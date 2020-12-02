@@ -8,6 +8,7 @@
   "workspaces": {
     "packages": [
       "packages/**",
+      "utils/**",
       "!packages/app/cdk.out/**"
     ]
   },
@@ -25,6 +26,7 @@
     "@types/node": "^14.0.26",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
+    "apollo-server-express": "^2.19.0",
     "eslint": "^7.14.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
