@@ -8,6 +8,7 @@ import AWS from 'aws-sdk';
 import { ApolloServer } from 'apollo-server-lambda';
 // import { APIGatewayProxyCallback, APIGatewayProxyEvent, Context as LambdaContext } from 'aws-lambda';
 import {} from 'type-graphql';
+import { commonFunctionExample } from '@danielblignaut/common-lambda-lib/dist/utils';
 import createSchema from './graph-ql/create-schema';
 import { REGION, TABLE_NAME_PREFIX } from './config/index';
 import { initMapper, initTables } from './util/mapper';
@@ -26,7 +27,7 @@ const server = new ApolloServer(serverParams);
 
 export const init = (): void => {
   AWS.config.update({ region: REGION });
-
+  commonFunctionExample();
   initMapper(REGION, TABLE_NAME_PREFIX);
 };
 

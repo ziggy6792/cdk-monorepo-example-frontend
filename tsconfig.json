@@ -2,19 +2,11 @@
   "extends": "./tsconfig.build.json",
 
   "compilerOptions": {
-    "rootDir": "./",
     "baseUrl": ".",
-    "paths": {
-    }
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    "paths": {}
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-    "**/build",
-    "**/dist",
-    "**/node_modules",
-    "cdk.out",
-    "**/cdk.out"
-  ]
+  "exclude": ["node_modules", "dist", "build", "**/build", "**/dist", "**/node_modules", "cdk.out", "**/cdk.out"]
 }

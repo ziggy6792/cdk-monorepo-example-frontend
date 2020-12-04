@@ -2,5 +2,5 @@
   "watch": ["packages"],
   "ext": "ts,json",
   "ignore": ["**/*.test.ts"],
-  "exec": "ts-node ./utils/lambda-server"
+  "exec": "ts-node ./utils/lambda-server & ts-node ./packages/lambda-gq-resolver/src/local-server "
 }

@@ -10,10 +10,10 @@ const app = express();
 
 // Setup local grapql server
 
-const apolloServer = new ApolloServer(serverParams);
-initGqServer();
+// const apolloServer = new ApolloServer(serverParams);
+// initGqServer();
 
-apolloServer.applyMiddleware({ app, path: '/lambda-gq-resolver/graphql' });
+// apolloServer.applyMiddleware({ app, path: '/lambda-gq-resolver/graphql' });
 
 // Setup gateway services
 
