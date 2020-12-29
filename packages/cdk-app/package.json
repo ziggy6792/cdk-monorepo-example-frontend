@@ -12,12 +12,6 @@
     "clean:light": "rm -rf ./dist && rm -rf tsconfig.build.tsbuildinfo",
     "clean:full": "yarn run clean:light && rm -rf ./node_modules && rm -rf ./cdk.out"
   },
-  "devDependencies": {
-    "@aws-cdk/assert": "1.75.0",
-    "@types/node": "10.17.27",
-    "ts-node": "^8.1.0",
-    "typescript": "~3.9.7"
-  },
   "dependencies": {
     "aws-cdk": "1.75.0",
     "@aws-cdk/aws-apigateway": "1.75.0",
