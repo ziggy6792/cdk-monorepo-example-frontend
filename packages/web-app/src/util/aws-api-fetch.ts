@@ -51,7 +51,7 @@ const buildIamFetch = (credentials: ICredentials) => {
     { accessKeyId: credentials.accessKeyId, secretAccessKey: credentials.secretAccessKey, sessionToken: credentials.sessionToken }
   );
 
-  axiosInstance.interceptors.request.use(interceptor);
+  axiosInstance.interceptors.request.use(interceptor as any);
 
   return buildAxiosFetch(axiosInstance);
 };
