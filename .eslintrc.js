@@ -5,6 +5,10 @@ module.exports = {
   },
   extends: ['airbnb-base', 'eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
+  // parserOptions: {
+  //   ecmaVersion: 11,
+  //   sourceType: 'module',
+  // },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -40,19 +44,5 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'import/no-absolute-path': 'off',
-
-    'prettier/prettier': [
-      'warn',
-      {
-        endOfLine: 'auto',
-        singleQuote: true,
-        jsxSingleQuote: true,
-      },
-    ],
   },
-  // settings: {
-  //   'import/resolver': {
-  //     alias: [['/', '/build']],
-  //   },
-  // },
 };

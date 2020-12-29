@@ -1,10 +1,10 @@
 import React from 'react';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { createHttpLink } from 'apollo-link-http';
 import Auth from '@aws-amplify/auth';
 import ApolloClient from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
+import { createHttpLink } from 'apollo-link-http';
 import awsConfig from './util/aws-config';
 import Routes from './routes';
 import store from './conf/store';
