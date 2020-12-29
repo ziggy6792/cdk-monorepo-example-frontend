@@ -20,18 +20,20 @@ export class PackagesStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(require.resolve('@danielblignaut/lambda-a'), '..')),
     });
 
-    const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
-      publicReadAccess: true,
-      websiteIndexDocument: 'index.html',
-    });
+    // const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
+    //   publicReadAccess: true,
+    //   websiteIndexDocument: 'index.html',
+    // });
 
-    const deployment = new s3Deployment.BucketDeployment(this, 'DeployWebsite', {
-      destinationBucket: websiteBucket,
-      sources: [s3Deployment.Source.asset('../frontend/build')],
-    });
+    // const deployment = new s3Deployment.BucketDeployment(this, 'DeployWebsite', {
+    //   destinationBucket: websiteBucket,
+    //   sources: [s3Deployment.Source.asset(path.join(require.resolve('@danielblignaut/web-app'), '/build'))],
+    // });
 
-    const output = new cdk.CfnOutput(this, 'Website Address', {
-      value: websiteBucket.bucketWebsiteUrl,
-    });
+    // const output = new cdk.CfnOutput(this, 'Website Address', {
+    //   value: websiteBucket.bucketWebsiteUrl,
+    // });
+
+    console.log('hello');
   }
 }

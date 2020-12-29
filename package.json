@@ -16,7 +16,8 @@
     "clean:full": "yarn run clean:light && rm -rf ./node_modules",
     "test:watch": "node --expose-gc ./node_modules/.bin/jest --watch --debug --runInBand --colors",
     "test": "node --expose-gc ./node_modules/.bin/jest --coverage --debug --runInBand --colors",
-    "start": "lerna run start --stream --parallel"
+    "start": "lerna run start --stream --parallel",
+    "build": "lerna run build"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.59",
