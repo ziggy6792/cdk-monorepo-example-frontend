@@ -46,6 +46,7 @@
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
   },
   "eslintConfig": {
+    "root": true,
     "extends": [
       "react-app",
       "react-app/jest"
