@@ -40,6 +40,15 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'import/no-absolute-path': 'off',
+
+    'prettier/prettier': [
+      'warn',
+      {
+        endOfLine: 'auto',
+        singleQuote: true,
+        jsxSingleQuote: true,
+      },
+    ],
   },
   // settings: {
   //   'import/resolver': {

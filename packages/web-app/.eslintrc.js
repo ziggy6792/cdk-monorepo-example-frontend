@@ -29,30 +29,10 @@ module.exports = {
   },
   rules: {
     // quotes: [2, 'single', { avoidEscape: true }],
+    ...baseConfig.rules,
     'react/destructuring-assignment': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
-    'no-param-reassign': 'off',
     'react/prop-types': 'off',
     'linebreak-style': 'off',
-    'prettier/prettier': [
-      'warn',
-      {
-        endOfLine: 'auto',
-        singleQuote: true,
-        jsxSingleQuote: true,
-      },
-    ],
-    'max-len': [
-      'error',
-      160,
-      2,
-      {
-        ignoreUrls: true,
-        ignoreComments: false,
-        ignoreRegExpLiterals: true,
-        ignoreStrings: false,
-        ignoreTemplateLiterals: false,
-      },
-    ],
   },
 };
