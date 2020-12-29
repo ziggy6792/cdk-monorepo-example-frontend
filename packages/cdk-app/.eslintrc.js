@@ -1,4 +1,4 @@
-const baseConfig = require('awesome-tools/eslint.config.js');
+const baseConfig = require('../../.eslintrc.js');
 
 module.exports = {
   ...baseConfig,
