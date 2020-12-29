@@ -10,14 +10,6 @@ export class PackagesStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const queue = new sqs.Queue(this, 'PackagesQueue', {
-      visibilityTimeout: cdk.Duration.seconds(300),
-    });
-
-    const topic = new sns.Topic(this, 'PackagesTopic');
-
-    topic.addSubscription(new subs.SqsSubscription(queue));
-
     const lambdaA = new lambda.Function(this, 'lambda-a', {
       functionName: 'lambda-a',
       memorySize: 256,
