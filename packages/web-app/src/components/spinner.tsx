@@ -6,9 +6,9 @@ const Spinner = () => {
     <Grid
       container
       spacing={0}
-      direction="column"
-      alignItems="center"
-      justify="center"
+      direction='column'
+      alignItems='center'
+      justify='center'
       style={{
         minHeight: '100vh',
         position: 'absolute',
