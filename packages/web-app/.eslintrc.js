@@ -1,4 +1,10 @@
+const baseConfig = require('../../.eslintrc.js');
+
 module.exports = {
+  ...baseConfig,
+  globals: {
+    ...baseConfig.globals,
+  },
   ignorePatterns: ['build', '*.config.js', 'node_modules'],
   extends: [
     'airbnb-typescript',
