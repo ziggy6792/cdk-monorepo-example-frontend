@@ -22,25 +22,27 @@ export class PackagesStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(require.resolve('@danielblignaut/lambda-a'), '..')),
     });
 
-    const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
-      publicReadAccess: true,
-      websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'index.html',
-    });
+    // const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
+    //   publicReadAccess: true,
+    //   websiteIndexDocument: 'index.html',
+    //   websiteErrorDocument: 'index.html',
+    // });
 
-    const deployment = new s3Deployment.BucketDeployment(this, 'DeployWebsite', {
-      destinationBucket: websiteBucket,
-      sources: [s3Deployment.Source.asset(path.join(require.resolve('@danielblignaut/web-app'), '..'))],
-    });
+    // const deployment = new s3Deployment.BucketDeployment(this, 'DeployWebsite', {
+    //   destinationBucket: websiteBucket,
+    //   sources: [s3Deployment.Source.asset(path.join(require.resolve('@danielblignaut/web-app'), '..'))],
+    // });
 
-    const output = new cdk.CfnOutput(this, 'Website Address', {
-      value: websiteBucket.bucketWebsiteUrl,
-    });
+    // const output = new cdk.CfnOutput(this, 'Website Address', {
+    //   value: websiteBucket.bucketWebsiteUrl,
+    // });
+
+    const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), '..');
 
     // defaults.printWarning(path.join(require.resolve('@danielblignaut/web-app'), '..'));
 
     // console.log('hello');
 
-    // new SPADeploy(this, 'Website Deploy').createBasicSite({ indexDoc: 'index.html', websiteFolder: '../frontend/build' });
+    new SPADeploy(this, 'Website Deploy').createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
   }
 }
