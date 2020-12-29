@@ -7,6 +7,8 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as s3Deployment from '@aws-cdk/aws-s3-deployment';
 import path from 'path';
+import * as defaults from '@aws-solutions-constructs/core';
+import { SPADeploy } from 'cdk-spa-deploy';
 
 export class PackagesStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
@@ -20,20 +22,25 @@ export class PackagesStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(require.resolve('@danielblignaut/lambda-a'), '..')),
     });
 
-    // const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
-    //   publicReadAccess: true,
-    //   websiteIndexDocument: 'index.html',
-    // });
+    const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
+      publicReadAccess: true,
+      websiteIndexDocument: 'index.html',
+      websiteErrorDocument: 'index.html',
+    });
 
-    // const deployment = new s3Deployment.BucketDeployment(this, 'DeployWebsite', {
-    //   destinationBucket: websiteBucket,
-    //   sources: [s3Deployment.Source.asset(path.join(require.resolve('@danielblignaut/web-app'), '/build'))],
-    // });
+    const deployment = new s3Deployment.BucketDeployment(this, 'DeployWebsite', {
+      destinationBucket: websiteBucket,
+      sources: [s3Deployment.Source.asset(path.join(require.resolve('@danielblignaut/web-app'), '..'))],
+    });
 
-    // const output = new cdk.CfnOutput(this, 'Website Address', {
-    //   value: websiteBucket.bucketWebsiteUrl,
-    // });
+    const output = new cdk.CfnOutput(this, 'Website Address', {
+      value: websiteBucket.bucketWebsiteUrl,
+    });
 
-    console.log('hello');
+    // defaults.printWarning(path.join(require.resolve('@danielblignaut/web-app'), '..'));
+
+    // console.log('hello');
+
+    // new SPADeploy(this, 'Website Deploy').createBasicSite({ indexDoc: 'index.html', websiteFolder: '../frontend/build' });
   }
 }
