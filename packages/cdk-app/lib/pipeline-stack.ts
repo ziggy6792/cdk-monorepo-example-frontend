@@ -6,7 +6,7 @@ import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipelineActions from '@aws-cdk/aws-codepipeline-actions';
-import { CdkPipelinesDemoStage } from './cdk-pipelines-demo-stage';
+import { CdkPipelinesDemoStage } from './deployment-stage';
 
 export class CdkpipelinesDemoPipelineStack extends Stack {
   public readonly devUrlOutput: cdk.CfnOutput;

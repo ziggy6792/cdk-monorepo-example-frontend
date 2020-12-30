@@ -8,7 +8,7 @@
 /* eslint-disable no-new */
 
 import * as cdk from '@aws-cdk/core';
-import { CdkpipelinesDemoPipelineStack } from '../lib/cdk-pipelines-demo-pipeline-stack';
+import { CdkpipelinesDemoPipelineStack } from '../lib/pipeline-stack';
 
 module.exports = {};
 
