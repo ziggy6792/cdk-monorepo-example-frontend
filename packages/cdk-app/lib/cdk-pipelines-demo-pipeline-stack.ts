@@ -41,12 +41,8 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
         // Use this if you need a build step (if you're not using ts-node
         // or if you have TypeScript Lambdas that need to be compiled).
         buildCommand: 'yarn run build',
-        // synthCommand: 'yarn cdk-synth',
-        subdirectory: 'packages/cdk-app',
-        // artifacts: {
-        //   'base-directory': 'cdk/cdk.out',
-        //   // files: '**/*',
-        // },
+        synthCommand: 'yarn cdk-synth',
+        // subdirectory: 'packages/cdk-app'
       }),
     });
 
