@@ -13,7 +13,7 @@ class DeploymentStack extends cdk.Stack {
 
     const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), '..');
 
-    const webstie = new SPADeploy(this, 'website').createBasicSite({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
+    const webstie = new SPADeploy(this, 'website').createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
 
     const paramId = util.getSsmParamId('deployment_url', stage);
 
