@@ -11,8 +11,6 @@ class ApigwDemoStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, stageName: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    super(scope, id, props);
-
     const lambdaA = new lambda.Function(this, 'lambda-a', {
       functionName: 'lambda-a',
       memorySize: 256,
@@ -42,7 +40,7 @@ class ApigwDemoStack extends cdk.Stack {
 
     // console.log('hello');
 
-    new SPADeploy(this, `${id}-${stageName}`).createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
+    new SPADeploy(this, `${id}-${stageName}`).createBasicSite({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
   }
 }
 
