@@ -1,10 +1,6 @@
 import * as cdk from '@aws-cdk/core';
-import * as apigw from '@aws-cdk/aws-apigateway';
-import * as lambda from '@aws-cdk/aws-lambda';
 import * as path from 'path';
-import { ServicePrincipal } from '@aws-cdk/aws-iam';
 import { SPADeploy } from 'cdk-spa-deploy';
-import * as defaults from '@aws-solutions-constructs/core';
 
 class ApigwDemoStack extends cdk.Stack {
   public readonly urlOutput: cdk.CfnOutput;

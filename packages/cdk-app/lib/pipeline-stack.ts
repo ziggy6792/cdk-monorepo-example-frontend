@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import * as cdk from '@aws-cdk/core';
 
-import { Stack, StackProps, Construct, SecretValue, Fn } from '@aws-cdk/core';
+import { Stack, StackProps, Construct, SecretValue } from '@aws-cdk/core';
 import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
