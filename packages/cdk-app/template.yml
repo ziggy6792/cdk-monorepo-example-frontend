@@ -272,7 +272,7 @@ Resources:
               Configuration:
                 ProjectName:
                   Ref: CDKMonoRepoFrontendPipelineBuildSynthCdkBuildProjectC5FD30AF
-                EnvironmentVariables: '[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"d124d327028d74a3dc9970f163315bc04f597c8fe8cc5dfe09c7d7b567655ab6"}]'
+                EnvironmentVariables: '[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"1e753ec7d932a70bbf6c2712ea448020074b4cac1f4f82349e080ad8fdd1fa23"}]'
               InputArtifacts:
                 - Name: Artifact_Source_GitHub
               Name: Synth
@@ -622,7 +622,7 @@ Resources:
               "build": {
                 "commands": [
                   "yarn run build",
-                  "npx cdk synth"
+                  "yarn cdk-synth"
                 ]
               }
             },
