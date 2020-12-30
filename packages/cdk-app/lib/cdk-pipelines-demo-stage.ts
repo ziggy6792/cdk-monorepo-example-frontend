@@ -12,7 +12,7 @@ export class CdkPipelinesDemoStage extends Stage {
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    const stack = new ApigwDemoStack(this, 'stack');
+    const stack = new ApigwDemoStack(this, 'deployment');
 
     defaults.printWarning(id);
     // this.stack = service;

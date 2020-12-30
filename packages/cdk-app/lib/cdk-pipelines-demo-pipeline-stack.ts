@@ -19,7 +19,7 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
     const sourceArtifact = new codepipeline.Artifact();
     const cloudAssemblyArtifact = new codepipeline.Artifact();
 
-    const stackName = 'CDKMonoRepo-Frontend-bla';
+    const stackName = 'CDKMonoRepo-Frontend';
 
     const generateConstructId = (constructId: string, sep = '-'): string => {
       return `${stackName}${sep}${constructId}`;
