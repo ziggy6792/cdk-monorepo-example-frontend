@@ -1,17 +1,16 @@
-/* eslint-disable import/prefer-default-export */
-import * as sns from '@aws-cdk/aws-sns';
-import * as subs from '@aws-cdk/aws-sns-subscriptions';
-import * as sqs from '@aws-cdk/aws-sqs';
 import * as cdk from '@aws-cdk/core';
+import * as apigw from '@aws-cdk/aws-apigateway';
 import * as lambda from '@aws-cdk/aws-lambda';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as s3Deployment from '@aws-cdk/aws-s3-deployment';
-import path from 'path';
-import * as defaults from '@aws-solutions-constructs/core';
+import * as path from 'path';
+import { ServicePrincipal } from '@aws-cdk/aws-iam';
 import { SPADeploy } from 'cdk-spa-deploy';
 
-export class PackagesStack extends cdk.Stack {
-  constructor(scope: cdk.App, id: string, stageName?: string, props?: cdk.StackProps) {
+class ApigwDemoStack extends cdk.Stack {
+  public readonly urlOutput: cdk.CfnOutput;
+
+  constructor(scope: cdk.Construct, id: string, stageName: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
     super(scope, id, props);
 
     const lambdaA = new lambda.Function(this, 'lambda-a', {
@@ -43,6 +42,8 @@ export class PackagesStack extends cdk.Stack {
 
     // console.log('hello');
 
-    new SPADeploy(this, 'Website Deploy').createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
+    new SPADeploy(this, `${id}-${stageName}`).createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
   }
 }
+
+export default ApigwDemoStack;
