@@ -22,8 +22,8 @@ class PipelineStack extends Stack {
 
     const stackName = 'CDKMonoRepo-Frontend';
 
-    const pipeline = new CdkPipeline(this, util.getConstructId('Pipeline'), {
-      pipelineName: util.getConstructId('Pipeline'),
+    const pipeline = new CdkPipeline(this, util.getConstructId('pipeline'), {
+      pipelineName: util.getConstructId('pipeline'),
       cloudAssemblyArtifact,
 
       sourceAction: new codepipelineActions.GitHubSourceAction({
