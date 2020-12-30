@@ -14,8 +14,8 @@ import * as util from '../util';
 module.exports = {};
 
 const app = new cdk.App();
-new PipelineStack(app, util.getConstructId('Pipeline'), {
-  description: util.getConstructId('Pipeline'),
+new PipelineStack(app, util.getConstructId('pipeline'), {
+  description: util.getConstructId('pipeline'),
   env: {
     account: '694710432912',
     region: 'ap-southeast-1',

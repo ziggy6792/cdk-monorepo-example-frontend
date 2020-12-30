@@ -17,8 +17,6 @@ class DeploymentStack extends cdk.Stack {
 
     const paramId = util.getSsmParamId('deployment_url', stage);
 
-    defaults.printWarning(paramId);
-
     const websiteUrl = new ssm.StringParameter(this, paramId, {
       parameterName: paramId,
       stringValue: webstie.websiteBucket.bucketWebsiteUrl,
