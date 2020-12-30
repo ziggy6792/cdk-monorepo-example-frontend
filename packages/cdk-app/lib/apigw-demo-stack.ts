@@ -11,13 +11,13 @@ class ApigwDemoStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, stageName: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const lambdaA = new lambda.Function(this, 'lambda-a', {
-      functionName: 'lambda-a',
-      memorySize: 256,
-      runtime: lambda.Runtime.NODEJS_12_X,
-      handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(require.resolve('@danielblignaut/lambda-a'), '..')),
-    });
+    // const lambdaA = new lambda.Function(this, 'lambda-a', {
+    //   functionName: 'lambda-a',
+    //   memorySize: 256,
+    //   runtime: lambda.Runtime.NODEJS_12_X,
+    //   handler: 'index.handler',
+    //   code: lambda.Code.fromAsset(path.join(require.resolve('@danielblignaut/lambda-a'), '..')),
+    // });
 
     // const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
     //   publicReadAccess: true,
