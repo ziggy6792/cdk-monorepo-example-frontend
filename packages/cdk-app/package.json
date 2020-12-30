@@ -5,7 +5,8 @@
     "packages": "bin/packages.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && npx cdk synth",
+    "build": "tsc -p tsconfig.build.json",
+    "synth": "tsc -p tsconfig.build.json && npx cdk synth",
     "watch": "tsc -w -p tsconfig.build.json",
     "test": "jest",
     "cdk": "cdk",
