@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "synth": "npx cdk synth && cp -r cdk.out ../..",
+    "synth": "npx cdk synth",
     "watch": "tsc -w -p tsconfig.build.json",
     "test": "jest",
     "cdk": "cdk",

@@ -19,8 +19,14 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
     const sourceArtifact = new codepipeline.Artifact();
     const cloudAssemblyArtifact = new codepipeline.Artifact();
 
-    const pipeline = new CdkPipeline(this, 'CDK-MonoRepo-Frontend-Pipeline', {
-      pipelineName: 'CDK-MonoRepo-Frontend-Pipeline',
+    const stackName = 'CDKMonoRepo-Frontend-bla';
+
+    const generateConstructId = (constructId: string, sep = '-'): string => {
+      return `${stackName}${sep}${constructId}`;
+    };
+
+    const pipeline = new CdkPipeline(this, generateConstructId('Pipeline'), {
+      pipelineName: generateConstructId('Pipeline'),
       cloudAssemblyArtifact,
 
       sourceAction: new codepipelineActions.GitHubSourceAction({
@@ -42,13 +48,13 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
         // or if you have TypeScript Lambdas that need to be compiled).
         buildCommand: 'yarn run build',
         synthCommand: 'yarn cdk-synth',
-        // subdirectory: 'packages/cdk-app'
+        // subdirectory: 'packages/cdk-app',
       }),
     });
 
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
-    const deployedDevStage = new CdkPipelinesDemoStage(this, 'dev', {
+    const deployedDevStage = new CdkPipelinesDemoStage(this, generateConstructId('dev'), {
       env: {
         account: '694710432912',
         region: 'ap-southeast-1',
@@ -78,7 +84,7 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
 
-    const deployedProdStage = new CdkPipelinesDemoStage(this, 'prod', {
+    const deployedProdStage = new CdkPipelinesDemoStage(this, generateConstructId('prod'), {
       env: {
         account: '694710432912',
         region: 'ap-southeast-1',

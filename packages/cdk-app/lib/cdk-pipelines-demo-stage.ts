@@ -2,6 +2,7 @@
 import { Construct, Stage, StageProps } from '@aws-cdk/core';
 
 import * as cdk from '@aws-cdk/core';
+import * as defaults from '@aws-solutions-constructs/core';
 import ApigwDemoStack from './apigw-demo-stack';
 
 export class CdkPipelinesDemoStage extends Stage {
@@ -11,10 +12,9 @@ export class CdkPipelinesDemoStage extends Stage {
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    const stackName = 'CDKMonoRepo-Frontend';
+    const stack = new ApigwDemoStack(this, 'stack');
 
-    const service = new ApigwDemoStack(this, stackName, id);
-
+    defaults.printWarning(id);
     // this.stack = service;
     // this.urlOutput = new cdk.CfnOutput(scope, `${stackName}-${id}`, { value: Fn.importValue('url') });
     // this.urlOutput = new cdk.CfnOutput(this, `${stackName}-${id}`, { value: service.urlOutput });
