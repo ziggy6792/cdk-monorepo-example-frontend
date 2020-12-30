@@ -4,9 +4,6 @@ const USE_LOCAL = true;
 
 const awsConfig = {
   ...cdkExports,
-  // aws_graphqlEndpoint_authNone: 'http://localhost:3100/lambda-gq-resolver/graphql',
-  // aws_graphqlEndpoint_authRole: 'http://localhost:3100/lambda-gq-resolver/graphql',
-  // aws_graphqlEndpoint_authUser: 'http://localhost:3100/lambda-gq-resolver/graphql',
   oauth: {
     ...cdkExports.oauth,
     redirectSignIn: `${window.location.protocol}//${window.location.host}/profile/`,
