@@ -8,12 +8,14 @@
 /* eslint-disable no-new */
 
 import * as cdk from '@aws-cdk/core';
-import { CdkpipelinesDemoPipelineStack } from '../lib/pipeline-stack';
+import PipelineStack from '../lib/pipeline-stack';
+import * as util from '../util';
 
 module.exports = {};
 
 const app = new cdk.App();
-new CdkpipelinesDemoPipelineStack(app, 'CDK-MonoRepo-Frontend-Pipeline', {
+new PipelineStack(app, util.getConstructId('Pipeline'), {
+  description: util.getConstructId('Pipeline'),
   env: {
     account: '694710432912',
     region: 'ap-southeast-1',

@@ -7,8 +7,9 @@ import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipelineActions from '@aws-cdk/aws-codepipeline-actions';
 import { CdkPipelinesDemoStage } from './deployment-stage';
+import * as util from '../util';
 
-export class CdkpipelinesDemoPipelineStack extends Stack {
+class PipelineStack extends Stack {
   public readonly devUrlOutput: cdk.CfnOutput;
 
   public readonly prodUrlOutput: cdk.CfnOutput;
@@ -21,12 +22,8 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
 
     const stackName = 'CDKMonoRepo-Frontend';
 
-    const generateConstructId = (constructId: string, sep = '-'): string => {
-      return `${stackName}${sep}${constructId}`;
-    };
-
-    const pipeline = new CdkPipeline(this, generateConstructId('Pipeline'), {
-      pipelineName: generateConstructId('Pipeline'),
+    const pipeline = new CdkPipeline(this, util.getConstructId('Pipeline'), {
+      pipelineName: util.getConstructId('Pipeline'),
       cloudAssemblyArtifact,
 
       sourceAction: new codepipelineActions.GitHubSourceAction({
@@ -54,7 +51,7 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
 
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
-    const deployedDevStage = new CdkPipelinesDemoStage(this, generateConstructId('dev'), {
+    const deployedDevStage = new CdkPipelinesDemoStage(this, util.getConstructId('dev'), 'dev', {
       env: {
         account: '694710432912',
         region: 'ap-southeast-1',
@@ -84,7 +81,7 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
 
-    const deployedProdStage = new CdkPipelinesDemoStage(this, generateConstructId('prod'), {
+    const deployedProdStage = new CdkPipelinesDemoStage(this, util.getConstructId('prod'), 'prod', {
       env: {
         account: '694710432912',
         region: 'ap-southeast-1',
@@ -101,3 +98,5 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
     // this.urlOutput = service.urlOutput;
   }
 }
+
+export default PipelineStack;
