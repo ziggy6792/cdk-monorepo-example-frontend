@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import awsConfig from './util/aws-config';
+import awsConfig from './conf/aws-config';
 import Routes from './routes';
 import store from './conf/store';
 import * as ApiFetch from './util/aws-api-fetch';

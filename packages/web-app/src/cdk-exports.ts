@@ -10,8 +10,6 @@ const cdkExports = {
   oauth: {
     domain: 'alpaca-dev.auth.ap-southeast-1.amazoncognito.com',
     scope: ['openid', 'email', 'phone', 'aws.cognito.signin.user.admin'],
-    redirectSignIn: '/profile/',
-    redirectSignOut: '/profile/',
     responseType: 'code',
   },
 };
