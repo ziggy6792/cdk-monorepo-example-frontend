@@ -15,11 +15,11 @@ class DeploymentStack extends cdk.Stack {
 
     const webstie = new SPADeploy(this, 'website').createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
 
-    const paramId = util.getSsmParamId('deployment_url', stage);
+    const paramId = util.getSsmParamId('url', stage);
 
     const websiteUrl = new ssm.StringParameter(this, paramId, {
       parameterName: paramId,
-      stringValue: webstie.websiteBucket.bucketWebsiteUrl,
+      stringValue: webstie.distribution.distributionDomainName,
     });
   }
 }
