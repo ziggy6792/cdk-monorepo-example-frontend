@@ -41,7 +41,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "yarn builds:add:all",
     "build:staging": "env-cmd -f .env.staging react-scripts build",
     "builds:add:staging": "yarn build:staging && mkdir -p builds/staging && mv build builds/staging",
     "builds:add:prod": "yarn build && mkdir -p builds/prod && mv build builds/prod",
