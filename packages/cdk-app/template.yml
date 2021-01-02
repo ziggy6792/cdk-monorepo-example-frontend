@@ -1,6 +1,8 @@
-Description: cdk-monorepo-frontend-Pipeline
+/Users/sive/Documents/Training/serverless/cdk-monorepo-example/cdk-monorepo-example-frontend-2/packages/web-app/builds/staging/build
+/Users/sive/Documents/Training/serverless/cdk-monorepo-example/cdk-monorepo-example-frontend-2/packages/web-app/builds/prod/build
+Description: cdk-monorepo-frontend-pipeline
 Resources:
-  cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92:
+  cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563:
     Type: AWS::KMS::Key
     Properties:
       KeyPolicy:
@@ -40,7 +42,7 @@ Resources:
             Principal:
               AWS:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineRole0F8A180E
+                  - cdkmonorepofrontendpipelinePipelineRoleE810008A
                   - Arn
             Resource: "*"
           - Action:
@@ -53,7 +55,7 @@ Resources:
             Principal:
               AWS:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineBuildSynthCdkBuildProjectRole81414D41
+                  - cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProjectRoleB6B425B3
                   - Arn
             Resource: "*"
           - Action:
@@ -65,7 +67,7 @@ Resources:
             Principal:
               AWS:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineBuildSynthCdkBuildProjectRole81414D41
+                  - cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProjectRoleB6B425B3
                   - Arn
             Resource: "*"
           - Action:
@@ -75,7 +77,7 @@ Resources:
             Principal:
               AWS:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineUpdatePipelineSelfMutationRole59CF96D1
+                  - cdkmonorepofrontendpipelineUpdatePipelineSelfMutationRoleCBC457AF
                   - Arn
             Resource: "*"
           - Action:
@@ -87,7 +89,7 @@ Resources:
             Principal:
               AWS:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineUpdatePipelineSelfMutationRole59CF96D1
+                  - cdkmonorepofrontendpipelineUpdatePipelineSelfMutationRoleCBC457AF
                   - Arn
             Resource: "*"
           - Action:
@@ -97,7 +99,7 @@ Resources:
             Principal:
               AWS:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+                  - cdkmonorepofrontendpipelineAssetsFileRole561649DD
                   - Arn
             Resource: "*"
           - Action:
@@ -109,7 +111,7 @@ Resources:
             Principal:
               AWS:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+                  - cdkmonorepofrontendpipelineAssetsFileRole561649DD
                   - Arn
             Resource: "*"
           - Action:
@@ -128,20 +130,20 @@ Resources:
     UpdateReplacePolicy: Delete
     DeletionPolicy: Delete
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/ArtifactsBucketEncryptionKey/Resource
-  cdkmonorepofrontendPipelineArtifactsBucketEncryptionKeyAliasDF0F104B:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/ArtifactsBucketEncryptionKey/Resource
+  cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKeyAliasB351F207:
     Type: AWS::KMS::Alias
     Properties:
-      AliasName: alias/codepipeline-cdkmonorepofrontendpipeline96762421
+      AliasName: alias/codepipeline-cdkmonorepofrontendpipelinepipelined16beb3f
       TargetKeyId:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+          - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
           - Arn
     UpdateReplacePolicy: Delete
     DeletionPolicy: Delete
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/ArtifactsBucketEncryptionKeyAlias/Resource
-  cdkmonorepofrontendPipelineArtifactsBucket7BCFE244:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/ArtifactsBucketEncryptionKeyAlias/Resource
+  cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33:
     Type: AWS::S3::Bucket
     Properties:
       BucketEncryption:
@@ -149,7 +151,7 @@ Resources:
           - ServerSideEncryptionByDefault:
               KMSMasterKeyID:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+                  - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
                   - Arn
               SSEAlgorithm: aws:kms
       PublicAccessBlockConfiguration:
@@ -160,8 +162,8 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/ArtifactsBucket/Resource
-  cdkmonorepofrontendPipelineRole0F8A180E:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/ArtifactsBucket/Resource
+  cdkmonorepofrontendpipelinePipelineRoleE810008A:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -172,8 +174,8 @@ Resources:
               Service: codepipeline.amazonaws.com
         Version: "2012-10-17"
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Role/Resource
-  cdkmonorepofrontendPipelineRoleDefaultPolicy5B5AB595:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Role/Resource
+  cdkmonorepofrontendpipelinePipelineRoleDefaultPolicy08E0110E:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
@@ -188,12 +190,12 @@ Resources:
             Effect: Allow
             Resource:
               - Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                  - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                   - Arn
               - Fn::Join:
                   - ""
                   - - Fn::GetAtt:
-                        - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                        - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                         - Arn
                     - /*
           - Action:
@@ -205,25 +207,25 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+                - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
                 - Arn
           - Action: sts:AssumeRole
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineBuildSynthCodePipelineActionRoleC81A52B4
+                - cdkmonorepofrontendpipelinePipelineBuildSynthCodePipelineActionRole5805935D
                 - Arn
           - Action: sts:AssumeRole
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineUpdatePipelineSelfMutateCodePipelineActionRole055131DB
+                - cdkmonorepofrontendpipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleE805928E
                 - Arn
           - Action: sts:AssumeRole
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+                - cdkmonorepofrontendpipelineAssetsFileRole561649DD
                 - Arn
           - Action: sts:AssumeRole
             Effect: Allow
@@ -234,17 +236,17 @@ Resources:
                   - Ref: AWS::Partition
                   - :iam::694710432912:role/cdk-hnb659fds-deploy-role-694710432912-ap-southeast-1
         Version: "2012-10-17"
-      PolicyName: cdkmonorepofrontendPipelineRoleDefaultPolicy5B5AB595
+      PolicyName: cdkmonorepofrontendpipelinePipelineRoleDefaultPolicy08E0110E
       Roles:
-        - Ref: cdkmonorepofrontendPipelineRole0F8A180E
+        - Ref: cdkmonorepofrontendpipelinePipelineRoleE810008A
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Role/DefaultPolicy/Resource
-  cdkmonorepofrontendPipeline3A447AC1:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Role/DefaultPolicy/Resource
+  cdkmonorepofrontendpipelinePipelineAE6D8D42:
     Type: AWS::CodePipeline::Pipeline
     Properties:
       RoleArn:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineRole0F8A180E
+          - cdkmonorepofrontendpipelinePipelineRoleE810008A
           - Arn
       Stages:
         - Actions:
@@ -272,7 +274,7 @@ Resources:
                 Version: "1"
               Configuration:
                 ProjectName:
-                  Ref: cdkmonorepofrontendPipelineBuildSynthCdkBuildProject73BF2FE2
+                  Ref: cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProject1F909833
                 EnvironmentVariables: '[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"1e753ec7d932a70bbf6c2712ea448020074b4cac1f4f82349e080ad8fdd1fa23"}]'
               InputArtifacts:
                 - Name: Artifact_Source_GitHub
@@ -281,7 +283,7 @@ Resources:
                 - Name: Artifact_Build_Synth
               RoleArn:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineBuildSynthCodePipelineActionRoleC81A52B4
+                  - cdkmonorepofrontendpipelinePipelineBuildSynthCodePipelineActionRole5805935D
                   - Arn
               RunOrder: 1
           Name: Build
@@ -293,13 +295,13 @@ Resources:
                 Version: "1"
               Configuration:
                 ProjectName:
-                  Ref: cdkmonorepofrontendPipelineUpdatePipelineSelfMutationFD183E4F
+                  Ref: cdkmonorepofrontendpipelineUpdatePipelineSelfMutation30CEFEC4
               InputArtifacts:
                 - Name: Artifact_Build_Synth
               Name: SelfMutate
               RoleArn:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineUpdatePipelineSelfMutateCodePipelineActionRole055131DB
+                  - cdkmonorepofrontendpipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleE805928E
                   - Arn
               RunOrder: 1
           Name: UpdatePipeline
@@ -311,13 +313,13 @@ Resources:
                 Version: "1"
               Configuration:
                 ProjectName:
-                  Ref: cdkmonorepofrontendPipelineAssetsFileAsset1073B6AA7
+                  Ref: cdkmonorepofrontendpipelineAssetsFileAsset1F98A1A86
               InputArtifacts:
                 - Name: Artifact_Build_Synth
               Name: FileAsset1
               RoleArn:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+                  - cdkmonorepofrontendpipelineAssetsFileRole561649DD
                   - Arn
               RunOrder: 1
             - ActionTypeId:
@@ -327,13 +329,29 @@ Resources:
                 Version: "1"
               Configuration:
                 ProjectName:
-                  Ref: cdkmonorepofrontendPipelineAssetsFileAsset2CA838F12
+                  Ref: cdkmonorepofrontendpipelineAssetsFileAsset2025360BC
               InputArtifacts:
                 - Name: Artifact_Build_Synth
               Name: FileAsset2
               RoleArn:
                 Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+                  - cdkmonorepofrontendpipelineAssetsFileRole561649DD
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: cdkmonorepofrontendpipelineAssetsFileAsset3E09860C6
+              InputArtifacts:
+                - Name: Artifact_Build_Synth
+              Name: FileAsset3
+              RoleArn:
+                Fn::GetAtt:
+                  - cdkmonorepofrontendpipelineAssetsFileRole561649DD
                   - Arn
               RunOrder: 1
           Name: Assets
@@ -344,7 +362,7 @@ Resources:
                 Provider: CloudFormation
                 Version: "1"
               Configuration:
-                StackName: cdk-monorepo-frontend-dev-deployment
+                StackName: cdk-monorepo-frontend-staging-deployment
                 Capabilities: CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
                 RoleArn:
                   Fn::Join:
@@ -354,7 +372,7 @@ Resources:
                       - :iam::694710432912:role/cdk-hnb659fds-cfn-exec-role-694710432912-ap-southeast-1
                 ActionMode: CHANGE_SET_REPLACE
                 ChangeSetName: PipelineChange
-                TemplatePath: Artifact_Build_Synth::assembly-cdk-monorepo-frontend-Pipeline-cdk-monorepo-frontend-dev/cdkmonorepofrontendPipelinecdkmonorepofrontenddevdeploymentCF9590D7.template.json
+                TemplatePath: Artifact_Build_Synth::assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-staging/cdkmonorepofrontendpipelinecdkmonorepofrontendstagingdeployment153ECE54.template.json
               InputArtifacts:
                 - Name: Artifact_Build_Synth
               Name: deployment.Prepare
@@ -371,7 +389,7 @@ Resources:
                 Provider: CloudFormation
                 Version: "1"
               Configuration:
-                StackName: cdk-monorepo-frontend-dev-deployment
+                StackName: cdk-monorepo-frontend-staging-deployment
                 ActionMode: CHANGE_SET_EXECUTE
                 ChangeSetName: PipelineChange
               Name: deployment.Deploy
@@ -382,7 +400,7 @@ Resources:
                     - Ref: AWS::Partition
                     - :iam::694710432912:role/cdk-hnb659fds-deploy-role-694710432912-ap-southeast-1
               RunOrder: 2
-          Name: cdk-monorepo-frontend-dev
+          Name: cdk-monorepo-frontend-staging
         - Actions:
             - ActionTypeId:
                 Category: Deploy
@@ -400,7 +418,7 @@ Resources:
                       - :iam::694710432912:role/cdk-hnb659fds-cfn-exec-role-694710432912-ap-southeast-1
                 ActionMode: CHANGE_SET_REPLACE
                 ChangeSetName: PipelineChange
-                TemplatePath: Artifact_Build_Synth::assembly-cdk-monorepo-frontend-Pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendPipelinecdkmonorepofrontendproddeployment1678CF4E.template.json
+                TemplatePath: Artifact_Build_Synth::assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendpipelinecdkmonorepofrontendproddeploymentF9674146.template.json
               InputArtifacts:
                 - Name: Artifact_Build_Synth
               Name: deployment.Prepare
@@ -433,20 +451,20 @@ Resources:
         EncryptionKey:
           Id:
             Fn::GetAtt:
-              - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+              - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
               - Arn
           Type: KMS
         Location:
-          Ref: cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+          Ref: cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
         Type: S3
-      Name: cdk-monorepo-frontend-Pipeline
+      Name: cdk-monorepo-frontend-pipeline
       RestartExecutionOnUpdate: true
     DependsOn:
-      - cdkmonorepofrontendPipelineRoleDefaultPolicy5B5AB595
-      - cdkmonorepofrontendPipelineRole0F8A180E
+      - cdkmonorepofrontendpipelinePipelineRoleDefaultPolicy08E0110E
+      - cdkmonorepofrontendpipelinePipelineRoleE810008A
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Resource
-  cdkmonorepofrontendPipelineBuildSynthCodePipelineActionRoleC81A52B4:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Resource
+  cdkmonorepofrontendpipelinePipelineBuildSynthCodePipelineActionRole5805935D:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -462,8 +480,8 @@ Resources:
                     - :iam::694710432912:root
         Version: "2012-10-17"
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Build/Synth/CodePipelineActionRole/Resource
-  cdkmonorepofrontendPipelineBuildSynthCodePipelineActionRoleDefaultPolicy3DF5D0B5:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Build/Synth/CodePipelineActionRole/Resource
+  cdkmonorepofrontendpipelinePipelineBuildSynthCodePipelineActionRoleDefaultPolicy3986700B:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
@@ -475,15 +493,15 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineBuildSynthCdkBuildProject73BF2FE2
+                - cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProject1F909833
                 - Arn
         Version: "2012-10-17"
-      PolicyName: cdkmonorepofrontendPipelineBuildSynthCodePipelineActionRoleDefaultPolicy3DF5D0B5
+      PolicyName: cdkmonorepofrontendpipelinePipelineBuildSynthCodePipelineActionRoleDefaultPolicy3986700B
       Roles:
-        - Ref: cdkmonorepofrontendPipelineBuildSynthCodePipelineActionRoleC81A52B4
+        - Ref: cdkmonorepofrontendpipelinePipelineBuildSynthCodePipelineActionRole5805935D
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Build/Synth/CodePipelineActionRole/DefaultPolicy/Resource
-  cdkmonorepofrontendPipelineBuildSynthCdkBuildProjectRole81414D41:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Build/Synth/CodePipelineActionRole/DefaultPolicy/Resource
+  cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProjectRoleB6B425B3:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -494,8 +512,8 @@ Resources:
               Service: codebuild.amazonaws.com
         Version: "2012-10-17"
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Build/Synth/CdkBuildProject/Role/Resource
-  cdkmonorepofrontendPipelineBuildSynthCdkBuildProjectRoleDefaultPolicyAD0BD79A:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Build/Synth/CdkBuildProject/Role/Resource
+  cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProjectRoleDefaultPolicy6A6D8495:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
@@ -511,13 +529,13 @@ Resources:
                   - - "arn:"
                     - Ref: AWS::Partition
                     - :logs:ap-southeast-1:694710432912:log-group:/aws/codebuild/
-                    - Ref: cdkmonorepofrontendPipelineBuildSynthCdkBuildProject73BF2FE2
+                    - Ref: cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProject1F909833
               - Fn::Join:
                   - ""
                   - - "arn:"
                     - Ref: AWS::Partition
                     - :logs:ap-southeast-1:694710432912:log-group:/aws/codebuild/
-                    - Ref: cdkmonorepofrontendPipelineBuildSynthCdkBuildProject73BF2FE2
+                    - Ref: cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProject1F909833
                     - :*
           - Action:
               - codebuild:CreateReportGroup
@@ -532,7 +550,7 @@ Resources:
                 - - "arn:"
                   - Ref: AWS::Partition
                   - :codebuild:ap-southeast-1:694710432912:report-group/
-                  - Ref: cdkmonorepofrontendPipelineBuildSynthCdkBuildProject73BF2FE2
+                  - Ref: cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProject1F909833
                   - -*
           - Action:
               - s3:GetObject*
@@ -544,12 +562,12 @@ Resources:
             Effect: Allow
             Resource:
               - Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                  - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                   - Arn
               - Fn::Join:
                   - ""
                   - - Fn::GetAtt:
-                        - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                        - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                         - Arn
                     - /*
           - Action:
@@ -561,7 +579,7 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+                - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
                 - Arn
           - Action:
               - kms:Decrypt
@@ -571,15 +589,15 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+                - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
                 - Arn
         Version: "2012-10-17"
-      PolicyName: cdkmonorepofrontendPipelineBuildSynthCdkBuildProjectRoleDefaultPolicyAD0BD79A
+      PolicyName: cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProjectRoleDefaultPolicy6A6D8495
       Roles:
-        - Ref: cdkmonorepofrontendPipelineBuildSynthCdkBuildProjectRole81414D41
+        - Ref: cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProjectRoleB6B425B3
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Build/Synth/CdkBuildProject/Role/DefaultPolicy/Resource
-  cdkmonorepofrontendPipelineBuildSynthCdkBuildProject73BF2FE2:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Build/Synth/CdkBuildProject/Role/DefaultPolicy/Resource
+  cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProject1F909833:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
@@ -592,7 +610,7 @@ Resources:
         Type: LINUX_CONTAINER
       ServiceRole:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineBuildSynthCdkBuildProjectRole81414D41
+          - cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProjectRoleB6B425B3
           - Arn
       Source:
         BuildSpec: >-
@@ -619,11 +637,11 @@ Resources:
         Type: CODEPIPELINE
       EncryptionKey:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+          - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
           - Arn
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/Build/Synth/CdkBuildProject/Resource
-  cdkmonorepofrontendPipelineUpdatePipelineSelfMutateCodePipelineActionRole055131DB:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/Build/Synth/CdkBuildProject/Resource
+  cdkmonorepofrontendpipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleE805928E:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -639,8 +657,8 @@ Resources:
                     - :iam::694710432912:root
         Version: "2012-10-17"
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/Resource
-  cdkmonorepofrontendPipelineUpdatePipelineSelfMutateCodePipelineActionRoleDefaultPolicy4636BCF8:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/Resource
+  cdkmonorepofrontendpipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleDefaultPolicy54091B62:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
@@ -652,15 +670,15 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineUpdatePipelineSelfMutationFD183E4F
+                - cdkmonorepofrontendpipelineUpdatePipelineSelfMutation30CEFEC4
                 - Arn
         Version: "2012-10-17"
-      PolicyName: cdkmonorepofrontendPipelineUpdatePipelineSelfMutateCodePipelineActionRoleDefaultPolicy4636BCF8
+      PolicyName: cdkmonorepofrontendpipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleDefaultPolicy54091B62
       Roles:
-        - Ref: cdkmonorepofrontendPipelineUpdatePipelineSelfMutateCodePipelineActionRole055131DB
+        - Ref: cdkmonorepofrontendpipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleE805928E
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/DefaultPolicy/Resource
-  cdkmonorepofrontendPipelineUpdatePipelineSelfMutationRole59CF96D1:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/DefaultPolicy/Resource
+  cdkmonorepofrontendpipelineUpdatePipelineSelfMutationRoleCBC457AF:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -671,8 +689,8 @@ Resources:
               Service: codebuild.amazonaws.com
         Version: "2012-10-17"
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/UpdatePipeline/SelfMutation/Role/Resource
-  cdkmonorepofrontendPipelineUpdatePipelineSelfMutationRoleDefaultPolicy481111D6:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/UpdatePipeline/SelfMutation/Role/Resource
+  cdkmonorepofrontendpipelineUpdatePipelineSelfMutationRoleDefaultPolicy6B8380F2:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
@@ -688,13 +706,13 @@ Resources:
                   - - "arn:"
                     - Ref: AWS::Partition
                     - :logs:ap-southeast-1:694710432912:log-group:/aws/codebuild/
-                    - Ref: cdkmonorepofrontendPipelineUpdatePipelineSelfMutationFD183E4F
+                    - Ref: cdkmonorepofrontendpipelineUpdatePipelineSelfMutation30CEFEC4
               - Fn::Join:
                   - ""
                   - - "arn:"
                     - Ref: AWS::Partition
                     - :logs:ap-southeast-1:694710432912:log-group:/aws/codebuild/
-                    - Ref: cdkmonorepofrontendPipelineUpdatePipelineSelfMutationFD183E4F
+                    - Ref: cdkmonorepofrontendpipelineUpdatePipelineSelfMutation30CEFEC4
                     - :*
           - Action:
               - codebuild:CreateReportGroup
@@ -709,7 +727,7 @@ Resources:
                 - - "arn:"
                   - Ref: AWS::Partition
                   - :codebuild:ap-southeast-1:694710432912:report-group/
-                  - Ref: cdkmonorepofrontendPipelineUpdatePipelineSelfMutationFD183E4F
+                  - Ref: cdkmonorepofrontendpipelineUpdatePipelineSelfMutation30CEFEC4
                   - -*
           - Action: sts:AssumeRole
             Effect: Allow
@@ -729,12 +747,12 @@ Resources:
             Effect: Allow
             Resource:
               - Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                  - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                   - Arn
               - Fn::Join:
                   - ""
                   - - Fn::GetAtt:
-                        - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                        - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                         - Arn
                     - /*
           - Action:
@@ -743,7 +761,7 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+                - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
                 - Arn
           - Action:
               - kms:Decrypt
@@ -753,15 +771,15 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+                - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
                 - Arn
         Version: "2012-10-17"
-      PolicyName: cdkmonorepofrontendPipelineUpdatePipelineSelfMutationRoleDefaultPolicy481111D6
+      PolicyName: cdkmonorepofrontendpipelineUpdatePipelineSelfMutationRoleDefaultPolicy6B8380F2
       Roles:
-        - Ref: cdkmonorepofrontendPipelineUpdatePipelineSelfMutationRole59CF96D1
+        - Ref: cdkmonorepofrontendpipelineUpdatePipelineSelfMutationRoleCBC457AF
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/UpdatePipeline/SelfMutation/Role/DefaultPolicy/Resource
-  cdkmonorepofrontendPipelineUpdatePipelineSelfMutationFD183E4F:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/UpdatePipeline/SelfMutation/Role/DefaultPolicy/Resource
+  cdkmonorepofrontendpipelineUpdatePipelineSelfMutation30CEFEC4:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
@@ -774,7 +792,7 @@ Resources:
         Type: LINUX_CONTAINER
       ServiceRole:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineUpdatePipelineSelfMutationRole59CF96D1
+          - cdkmonorepofrontendpipelineUpdatePipelineSelfMutationRoleCBC457AF
           - Arn
       Source:
         BuildSpec: >-
@@ -786,7 +804,7 @@ Resources:
               },
               "build": {
                 "commands": [
-                  "cdk -a . deploy cdk-monorepo-frontend-Pipeline --require-approval=never --verbose"
+                  "cdk -a . deploy cdk-monorepo-frontend-pipeline --require-approval=never --verbose"
                 ]
               }
             }
@@ -794,12 +812,12 @@ Resources:
         Type: CODEPIPELINE
       EncryptionKey:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+          - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
           - Arn
-      Name: cdk-monorepo-frontend-Pipeline-selfupdate
+      Name: cdk-monorepo-frontend-pipeline-selfupdate
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/UpdatePipeline/SelfMutation/Resource
-  cdkmonorepofrontendPipelineAssetsFileRoleC31BA605:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/UpdatePipeline/SelfMutation/Resource
+  cdkmonorepofrontendpipelineAssetsFileRole561649DD:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -816,8 +834,8 @@ Resources:
                     - :iam::694710432912:root
         Version: "2012-10-17"
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Assets/FileRole/Resource
-  cdkmonorepofrontendPipelineAssetsFileRoleDefaultPolicy19849314:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Assets/FileRole/Resource
+  cdkmonorepofrontendpipelineAssetsFileRoleDefaultPolicyB083EF2C:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
@@ -862,12 +880,12 @@ Resources:
             Effect: Allow
             Resource:
               - Fn::GetAtt:
-                  - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                  - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                   - Arn
               - Fn::Join:
                   - ""
                   - - Fn::GetAtt:
-                        - cdkmonorepofrontendPipelineArtifactsBucket7BCFE244
+                        - cdkmonorepofrontendpipelinePipelineArtifactsBucket14279A33
                         - Arn
                     - /*
           - Action:
@@ -876,15 +894,15 @@ Resources:
             Effect: Allow
             Resource:
               Fn::GetAtt:
-                - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+                - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
                 - Arn
         Version: "2012-10-17"
-      PolicyName: cdkmonorepofrontendPipelineAssetsFileRoleDefaultPolicy19849314
+      PolicyName: cdkmonorepofrontendpipelineAssetsFileRoleDefaultPolicyB083EF2C
       Roles:
-        - Ref: cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+        - Ref: cdkmonorepofrontendpipelineAssetsFileRole561649DD
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Assets/FileRole/DefaultPolicy/Resource
-  cdkmonorepofrontendPipelineAssetsFileAsset1073B6AA7:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Assets/FileRole/DefaultPolicy/Resource
+  cdkmonorepofrontendpipelineAssetsFileAsset1F98A1A86:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
@@ -897,7 +915,7 @@ Resources:
         Type: LINUX_CONTAINER
       ServiceRole:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+          - cdkmonorepofrontendpipelineAssetsFileRole561649DD
           - Arn
       Source:
         BuildSpec: >-
@@ -909,8 +927,8 @@ Resources:
               },
               "build": {
                 "commands": [
-                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-Pipeline-cdk-monorepo-frontend-dev/cdkmonorepofrontendPipelinecdkmonorepofrontenddevdeploymentCF9590D7.assets.json\" --verbose publish \"c9ac4b3b65f3510a2088b7fd003de23d2aefac424025eb168725ce6769e3c176:694710432912-ap-southeast-1\"",
-                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-Pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendPipelinecdkmonorepofrontendproddeployment1678CF4E.assets.json\" --verbose publish \"c9ac4b3b65f3510a2088b7fd003de23d2aefac424025eb168725ce6769e3c176:694710432912-ap-southeast-1\""
+                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-staging/cdkmonorepofrontendpipelinecdkmonorepofrontendstagingdeployment153ECE54.assets.json\" --verbose publish \"c9ac4b3b65f3510a2088b7fd003de23d2aefac424025eb168725ce6769e3c176:694710432912-ap-southeast-1\"",
+                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendpipelinecdkmonorepofrontendproddeploymentF9674146.assets.json\" --verbose publish \"c9ac4b3b65f3510a2088b7fd003de23d2aefac424025eb168725ce6769e3c176:694710432912-ap-southeast-1\""
                 ]
               }
             }
@@ -918,11 +936,11 @@ Resources:
         Type: CODEPIPELINE
       EncryptionKey:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+          - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
           - Arn
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Assets/FileAsset1/Default/Resource
-  cdkmonorepofrontendPipelineAssetsFileAsset2CA838F12:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Assets/FileAsset1/Default/Resource
+  cdkmonorepofrontendpipelineAssetsFileAsset2025360BC:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
@@ -935,7 +953,7 @@ Resources:
         Type: LINUX_CONTAINER
       ServiceRole:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineAssetsFileRoleC31BA605
+          - cdkmonorepofrontendpipelineAssetsFileRole561649DD
           - Arn
       Source:
         BuildSpec: >-
@@ -947,8 +965,7 @@ Resources:
               },
               "build": {
                 "commands": [
-                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-Pipeline-cdk-monorepo-frontend-dev/cdkmonorepofrontendPipelinecdkmonorepofrontenddevdeploymentCF9590D7.assets.json\" --verbose publish \"709405a342ad33219dc8da48dc9681702808cca84b2dcb9c8b4e28181f199e26:694710432912-ap-southeast-1\"",
-                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-Pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendPipelinecdkmonorepofrontendproddeployment1678CF4E.assets.json\" --verbose publish \"709405a342ad33219dc8da48dc9681702808cca84b2dcb9c8b4e28181f199e26:694710432912-ap-southeast-1\""
+                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-staging/cdkmonorepofrontendpipelinecdkmonorepofrontendstagingdeployment153ECE54.assets.json\" --verbose publish \"16a498583c98679ba8486b7e23465f4f2b2cb9936ab67dfc7fae9618f60d0f55:694710432912-ap-southeast-1\""
                 ]
               }
             }
@@ -956,16 +973,53 @@ Resources:
         Type: CODEPIPELINE
       EncryptionKey:
         Fn::GetAtt:
-          - cdkmonorepofrontendPipelineArtifactsBucketEncryptionKey22160B92
+          - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
           - Arn
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/cdk-monorepo-frontend-Pipeline/Assets/FileAsset2/Default/Resource
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Assets/FileAsset2/Default/Resource
+  cdkmonorepofrontendpipelineAssetsFileAsset3E09860C6:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:4.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - cdkmonorepofrontendpipelineAssetsFileRole561649DD
+          - Arn
+      Source:
+        BuildSpec: >-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": "npm install -g cdk-assets"
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendpipelinecdkmonorepofrontendproddeploymentF9674146.assets.json\" --verbose publish \"f9cdbda4e089590a1f19d40a15e1734783b1d88cc92a36ec0bb7bef556ab5779:694710432912-ap-southeast-1\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      EncryptionKey:
+        Fn::GetAtt:
+          - cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563
+          - Arn
+    Metadata:
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/cdk-monorepo-frontend-pipeline/Assets/FileAsset3/Default/Resource
   CDKMetadata:
     Type: AWS::CDK::Metadata
     Properties:
-      Modules: aws-cdk=1.78.0,@aws-cdk/assets=1.77.0,@aws-cdk/aws-apigateway=1.77.0,@aws-cdk/aws-applicationautoscaling=1.77.0,@aws-cdk/aws-autoscaling=1.77.0,@aws-cdk/aws-autoscaling-common=1.77.0,@aws-cdk/aws-autoscaling-hooktargets=1.77.0,@aws-cdk/aws-certificatemanager=1.77.0,@aws-cdk/aws-cloudformation=1.77.0,@aws-cdk/aws-cloudfront=1.77.0,@aws-cdk/aws-cloudfront-origins=1.77.0,@aws-cdk/aws-cloudwatch=1.77.0,@aws-cdk/aws-codebuild=1.77.0,@aws-cdk/aws-codeguruprofiler=1.77.0,@aws-cdk/aws-codepipeline=1.77.0,@aws-cdk/aws-codepipeline-actions=1.77.0,@aws-cdk/aws-cognito=1.77.0,@aws-cdk/aws-dynamodb=1.77.0,@aws-cdk/aws-ec2=1.77.0,@aws-cdk/aws-ecr=1.77.0,@aws-cdk/aws-ecr-assets=1.77.0,@aws-cdk/aws-ecs=1.77.0,@aws-cdk/aws-elasticloadbalancingv2=1.77.0,@aws-cdk/aws-elasticsearch=1.77.0,@aws-cdk/aws-events=1.77.0,@aws-cdk/aws-events-targets=1.77.0,@aws-cdk/aws-iam=1.77.0,@aws-cdk/aws-kinesis=1.77.0,@aws-cdk/aws-kinesisanalytics=1.77.0,@aws-cdk/aws-kms=1.77.0,@aws-cdk/aws-lambda=1.77.0,@aws-cdk/aws-lambda-event-sources=1.77.0,@aws-cdk/aws-logs=1.77.0,@aws-cdk/aws-mediastore=1.77.0,@aws-cdk/aws-route53=1.77.0,@aws-cdk/aws-route53-patterns=1.77.0,@aws-cdk/aws-route53-targets=1.77.0,@aws-cdk/aws-s3=1.77.0,@aws-cdk/aws-s3-assets=1.77.0,@aws-cdk/aws-s3-deployment=1.77.0,@aws-cdk/aws-s3-notifications=1.77.0,@aws-cdk/aws-sagemaker=1.77.0,@aws-cdk/aws-sam=1.77.0,@aws-cdk/aws-secretsmanager=1.77.0,@aws-cdk/aws-servicediscovery=1.77.0,@aws-cdk/aws-sns=1.77.0,@aws-cdk/aws-sns-subscriptions=1.77.0,@aws-cdk/aws-sqs=1.77.0,@aws-cdk/aws-ssm=1.77.0,@aws-cdk/aws-stepfunctions=1.77.0,@aws-cdk/cloud-assembly-schema=1.77.0,@aws-cdk/core=1.77.0,@aws-cdk/custom-resources=1.77.0,@aws-cdk/cx-api=1.77.0,@aws-cdk/pipelines=1.77.0,@aws-cdk/region-info=1.77.0,@aws-solutions-constructs/core=1.77.0,jsii-runtime=node.js/v14.14.0
+      Modules: aws-cdk=1.78.0,@aws-cdk/assets=1.77.0,@aws-cdk/aws-applicationautoscaling=1.77.0,@aws-cdk/aws-autoscaling=1.77.0,@aws-cdk/aws-autoscaling-common=1.77.0,@aws-cdk/aws-autoscaling-hooktargets=1.77.0,@aws-cdk/aws-certificatemanager=1.77.0,@aws-cdk/aws-cloudformation=1.77.0,@aws-cdk/aws-cloudfront=1.77.0,@aws-cdk/aws-cloudwatch=1.77.0,@aws-cdk/aws-codebuild=1.77.0,@aws-cdk/aws-codeguruprofiler=1.77.0,@aws-cdk/aws-codepipeline=1.77.0,@aws-cdk/aws-codepipeline-actions=1.77.0,@aws-cdk/aws-ec2=1.77.0,@aws-cdk/aws-ecr=1.77.0,@aws-cdk/aws-ecr-assets=1.77.0,@aws-cdk/aws-ecs=1.77.0,@aws-cdk/aws-elasticloadbalancingv2=1.77.0,@aws-cdk/aws-events=1.77.0,@aws-cdk/aws-events-targets=1.77.0,@aws-cdk/aws-iam=1.77.0,@aws-cdk/aws-kms=1.77.0,@aws-cdk/aws-lambda=1.77.0,@aws-cdk/aws-logs=1.77.0,@aws-cdk/aws-route53=1.77.0,@aws-cdk/aws-route53-patterns=1.77.0,@aws-cdk/aws-route53-targets=1.77.0,@aws-cdk/aws-s3=1.77.0,@aws-cdk/aws-s3-assets=1.77.0,@aws-cdk/aws-s3-deployment=1.77.0,@aws-cdk/aws-servicediscovery=1.77.0,@aws-cdk/aws-sns=1.77.0,@aws-cdk/aws-sns-subscriptions=1.77.0,@aws-cdk/aws-sqs=1.77.0,@aws-cdk/aws-ssm=1.77.0,@aws-cdk/cloud-assembly-schema=1.77.0,@aws-cdk/core=1.77.0,@aws-cdk/custom-resources=1.77.0,@aws-cdk/cx-api=1.77.0,@aws-cdk/pipelines=1.77.0,@aws-cdk/region-info=1.77.0,jsii-runtime=node.js/v14.14.0
     Metadata:
-      aws:cdk:path: cdk-monorepo-frontend-Pipeline/CDKMetadata/Default
+      aws:cdk:path: cdk-monorepo-frontend-pipeline/CDKMetadata/Default
 Parameters:
   BootstrapVersion:
     Type: AWS::SSM::Parameter::Value<String>

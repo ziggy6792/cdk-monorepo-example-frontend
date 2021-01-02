@@ -2,7 +2,7 @@
   "name": "@danielblignaut/web-app",
   "version": "0.1.0",
   "private": true,
-  "main": "build/index.html",
+  "main": "builds/index.js",
   "dependencies": {
     "@aws-amplify/auth": "^3.4.15",
     "@lifeomic/axios-fetch": "^1.4.2",
@@ -18,6 +18,7 @@
     "aws-amplify": "^3.3.12",
     "aws4-axios": "^2.0.1",
     "axios": "^0.19.2",
+    "env-cmd": "^10.1.0",
     "formik": "^2.2.6",
     "formik-material-ui": "^3.0.1",
     "graphql-tag": "^2.11.0",
@@ -41,6 +42,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:staging": "env-cmd -f .env.staging react-scripts build",
+    "builds:add:staging": "yarn build:staging && mkdir -p builds/staging && mv build builds/staging",
+    "builds:add:prod": "yarn build && mkdir -p builds/prod && mv build builds/prod",
+    "builds:add:all": "yarn builds:add:staging && yarn builds:add:prod",
+    "builds:clean": "rm -rfv builds/prod && rm -rfv builds/staging",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",

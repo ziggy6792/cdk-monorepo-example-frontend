@@ -6,11 +6,11 @@ import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipelineActions from '@aws-cdk/aws-codepipeline-actions';
-import { CdkPipelinesDemoStage } from './deployment-stage';
+import { DeploymentStage } from './deployment-stage';
 import * as util from '../util';
 
 class PipelineStack extends Stack {
-  public readonly devUrlOutput: cdk.CfnOutput;
+  public readonly stagingUrlOutput: cdk.CfnOutput;
 
   public readonly prodUrlOutput: cdk.CfnOutput;
 
@@ -19,8 +19,6 @@ class PipelineStack extends Stack {
 
     const sourceArtifact = new codepipeline.Artifact();
     const cloudAssemblyArtifact = new codepipeline.Artifact();
-
-    const stackName = 'CDKMonoRepo-Frontend';
 
     const pipeline = new CdkPipeline(this, util.getConstructId('pipeline'), {
       pipelineName: util.getConstructId('pipeline'),
@@ -51,22 +49,19 @@ class PipelineStack extends Stack {
 
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
-    const deployedDevStage = new CdkPipelinesDemoStage(this, util.getConstructId('dev'), 'dev', {
+    const deployedStagingStage = new DeploymentStage(this, util.getConstructId('staging'), 'staging', {
       env: {
         account: '694710432912',
         region: 'ap-southeast-1',
       },
     });
 
-    // if (deployedDevStage.urlOutput.exportName) {
-    //   this.devUrlOutput = new cdk.CfnOutput(this, deployedDevStage.urlOutput.exportName, { value: deployedDevStage.urlOutput.importValue });
-    // }
+    const stagingStage = pipeline.addApplicationStage(deployedStagingStage);
 
-    // this.devUrlOutput = new cdk.CfnOutput(this, 'webservice-dev-url', { value: Fn.importValue('webservice-dev') });
-
-    // Fn.importValue('webservice-dev');
-
-    const devStage = pipeline.addApplicationStage(deployedDevStage);
+    // devStage.addActions(new ManualApprovalAction({
+    //   actionName: 'ManualApproval',
+    //   runOrder: testingStage.nextSequentialRunOrder(),
+    // }));
 
     // pipeline.
 
@@ -81,7 +76,7 @@ class PipelineStack extends Stack {
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
 
-    const deployedProdStage = new CdkPipelinesDemoStage(this, util.getConstructId('prod'), 'prod', {
+    const deployedProdStage = new DeploymentStage(this, util.getConstructId('prod'), 'prod', {
       env: {
         account: '694710432912',
         region: 'ap-southeast-1',
