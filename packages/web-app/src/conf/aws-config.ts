@@ -13,6 +13,8 @@ const awsConfig = {
   aws_graphqlEndpoint_authNone: process.env.REACT_APP_AWS_GRAPHQLENDPOINT_AUTHNONE,
   oauth: {
     domain: process.env.REACT_APP_AWS_OATH_DOMAIN,
+    redirectSignIn: `${window.location.protocol}//${window.location.host}/profile/`,
+    redirectSignOut: `${window.location.protocol}//${window.location.host}/profile/`,
     scope: ['openid', 'email', 'phone', 'aws.cognito.signin.user.admin'],
     responseType: 'code',
   },
@@ -28,28 +30,3 @@ if (process.env.REACT_APP_ENV === 'dev' && USE_LOCAL) {
 console.log('awsConfig', awsConfig);
 
 export default awsConfig;
-
-// import cdkExports from '../cdk-exports';
-
-// const USE_LOCAL = true;
-
-// const awsConfig = {
-//   ...cdkExports,
-//   oauth: {
-//     ...cdkExports.oauth,
-//     redirectSignIn: `${window.location.protocol}//${window.location.host}/profile/`,
-//     redirectSignOut: `${window.location.protocol}//${window.location.host}/profile/`,
-//   },
-// };
-
-// if (process.env.REACT_APP_IS_LOCAL && USE_LOCAL) {
-//   // Overwrite to local endpoint
-//   awsConfig.aws_graphqlEndpoint_authNone = 'http://localhost:3100/lambda-gq-resolver/graphql';
-//   awsConfig.aws_graphqlEndpoint_authRole = 'http://localhost:3100/lambda-gq-resolver/graphql';
-//   awsConfig.aws_graphqlEndpoint_authUser = 'http://localhost:3100/lambda-gq-resolver/graphql';
-// }
-
-// console.log('REACT_APP_IS_LOCAL', process.env.REACT_APP_IS_LOCAL);
-// console.log('NODE_ENV', process.env.NODE_ENV);
-
-// export default awsConfig;
