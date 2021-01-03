@@ -23,15 +23,17 @@ const ProfileScreen: React.FC = () => {
   const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
 
   // Logger.info('auth state', state);
-  useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      const response = await Auth.currentCredentials();
-      console.log('credentials', response);
-      // ...
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     const response = await Auth.currentCredentials();
+  //     console.log('credentials', response);
+  //     // ...
+  //   }
+  //   fetchData();
+  // }, []);
+
+  console.log('isLoading', isLoading);
 
   if (isLoading) {
     return <Spinner />;

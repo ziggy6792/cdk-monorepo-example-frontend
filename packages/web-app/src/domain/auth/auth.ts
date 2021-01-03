@@ -2,16 +2,16 @@
 import { CognitoHostedUIIdentityProvider, CognitoUser } from '@aws-amplify/auth';
 import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
 import { Auth } from 'aws-amplify';
-import IUser, { mapInUser } from './user';
+import IUser, { mapInUser, USER_TYPE } from './user';
 
 interface ILoginParamsEmail {
-  type: 'email';
+  type: USER_TYPE.EMAIL;
   email: string;
   password: string;
 }
 
 interface ILoginParamsFacebook {
-  type: 'facebook';
+  type: USER_TYPE.FACEBOOK;
 }
 
 type ILoginParams = ILoginParamsEmail | ILoginParamsFacebook;
@@ -32,30 +32,30 @@ const cleatStorage = () => {
 
 const login = createAsyncThunk<
   // Return type of the payload creator
-  IUser,
+  IUser | USER_TYPE.FACEBOOK,
   // First argument to the payload creator
   ILoginParams
   // Types for ThunkAPI
 >('auth/login', async (payload) => {
   let cognitoUser: CognitoUser;
 
-  switch (payload.type) {
-    case 'email':
-      cognitoUser = await Auth.signIn(payload.email, payload.password);
-      break;
-    case 'facebook':
-      const credentials = await Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Facebook });
-      console.log('credentials', credentials);
+  let userPayload: IUser | USER_TYPE.FACEBOOK;
 
-      cognitoUser = await Auth.currentAuthenticatedUser();
+  switch (payload.type) {
+    case USER_TYPE.EMAIL:
+      cognitoUser = await Auth.signIn(payload.email, payload.password);
+      userPayload = mapInUser(cognitoUser);
+      saveToStorage(userPayload as IUser);
+      break;
+    case USER_TYPE.FACEBOOK:
+      await Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Facebook });
+      userPayload = USER_TYPE.FACEBOOK;
       break;
     default:
       throw new Error('Not regognized');
   }
 
-  const user = mapInUser(cognitoUser);
-  saveToStorage(user);
-  return user;
+  return userPayload;
 });
 
 const logout = createAsyncThunk<// Return type of the payload creator
@@ -104,8 +104,15 @@ const authSlice = createSlice({
       state.error = action.error;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.user = payload;
+      if (payload === USER_TYPE.FACEBOOK) {
+        // If user payload is facebook then stay in loading state and wait for redirect to facebook
+        // User state will be upfated after page reload in isAuthenticated
+        state.isLoading = true;
+      } else {
+        state.isLoading = false;
+        state.user = payload as IUser;
+      }
+      console.log('fullfilled');
     });
     // Logout
     builder.addCase(logout.pending, (state) => {

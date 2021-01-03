@@ -6,6 +6,7 @@ import { Button, Grid } from '@material-ui/core';
 import { Email, Facebook } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { loginActionCreator } from 'src/domain/auth';
+import { USER_TYPE } from 'src/domain/auth/user';
 import withAuthenticator from '../../hoc/withAuthenticator/with-authenticator';
 
 interface IButtonsProps {
@@ -18,7 +19,7 @@ const Buttons: React.FC<IButtonsProps> = ({ updateFormState }) => {
   return (
     <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%' }}>
       <Grid item>
-        <Button color='primary' endIcon={<Facebook />} onClick={() => dispatch(loginActionCreator({ type: 'facebook' }))}>
+        <Button color='primary' endIcon={<Facebook />} onClick={() => dispatch(loginActionCreator({ type: USER_TYPE.FACEBOOK }))}>
           Facebook
         </Button>
       </Grid>
