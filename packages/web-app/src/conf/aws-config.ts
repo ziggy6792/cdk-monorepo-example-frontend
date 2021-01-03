@@ -1,6 +1,6 @@
 console.log('env', process.env);
 
-const USE_LOCAL = true;
+const USE_LOCAL = false;
 
 const awsConfig = {
   aws_project_region: process.env.REACT_APP_AWS_REGION,

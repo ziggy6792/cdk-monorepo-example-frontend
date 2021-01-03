@@ -112,7 +112,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = payload as IUser;
       }
-      console.log('fullfilled');
     });
     // Logout
     builder.addCase(logout.pending, (state) => {
