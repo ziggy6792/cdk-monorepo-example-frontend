@@ -7,8 +7,8 @@ import { TextField } from 'formik-material-ui';
 import { Button, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { loginActionCreator } from 'src/domain/auth';
 import { USER_TYPE } from 'src/domain/auth/user';
+import { loginActionCreator } from 'src/domain/auth';
 
 interface IFormState {
   email: string;

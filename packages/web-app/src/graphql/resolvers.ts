@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Context } from 'react-apollo';
 import { defaultIfNull } from '../util/utility';
-import { GuestLogin } from '../conf/content';
+import { GuestLogin } from '../config/content';
 
 interface SignInParams {
   email: string;

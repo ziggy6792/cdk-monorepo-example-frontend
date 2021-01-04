@@ -1,4 +1,4 @@
-import { IRootState } from 'src/conf/store';
+import { IRootState } from 'src/config/store';
 import IUser from './user';
 
 export const selectUser = (state: IRootState): IUser | null => state.auth.user;

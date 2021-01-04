@@ -5,8 +5,8 @@ import { Auth } from 'aws-amplify';
 import { Button, Grid } from '@material-ui/core';
 import { Email, Facebook } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { loginActionCreator } from 'src/domain/auth';
 import { USER_TYPE } from 'src/domain/auth/user';
+import { loginActionCreator } from 'src/domain/auth';
 import withAuthenticator from '../../hoc/withAuthenticator/with-authenticator';
 
 interface IButtonsProps {

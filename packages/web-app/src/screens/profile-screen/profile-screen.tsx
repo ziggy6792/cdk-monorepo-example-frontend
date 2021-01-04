@@ -5,8 +5,8 @@ import { Auth, Hub } from 'aws-amplify';
 
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutActionCreator } from 'src/domain/auth';
 import Logger from 'js-logger';
+import { logoutActionCreator } from 'src/domain/auth';
 import Spinner from '../../components/spinner';
 import Buttons from '../../modules/login-form/Buttons';
 import LoginForm from '../../modules/login-form';
