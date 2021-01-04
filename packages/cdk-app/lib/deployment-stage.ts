@@ -5,7 +5,7 @@ import * as cdk from '@aws-cdk/core';
 import * as defaults from '@aws-solutions-constructs/core';
 import * as path from 'path';
 import DeploymentStack from './deployment-stack';
-import * as util from '../util';
+import * as utils from '../utils';
 
 export class DeploymentStage extends Stage {
   public readonly urlOutput: cdk.CfnOutput;
@@ -15,7 +15,7 @@ export class DeploymentStage extends Stage {
     super(scope, id, props);
 
     const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), `../${stage}/build`);
-    const ssmUrlParamId = util.getSsmParamId('url', stage);
+    const ssmUrlParamId = utils.getSsmParamId('url', stage);
 
     const stack = new DeploymentStack(this, 'deployment', { websiteFolder, ssmUrlParamId });
 
