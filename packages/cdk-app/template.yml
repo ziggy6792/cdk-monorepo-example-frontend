@@ -1,5 +1,3 @@
-/Users/sive/Documents/Training/serverless/cdk-monorepo-example/cdk-monorepo-example-frontend-2/packages/web-app/builds/staging/build
-/Users/sive/Documents/Training/serverless/cdk-monorepo-example/cdk-monorepo-example-frontend-2/packages/web-app/builds/prod/build
 Description: cdk-monorepo-frontend-pipeline
 Resources:
   cdkmonorepofrontendpipelinePipelineArtifactsBucketEncryptionKey6133F563:
@@ -275,7 +273,7 @@ Resources:
               Configuration:
                 ProjectName:
                   Ref: cdkmonorepofrontendpipelinePipelineBuildSynthCdkBuildProject1F909833
-                EnvironmentVariables: '[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"1e753ec7d932a70bbf6c2712ea448020074b4cac1f4f82349e080ad8fdd1fa23"}]'
+                EnvironmentVariables: '[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"a25d4d5614ffea15e0464d43ff5f7eaaff82d0f0ea516cbd0f1c30bcfbc86129"}]'
               InputArtifacts:
                 - Name: Artifact_Source_GitHub
               Name: Synth
@@ -625,7 +623,7 @@ Resources:
               "build": {
                 "commands": [
                   "yarn run build",
-                  "yarn cdk-synth"
+                  "yarn cdk:synth"
                 ]
               }
             },
@@ -965,7 +963,7 @@ Resources:
               },
               "build": {
                 "commands": [
-                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-staging/cdkmonorepofrontendpipelinecdkmonorepofrontendstagingdeployment153ECE54.assets.json\" --verbose publish \"16a498583c98679ba8486b7e23465f4f2b2cb9936ab67dfc7fae9618f60d0f55:694710432912-ap-southeast-1\""
+                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-staging/cdkmonorepofrontendpipelinecdkmonorepofrontendstagingdeployment153ECE54.assets.json\" --verbose publish \"9eacc7ca2dc78c7911021d91fdfd37c2f7f56c111074c770cc014f6307a95312:694710432912-ap-southeast-1\""
                 ]
               }
             }
@@ -1002,7 +1000,7 @@ Resources:
               },
               "build": {
                 "commands": [
-                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendpipelinecdkmonorepofrontendproddeploymentF9674146.assets.json\" --verbose publish \"f9cdbda4e089590a1f19d40a15e1734783b1d88cc92a36ec0bb7bef556ab5779:694710432912-ap-southeast-1\""
+                  "cdk-assets --path \"assembly-cdk-monorepo-frontend-pipeline-cdk-monorepo-frontend-prod/cdkmonorepofrontendpipelinecdkmonorepofrontendproddeploymentF9674146.assets.json\" --verbose publish \"d09380e5eb1d7dcc1d20163bae094133b59edfcb07e59c066efd6f07dc501ba4:694710432912-ap-southeast-1\""
                 ]
               }
             }
