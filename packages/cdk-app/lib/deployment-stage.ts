@@ -7,15 +7,20 @@ import * as path from 'path';
 import DeploymentStack from './deployment-stack';
 import * as utils from '../utils';
 
+export interface DeploymentStageProps extends cdk.StackProps {
+  readonly stageName: string;
+}
 export class DeploymentStage extends Stage {
   public readonly urlOutput: cdk.CfnOutput;
   // public stack: ApigwDemoStack;
 
-  constructor(scope: Construct, id: string, stage?: string, props?: StageProps) {
+  constructor(scope: Construct, id: string, props?: DeploymentStageProps) {
     super(scope, id, props);
 
-    const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), `../${stage}/build`);
-    const ssmUrlParamId = utils.getSsmParamId('url', stage);
+    const { stageName } = props;
+
+    const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), `../${stageName}/build`);
+    const ssmUrlParamId = utils.getSsmParamId('url', stageName);
 
     const stack = new DeploymentStack(this, 'deployment', { websiteFolder, ssmUrlParamId });
 
