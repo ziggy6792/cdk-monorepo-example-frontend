@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Logger from 'js-logger';
 import { logoutActionCreator } from 'src/domain/auth';
 import Spinner from '../../components/spinner';
-import Buttons from '../../modules/login-form/Buttons';
+import Buttons from '../../modules/login-form/buttons';
 import LoginForm from '../../modules/login-form';
 
 import * as authSelectors from '../../domain/auth/selectors';
