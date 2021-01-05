@@ -21,7 +21,7 @@ interface IFormState {
   confirmationCode: string;
 }
 
-const loadDefaultData = envConfig.isDev;
+const loadDefaultData = false;
 
 const initialFormValues = loadDefaultData
   ? {
@@ -130,7 +130,7 @@ interface SubFormProps {
   resetForm?: () => void;
 }
 
-const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
+const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled, resetForm }) => (
   <>
     <Grid item>
       <LoginFormField component={TextField} name='email' type='email' inputProps={{ min: 0, style: { textAlign: 'center' } }} placeholder='Email' />
@@ -149,6 +149,8 @@ const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
         <Button
           color='primary'
           onClick={() => {
+            resetForm();
+
             setFormType(FormType.SIGN_UP);
           }}
         >
@@ -159,7 +161,7 @@ const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
   </>
 );
 
-const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
+const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled, resetForm }) => (
   <>
     <Grid item>
       {/* <CenteredField component={TextField} name='email' type='email' placeholder='Email' /> */}
@@ -185,6 +187,8 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
         <Button
           color='primary'
           onClick={() => {
+            resetForm();
+
             setFormType(FormType.SIGN_IN);
           }}
         >
@@ -249,7 +253,6 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
   return (
     <Formik
       initialValues={initialFormValues}
-      isInitialValid={loadDefaultData}
       validationSchema={Yup.object().shape(validationSchema)}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true);
@@ -259,12 +262,17 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
       }}
     >
       {(props) => {
-        const { submitForm, isSubmitting, isValid } = props;
-        const isSubmitDisabled = isSubmitting || !isValid;
+        const { submitForm, isSubmitting, isValid, resetForm, dirty } = props;
+
+        const isSubmitDisabled = isSubmitting || !isValid || (!dirty && !loadDefaultData);
         return (
           <Grid container direction='column' justify='center' alignItems='center' spacing={2} style={{ height: '100%', width: '100%' }}>
-            {formType === FormType.SIGN_IN && <SignInForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
-            {formType === FormType.SIGN_UP && <SignUpForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
+            {formType === FormType.SIGN_IN && (
+              <SignInForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} resetForm={resetForm} />
+            )}
+            {formType === FormType.SIGN_UP && (
+              <SignUpForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} resetForm={resetForm} />
+            )}
             {formType === FormType.CONFIRM && <ConfirimForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
           </Grid>
         );
