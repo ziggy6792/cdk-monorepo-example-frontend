@@ -21,7 +21,7 @@ interface IFormState {
   confirmationCode: string;
 }
 
-const loadDefaultData = false;
+const loadDefaultData = envConfig.isDev;
 
 const initialFormValues = loadDefaultData
   ? {
