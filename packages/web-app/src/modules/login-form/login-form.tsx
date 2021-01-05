@@ -66,16 +66,6 @@ async function signUp({ email, password, firstName, lastName }: IFormState) {
   }
 }
 
-async function signIn({ email, password }: IFormState) {
-  try {
-    const response = await Auth.signIn(email, password);
-    Logger.info(response.user);
-    Logger.info('sign up success!');
-  } catch (err) {
-    Logger.info('error signing up..', err);
-  }
-}
-
 interface ISignupConfirmation {
   email: string;
   confirmationCode: string;
@@ -117,12 +107,12 @@ enum FormType {
 
 interface SubFormProps {
   setFormType: (formType: FormType) => void;
-  isSubmitting: boolean;
   submitForm: () => Promise<void>;
-  isValid: boolean;
+  isSubmitDisabled: boolean;
+  resetForm?: () => void;
 }
 
-const SignInForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitForm, isValid }) => (
+const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
   <>
     <Grid item>
       <CenteredField component={TextField} name='email' type='email' inputProps={{ min: 0, style: { textAlign: 'center' } }} placeholder='Email' />
@@ -132,13 +122,18 @@ const SignInForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitF
     </Grid>
     <>
       <Grid item>
-        <Button variant='contained' color='primary' disabled={isSubmitting || !isValid} onClick={submitForm}>
+        <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
           Sign In
         </Button>
       </Grid>
       <Grid item>
         Need a Pofile?{' '}
-        <Button color='primary' onClick={() => setFormType(FormType.SIGN_UP)}>
+        <Button
+          color='primary'
+          onClick={() => {
+            setFormType(FormType.SIGN_UP);
+          }}
+        >
           Sign Up
         </Button>
       </Grid>
@@ -160,7 +155,7 @@ const CenteredField: React.FC<FieldAttributes<any>> = ({ ...props }) => {
   );
 };
 
-const SignUpForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitForm, isValid }) => (
+const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
   <>
     <Grid item>
       {/* <CenteredField component={TextField} name='email' type='email' placeholder='Email' /> */}
@@ -177,13 +172,18 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitF
     </Grid>
     <>
       <Grid item>
-        <Button variant='contained' color='primary' disabled={isSubmitting || !isValid} onClick={submitForm}>
+        <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
           Sign Up
         </Button>
       </Grid>
       <Grid item>
         Have a Pofile?{' '}
-        <Button color='primary' onClick={() => setFormType(FormType.SIGN_IN)}>
+        <Button
+          color='primary'
+          onClick={() => {
+            setFormType(FormType.SIGN_IN);
+          }}
+        >
           Sign In
         </Button>
       </Grid>
@@ -191,14 +191,14 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitF
   </>
 );
 
-const ConfirimForm: React.FC<SubFormProps> = ({ isSubmitting, submitForm, isValid }) => (
+const ConfirimForm: React.FC<SubFormProps> = ({ submitForm, isSubmitDisabled }) => (
   <Grid item>
     <Grid item>
       <CenteredField component={TextField} name='confirmationCode' placeholder='Confirmation Code' />
     </Grid>
 
     <Grid item>
-      <Button variant='contained' color='primary' disabled={isSubmitting || !isValid} onClick={submitForm}>
+      <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
         Confirm Sign Up
       </Button>
     </Grid>
@@ -256,13 +256,19 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
         setSubmitting(false);
       }}
     >
-      {({ submitForm, isSubmitting, isValid }) => (
-        <Grid container direction='column' justify='center' alignItems='center' spacing={2} style={{ height: '100%', width: '100%' }}>
-          {formType === FormType.SIGN_IN && <SignInForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} isValid={isValid} />}
-          {formType === FormType.SIGN_UP && <SignUpForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} isValid={isValid} />}
-          {formType === FormType.CONFIRM && <ConfirimForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} isValid={isValid} />}
-        </Grid>
-      )}
+      {(props) => {
+        const { submitForm, isSubmitting, isValid, dirty } = props;
+        const isSubmitDisabled = isSubmitting || !isValid || !dirty;
+        // I was experimenting with persisting the state between signIn and signUp
+        // const resetForm = () => formikResetForm({ values });
+        return (
+          <Grid container direction='column' justify='center' alignItems='center' spacing={2} style={{ height: '100%', width: '100%' }}>
+            {formType === FormType.SIGN_IN && <SignInForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
+            {formType === FormType.SIGN_UP && <SignUpForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
+            {formType === FormType.CONFIRM && <ConfirimForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
+          </Grid>
+        );
+      }}
     </Formik>
   );
 };
