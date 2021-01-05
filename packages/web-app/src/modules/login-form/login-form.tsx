@@ -37,14 +37,14 @@ const initialFormValues = {
 };
 
 const signInSchema = {
-  firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-  lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().min(6, 'Too Short!').required('Required'),
 };
 
 const signUpSchema = {
   ...signInSchema,
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().min(6, 'Too Short!').required('Required'),
+  firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
 };
 
 const confirmSchema = {
