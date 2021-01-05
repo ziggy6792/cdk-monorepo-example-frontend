@@ -31,7 +31,7 @@ class PipelineStack extends Stack {
         trigger: codepipelineActions.GitHubTrigger.POLL,
         // Replace these with your actual GitHub project info
         owner: 'ziggy6792',
-        repo: 'cdk-monorepo-example-frontend-2',
+        repo: 'cdk-monorepo-example-frontend',
         branch: 'feature/cdk-pipeline',
       }),
 
