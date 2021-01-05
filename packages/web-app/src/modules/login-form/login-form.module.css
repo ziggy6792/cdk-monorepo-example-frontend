@@ -3,6 +3,6 @@
 }
 
 .textField {
-  width: calc(80 * var(--vw));
+  width: 80vw;
   max-width: 350px;
 }
