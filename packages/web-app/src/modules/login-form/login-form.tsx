@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 import Logger from 'js-logger';
 import { Formik, Field, FieldAttributes } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Button, Grid, useTheme, TextField as MuiTextField } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { USER_TYPE } from 'src/domain/auth/user';
@@ -218,7 +218,6 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
   const [formType, setFormType] = useState<FormType>(FormType.SIGN_IN);
 
   let onSubmit: SubmitFormFunction;
-  const theme = useTheme();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let validationSchema: any = {};
@@ -254,9 +253,7 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
       validationSchema={Yup.object().shape(validationSchema)}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true);
-        console.log('start');
         await onSubmit(values);
-        console.log('end');
 
         setSubmitting(false);
       }}
@@ -264,9 +261,6 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
       {(props) => {
         const { submitForm, isSubmitting, isValid } = props;
         const isSubmitDisabled = isSubmitting || !isValid;
-        console.log('isSubmitDisabled', isSubmitDisabled);
-        // I was experimenting with persisting the state between signIn and signUp
-        // const resetForm = () => formikResetForm({ values });
         return (
           <Grid container direction='column' justify='center' alignItems='center' spacing={2} style={{ height: '100%', width: '100%' }}>
             {formType === FormType.SIGN_IN && <SignInForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}

@@ -17,7 +17,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
 
   rules: {
-    'no-console': 'off',
+    // 'no-console': 'off',
     'no-plusplus': 'off',
     'no-nested-ternary': 'off',
     'no-use-before-define': 'off',
