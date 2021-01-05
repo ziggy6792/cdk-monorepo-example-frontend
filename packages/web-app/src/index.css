@@ -1,6 +1,38 @@
-body,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+/* body,
 html {
   height: 100%;
   width: 100%;
   margin: 0;
 }
+
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+} */
+
+/* old */
+
+/* body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+} */
+/* 
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+} */

@@ -10,7 +10,7 @@ const Spinner = () => {
       alignItems='center'
       justify='center'
       style={{
-        minHeight: '100vh',
+        minHeight: 'calc(100 * var(--vh))',
         position: 'absolute',
         left: '0',
         top: '0',

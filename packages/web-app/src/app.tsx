@@ -14,6 +14,16 @@ import envConfig from './config/env-config';
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
 
+// Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
+const calcVh = () => {
+  (document.querySelector(':root') as any).style.setProperty('--vh', `${window.innerHeight / 100}px`);
+};
+
+calcVh();
+window.addEventListener('resize', () => {
+  calcVh();
+});
+
 document.title = envConfig.title;
 
 const client = new ApolloClient({
@@ -24,7 +34,7 @@ const client = new ApolloClient({
 });
 
 const App: React.FC = () => (
-  <div className='App' style={{ height: '100vh', width: '100vw' }}>
+  <div className='App' style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
     <Routes />
   </div>
 );
@@ -36,19 +46,5 @@ const WithProvider: React.FC = () => (
     </ApolloProvider>
   </Provider>
 );
-
-// const WithProvider: React.FC = () => {
-//   const client = new ApolloClient({
-//     link: authLink.concat(httpLink),
-//     cache: new InMemoryCache(),
-//     typeDefs,
-//     resolvers: resolvers as any,
-//   });
-//   return (
-//     <ApolloProvider client={client}>
-//       <App />
-//     </ApolloProvider>
-//   );
-// };
 
 export default WithProvider;
