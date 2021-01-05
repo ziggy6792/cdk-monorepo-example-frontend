@@ -5,8 +5,8 @@ import { Auth, Hub } from 'aws-amplify';
 
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutActionCreator } from 'src/domain/auth';
 import Logger from 'js-logger';
+import { logoutActionCreator } from 'src/domain/auth';
 import Spinner from '../../components/spinner';
 import Buttons from '../../modules/login-form/Buttons';
 import LoginForm from '../../modules/login-form';
@@ -23,15 +23,17 @@ const ProfileScreen: React.FC = () => {
   const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
 
   // Logger.info('auth state', state);
-  useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      const response = await Auth.currentCredentials();
-      console.log('credentials', response);
-      // ...
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     const response = await Auth.currentCredentials();
+  //     console.log('credentials', response);
+  //     // ...
+  //   }
+  //   fetchData();
+  // }, []);
+
+  console.log('isLoading', isLoading);
 
   if (isLoading) {
     return <Spinner />;

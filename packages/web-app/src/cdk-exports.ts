@@ -1,3 +1,5 @@
+console.log('env', process.env);
+
 const cdkExports = {
   aws_project_region: 'ap-southeast-1',
   aws_cognito_identity_pool_id: 'ap-southeast-1:25f7932c-e731-4beb-8018-3bbbe0448be1',

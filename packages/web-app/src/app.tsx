@@ -3,15 +3,18 @@ import Auth from '@aws-amplify/auth';
 import ApolloClient from 'apollo-client';
 import { Provider } from 'react-redux';
 import { createHttpLink } from 'apollo-link-http';
-import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import awsConfig from './conf/aws-config';
+import { ApolloProvider } from 'react-apollo';
+import awsConfig from './config/aws-config';
 import Routes from './routes';
-import store from './conf/store';
-import * as ApiFetch from './util/aws-api-fetch';
+import store from './config/store';
+import * as ApiFetch from './utils/aws-api-fetch';
+import envConfig from './config/env-config';
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
+
+document.title = envConfig.title;
 
 const client = new ApolloClient({
   link: createHttpLink({

@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { isAuthenticatedActionCreator } from 'src/domain/auth';
 import Theme from '../ui/theme';
-import { ROUTE_PROFILE, ROUTE_HOME } from '../conf/navigation';
+import { ROUTE_PROFILE, ROUTE_HOME } from '../config/navigation';
 import HomeScreen from '../screens/home-screen';
 import ProfileScreen from '../screens/profile-screen';
 

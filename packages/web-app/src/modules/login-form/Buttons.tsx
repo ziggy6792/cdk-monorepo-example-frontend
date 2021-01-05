@@ -1,12 +1,11 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 
-import { Auth } from 'aws-amplify';
 import { Button, Grid } from '@material-ui/core';
 import { Email, Facebook } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
+import { USER_TYPE } from 'src/domain/auth/user';
 import { loginActionCreator } from 'src/domain/auth';
-import withAuthenticator from '../../hoc/withAuthenticator/with-authenticator';
 
 interface IButtonsProps {
   updateFormState: (formState: string) => void;
@@ -18,7 +17,7 @@ const Buttons: React.FC<IButtonsProps> = ({ updateFormState }) => {
   return (
     <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%' }}>
       <Grid item>
-        <Button color='primary' endIcon={<Facebook />} onClick={() => dispatch(loginActionCreator({ type: 'facebook' }))}>
+        <Button color='primary' endIcon={<Facebook />} onClick={() => dispatch(loginActionCreator({ type: USER_TYPE.FACEBOOK }))}>
           Facebook
         </Button>
       </Grid>

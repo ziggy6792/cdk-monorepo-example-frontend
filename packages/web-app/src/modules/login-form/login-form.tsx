@@ -7,6 +7,7 @@ import { TextField } from 'formik-material-ui';
 import { Button, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
+import { USER_TYPE } from 'src/domain/auth/user';
 import { loginActionCreator } from 'src/domain/auth';
 
 interface IFormState {
@@ -18,7 +19,7 @@ interface IFormState {
 }
 
 const initialFormValues = {
-  email: 'ziggy067+9@gmail.com',
+  email: 'ziggy067+1@gmail.com',
   firstName: 'Simon',
   lastName: 'Verhoeven',
   password: 'password',
@@ -89,7 +90,7 @@ const LoginForm: React.FC = () => {
         signUp(values);
       }}
       onSignIn={async ({ email, password }: IFormState) => {
-        dispatch(loginActionCreator({ type: 'email', email, password }));
+        dispatch(loginActionCreator({ type: USER_TYPE.EMAIL, email, password }));
       }}
       onConfirm={async ({ email, confirmationCode }: IFormState) => confirmSignUp({ email, confirmationCode })}
     />
