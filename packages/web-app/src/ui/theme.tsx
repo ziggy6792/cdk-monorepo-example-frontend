@@ -94,8 +94,8 @@ export default createMuiTheme({
     },
     MuiFormHelperText: {
       root: {
-        color: swtRed,
         fontSize: '0.7rem',
+        '&$error': { color: swtRed },
       },
     },
 

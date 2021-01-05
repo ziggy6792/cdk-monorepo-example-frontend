@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 
 import { Auth } from 'aws-amplify';
 import Logger from 'js-logger';
-import { Formik, Field } from 'formik';
+import { Formik, Field, FieldAttributes } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { Button, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { USER_TYPE } from 'src/domain/auth/user';
 import { loginActionCreator } from 'src/domain/auth';
+
+import envConfig from 'src/config/env-config';
+import styles from './login-form.module.css';
 
 interface IFormState {
   email: string;
@@ -18,23 +21,33 @@ interface IFormState {
   confirmationCode: string;
 }
 
-const initialFormValues = {
-  email: 'ziggy067+1@gmail.com',
-  firstName: 'Simon',
-  lastName: 'Verhoeven',
-  password: 'password',
-  confirmationCode: '',
-};
+const loadDefaultData = envConfig.isDev;
+
+const initialFormValues = loadDefaultData
+  ? {
+      email: 'ziggy067+1@gmail.com',
+      firstName: 'Simon',
+      lastName: 'Verhoeven',
+      password: 'password',
+      confirmationCode: '',
+    }
+  : {
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      confirmationCode: '',
+    };
 
 const signInSchema = {
-  firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-  lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().min(6, 'Too Short!').required('Required'),
 };
 
 const signUpSchema = {
   ...signInSchema,
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().min(6, 'Too Short!').required('Required'),
+  firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
 };
 
 const confirmSchema = {
@@ -49,16 +62,6 @@ async function signUp({ email, password, firstName, lastName }: IFormState) {
       password,
       attributes: { email, 'custom:signUpAttributes': JSON.stringify({ given_name: firstName, family_name: lastName }) },
     });
-    Logger.info(response.user);
-    Logger.info('sign up success!');
-  } catch (err) {
-    Logger.info('error signing up..', err);
-  }
-}
-
-async function signIn({ email, password }: IFormState) {
-  try {
-    const response = await Auth.signIn(email, password);
     Logger.info(response.user);
     Logger.info('sign up success!');
   } catch (err) {
@@ -97,6 +100,21 @@ const LoginForm: React.FC = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const LoginFormField: React.FC<FieldAttributes<any>> = ({ ...props }) => {
+  return (
+    <Field
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      classes={{ root: styles.textField }}
+      inputProps={{ style: { textAlign: 'center' } }}
+      FormHelperTextProps={{
+        classes: { root: styles.helperText },
+      }}
+    />
+  );
+};
+
 type SubmitFormFunction = (formValues: IFormState) => Promise<void>;
 
 enum FormType {
@@ -107,76 +125,88 @@ enum FormType {
 
 interface SubFormProps {
   setFormType: (formType: FormType) => void;
-  isSubmitting: boolean;
   submitForm: () => Promise<void>;
+  isSubmitDisabled: boolean;
+  resetForm?: () => void;
 }
 
-const SignInForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitForm }) => (
-  <Grid item>
+const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
+  <>
     <Grid item>
-      <Field component={TextField} name='email' type='email' label='Email' />
+      <LoginFormField component={TextField} name='email' type='email' inputProps={{ min: 0, style: { textAlign: 'center' } }} placeholder='Email' />
     </Grid>
     <Grid item>
-      <Field component={TextField} type='password' label='Password' name='password' />
+      <LoginFormField component={TextField} type='password' placeholder='Password' name='password' />
     </Grid>
-    <Grid item>
+    <>
       <Grid item>
-        <Button variant='contained' color='primary' disabled={isSubmitting} onClick={submitForm}>
+        <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
           Sign In
         </Button>
       </Grid>
       <Grid item>
         Need a Pofile?{' '}
-        <Button color='primary' onClick={() => setFormType(FormType.SIGN_UP)}>
+        <Button
+          color='primary'
+          onClick={() => {
+            setFormType(FormType.SIGN_UP);
+          }}
+        >
           Sign Up
         </Button>
       </Grid>
-    </Grid>
-  </Grid>
+    </>
+  </>
 );
 
-const SignUpForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitForm }) => (
-  <Grid item>
+const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
+  <>
     <Grid item>
-      <Field component={TextField} name='email' type='email' label='Email' />
+      {/* <CenteredField component={TextField} name='email' type='email' placeholder='Email' /> */}
+      <LoginFormField component={TextField} name='email' type='email' placeholder='Email' />
     </Grid>
     <Grid item>
-      <Field component={TextField} type='password' label='Password' name='password' />
+      <LoginFormField component={TextField} type='password' name='password' placeholder='Password' />
     </Grid>
     <Grid item>
-      <Field component={TextField} name='firstName' label='First Name' />
+      <LoginFormField component={TextField} name='firstName' placeholder='First Name' />
     </Grid>
     <Grid item>
-      <Field component={TextField} name='lastName' label='Last Name' />
+      <LoginFormField component={TextField} name='lastName' placeholder='Last Name' />
     </Grid>
-    <Grid item>
+    <>
       <Grid item>
-        <Button variant='contained' color='primary' disabled={isSubmitting} onClick={submitForm}>
+        <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
           Sign Up
         </Button>
       </Grid>
       <Grid item>
         Have a Pofile?{' '}
-        <Button color='primary' onClick={() => setFormType(FormType.SIGN_IN)}>
+        <Button
+          color='primary'
+          onClick={() => {
+            setFormType(FormType.SIGN_IN);
+          }}
+        >
           Sign In
         </Button>
       </Grid>
-    </Grid>
-  </Grid>
+    </>
+  </>
 );
 
-const ConfirimForm: React.FC<SubFormProps> = ({ isSubmitting, submitForm }) => (
-  <Grid item>
+const ConfirimForm: React.FC<SubFormProps> = ({ submitForm, isSubmitDisabled }) => (
+  <>
     <Grid item>
-      <Field component={TextField} name='confirmationCode' label='Confirmation Code' />
+      <LoginFormField component={TextField} name='confirmationCode' placeholder='Confirmation Code' />
     </Grid>
 
-    <Grid item>
-      <Button variant='contained' color='primary' disabled={isSubmitting} onClick={submitForm}>
+    <>
+      <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
         Confirm Sign Up
       </Button>
-    </Grid>
-  </Grid>
+    </>
+  </>
 );
 interface FormProps {
   onSignIn: SubmitFormFunction;
@@ -219,23 +249,26 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
   return (
     <Formik
       initialValues={initialFormValues}
+      isInitialValid={loadDefaultData}
       validationSchema={Yup.object().shape(validationSchema)}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true);
-        console.log('start');
         await onSubmit(values);
-        console.log('end');
 
         setSubmitting(false);
       }}
     >
-      {({ submitForm, isSubmitting }) => (
-        <Grid container direction='column'>
-          {formType === FormType.SIGN_IN && <SignInForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} />}
-          {formType === FormType.SIGN_UP && <SignUpForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} />}
-          {formType === FormType.CONFIRM && <ConfirimForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} />}
-        </Grid>
-      )}
+      {(props) => {
+        const { submitForm, isSubmitting, isValid } = props;
+        const isSubmitDisabled = isSubmitting || !isValid;
+        return (
+          <Grid container direction='column' justify='center' alignItems='center' spacing={2} style={{ height: '100%', width: '100%' }}>
+            {formType === FormType.SIGN_IN && <SignInForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
+            {formType === FormType.SIGN_UP && <SignUpForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
+            {formType === FormType.CONFIRM && <ConfirimForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} />}
+          </Grid>
+        );
+      }}
     </Formik>
   );
 };

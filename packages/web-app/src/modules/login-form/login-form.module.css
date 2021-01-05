@@ -1,0 +1,8 @@
+.helperText {
+  text-align: center !important;
+}
+
+.textField {
+  width: calc(80 * var(--vw));
+  max-width: 350px;
+}
