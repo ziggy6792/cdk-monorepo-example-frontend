@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { USER_TYPE } from 'src/domain/auth/user';
 import { loginActionCreator } from 'src/domain/auth';
 
+import envConfig from 'src/config/env-config';
 import styles from './login-form.module.css';
 
 interface IFormState {
@@ -20,21 +21,23 @@ interface IFormState {
   confirmationCode: string;
 }
 
-// const initialFormValues = {
-//   email: 'ziggy067+1@gmail.com',
-//   firstName: 'Simon',
-//   lastName: 'Verhoeven',
-//   password: 'password',
-//   confirmationCode: '',
-// };
+const loadDefaultData = envConfig.isDev;
 
-const initialFormValues = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  password: '',
-  confirmationCode: '',
-};
+const initialFormValues = loadDefaultData
+  ? {
+      email: 'ziggy067+1@gmail.com',
+      firstName: 'Simon',
+      lastName: 'Verhoeven',
+      password: 'password',
+      confirmationCode: '',
+    }
+  : {
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      confirmationCode: '',
+    };
 
 const signInSchema = {
   email: Yup.string().email('Invalid email').required('Required'),
@@ -97,6 +100,21 @@ const LoginForm: React.FC = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const LoginFormField: React.FC<FieldAttributes<any>> = ({ ...props }) => {
+  return (
+    <Field
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      classes={{ root: styles.textField }}
+      inputProps={{ style: { textAlign: 'center' } }}
+      FormHelperTextProps={{
+        classes: { root: styles.helperText },
+      }}
+    />
+  );
+};
+
 type SubmitFormFunction = (formValues: IFormState) => Promise<void>;
 
 enum FormType {
@@ -115,10 +133,10 @@ interface SubFormProps {
 const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
   <>
     <Grid item>
-      <CenteredField component={TextField} name='email' type='email' inputProps={{ min: 0, style: { textAlign: 'center' } }} placeholder='Email' />
+      <LoginFormField component={TextField} name='email' type='email' inputProps={{ min: 0, style: { textAlign: 'center' } }} placeholder='Email' />
     </Grid>
     <Grid item>
-      <CenteredField component={TextField} type='password' placeholder='Password' name='password' />
+      <LoginFormField component={TextField} type='password' placeholder='Password' name='password' />
     </Grid>
     <>
       <Grid item>
@@ -141,34 +159,20 @@ const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
   </>
 );
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CenteredField: React.FC<FieldAttributes<any>> = ({ ...props }) => {
-  return (
-    <Field
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-      inputProps={{ style: { textAlign: 'center' } }}
-      FormHelperTextProps={{
-        classes: { root: styles.helper },
-      }}
-    />
-  );
-};
-
 const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled }) => (
   <>
     <Grid item>
       {/* <CenteredField component={TextField} name='email' type='email' placeholder='Email' /> */}
-      <CenteredField component={TextField} name='email' type='email' placeholder='Email' />
+      <LoginFormField component={TextField} name='email' type='email' placeholder='Email' />
     </Grid>
     <Grid item>
-      <CenteredField component={TextField} type='password' name='password' placeholder='Password' />
+      <LoginFormField component={TextField} type='password' name='password' placeholder='Password' />
     </Grid>
     <Grid item>
-      <CenteredField component={TextField} name='firstName' placeholder='First Name' />
+      <LoginFormField component={TextField} name='firstName' placeholder='First Name' />
     </Grid>
     <Grid item>
-      <CenteredField component={TextField} name='lastName' placeholder='Last Name' />
+      <LoginFormField component={TextField} name='lastName' placeholder='Last Name' />
     </Grid>
     <>
       <Grid item>
@@ -192,17 +196,17 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
 );
 
 const ConfirimForm: React.FC<SubFormProps> = ({ submitForm, isSubmitDisabled }) => (
-  <Grid item>
+  <>
     <Grid item>
-      <CenteredField component={TextField} name='confirmationCode' placeholder='Confirmation Code' />
+      <LoginFormField component={TextField} name='confirmationCode' placeholder='Confirmation Code' />
     </Grid>
 
-    <Grid item>
+    <>
       <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
         Confirm Sign Up
       </Button>
-    </Grid>
-  </Grid>
+    </>
+  </>
 );
 interface FormProps {
   onSignIn: SubmitFormFunction;
@@ -246,6 +250,7 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
   return (
     <Formik
       initialValues={initialFormValues}
+      isInitialValid={loadDefaultData}
       validationSchema={Yup.object().shape(validationSchema)}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true);
@@ -257,8 +262,9 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
       }}
     >
       {(props) => {
-        const { submitForm, isSubmitting, isValid, dirty } = props;
-        const isSubmitDisabled = isSubmitting || !isValid || !dirty;
+        const { submitForm, isSubmitting, isValid } = props;
+        const isSubmitDisabled = isSubmitting || !isValid;
+        console.log('isSubmitDisabled', isSubmitDisabled);
         // I was experimenting with persisting the state between signIn and signUp
         // const resetForm = () => formikResetForm({ values });
         return (

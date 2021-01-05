@@ -15,13 +15,14 @@ Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
 
 // Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
-const calcVh = () => {
+const calcVhVw = () => {
   (document.querySelector(':root') as any).style.setProperty('--vh', `${window.innerHeight / 100}px`);
+  (document.querySelector(':root') as any).style.setProperty('--vw', `${window.innerWidth / 100}px`);
 };
 
-calcVh();
+calcVhVw();
 window.addEventListener('resize', () => {
-  calcVh();
+  calcVhVw();
 });
 
 document.title = envConfig.title;
