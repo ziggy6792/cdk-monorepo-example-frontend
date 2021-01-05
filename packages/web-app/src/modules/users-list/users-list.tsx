@@ -18,7 +18,7 @@ const UsersList: React.FC = () => {
   return (
     <>
       {loading && <div>loading</div>}
-      {!loading && <div>bla {JSON.stringify(data)}</div>}
+      {!loading && <div>{JSON.stringify(data)}</div>}
     </>
   );
 };
