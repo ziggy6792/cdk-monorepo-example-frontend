@@ -4,11 +4,13 @@ import { Auth } from 'aws-amplify';
 import Logger from 'js-logger';
 import { Formik, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, useTheme, TextField as MuiTextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { USER_TYPE } from 'src/domain/auth/user';
 import { loginActionCreator } from 'src/domain/auth';
+
+import styles from './login-form.module.css';
 
 interface IFormState {
   email: string;
@@ -112,14 +114,14 @@ interface SubFormProps {
 }
 
 const SignInForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitForm }) => (
-  <Grid item>
+  <>
     <Grid item>
-      <Field component={TextField} name='email' type='email' label='Email' />
+      <Field component={TextField} name='email' type='email' inputProps={{ min: 0, style: { textAlign: 'center' } }} placeholder='Email' />
     </Grid>
     <Grid item>
       <Field component={TextField} type='password' label='Password' name='password' />
     </Grid>
-    <Grid item>
+    <>
       <Grid item>
         <Button variant='contained' color='primary' disabled={isSubmitting} onClick={submitForm}>
           Sign In
@@ -131,15 +133,38 @@ const SignInForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitF
           Sign Up
         </Button>
       </Grid>
-    </Grid>
-  </Grid>
+    </>
+  </>
 );
 
 const SignUpForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitForm }) => (
-  <Grid item>
+  <>
     <Grid item>
-      <Field component={TextField} name='email' type='email' label='Email' />
+      {/* <Field component={TextField} name='email' type='email' label='Email' /> */}
+      <Field
+        component={TextField}
+        name='email'
+        type='email'
+        inputProps={{ min: 0, style: { textAlign: 'center' } }}
+        placeholder='Email'
+        helperText='Plase enter email'
+        classes={{
+          root: {
+            margin: 'auto',
+            backgroundColor: 'red',
+            width: 200,
+            '& p': {
+              color: 'blue',
+              backgroundColor: 'red',
+            },
+          },
+        }}
+        FormHelperTextProps={{
+          classes: { root: styles.helper },
+        }}
+      />
     </Grid>
+
     <Grid item>
       <Field component={TextField} type='password' label='Password' name='password' />
     </Grid>
@@ -149,7 +174,7 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitF
     <Grid item>
       <Field component={TextField} name='lastName' label='Last Name' />
     </Grid>
-    <Grid item>
+    <>
       <Grid item>
         <Button variant='contained' color='primary' disabled={isSubmitting} onClick={submitForm}>
           Sign Up
@@ -161,8 +186,8 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, isSubmitting, submitF
           Sign In
         </Button>
       </Grid>
-    </Grid>
-  </Grid>
+    </>
+  </>
 );
 
 const ConfirimForm: React.FC<SubFormProps> = ({ isSubmitting, submitForm }) => (
@@ -188,6 +213,7 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
   const [formType, setFormType] = useState<FormType>(FormType.SIGN_IN);
 
   let onSubmit: SubmitFormFunction;
+  const theme = useTheme();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let validationSchema: any = {};
@@ -230,7 +256,7 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
       }}
     >
       {({ submitForm, isSubmitting }) => (
-        <Grid container direction='column'>
+        <Grid container direction='column' justify='center' alignItems='center' spacing={2} style={{ height: '100%', width: '100%' }}>
           {formType === FormType.SIGN_IN && <SignInForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} />}
           {formType === FormType.SIGN_UP && <SignUpForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} />}
           {formType === FormType.CONFIRM && <ConfirimForm setFormType={setFormType} isSubmitting={isSubmitting} submitForm={submitForm} />}
