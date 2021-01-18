@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import * as config from '../config';
+import * as config from 'src/config';
 
 const ssmSep = '/';
 const conSep = '-';
