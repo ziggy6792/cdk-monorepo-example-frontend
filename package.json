@@ -65,7 +65,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged && lerna run precommit --stream --parallel --since HEAD"
+            "pre-commit": "lint-staged && lerna run precommit --parallel --since HEAD"
         }
     }
 }
