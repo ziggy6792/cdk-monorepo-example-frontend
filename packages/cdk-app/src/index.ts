@@ -8,8 +8,8 @@
 /* eslint-disable no-new */
 
 import * as cdk from '@aws-cdk/core';
-import PipelineStack from '../lib/pipeline-stack';
-import * as utils from '../utils';
+import PipelineStack from './frontend-stack/pipeline-stack';
+import * as utils from './utils';
 
 module.exports = {};
 

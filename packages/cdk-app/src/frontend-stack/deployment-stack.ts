@@ -1,8 +1,6 @@
 import * as cdk from '@aws-cdk/core';
-import * as path from 'path';
 import { SPADeploy } from 'cdk-spa-deploy';
 import * as ssm from '@aws-cdk/aws-ssm';
-import * as defaults from '@aws-solutions-constructs/core';
 
 export interface DeploymentStackProps extends cdk.StackProps {
   readonly websiteFolder: string;
