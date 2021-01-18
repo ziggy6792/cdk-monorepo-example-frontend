@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
-import { HELLO } from '../../graphql/custom-queries';
+import { HELLO } from 'src/graphql/custom-queries';
 
 const UsersList: React.FC = () => {
   const { loading, data, error } = useQuery(HELLO);

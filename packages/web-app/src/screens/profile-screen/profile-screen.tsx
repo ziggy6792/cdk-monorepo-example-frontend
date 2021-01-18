@@ -1,17 +1,14 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect, useState, Fragment, Component } from 'react';
-
-import { Auth, Hub } from 'aws-amplify';
+import React, { useState } from 'react';
 
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import Logger from 'js-logger';
 import { logoutActionCreator } from 'src/domain/auth';
-import Spinner from '../../components/spinner';
-import Buttons from '../../modules/login-form/buttons';
-import LoginForm from '../../modules/login-form';
+import Spinner from 'src/components/spinner';
+import Buttons from 'src/modules/login-form/buttons';
+import LoginForm from 'src/modules/login-form';
 
-import * as authSelectors from '../../domain/auth/selectors';
+import * as authSelectors from 'src/domain/auth/selectors';
 
 const ProfileScreen: React.FC = () => {
   const [formState, setFormSate] = useState('base');
