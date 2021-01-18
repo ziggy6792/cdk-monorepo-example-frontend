@@ -6,16 +6,7 @@ module.exports = {
         ...baseConfig.globals,
     },
     ignorePatterns: ['build', '*.config.js', 'node_modules'],
-    extends: [
-        'airbnb-typescript',
-        'airbnb/hooks',
-        'plugin:prettier/recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:jest/recommended',
-        'prettier',
-        'prettier/react',
-        'prettier/@typescript-eslint',
-    ],
+    extends: ['airbnb-typescript', 'airbnb/hooks', 'prettier', 'prettier/@typescript-eslint', 'prettier/react'],
     // plugins: ['react', '@typescript-eslint', 'jest'],
     plugins: ['react', '@typescript-eslint', 'prettier'],
     env: {
@@ -28,7 +19,6 @@ module.exports = {
         SharedArrayBuffer: 'readonly',
     },
     rules: {
-        // quotes: [2, 'single', { avoidEscape: true }],
         ...baseConfig.rules,
         'react/destructuring-assignment': 'off',
         '@typescript-eslint/no-use-before-define': 'off',

@@ -18,7 +18,6 @@ module.exports = {
 
     rules: {
         // 'no-console': 'off',
-        indent: ['error', 4],
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': ['warn'],
         'no-plusplus': 'off',
