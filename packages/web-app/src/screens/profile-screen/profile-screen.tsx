@@ -1,6 +1,5 @@
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
-
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutActionCreator } from 'src/domain/auth';
@@ -18,17 +17,6 @@ const ProfileScreen: React.FC = () => {
     const user = useSelector(authSelectors.selectUser);
     const isLoading = useSelector(authSelectors.selectIsLoading);
     const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
-
-    // Logger.info('auth state', state);
-    // useEffect(() => {
-    //   async function fetchData() {
-    //     // You can await here
-    //     const response = await Auth.currentCredentials();
-    //     console.log('credentials', response);
-    //     // ...
-    //   }
-    //   fetchData();
-    // }, []);
 
     console.log('isLoading', isLoading);
 
