@@ -15,6 +15,7 @@
     "clean:light": "rm -rf ./tsconfig.build.tsbuildinfo && rm -rf ./dist",
     "clean:full": "yarn run clean:light && rm -rf ./node_modules",
     "test:watch": "node --expose-gc ./node_modules/.bin/jest --watch --debug --runInBand --colors",
+    "lint": "eslint './packages/**/src/**/*.{ts,tsx}'",
     "test": "node --expose-gc ./node_modules/.bin/jest --coverage --debug --runInBand --colors",
     "start": "lerna run start --stream --parallel",
     "build": "lerna run build --stream",
