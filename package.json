@@ -37,6 +37,7 @@
         "eslint-plugin-prettier": "^3.3.1",
         "express": "^4.17.1",
         "husky": "^4.3.8",
+        "jest-canvas-mock": "^2.3.0",
         "jsonwebtoken": "^8.5.1",
         "jwk-to-pem": "^2.0.4",
         "lambda-local": "^1.7.4",
