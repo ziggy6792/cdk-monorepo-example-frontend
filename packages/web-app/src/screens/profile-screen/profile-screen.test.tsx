@@ -1,12 +1,13 @@
 /* eslint-disable react/button-has-type */
-import { render } from '@testing-library/react';
-import React, { useState } from 'react';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { renderWithAllProviders } from 'src/utils/test-utils';
 import ProfileScreen from './profile-screen';
 
-describe('Profile Screen Test', () => {
-    it('should be good', () => {
-        // render(<ProfileScreen />);
+describe('Profile Screen', () => {
+    it('should show login form', async () => {
+        renderWithAllProviders(<ProfileScreen />, { initialState: { auth: { isLoading: false, error: null, user: null } } });
 
-        expect(1 + 1 === 2);
+        expect(await screen.findByText(/Sign in with Email/i)).toBeInTheDocument();
     });
 });

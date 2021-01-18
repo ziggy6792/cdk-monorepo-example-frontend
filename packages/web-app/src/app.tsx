@@ -8,11 +8,12 @@ import { ApolloProvider } from 'react-apollo';
 import Routes from 'src/routes';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
-import store from './config/store';
+import initStore from './config/store';
 import * as ApiFetch from './utils/aws-api-fetch';
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
+const store = initStore();
 
 // Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
 const calcVh = () => {
