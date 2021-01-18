@@ -9,25 +9,25 @@ import HomeScreen from 'src/screens/home-screen';
 import ProfileScreen from 'src/screens/profile-screen';
 
 const Routes: React.FC = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(isAuthenticatedActionCreator());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(isAuthenticatedActionCreator());
+    }, [dispatch]);
 
-  return (
-    <ThemeProvider theme={Theme}>
-      <BrowserRouter>
-        <Route exact path='/'>
-          <Redirect to={ROUTE_PROFILE} />
-        </Route>
-        <Switch>
-          <Route exact path={ROUTE_HOME} component={HomeScreen} />
-          <Route exact path={ROUTE_PROFILE} component={ProfileScreen} />
-        </Switch>
-      </BrowserRouter>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={Theme}>
+            <BrowserRouter>
+                <Route exact path='/'>
+                    <Redirect to={ROUTE_PROFILE} />
+                </Route>
+                <Switch>
+                    <Route exact path={ROUTE_HOME} component={HomeScreen} />
+                    <Route exact path={ROUTE_PROFILE} component={ProfileScreen} />
+                </Switch>
+            </BrowserRouter>
+        </ThemeProvider>
+    );
 };
 
 export default Routes;

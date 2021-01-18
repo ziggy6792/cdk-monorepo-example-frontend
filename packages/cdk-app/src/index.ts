@@ -15,11 +15,11 @@ module.exports = {};
 
 const app = new cdk.App();
 new PipelineStack(app, utils.getConstructId('pipeline'), {
-  description: utils.getConstructId('pipeline'),
-  env: {
-    account: '694710432912',
-    region: 'ap-southeast-1',
-  },
+    description: utils.getConstructId('pipeline'),
+    env: {
+        account: '694710432912',
+        region: 'ap-southeast-1',
+    },
 });
 
 app.synth();

@@ -26,9 +26,6 @@
     "aws-cdk": "1.77.0",
     "cdk-spa-deploy": "1.77.0"
   },
-  "eslintConfig": {
-    "root": true
-  },
   "devDependencies": {
     "tsconfig-paths": "^3.9.0"
   }
