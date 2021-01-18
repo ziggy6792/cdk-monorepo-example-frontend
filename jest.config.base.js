@@ -6,7 +6,8 @@ module.exports = {
     },
     moduleNameMapper: {},
     collectCoverageFrom: [
-        'packages/**/*.ts',
+        'src/**/*.tsx',
+        'src/**/*.ts',
         '!**/dist/**',
         '!**/node_modules/**',
         '!**/build/**',
@@ -29,3 +30,19 @@ module.exports = {
 
     collectCoverage: false,
 };
+
+// module.exports = {
+//     // preset: 'ts-jest',
+
+//     transform: {
+//         '^.+\\.[jt]sx?$': 'ts-jest',
+//     },
+//     moduleNameMapper: {},
+//     collectCoverageFrom: ['**.ts', '**.tsx'],
+//     testEnvironment: 'node',
+//     watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
+//     // modulePaths: ['node_modules', '<rootDir>/test/'],
+//     verbose: true,
+
+//     collectCoverage: true,
+// };
