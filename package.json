@@ -14,14 +14,15 @@
     "scripts": {
         "clean:light": "rm -rf ./tsconfig.build.tsbuildinfo && rm -rf ./dist",
         "clean:full": "yarn run clean:light && rm -rf ./node_modules",
-        "test:watch": "jest --watch --debug --runInBand --colors",
-        "test": "jest --coverage --debug --runInBand --colors",
+        "test:watch": "jest --watch --runInBand --colors",
+        "test": "jest --coverage --runInBand --colors",
         "lint": "eslint './packages/**/src/**/*.{ts,tsx}'",
         "start": "lerna run start --stream --parallel",
         "build": "lerna run build --stream",
         "cdk:synth": "lerna run synth --scope @danielblignaut/cdk-app && rm -rf cdk.out && cp -r packages/cdk-app/cdk.out cdk.out"
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^5.11.9",
         "@types/aws-lambda": "^8.10.59",
         "@types/node": "^14.0.26",
         "@typescript-eslint/eslint-plugin": "^4.13.0",
