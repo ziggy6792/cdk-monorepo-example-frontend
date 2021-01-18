@@ -7,6 +7,6 @@ describe('Profile Screen Test', () => {
     it('should be good', () => {
         // render(<ProfileScreen />);
 
-        expect(1 + 1 === 2);
+        expect(2 + 1 === 3);
     });
 });
