@@ -6,10 +6,10 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 import Routes from 'src/routes';
+import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import store from './config/store';
 import * as ApiFetch from './utils/aws-api-fetch';
-import envConfig from './config/env-config';
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
