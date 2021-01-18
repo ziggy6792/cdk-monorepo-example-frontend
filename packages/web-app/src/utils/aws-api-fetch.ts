@@ -25,13 +25,12 @@ interface ICredentials {
     sessionToken: string;
 }
 
-const buildCognitoFetch = (jwtToken: string) => {
+const buildCognitoFetch = (jwtToken: string) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (uri: string, options: any) => {
+    (uri: string, options: any) => {
         options.headers.Authorization = jwtToken;
         return fetch(uri, options);
     };
-};
 
 const buildIamFetch = (credentials: ICredentials) => {
     const axiosInstance = Axios.create();

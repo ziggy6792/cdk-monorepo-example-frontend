@@ -101,8 +101,7 @@ const LoginForm: React.FC = () => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const LoginFormField: React.FC<FieldAttributes<any>> = ({ ...props }) => {
-    return (
+const LoginFormField: React.FC<FieldAttributes<any>> = ({ ...props }) => (
         <Field
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
@@ -113,7 +112,6 @@ const LoginFormField: React.FC<FieldAttributes<any>> = ({ ...props }) => {
             }}
         />
     );
-};
 
 type SubmitFormFunction = (formValues: IFormState) => Promise<void>;
 

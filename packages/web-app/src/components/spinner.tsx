@@ -1,8 +1,7 @@
 import React from 'react';
 import { CircularProgress, Grid } from '@material-ui/core';
 
-const Spinner = () => {
-    return (
+const Spinner:React.FC = () => (
         <Grid
             container
             spacing={0}
@@ -22,6 +21,5 @@ const Spinner = () => {
             </Grid>
         </Grid>
     );
-};
 
 export default Spinner;
