@@ -46,6 +46,15 @@ class PipelineStack extends cdk.Stack {
             }),
         });
 
+        const testAction = new cdkPipeline.ShellScriptAction({
+            actionName: 'Test',
+            additionalArtifacts: [sourceArtifact],
+            runOrder: 1,
+            commands: ['yarn install', 'yarn test'],
+        });
+
+        pipeline.codePipeline.stages[1].addAction(testAction);
+
         // Do this as many times as necessary with any account and region
         // Account and region may be different from the pipeline's.
         const deployedStagingStage = new DeploymentStage(this, utils.getConstructId('staging'), {
