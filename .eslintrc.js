@@ -18,14 +18,15 @@ module.exports = {
 
   rules: {
     // 'no-console': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
     'no-plusplus': 'off',
     'no-nested-ternary': 'off',
     'no-use-before-define': 'off',
-    'no-unused-vars': 'warn',
     'no-shadow': 'off',
     'no-param-reassign': 'off',
     'func-names': 'off',
-    'no-restricted-imports': ['error', { patterns: ['../*', '..'] }],
+    // 'no-restricted-imports': ['error', { patterns: ['../*', '..'] }],
     'max-len': [
       'error',
       160,
