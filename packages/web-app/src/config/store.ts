@@ -9,6 +9,11 @@ const reducer = combineReducers<IRootState>({
     auth: authReducer,
 });
 
-export default configureStore({
-    reducer,
-});
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const initStore = (initialState?: IRootState) =>
+    configureStore({
+        preloadedState: initialState,
+        reducer,
+    });
+
+export default initStore;
