@@ -3,10 +3,10 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { isAuthenticatedActionCreator } from 'src/domain/auth';
-import Theme from '../ui/theme';
-import { ROUTE_PROFILE, ROUTE_HOME } from '../config/navigation';
-import HomeScreen from '../screens/home-screen';
-import ProfileScreen from '../screens/profile-screen';
+import Theme from 'src/ui/theme';
+import { ROUTE_PROFILE, ROUTE_HOME } from 'src/config/navigation';
+import HomeScreen from 'src/screens/home-screen';
+import ProfileScreen from 'src/screens/profile-screen';
 
 const Routes: React.FC = () => {
   const dispatch = useDispatch();
