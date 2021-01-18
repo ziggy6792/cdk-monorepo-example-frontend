@@ -5,11 +5,11 @@ const isDev = process.env.REACT_APP_ENV === 'dev';
 const title = `MonoRepo ${!isProd ? `(${process.env.REACT_APP_ENV})` : ''}`;
 
 const envConfig = {
-  env,
-  isProd,
-  isStaging,
-  isDev,
-  title,
+    env,
+    isProd,
+    isStaging,
+    isDev,
+    title,
 };
 
 export default envConfig;

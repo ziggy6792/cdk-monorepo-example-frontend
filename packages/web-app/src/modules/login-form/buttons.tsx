@@ -8,26 +8,26 @@ import { USER_TYPE } from 'src/domain/auth/user';
 import { loginActionCreator } from 'src/domain/auth';
 
 interface IButtonsProps {
-  updateFormState: (formState: string) => void;
+    updateFormState: (formState: string) => void;
 }
 
 const Buttons: React.FC<IButtonsProps> = ({ updateFormState }) => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  return (
-    <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%' }}>
-      <Grid item>
-        <Button color='primary' endIcon={<Facebook />} onClick={() => dispatch(loginActionCreator({ type: USER_TYPE.FACEBOOK }))}>
-          Facebook
-        </Button>
-      </Grid>
-      <Grid item>
-        <Button color='primary' endIcon={<Email />} onClick={() => updateFormState('email')}>
-          Sign in with Email
-        </Button>
-      </Grid>
-    </Grid>
-  );
+    return (
+        <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%' }}>
+            <Grid item>
+                <Button color='primary' endIcon={<Facebook />} onClick={() => dispatch(loginActionCreator({ type: USER_TYPE.FACEBOOK }))}>
+                    Facebook
+                </Button>
+            </Grid>
+            <Grid item>
+                <Button color='primary' endIcon={<Email />} onClick={() => updateFormState('email')}>
+                    Sign in with Email
+                </Button>
+            </Grid>
+        </Grid>
+    );
 };
 
 export default Buttons;

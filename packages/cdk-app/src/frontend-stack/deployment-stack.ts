@@ -3,24 +3,24 @@ import { SPADeploy } from 'cdk-spa-deploy';
 import * as ssm from '@aws-cdk/aws-ssm';
 
 export interface DeploymentStackProps extends cdk.StackProps {
-  readonly websiteFolder: string;
-  readonly ssmUrlParamId: string;
+    readonly websiteFolder: string;
+    readonly ssmUrlParamId: string;
 }
 class DeploymentStack extends cdk.Stack {
-  public readonly urlOutput: cdk.CfnOutput;
+    public readonly urlOutput: cdk.CfnOutput;
 
-  constructor(scope: cdk.Construct, id: string, props?: DeploymentStackProps) {
-    super(scope, id, props);
+    constructor(scope: cdk.Construct, id: string, props?: DeploymentStackProps) {
+        super(scope, id, props);
 
-    const { websiteFolder, ssmUrlParamId } = props;
+        const { websiteFolder, ssmUrlParamId } = props;
 
-    const webstie = new SPADeploy(this, 'website').createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
+        const webstie = new SPADeploy(this, 'website').createSiteWithCloudfront({ indexDoc: 'index.html', errorDoc: 'index.html', websiteFolder });
 
-    const websiteUrl = new ssm.StringParameter(this, ssmUrlParamId, {
-      parameterName: ssmUrlParamId,
-      stringValue: webstie.distribution.distributionDomainName,
-    });
-  }
+        const websiteUrl = new ssm.StringParameter(this, ssmUrlParamId, {
+            parameterName: ssmUrlParamId,
+            stringValue: webstie.distribution.distributionDomainName,
+        });
+    }
 }
 
 export default DeploymentStack;
