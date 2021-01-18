@@ -102,16 +102,16 @@ const LoginForm: React.FC = () => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LoginFormField: React.FC<FieldAttributes<any>> = ({ ...props }) => (
-        <Field
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...props}
-            classes={{ root: styles.textField }}
-            inputProps={{ style: { textAlign: 'center' } }}
-            FormHelperTextProps={{
-                classes: { root: styles.helperText },
-            }}
-        />
-    );
+    <Field
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+        classes={{ root: styles.textField }}
+        inputProps={{ style: { textAlign: 'center' } }}
+        FormHelperTextProps={{
+            classes: { root: styles.helperText },
+        }}
+    />
+);
 
 type SubmitFormFunction = (formValues: IFormState) => Promise<void>;
 
