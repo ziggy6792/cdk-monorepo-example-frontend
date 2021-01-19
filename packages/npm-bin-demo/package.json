@@ -1,10 +1,10 @@
 {
-    "name": "@danielblignaut/fetch-config",
+    "name": "@danielblignaut/bin-demo",
     "bin": {
         "hello-world": "./hello.js"
     },
+    "version": "2.0.1",
     "scripts": {
-        "fig": "figlet",
         "hello-world": "./hello.js"
     },
     "dependencies": {
