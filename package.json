@@ -14,8 +14,8 @@
     "scripts": {
         "clean:light": "rm -rf ./tsconfig.build.tsbuildinfo && rm -rf ./dist",
         "clean:full": "yarn run clean:light && rm -rf ./node_modules",
-        "test:watch": "jest --watch --runInBand --colors",
-        "test": "jest --coverage --runInBand --colors",
+        "test:watch": "jest --watch --debug --runInBand --colors",
+        "test": "jest --coverage --debug --runInBand --colors",
         "lint": "eslint './packages/**/src/**/*.{ts,tsx}'",
         "start": "lerna run start --stream --parallel",
         "build": "lerna run build --stream",
@@ -37,7 +37,6 @@
         "eslint-plugin-prettier": "^3.3.1",
         "express": "^4.17.1",
         "husky": "^4.3.8",
-        "jest-canvas-mock": "^2.3.0",
         "jsonwebtoken": "^8.5.1",
         "jwk-to-pem": "^2.0.4",
         "lambda-local": "^1.7.4",
