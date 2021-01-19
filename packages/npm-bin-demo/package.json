@@ -1,0 +1,13 @@
+{
+    "name": "@danielblignaut/fetch-config",
+    "bin": {
+        "hello-world": "./hello.js"
+    },
+    "scripts": {
+        "fig": "figlet",
+        "hello-world": "./hello.js"
+    },
+    "dependencies": {
+        "figlet-cli": "^0.1.0"
+    }
+}
