@@ -2,7 +2,13 @@
 
 import AWS from 'aws-sdk';
 import util from 'util';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
 import fetchConfig from './fetch-config';
+
+const { argv } = yargs(hideBin(process.argv));
+
+console.log('argv', argv);
 
 AWS.config.update({ region: 'ap-southeast-1' });
 
