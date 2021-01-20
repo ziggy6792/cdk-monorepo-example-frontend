@@ -1,11 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-// async function myInit() {
-//     const response = await fetch('./env.json');
-//     const json = await response.json();
-//     console.log('env json', json);
-// }
-
 function loadEnv() {
     // Load json file;
     const json = loadTextFileAjaxSync('./env.json', 'application/json');
