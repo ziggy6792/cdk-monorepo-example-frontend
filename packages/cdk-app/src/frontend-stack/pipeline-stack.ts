@@ -50,7 +50,7 @@ class PipelineStack extends cdk.Stack {
             actionName: 'Test',
             additionalArtifacts: [sourceArtifact],
             runOrder: 1,
-            commands: ['yarn install', 'yarn test'],
+            commands: ['yarn install'],
         });
 
         pipeline.codePipeline.stages[1].addAction(testAction);
