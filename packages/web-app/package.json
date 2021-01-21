@@ -2,7 +2,7 @@
     "name": "@danielblignaut/web-app",
     "version": "0.1.0",
     "private": true,
-    "main": "builds/index.js",
+    "main": "build/index.html",
     "dependencies": {
         "@aws-amplify/auth": "^3.4.15",
         "@lifeomic/axios-fetch": "^1.4.2",
@@ -49,12 +49,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "yarn builds:add:staging && yarn builds:add:prod",
-        "build:prod": "react-scripts build",
-        "build:staging": "env-cmd -f .env.staging react-scripts build",
-        "builds:add:staging": "rm -rfv builds/staging && yarn build:staging && mkdir -p builds/staging && mv build builds/staging",
-        "builds:add:prod": "rm -rfv builds/prod && yarn build:prod && mkdir -p builds/prod && mv build builds/prod",
-        "builds:clean": "rm -rfv builds/prod && rm -rfv builds/staging",
+        "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "format": "prettier --write src/**/*.ts{,x}",

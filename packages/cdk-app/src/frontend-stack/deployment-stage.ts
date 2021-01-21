@@ -17,7 +17,8 @@ export class DeploymentStage extends cdk.Stage {
 
         const { stageName } = props;
 
-        const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), `../${stageName}/build`);
+        const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), '..');
+
         const ssmUrlParamId = utils.getSsmParamId('url', stageName);
         const ssmS3BucketParamId = utils.getSsmParamId('s3-bucket', stageName);
 
