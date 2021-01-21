@@ -21,8 +21,9 @@ export class DeploymentStage extends cdk.Stage {
 
         const ssmUrlParamId = utils.getSsmParamId('url', stageName);
         const ssmS3BucketParamId = utils.getSsmParamId('s3-bucket', stageName);
+        const ssmDistributionId = utils.getSsmParamId('distribution-id', stageName);
 
-        const stack = new DeploymentStack(this, 'deployment', { websiteFolder, ssmUrlParamId, ssmS3BucketParamId });
+        const stack = new DeploymentStack(this, 'deployment', { websiteFolder, ssmUrlParamId, ssmS3BucketParamId, ssmDistributionId });
 
         // defaults.printWarning(websiteFolder);
 
