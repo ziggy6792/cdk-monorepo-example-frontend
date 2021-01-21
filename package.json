@@ -16,6 +16,7 @@
         "clean:full": "yarn run clean:light && rm -rf ./node_modules",
         "test:watch": "jest --watch --debug --runInBand --colors",
         "test": "jest --coverage --debug --runInBand --colors",
+        "deploy:config": "./bash/deploy-config/deploy-config.sh",
         "lint": "eslint './packages/**/src/**/*.{ts,tsx}'",
         "start": "lerna run start --stream --parallel",
         "build": "lerna run build --stream",
