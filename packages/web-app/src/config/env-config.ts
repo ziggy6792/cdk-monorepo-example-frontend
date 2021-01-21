@@ -1,8 +1,8 @@
-const env = process.env.REACT_APP_ENV;
-const isProd = process.env.REACT_APP_ENV === 'prod';
-const isStaging = process.env.REACT_APP_ENV === 'staging';
-const isDev = process.env.REACT_APP_ENV === 'dev';
-const title = `MonoRepo ${!isProd ? `(${process.env.REACT_APP_ENV})` : ''}`;
+const env = window.env.ENV;
+const isProd = window.env.ENV === 'prod';
+const isStaging = window.env.ENV === 'staging';
+const isDev = window.env.ENV === 'dev';
+const title = `MonoRepo ${!isProd ? `(${window.env.ENV})` : ''}`;
 
 const envConfig = {
     env,

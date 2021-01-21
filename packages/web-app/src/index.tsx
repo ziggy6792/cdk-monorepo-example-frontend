@@ -9,6 +9,8 @@ Logger.setLevel(Logger.INFO);
 // eslint-disable-next-line react-hooks/rules-of-hooks
 Logger.useDefaults();
 
+console.log('ENV', window.env);
+
 ReactDOM.render(
     <React.StrictMode>
         <App />
