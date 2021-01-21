@@ -1,5 +1,6 @@
 !jest.config.js
 *.d.ts
+!globals.d.ts
 node_modules
 **/.DS_Store
 
