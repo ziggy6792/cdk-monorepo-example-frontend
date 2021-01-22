@@ -31,7 +31,9 @@ process.argv.forEach((val, index, array) => {
 
 // util.inspect(process);
 
-const cwdDir = process.env.INIT_CWD;
+const cwdDir = process.env.PWD;
+
+console.log('cwdDir!!!!!', cwdDir);
 
 const main = async () => {
     const config = await fetchConfig(args.fromSsm);
