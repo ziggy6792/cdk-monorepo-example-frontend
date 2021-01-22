@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
+// const path = require('path');
 
 module.exports = {
-    setupFilesAfterEnv: [path.join(__dirname, './setup-tests.ts')],
+    // setupFilesAfterEnv: [path.join(__dirname, './setup-tests.ts')],
 
     transform: {
         '^.+\\.[jt]sx?$': 'ts-jest',
