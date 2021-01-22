@@ -22,7 +22,7 @@
         "cdk:synth": "lerna run synth --scope @danielblignaut/cdk-app && rm -rf cdk.out && cp -r packages/cdk-app/cdk.out cdk.out"
     },
     "devDependencies": {
-        "@danielblignaut/aws-env-config": "^2.0.5",
+        "@danielblignaut/aws-env-config": "^2.0.6",
         "@testing-library/jest-dom": "^5.11.9",
         "@types/aws-lambda": "^8.10.59",
         "@types/node": "^14.0.26",
