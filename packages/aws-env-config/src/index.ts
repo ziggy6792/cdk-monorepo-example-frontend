@@ -1,19 +1,29 @@
 #!/usr/bin/env node
 
 import AWS from 'aws-sdk';
+import fs from 'fs';
 import util from 'util';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
+import path from 'path';
+import jsonBeautify from 'json-beautify';
 import fetchConfig from './fetch-config';
 
-const { argv } = yargs(hideBin(process.argv));
+const writeFile = util.promisify(fs.writeFile);
+interface IArgs {
+    fromSsm: string;
+    toFile: string;
+}
 
-console.log('argv', argv);
+const args = (yargs(hideBin(process.argv)).argv as unknown) as IArgs;
+
+console.log('argv', args);
+
+if (!args.fromSsm || !args.toFile) {
+    throw new Error('Invalid Args');
+}
 
 AWS.config.update({ region: 'ap-southeast-1' });
-
-console.log('HELLO');
-console.log(`dir ${__dirname}`);
 
 process.argv.forEach((val, index, array) => {
     console.log(`${index}: ${val}`);
@@ -21,10 +31,22 @@ process.argv.forEach((val, index, array) => {
 
 // util.inspect(process);
 
-console.log('process');
-console.log(`called from ${process.env.INIT_CWD}`);
+const cwdDir = process.env.INIT_CWD;
 
-fetchConfig('/cdk-monorepo-backend/staging/frontend-config')
+const main = async () => {
+    const config = await fetchConfig(args.fromSsm);
+
+    const fileToWrite = path.join(cwdDir, args.toFile);
+
+    console.log(config);
+    console.log(fileToWrite);
+
+    const jsonEnvConfig = jsonBeautify(config, null, 2, 100);
+
+    writeFile(fileToWrite, `window.env = ${jsonEnvConfig}`);
+};
+
+main()
     .then((response) => {
         console.log(response);
     })
