@@ -5,7 +5,6 @@
     "main": "builds/index.js",
     "dependencies": {
         "@aws-amplify/auth": "^3.4.15",
-        "@danielblignaut/bin-demo": "^2.0.1",
         "@lifeomic/axios-fetch": "^1.4.2",
         "@material-ui/core": "^4.11.2",
         "@material-ui/icons": "^4.11.2",
@@ -50,11 +49,12 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "yarn builds:add:staging && yarn builds:add:prod",
-        "build:prod": "react-scripts build",
-        "build:staging": "env-cmd -f .env.staging react-scripts build",
-        "builds:add:staging": "rm -rfv builds/staging && yarn build:staging && mkdir -p builds/staging && mv build builds/staging",
-        "builds:add:prod": "rm -rfv builds/prod && yarn build:prod && mkdir -p builds/prod && mv build builds/prod",
+        "build": "react-scripts build",
+        "builds:create": "yarn builds:add:staging && yarn builds:add:prod",
+        "builds:add:staging": "rm -rfv builds/staging && mkdir -p builds/staging && cp -a build builds/staging && yarn builds:config:staging",
+        "builds:add:prod": "rm -rfv builds/prod && mkdir -p builds/prod && cp -a build builds/prod && yarn builds:config:prod",
+        "builds:config:prod": "yarn fetch-env-config",
+        "builds:config:staging": "yarn fetch-env-config",
         "builds:clean": "rm -rfv builds/prod && rm -rfv builds/staging",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
@@ -76,6 +76,7 @@
         ]
     },
     "devDependencies": {
+        "@danielblignaut/aws-env-config": "^2.0.6",
         "@types/lodash": "^4.14.166",
         "@types/node": "^14.14.16",
         "@types/react": "^17.0.0",

@@ -17,12 +17,13 @@
         "test:watch": "jest --watch --debug --runInBand --colors",
         "test": "jest --coverage --debug --runInBand --colors",
         "lint": "eslint './packages/**/src/**/*.{ts,tsx}'",
+        "cdk:synth": "lerna run synth --scope @danielblignaut/cdk-app && rm -rf cdk.out && cp -r packages/cdk-app/cdk.out cdk.out",
         "start": "lerna run start --stream --parallel",
         "build": "lerna run build --stream",
-        "cdk:synth": "lerna run synth --scope @danielblignaut/cdk-app && rm -rf cdk.out && cp -r packages/cdk-app/cdk.out cdk.out"
+        "prepare:deployment": "lerna run builds:create --scope @danielblignaut/web-app",
+        "build:and:prepare:deployment": "yarn build && yarn prepare:deployment"
     },
     "devDependencies": {
-        "@danielblignaut/aws-env-config": "^2.0.6",
         "@testing-library/jest-dom": "^5.11.9",
         "@types/aws-lambda": "^8.10.59",
         "@types/node": "^14.0.26",

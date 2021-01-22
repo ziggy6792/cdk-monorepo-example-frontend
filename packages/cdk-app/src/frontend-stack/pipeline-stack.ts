@@ -40,7 +40,7 @@ class PipelineStack extends cdk.Stack {
 
                 // Use this if you need a build step (if you're not using ts-node
                 // or if you have TypeScript Lambdas that need to be compiled).
-                buildCommand: 'yarn run build',
+                buildCommand: 'yarn build:and:prepare:deployment',
                 synthCommand: 'yarn cdk:synth',
                 // subdirectory: 'packages/cdk-app',
             }),
@@ -50,7 +50,7 @@ class PipelineStack extends cdk.Stack {
             actionName: 'Test',
             additionalArtifacts: [sourceArtifact],
             runOrder: 1,
-            commands: ['yarn install'],
+            commands: ['yarn install', 'yarn build', 'yarn test'],
         });
 
         pipeline.codePipeline.stages[1].addAction(testAction);
