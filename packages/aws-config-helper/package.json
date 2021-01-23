@@ -1,7 +1,7 @@
 {
     "name": "@danielblignaut/aws-config-helper",
     "bin": {
-        "fetch-env-config": "./dist/index.js"
+        "aws-config-helper": "./dist/index.js"
     },
     "version": "2.0.6",
     "scripts": {
