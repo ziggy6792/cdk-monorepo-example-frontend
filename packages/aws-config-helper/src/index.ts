@@ -63,4 +63,4 @@ main()
         process.exit(1);
     });
 
-// console.log('aws-env-config bla');
+// console.log('aws-config-helper bla');
