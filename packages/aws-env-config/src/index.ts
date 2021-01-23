@@ -49,7 +49,7 @@ const main = async () => {
 
     const jsonEnvConfig = jsonBeautify(config, null, 2, 100);
 
-    writeFile(fileToWrite, `window.env = ${jsonEnvConfig}`);
+    await writeFile(fileToWrite, `window.env = ${jsonEnvConfig}`);
 };
 
 main()
