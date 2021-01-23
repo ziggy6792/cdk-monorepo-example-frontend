@@ -6,6 +6,7 @@ import * as cdkPipeline from '@aws-cdk/pipelines';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipelineActions from '@aws-cdk/aws-codepipeline-actions';
 import * as utils from 'src/utils';
+import * as iam from '@aws-cdk/aws-iam';
 import { DeploymentStage } from './deployment-stage';
 
 class PipelineStack extends cdk.Stack {
@@ -54,6 +55,10 @@ class PipelineStack extends cdk.Stack {
         });
 
         pipeline.codePipeline.stages[1].addAction(testAction);
+
+        const buildAction = pipeline.codePipeline.stages[1].actions[0];
+        // Build action need to get config from SSM
+        buildAction.actionProperties.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMFullAccess'));
 
         // Do this as many times as necessary with any account and region
         // Account and region may be different from the pipeline's.

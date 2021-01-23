@@ -53,9 +53,13 @@ const main = async () => {
 };
 
 main()
-    .then((response) => {
-        console.log(response);
+    .then(() => {
+        console.log('fetch config: SUCCESS');
+        process.exit(0);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        console.log(err);
+        process.exit(1);
+    });
 
 // console.log('aws-env-config bla');
