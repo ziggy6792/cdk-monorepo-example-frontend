@@ -43,6 +43,10 @@ const main = async () => {
     console.log(config);
     console.log(fileToWrite);
 
+    if (!fs.existsSync(fileToWrite)) {
+        throw new Error(`File not fouund: ${fileToWrite}`);
+    }
+
     const jsonEnvConfig = jsonBeautify(config, null, 2, 100);
 
     writeFile(fileToWrite, `window.env = ${jsonEnvConfig}`);
