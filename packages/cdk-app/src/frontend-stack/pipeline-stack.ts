@@ -46,15 +46,15 @@ class PipelineStack extends cdk.Stack {
                 synthCommand: 'yarn cdk:synth',
                 rolePolicyStatements: [
                     new iam.PolicyStatement({
-                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-backend/staging/frontend-config`],
+                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-*`],
                         actions: ['ssm:GetParameter'],
                         effect: iam.Effect.ALLOW,
                     }),
-                    new iam.PolicyStatement({
-                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-backend/prod/frontend-config`],
-                        actions: ['ssm:GetParameter'],
-                        effect: iam.Effect.ALLOW,
-                    }),
+                    // new iam.PolicyStatement({
+                    //     resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-backend/prod/frontend-config`],
+                    //     actions: ['ssm:GetParameter'],
+                    //     effect: iam.Effect.ALLOW,
+                    // }),
                 ],
 
                 // subdirectory: 'packages/cdk-app',
