@@ -6,6 +6,7 @@ import * as cdkPipeline from '@aws-cdk/pipelines';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipelineActions from '@aws-cdk/aws-codepipeline-actions';
 import * as utils from 'src/utils';
+import * as config from 'src/config';
 import * as iam from '@aws-cdk/aws-iam';
 import { DeploymentStage } from './deployment-stage';
 
@@ -45,15 +46,15 @@ class PipelineStack extends cdk.Stack {
                 synthCommand: 'yarn cdk:synth',
                 rolePolicyStatements: [
                     new iam.PolicyStatement({
-                        resources: ['arn:aws:ssm:ap-southeast-1:*:parameter/cdk-monorepo-backend/staging/frontend-config'],
+                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-*`],
                         actions: ['ssm:GetParameter'],
                         effect: iam.Effect.ALLOW,
                     }),
-                    new iam.PolicyStatement({
-                        resources: ['arn:aws:ssm:ap-southeast-1:*:parameter/cdk-monorepo-backend/prod/frontend-config'],
-                        actions: ['ssm:GetParameter'],
-                        effect: iam.Effect.ALLOW,
-                    }),
+                    // new iam.PolicyStatement({
+                    //     resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-backend/prod/frontend-config`],
+                    //     actions: ['ssm:GetParameter'],
+                    //     effect: iam.Effect.ALLOW,
+                    // }),
                 ],
 
                 // subdirectory: 'packages/cdk-app',
@@ -78,8 +79,8 @@ class PipelineStack extends cdk.Stack {
         const deployedStagingStage = new DeploymentStage(this, utils.getConstructId('staging'), {
             stageName: 'staging',
             env: {
-                account: '694710432912',
-                region: 'ap-southeast-1',
+                account: config.AWS_ACCOUNT_ID,
+                region: config.AWS_REGION,
             },
         });
 
@@ -106,8 +107,8 @@ class PipelineStack extends cdk.Stack {
         const deployedProdStage = new DeploymentStage(this, utils.getConstructId('prod'), {
             stageName: 'prod',
             env: {
-                account: '694710432912',
-                region: 'ap-southeast-1',
+                account: config.AWS_ACCOUNT_ID,
+                region: config.AWS_REGION,
             },
         });
 
