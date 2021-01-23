@@ -43,6 +43,19 @@ class PipelineStack extends cdk.Stack {
                 // or if you have TypeScript Lambdas that need to be compiled).
                 buildCommand: 'yarn build:and:prepare:deployment',
                 synthCommand: 'yarn cdk:synth',
+                rolePolicyStatements: [
+                    new iam.PolicyStatement({
+                        resources: ['arn:aws:ssm:ap-southeast-1:694710432912:parameter/cdk-monorepo-backend/staging/frontend-config'],
+                        actions: ['ssm:GetParameter'],
+                        effect: iam.Effect.ALLOW,
+                    }),
+                    new iam.PolicyStatement({
+                        resources: ['arn:aws:ssm:ap-southeast-1:694710432912:parameter/cdk-monorepo-backend/prod/frontend-config'],
+                        actions: ['ssm:GetParameter'],
+                        effect: iam.Effect.ALLOW,
+                    }),
+                ],
+
                 // subdirectory: 'packages/cdk-app',
             }),
         });
@@ -56,9 +69,9 @@ class PipelineStack extends cdk.Stack {
 
         pipeline.codePipeline.stages[1].addAction(testAction);
 
-        const buildAction = pipeline.codePipeline.stages[1].actions[0];
-        // Build action need to get config from SSM
-        buildAction.actionProperties.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMFullAccess'));
+        // const buildAction = pipeline.codePipeline.stages[1].actions[0];
+        // // Build action need to get config from SSM
+        // buildAction.actionProperties.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMFullAccess'));
 
         // Do this as many times as necessary with any account and region
         // Account and region may be different from the pipeline's.
