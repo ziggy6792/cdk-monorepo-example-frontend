@@ -54,7 +54,7 @@ const main = async () => {
 
 main()
     .then(() => {
-        console.log('fetch config: SUCCESS');
+        console.log('fetch config:  SUCCESS');
         process.exit(0);
     })
     .catch((err) => {
