@@ -1,5 +1,5 @@
 window.env = {
-    ENV: 'staging',
+    ENV: 'dev',
     AWS_REGION: 'ap-southeast-1',
     AWS_COGNITO_IDENDITY_POOL_ID: 'ap-southeast-1:260bee68-fcaf-4172-a4e6-f827fd58ebd5',
     AWS_USER_POOLS_ID: 'ap-southeast-1_jSZ2DotQB',
