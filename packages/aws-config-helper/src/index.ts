@@ -10,7 +10,12 @@ import jsonBeautify from 'json-beautify';
 import fetchConfig from './fetch-config';
 
 const writeFile = util.promisify(fs.writeFile);
+
+enum ValidCommands {
+    COPY_CONFIG = 'copy-config',
+}
 interface IArgs {
+    _: string[];
     fromSsm: string;
     toFile: string;
 }
@@ -26,6 +31,20 @@ const main = async () => {
 
     log('Recieved Args', args);
 
+    const command = args?._.length && args._[0];
+
+    log('Recieved Command', command);
+
+    if (command !== ValidCommands.COPY_CONFIG) {
+        log('Command not valid', command);
+
+        throw new Error(`Command not valid: ${command}`);
+    }
+
+    await copyConfig(args);
+};
+
+const copyConfig = async (args: IArgs) => {
     if (!args.fromSsm || !args.toFile) {
         throw new Error('Invalid Args');
     }
