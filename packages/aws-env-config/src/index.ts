@@ -15,35 +15,35 @@ interface IArgs {
     toFile: string;
 }
 
-const args = (yargs(hideBin(process.argv)).argv as unknown) as IArgs;
-
-console.log('argv', args);
-
-if (!args.fromSsm || !args.toFile) {
-    throw new Error('Invalid Args');
-}
+const log = (...args) => {
+    console.log('Fetch Config:', ...args);
+};
 
 AWS.config.update({ region: 'ap-southeast-1' });
 
-process.argv.forEach((val, index, array) => {
-    console.log(`${index}: ${val}`);
-});
-
-// util.inspect(process);
-
-const cwdDir = process.env.PWD;
-
-console.log('cwdDir!!!!!', cwdDir);
-
 const main = async () => {
+    const args = (yargs(hideBin(process.argv)).argv as unknown) as IArgs;
+
+    log('Recieved Args', args);
+
+    if (!args.fromSsm || !args.toFile) {
+        throw new Error('Invalid Args');
+    }
+
+    const callingDirectory = process.env.PWD;
+
+    log('Calling Directory', callingDirectory);
+
+    const fileToWrite = path.join(callingDirectory, args.toFile);
+
+    log('To File Full Path', fileToWrite);
+
     const config = await fetchConfig(args.fromSsm);
 
-    const fileToWrite = path.join(cwdDir, args.toFile);
-
-    console.log(config);
-    console.log(fileToWrite);
+    log('Recievd Config', config);
 
     if (!fs.existsSync(fileToWrite)) {
+        log('File not fouund', fileToWrite);
         throw new Error(`File not fouund: ${fileToWrite}`);
     }
 
@@ -54,11 +54,12 @@ const main = async () => {
 
 main()
     .then(() => {
-        console.log('fetch config:  SUCCESS');
+        log('SUCCESS');
         process.exit(0);
     })
     .catch((err) => {
-        console.log(err);
+        log('ERROR', err);
+
         process.exit(1);
     });
 
