@@ -21,7 +21,7 @@ interface IArgs {
 }
 
 const log = (...args) => {
-    console.log('Fetch Config:', ...args);
+    console.log('AWS Config Helper:', ...args);
 };
 
 AWS.config.update({ region: 'ap-southeast-1' });
@@ -35,13 +35,14 @@ const main = async () => {
 
     log('Recieved Command', command);
 
-    if (command !== ValidCommands.COPY_CONFIG) {
-        log('Command not valid', command);
-
-        throw new Error(`Command not valid: ${command}`);
+    switch (command) {
+        case ValidCommands.COPY_CONFIG:
+            await copyConfig(args);
+            return;
+        default:
+            log('Command not valid', command);
+            throw new Error(`Command not valid: ${command}`);
     }
-
-    await copyConfig(args);
 };
 
 const copyConfig = async (args: IArgs) => {

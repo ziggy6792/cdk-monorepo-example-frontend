@@ -8,7 +8,9 @@
         "test": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
         "start": "tsc -w",
         "build": "tsc -p .",
-        "local": "sudo npm i -g && aws-config-helper"
+        "local": "sudo npm i -g && aws-config-helper",
+        "typecheck": "tsc --noEmit",
+        "precommit": "yarn run typecheck"
     },
     "dependencies": {
         "@types/node": "^14.14.21",
