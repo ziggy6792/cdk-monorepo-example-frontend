@@ -3,6 +3,7 @@
 import * as cdk from '@aws-cdk/core';
 import * as path from 'path';
 import * as utils from 'src/utils';
+import fs from 'fs';
 import DeploymentStack from './deployment-stack';
 
 export interface DeploymentStageProps extends cdk.StackProps {
@@ -17,7 +18,13 @@ export class DeploymentStage extends cdk.Stage {
 
         const { stageName } = props;
 
-        const websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), `../${stageName}/build`);
+        let websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), `../${stageName}/build`);
+
+        if (!fs.existsSync(websiteFolder)) {
+            // Point to empty build folder to allow deploy locally without error
+            websiteFolder = path.join(require.resolve('@danielblignaut/web-app'), '../');
+        }
+
         const ssmUrlParamId = utils.getSsmParamId('url', stageName);
 
         const stack = new DeploymentStack(this, 'deployment', { websiteFolder, ssmUrlParamId });
