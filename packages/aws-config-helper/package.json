@@ -1,5 +1,5 @@
 {
-    "name": "@danielblignaut/aws-config-helper",
+    "name": "@simonverhoeven/aws-config-helper",
     "bin": {
         "aws-config-helper": "./dist/index.js"
     },

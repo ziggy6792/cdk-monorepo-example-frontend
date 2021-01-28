@@ -264,7 +264,7 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
 
                 const isSubmitDisabled = isSubmitting || !isValid || (!dirty && !loadDefaultData);
                 return (
-                    <Grid container direction='column' justify='center' alignItems='center' spacing={2} style={{ height: '100%', width: '100%' }}>
+                    <Grid container direction='column' justify='center' alignItems='center' spacing={2}>
                         {formType === FormType.SIGN_IN && (
                             <SignInForm setFormType={setFormType} isSubmitDisabled={isSubmitDisabled} submitForm={submitForm} resetForm={resetForm} />
                         )}
