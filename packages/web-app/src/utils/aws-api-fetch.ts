@@ -15,6 +15,7 @@ interface IAwsGraphqlFetchConfig {
     aws_project_region: string;
     aws_graphqlEndpoint_authUser: string;
     aws_graphqlEndpoint_authRole: string;
+    aws_graphqlEndpoint_authNone?: string;
 }
 
 let gqFetchConfig: IAwsGraphqlFetchConfig | null = null;
@@ -61,7 +62,11 @@ export const configure = (config: IAwsGraphqlFetchConfig) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const awsApiFetch = async (uri: string, options: any): Promise<any> => {
-    const { aws_graphqlEndpoint_authUser: USER_AUTH_URL, aws_graphqlEndpoint_authRole: ROLE_AUTH_URL } = gqFetchConfig;
+    const {
+        aws_graphqlEndpoint_authUser: USER_AUTH_URL,
+        aws_graphqlEndpoint_authRole: ROLE_AUTH_URL,
+        aws_graphqlEndpoint_authNone: NO_AUTH_URL,
+    } = gqFetchConfig;
 
     try {
         const cognitoUser = await Auth.currentSession();
@@ -85,7 +90,7 @@ export const awsApiFetch = async (uri: string, options: any): Promise<any> => {
             throw err;
         }
     }
-    throw new Error('Could not authenticate with api');
+    return fetch(NO_AUTH_URL, options);
 };
 
 export default awsApiFetch;
