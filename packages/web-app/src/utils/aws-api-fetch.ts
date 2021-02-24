@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable max-len */
+/* eslint-disable camelcase */
 
 // import { setContext } from 'apollo-link-context';
 
@@ -14,7 +15,7 @@ interface IAwsGraphqlFetchConfig {
     aws_project_region: string;
     aws_graphqlEndpoint_authUser: string;
     aws_graphqlEndpoint_authRole: string;
-    aws_graphqlEndpoint_authNone: string;
+    aws_graphqlEndpoint_authNone?: string;
 }
 
 let gqFetchConfig: IAwsGraphqlFetchConfig | null = null;
@@ -72,7 +73,7 @@ export const awsApiFetch = async (uri: string, options: any): Promise<any> => {
 
         const cognitoFetch = buildCognitoFetch(cognitoUser.getAccessToken().getJwtToken());
 
-        return cognitoFetch(USER_AUTH_URL, options);
+        return await cognitoFetch(USER_AUTH_URL, options);
     } catch (err) {
         if (err === 'No current user') {
             console.log('Not logged in');
