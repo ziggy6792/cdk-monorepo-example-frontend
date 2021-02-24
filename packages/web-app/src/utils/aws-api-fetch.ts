@@ -73,7 +73,7 @@ export const awsApiFetch = async (uri: string, options: any): Promise<any> => {
 
         const cognitoFetch = buildCognitoFetch(cognitoUser.getAccessToken().getJwtToken());
 
-        return cognitoFetch(USER_AUTH_URL, options);
+        return await cognitoFetch(USER_AUTH_URL, options);
     } catch (err) {
         if (err === 'No current user') {
             console.log('Not logged in');
