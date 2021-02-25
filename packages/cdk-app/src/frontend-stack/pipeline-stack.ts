@@ -46,7 +46,7 @@ class PipelineStack extends cdk.Stack {
                 synthCommand: 'yarn cdk:synth',
                 rolePolicyStatements: [
                     new iam.PolicyStatement({
-                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-alpaca-*`],
+                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/alpaca-*`],
                         actions: ['ssm:GetParameter'],
                         effect: iam.Effect.ALLOW,
                     }),
