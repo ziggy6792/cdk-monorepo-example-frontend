@@ -31,7 +31,7 @@ class PipelineStack extends cdk.Stack {
                 oauthToken: cdk.SecretValue.secretsManager('GITHUB_OATH_TOKEN', { jsonField: 'GITHUB_OATH_TOKEN' }),
                 trigger: codepipelineActions.GitHubTrigger.POLL,
                 // Replace these with your actual GitHub project info
-                owner: 'ziggy6792',
+                owner: 'waketools',
                 repo: config.PROJECT_NAME,
                 branch: 'refactor/rename-project',
             }),
