@@ -31,8 +31,8 @@ class PipelineStack extends cdk.Stack {
                 oauthToken: cdk.SecretValue.secretsManager('GITHUB_OATH_TOKEN', { jsonField: 'GITHUB_OATH_TOKEN' }),
                 trigger: codepipelineActions.GitHubTrigger.POLL,
                 // Replace these with your actual GitHub project info
-                owner: 'ziggy6792',
-                repo: 'cdk-monorepo-example-frontend',
+                owner: 'waketools',
+                repo: config.PROJECT_NAME,
                 branch: 'master',
             }),
 
@@ -46,7 +46,7 @@ class PipelineStack extends cdk.Stack {
                 synthCommand: 'yarn cdk:synth',
                 rolePolicyStatements: [
                     new iam.PolicyStatement({
-                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-*`],
+                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/alpaca-*`],
                         actions: ['ssm:GetParameter'],
                         effect: iam.Effect.ALLOW,
                     }),

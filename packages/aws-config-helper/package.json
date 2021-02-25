@@ -1,5 +1,5 @@
 {
-    "name": "@simonverhoeven/aws-config-helper",
+    "name": "@alpaca-frontend/aws-config-helper",
     "bin": {
         "aws-config-helper": "./dist/index.js"
     },
