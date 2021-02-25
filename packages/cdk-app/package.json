@@ -1,5 +1,5 @@
 {
-    "name": "@simonverhoeven/cdk-app",
+    "name": "@alpaca-frontend/cdk-app",
     "version": "0.1.0",
     "bin": {
         "packages": "src/index.ts"
@@ -31,7 +31,7 @@
         "@aws-cdk/core": "1.87.0",
         "@aws-cdk/pipelines": "1.87.0",
         "@aws-solutions-constructs/core": "1.87.0",
-        "@simonverhoeven/web-app": "^0.1.0",
+        "@alpaca-frontend/web-app": "^0.1.0",
         "aws-cdk": "1.87.0"
     },
     "devDependencies": {
