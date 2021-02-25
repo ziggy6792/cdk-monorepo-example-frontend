@@ -18,11 +18,11 @@ export class DeploymentStage extends cdk.Stage {
 
         const { stageName } = props;
 
-        let websiteFolder = path.join(require.resolve('@simonverhoeven/web-app'), `../${stageName}/build`);
+        let websiteFolder = path.join(require.resolve('@alpaca-frontend/web-app'), `../${stageName}/build`);
 
         if (!fs.existsSync(websiteFolder)) {
             // Point to empty build folder to allow deploy locally without error
-            websiteFolder = path.join(require.resolve('@simonverhoeven/web-app'), '../');
+            websiteFolder = path.join(require.resolve('@alpaca-frontend/web-app'), '../');
         }
 
         const ssmUrlParamId = utils.getSsmParamId('url', stageName);

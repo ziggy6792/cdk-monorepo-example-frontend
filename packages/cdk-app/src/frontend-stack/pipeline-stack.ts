@@ -32,8 +32,8 @@ class PipelineStack extends cdk.Stack {
                 trigger: codepipelineActions.GitHubTrigger.POLL,
                 // Replace these with your actual GitHub project info
                 owner: 'ziggy6792',
-                repo: 'cdk-monorepo-example-frontend',
-                branch: 'master',
+                repo: config.PROJECT_NAME,
+                branch: 'refactor/rename-project',
             }),
 
             synthAction: cdkPipeline.SimpleSynthAction.standardYarnSynth({
@@ -46,7 +46,7 @@ class PipelineStack extends cdk.Stack {
                 synthCommand: 'yarn cdk:synth',
                 rolePolicyStatements: [
                     new iam.PolicyStatement({
-                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-monorepo-*`],
+                        resources: [`arn:aws:ssm:${config.AWS_REGION}:${config.AWS_ACCOUNT_ID}:parameter/cdk-alpaca-*`],
                         actions: ['ssm:GetParameter'],
                         effect: iam.Effect.ALLOW,
                     }),

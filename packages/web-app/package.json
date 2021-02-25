@@ -1,5 +1,5 @@
 {
-    "name": "@simonverhoeven/web-app",
+    "name": "@alpaca-frontend/web-app",
     "version": "0.1.0",
     "private": true,
     "main": "builds/index.js",
@@ -53,8 +53,8 @@
         "builds:create": "yarn builds:add:staging && yarn builds:add:prod",
         "builds:add:staging": "rm -rfv builds/staging && mkdir -p builds/staging && cp -a build builds/staging && yarn builds:config:staging",
         "builds:add:prod": "rm -rfv builds/prod && mkdir -p builds/prod && cp -a build builds/prod && yarn builds:config:prod",
-        "builds:config:prod": "yarn aws-config-helper copy-config --fromSsm /cdk-monorepo-backend/prod/frontend-config --toFile builds/prod/build/config/env.js",
-        "builds:config:staging": "yarn aws-config-helper copy-config --fromSsm /cdk-monorepo-backend/staging/frontend-config --toFile builds/staging/build/config/env.js",
+        "builds:config:prod": "yarn aws-config-helper copy-config --fromSsm /cdk-alpaca-backend/prod/frontend-config --toFile builds/prod/build/config/env.js",
+        "builds:config:staging": "yarn aws-config-helper copy-config --fromSsm /cdk-alpaca-backend/staging/frontend-config --toFile builds/staging/build/config/env.js",
         "builds:clean": "rm -rfv builds/prod && rm -rfv builds/staging",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
@@ -76,7 +76,7 @@
         ]
     },
     "devDependencies": {
-        "@simonverhoeven/aws-config-helper": "^2.0.6",
+        "@alpaca-frontend/aws-config-helper": "^2.0.6",
         "@types/lodash": "^4.14.166",
         "@types/node": "^14.14.16",
         "@types/react": "^17.0.0",
