@@ -3,8 +3,6 @@
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 
-// import { setContext } from 'apollo-link-context';
-
 import Auth from '@aws-amplify/auth';
 
 import { aws4Interceptor } from 'aws4-axios';
