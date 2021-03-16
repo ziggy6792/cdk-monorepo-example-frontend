@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-apollo';
 import { HELLO } from 'src/graphql/custom-queries';
 
-const UsersList: React.FC = () => {
+const HelloWorld: React.FC = () => {
     const { loading, data, error } = useQuery(HELLO);
 
     if (error) {
@@ -23,4 +23,4 @@ const UsersList: React.FC = () => {
     );
 };
 
-export default UsersList;
+export default HelloWorld;
