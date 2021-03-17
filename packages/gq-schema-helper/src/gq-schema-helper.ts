@@ -19,9 +19,8 @@ enum ValidCommands {
 }
 interface IArgs {
     _: string[];
-    env: string;
+    useLocal?: boolean;
     toFile: string;
-    config: string;
 }
 
 const main = async () => {
@@ -44,7 +43,7 @@ const main = async () => {
 };
 
 const fetchSchema = async (args: IArgs) => {
-    if (!args.env || !args.toFile) {
+    if (!args.toFile) {
         throw new Error('Invalid Args');
     }
 
@@ -52,21 +51,20 @@ const fetchSchema = async (args: IArgs) => {
 
     log('Calling Directory', callingDirectory);
 
-    const endpoint = config.endpoint[args.env];
+    let endpoint = config.hostedEndpoint;
+
+    if (args.useLocal) {
+        const configFile = path.join(callingDirectory, config.localConfig.file);
+
+        const env = await require(configFile);
+
+        endpoint = env[config.localConfig.endpointKey];
+    }
 
     const fileToWrite = path.join(callingDirectory, args.toFile);
-
-    const configFile = path.join(callingDirectory, args.config);
-
-    // const window = {};
-
-    await require(configFile);
-
-    // console.log('window', window);
+    log('Using endpoint', endpoint);
 
     log('To File Full Path', fileToWrite);
-
-    log('endpoint', endpoint);
 
     const result = await axios.post(endpoint, {
         variables: {},

@@ -48,9 +48,9 @@
         "yup": "^0.32.8"
     },
     "scripts": {
-        "start": "yarn fetch:schema --env=dev && react-scripts start",
-        "build": "react-scripts build",
-        "fetch:schema": "yarn gq-schema-helper fetch-schema --config=public/config/env.json --toFile=src/graphql/fragment-types.json",
+        "start": "yarn fetch:gq:schema --useLocal=true && react-scripts start",
+        "build": "yarn fetch:gq:schema && react-scripts build",
+        "fetch:gq:schema": "yarn gq-schema-helper fetch-schema --toFile=src/graphql/fragment-types.json",
         "builds:create": "yarn builds:add:staging && yarn builds:add:prod",
         "builds:add:staging": "rm -rfv builds/staging && mkdir -p builds/staging && cp -a build builds/staging && yarn builds:config:staging",
         "builds:add:prod": "rm -rfv builds/prod && mkdir -p builds/prod && cp -a build builds/prod && yarn builds:config:prod",
