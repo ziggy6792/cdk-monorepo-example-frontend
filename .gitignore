@@ -137,4 +137,4 @@ dist
 
 */*.env-local
 
-# packages/web-app/src/graphql/fragment-types.json
+**/fragment-types.json
