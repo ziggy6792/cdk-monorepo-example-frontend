@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { isAuthenticatedActionCreator } from 'src/domain/auth';
 import * as routeConfig from 'src/config/routes';
 import HomeScreen from 'src/screens/home-screen';
 import ProfileScreen from 'src/screens/profile-screen';
+import ProtectedRoute from './hoc/protected-route/index';
 import envConfig from './config/env-config';
 // Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
 const calcVh = () => {
@@ -32,8 +34,8 @@ const Routes: React.FC = () => {
                     <Redirect to={routeConfig.ROUTE_PROFILE} />
                 </Route>
                 <Switch>
-                    <Route exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
-                    <Route exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
+                    <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
+                    <ProtectedRoute isAuthenticated={false} exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
                 </Switch>
             </BrowserRouter>
         </div>
