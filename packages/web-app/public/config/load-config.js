@@ -22,4 +22,4 @@ function loadJSON(filePath) {
     return JSON.parse(json);
 }
 
-window.env = loadJSON('./config/env.json');
+window.env = loadJSON('/config/env.json');
