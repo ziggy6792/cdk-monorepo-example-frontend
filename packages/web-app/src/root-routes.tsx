@@ -1,12 +1,22 @@
 import React, { useEffect } from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { isAuthenticatedActionCreator } from 'src/domain/auth';
-import Theme from 'src/ui/theme';
 import * as routeConfig from 'src/config/routes';
 import HomeScreen from 'src/screens/home-screen';
 import ProfileScreen from 'src/screens/profile-screen';
+import envConfig from './config/env-config';
+// Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
+const calcVh = () => {
+    (document.querySelector(':root') as any).style.setProperty('--vh', `${window.innerHeight / 100}px`);
+};
+
+calcVh();
+window.addEventListener('resize', () => {
+    calcVh();
+});
+
+document.title = envConfig.title;
 
 const Routes: React.FC = () => {
     const dispatch = useDispatch();
@@ -16,7 +26,7 @@ const Routes: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <ThemeProvider theme={Theme}>
+        <div style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
             <BrowserRouter>
                 <Route exact path='/'>
                     <Redirect to={routeConfig.ROUTE_PROFILE} />
@@ -26,7 +36,7 @@ const Routes: React.FC = () => {
                     <Route exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
                 </Switch>
             </BrowserRouter>
-        </ThemeProvider>
+        </div>
     );
 };
 
