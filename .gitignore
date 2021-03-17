@@ -136,3 +136,5 @@ dist
 .pnp.*
 
 */*.env-local
+
+# packages/web-app/src/graphql/fragment-types.json
