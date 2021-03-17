@@ -1,5 +1,5 @@
 const log = (...args) => {
-    console.log('GQ Schema Helper:', ...args);
+    console.log('AWS Config Helper:', ...args);
 };
 
 export default log;

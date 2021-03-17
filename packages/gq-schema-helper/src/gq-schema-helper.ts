@@ -53,12 +53,26 @@ const fetchSchema = async (args: IArgs) => {
 
     let endpoint = config.hostedEndpoint;
 
-    if (args.useLocal) {
-        const configFile = path.join(callingDirectory, config.localConfig.configFile);
+    try {
+        if (args.useLocal) {
+            const configFile = path.join(callingDirectory, config.localConfig.configFile);
 
-        const env = await require(configFile);
+            log(`Local config file: ${configFile}`);
 
-        endpoint = env[config.localConfig.endpointKey];
+            const env = await require(configFile);
+
+            const localEndpoint = env[config.localConfig.endpointKey];
+
+            log(`Local endpoint: ${localEndpoint}`);
+
+            if (!localEndpoint) {
+                throw new Error('No endpoint');
+            }
+
+            endpoint = localEndpoint;
+        }
+    } catch (err) {
+        log(`Can not find local endpoint in local config file, default to hosted endpoint`);
     }
 
     const fileToWrite = path.join(callingDirectory, args.toFile);

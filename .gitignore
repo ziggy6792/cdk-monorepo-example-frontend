@@ -136,3 +136,6 @@ dist
 .pnp.*
 
 */*.env-local
+
+**/fragment-types.json
+**/config/env.json
