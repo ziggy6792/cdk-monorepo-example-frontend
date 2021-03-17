@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
@@ -19,6 +21,7 @@ interface IArgs {
     _: string[];
     env: string;
     toFile: string;
+    config: string;
 }
 
 const main = async () => {
@@ -52,6 +55,14 @@ const fetchSchema = async (args: IArgs) => {
     const endpoint = config.endpoint[args.env];
 
     const fileToWrite = path.join(callingDirectory, args.toFile);
+
+    const configFile = path.join(callingDirectory, args.config);
+
+    // const window = {};
+
+    await require(configFile);
+
+    // console.log('window', window);
 
     log('To File Full Path', fileToWrite);
 
