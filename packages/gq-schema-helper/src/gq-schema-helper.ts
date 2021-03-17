@@ -54,7 +54,7 @@ const fetchSchema = async (args: IArgs) => {
     let endpoint = config.hostedEndpoint;
 
     if (args.useLocal) {
-        const configFile = path.join(callingDirectory, config.localConfig.file);
+        const configFile = path.join(callingDirectory, config.localConfig.configFile);
 
         const env = await require(configFile);
 
