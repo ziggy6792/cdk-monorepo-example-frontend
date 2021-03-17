@@ -3,7 +3,9 @@ import Auth from '@aws-amplify/auth';
 import ApolloClient from 'apollo-client';
 import { Provider } from 'react-redux';
 import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import introspectionQueryResultData from 'src/graphql/fragment-types.json';
+
 import { ApolloProvider } from 'react-apollo';
 import Routes from 'src/routes';
 import envConfig from './config/env-config';
@@ -14,6 +16,10 @@ import * as ApiFetch from './utils/aws-api-fetch';
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
 const store = initStore();
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+    introspectionQueryResultData,
+});
 
 // Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
 const calcVh = () => {
@@ -31,7 +37,7 @@ const client = new ApolloClient({
     link: createHttpLink({
         fetch: ApiFetch.awsApiFetch,
     }),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({ fragmentMatcher }),
 });
 
 const App: React.FC = () => (

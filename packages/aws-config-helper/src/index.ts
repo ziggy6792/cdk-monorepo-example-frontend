@@ -69,7 +69,7 @@ const copyConfig = async (args: IArgs) => {
 
     const jsonEnvConfig = jsonBeautify(config, null, 2, 100);
 
-    await writeFile(fileToWrite, `window.env = ${jsonEnvConfig}`);
+    await writeFile(fileToWrite, jsonEnvConfig);
 };
 
 main()

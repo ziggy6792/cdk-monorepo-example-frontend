@@ -1,9 +1,9 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
-import { HELLO } from 'src/graphql/custom-queries';
+import { GET_DATA_ENTITY, HELLO } from 'src/graphql/custom-queries';
 
-const UsersList: React.FC = () => {
-    const { loading, data, error } = useQuery(HELLO);
+const HelloWorld: React.FC = () => {
+    const { loading, data, error } = useQuery(GET_DATA_ENTITY, { variables: { id: 'testCompetition' } });
 
     if (error) {
         console.log('error', error);
@@ -23,4 +23,4 @@ const UsersList: React.FC = () => {
     );
 };
 
-export default UsersList;
+export default HelloWorld;
