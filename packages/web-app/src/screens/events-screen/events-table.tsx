@@ -19,7 +19,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
 
     const history = useHistory();
 
-    const tableData = events && events.map((val) => [val.name, val?.startTime?.toString(), { rowMeta: { id: val.id } }]);
+    const tableData = events && events.map((val) => [val.name, val?.startTime?.toString()]);
 
     const columns = [
         {
