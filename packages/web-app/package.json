@@ -4,6 +4,8 @@
     "private": true,
     "main": "builds/index.js",
     "dependencies": {
+        "@apollo/client": "^3.3.12",
+        "@apollo/react-common": "^3.1.4",
         "@aws-amplify/auth": "^3.4.15",
         "@lifeomic/axios-fetch": "^1.4.2",
         "@material-ui/core": "^4.11.2",
@@ -64,7 +66,8 @@
         "format": "prettier --write src/**/*.ts{,x}",
         "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
         "typecheck": "tsc --noEmit",
-        "precommit": "yarn run typecheck"
+        "precommit": "yarn run typecheck",
+        "apollo:codegen": "apollo codegen:generate --localSchemaFile='graphql-schema.json' --target=typescript --includes='src/gql/**.gql.ts' --tagName=gql --addTypename  types"
     },
     "browserslist": {
         "production": [

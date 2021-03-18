@@ -1,16 +1,17 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
 
 import React from 'react';
 import MUIDataTable from 'mui-datatables';
 
 import _ from 'lodash';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
-import Event from 'src/domain/models/event';
 import { useHistory } from 'react-router';
+import { listEvents_listEvents } from 'src/gql/types/listEvents';
 
 interface EventsTableProps {
-    events: Event[];
+    events: listEvents_listEvents[];
 }
 
 const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
