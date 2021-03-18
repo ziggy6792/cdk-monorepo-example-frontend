@@ -8,7 +8,7 @@ export interface ListEvent extends Omit<ListEventsQuery['listEvents'][number], '
     startTime: Date;
 }
 
-interface ListEventsResult extends Omit<QueryResult, 'data'> {
+interface ListEventsResult extends QueryResult {
     data: { listEvents: ListEvent[] };
 }
 
