@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { HeatStatus } from '../../types/globalTypes';
+import { HeatStatus } from './../../types/globalTypes';
 
 // ====================================================
 // GraphQL query operation: getDataEntity

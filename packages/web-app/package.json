@@ -66,7 +66,7 @@
         "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
         "typecheck": "tsc --noEmit",
         "precommit": "yarn run typecheck",
-        "apollo:codegen": "apollo codegen:generate --localSchemaFile='graphql-schema.json' --target=typescript --includes='src/gql/**.gql.ts' --tagName=gql --addTypename  types"
+        "apollo:codegen": "cd src && apollo codegen:generate --localSchemaFile='../graphql-schema.json' --target=typescript --includes='gql/**.gql.ts' --tagName=gql --addTypename types"
     },
     "browserslist": {
         "production": [

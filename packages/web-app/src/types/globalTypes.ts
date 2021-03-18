@@ -8,12 +8,21 @@
 //==============================================================
 
 /**
+ * The Event Status
+ */
+export enum EventStatus {
+    FINALIZED = 'FINALIZED',
+    REGISTRATION_CLOSED = 'REGISTRATION_CLOSED',
+    REGISTRATION_OPEN = 'REGISTRATION_OPEN',
+}
+
+/**
  * The Heat Status
  */
 export enum HeatStatus {
-  CLOSED = "CLOSED",
-  FINISHED = "FINISHED",
-  OPEN = "OPEN",
+    CLOSED = 'CLOSED',
+    FINISHED = 'FINISHED',
+    OPEN = 'OPEN',
 }
 
 //==============================================================

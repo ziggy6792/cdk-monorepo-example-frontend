@@ -8,6 +8,7 @@ export const LIST_EVENTS = gql`
             id
             name
             startTime
+            status
         }
     }
 `;
