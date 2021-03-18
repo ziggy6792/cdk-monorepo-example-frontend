@@ -11,5 +11,5 @@ generates:
             withHooks: true
             withHOC: false
             withComponent: false
-            apolloReactHooksImportFrom: '@apollo/react-hooks'
+            # apolloReactHooksImportFrom: '@apollo/react-hooks'
             apolloReactCommonImportFrom: '@apollo/client'
