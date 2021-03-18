@@ -54,3 +54,13 @@ export const GET_DATA_ENTITY = gql`
         }
     }
 `;
+
+export const LIST_EVENTS = gql`
+    query listEvents {
+        listEvents {
+            id
+            name
+            startTime
+        }
+    }
+`;
