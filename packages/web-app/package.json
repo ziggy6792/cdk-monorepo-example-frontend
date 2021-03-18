@@ -5,6 +5,7 @@
     "main": "builds/index.js",
     "dependencies": {
         "@aws-amplify/auth": "^3.4.15",
+        "@graphql-codegen/cli": "1.9.1",
         "@lifeomic/axios-fetch": "^1.4.2",
         "@material-ui/core": "^4.11.2",
         "@material-ui/icons": "^4.11.2",
@@ -66,7 +67,8 @@
         "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
         "typecheck": "tsc --noEmit",
         "precommit": "yarn run typecheck",
-        "apollo:codegen": "cd src && apollo codegen:generate --localSchemaFile='../graphql-schema.json' --target=typescript --includes='gql/**.gql.ts' --tagName=gql --addTypename types"
+        "apollo:codegen": "cd src && apollo codegen:generate --localSchemaFile='../graphql-schema.json' --target=typescript --includes='gql/**.gql.ts' --tagName=gql --addTypename types",
+        "generate": "graphql-codegen"
     },
     "browserslist": {
         "production": [
@@ -83,6 +85,10 @@
     "devDependencies": {
         "@alpaca-frontend/aws-config-helper": "^2.0.6",
         "@alpaca-frontend/gq-schema-helper": "^1.0.0",
+        "@graphql-codegen/introspection": "1.9.1",
+        "@graphql-codegen/typescript": "1.9.1",
+        "@graphql-codegen/typescript-operations": "1.9.1",
+        "@graphql-codegen/typescript-react-apollo": "1.9.1",
         "@types/lodash": "^4.14.166",
         "@types/mui-datatables": "^3.7.1",
         "@types/node": "^14.14.16",
@@ -90,6 +96,7 @@
         "@types/react-dom": "^17.0.0",
         "@types/react-redux": "^7.1.14",
         "@types/react-router-dom": "^5.1.6",
+        "change-case": "^4.1.2",
         "prettier": "^2.2.1",
         "react-app-rewired": "^2.1.8"
     }

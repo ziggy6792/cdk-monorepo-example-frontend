@@ -1,0 +1,7 @@
+schema: 'http://localhost:3100/lambda-gq-resolver/auth-none/graphql'
+documents: ./src/gql/**.gql.ts
+generates:
+    ./src/types.ts:
+        plugins:
+            - typescript
+            - typescript-operations
