@@ -35,7 +35,7 @@ const Routes: React.FC = () => {
                 </Route>
                 <Switch>
                     <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
-                    <ProtectedRoute isAuthenticated={false} exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
+                    <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
                 </Switch>
             </BrowserRouter>
         </div>

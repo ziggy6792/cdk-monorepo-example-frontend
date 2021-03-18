@@ -41,7 +41,7 @@ const ProfileScreen: React.FC = () => {
                 {isAuthenticated && (
                     <>
                         <>
-                            <h4>Welcome {user.displayName}</h4>
+                            <h4>Welcomessss {user.displayName}</h4>
                             <Button onClick={() => dispatch(logoutActionCreator())}>sign out</Button>
                         </>
                     </>
