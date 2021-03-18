@@ -1,0 +1,67 @@
+#!/usr/bin/env node
+
+import AWS from 'aws-sdk';
+import fs from 'fs';
+import util from 'util';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
+import path from 'path';
+import jsonBeautify from 'json-beautify';
+import fetchConfig from './fetch-config';
+import log from './log';
+
+const writeFile = util.promisify(fs.writeFile);
+
+enum ValidCommands {
+    COPY_CONFIG = 'copy-config',
+}
+interface IArgs {
+    _: string[];
+    fromSsm: string;
+    toFile: string;
+}
+
+AWS.config.update({ region: 'ap-southeast-1' });
+
+const main = async () => {
+    const args = (yargs(hideBin(process.argv)).argv as unknown) as IArgs;
+
+    log('Recieved Args', args);
+
+    const command = args?._.length && args._[0];
+
+    log('Recieved Command', command);
+
+    switch (command) {
+        case ValidCommands.COPY_CONFIG:
+            await copyConfig(args);
+            return;
+        default:
+            log('Command not valid', command);
+            throw new Error(`Command not valid: ${command}`);
+    }
+};
+
+const copyConfig = async (args: IArgs) => {
+    if (!args.fromSsm || !args.toFile) {
+        throw new Error('Invalid Args');
+    }
+
+    const callingDirectory = process.env.PWD;
+
+    log('Calling Directory', callingDirectory);
+
+    const fileToWrite = path.join(callingDirectory, args.toFile);
+
+    log('To File Full Path', fileToWrite);
+
+    const config = await fetchConfig(args.fromSsm);
+
+    log('Recievd Config', config);
+
+    const jsonEnvConfig = jsonBeautify(config, null, 2, 100);
+
+    await writeFile(fileToWrite, jsonEnvConfig);
+};
+
+export default main;

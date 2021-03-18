@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import main from './aws-config-helper';
+import main from './gq-schema-helper';
 import log from './log';
 
 main()
@@ -13,5 +13,3 @@ main()
 
         process.exit(1);
     });
-
-// console.log('aws-config-helper bla');

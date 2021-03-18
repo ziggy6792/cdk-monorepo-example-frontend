@@ -1,6 +1,6 @@
 import React from 'react';
-import UsersList from 'src/modules/users-list';
+import HelloWorld from 'src/modules/hello-world';
 
-const HomeScreen = () => <UsersList />;
+const HomeScreen = () => <HelloWorld />;
 
 export default HomeScreen;

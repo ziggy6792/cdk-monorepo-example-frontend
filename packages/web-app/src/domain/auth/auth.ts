@@ -58,20 +58,16 @@ const login = createAsyncThunk<
     return userPayload;
 });
 
-const logout = createAsyncThunk<
-    // Return type of the payload creator
-    IUser
->('auth/logout', async () => {
+const logout = createAsyncThunk<// Return type of the payload creator
+IUser>('auth/logout', async () => {
     // First argument to the payload creator
     await Auth.signOut();
     cleatStorage();
     return null;
 });
 
-const isAuthenticated = createAsyncThunk<
-    // Return type of the payload creator
-    IUser
->('auth/isAuthenticatd', async () => {
+const isAuthenticated = createAsyncThunk<// Return type of the payload creator
+IUser>('auth/isAuthenticatd', async () => {
     let cognitoUser: CognitoUser = null;
     try {
         cognitoUser = await Auth.currentAuthenticatedUser();
