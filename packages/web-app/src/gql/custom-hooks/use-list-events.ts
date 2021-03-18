@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { QueryResult } from 'react-apollo';
+import { QueryResult } from '@apollo/client';
 import { parseISO } from 'date-fns';
 import { ListEventsQuery, useListEventsQuery as generatedUseListEventsQuery } from 'src/generated-types';
 

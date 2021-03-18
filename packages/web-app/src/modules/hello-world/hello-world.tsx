@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { GET_DATA_ENTITY, HELLO } from 'src/graphql/custom-queries';
 
 const HelloWorld: React.FC = () => {
