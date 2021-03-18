@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { isAuthenticatedActionCreator } from 'src/domain/auth';
 import * as routeConfig from 'src/config/routes';
 import HomeScreen from 'src/screens/home-screen';
+import LoginScreen from 'src/screens/login-screen';
 import ProfileScreen from 'src/screens/profile-screen';
 import ProtectedRoute from './hoc/protected-route/index';
 import envConfig from './config/env-config';
@@ -30,10 +31,8 @@ const Routes: React.FC = () => {
     return (
         <div style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
             <BrowserRouter>
-                <Route exact path='/'>
-                    <Redirect to={routeConfig.ROUTE_PROFILE} />
-                </Route>
                 <Switch>
+                    <Route path='/' component={LoginScreen} />
                     <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
                     <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
                 </Switch>
