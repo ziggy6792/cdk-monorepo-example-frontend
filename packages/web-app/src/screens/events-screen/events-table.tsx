@@ -8,10 +8,10 @@ import _ from 'lodash';
 import { Grid } from '@material-ui/core';
 
 import { useHistory } from 'react-router';
-import { listEvents_listEvents } from 'src/gql/types/listEvents';
+import { ListEvent } from 'src/gql/hooks/use-list-events';
 
 interface EventsTableProps {
-    events: listEvents_listEvents[];
+    events: ListEvent[];
 }
 
 const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
@@ -19,7 +19,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
 
     const history = useHistory();
 
-    const tableData = events && events.map((val) => [val.name, '06/07/1992', { rowMeta: { id: val.id } }]);
+    const tableData = events && events.map((val) => [val.name, val?.startTime?.toString(), { rowMeta: { id: val.id } }]);
 
     const columns = [
         {
