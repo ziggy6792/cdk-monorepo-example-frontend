@@ -1,8 +1,15 @@
 schema: 'http://localhost:3100/lambda-gq-resolver/auth-none/graphql'
 documents: ./src/gql/**.gql.ts
 generates:
-    ./generated-types.tsx:
+    src/generated-types.tsx:
         plugins:
             - typescript
             - typescript-operations
             - typescript-react-apollo
+        config:
+            skipTypename: false
+            withHooks: true
+            withHOC: false
+            withComponent: false
+            apolloReactHooksImportFrom: 'react-apollo'
+            apolloReactCommonImportFrom: 'react-apollo'

@@ -1,19 +1,18 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { useQuery } from 'react-apollo';
-import Event from 'src/domain/models/event';
-import { LIST_EVENTS } from 'src/gql/event.gql';
-import { useListEvents } from 'src/gql/hooks/use-list-events';
-import { listEvents } from 'src/gql/types/listEvents';
+import { useListEventsQuery } from 'src/gql/custom-hooks/use-list-events';
+// import { listEvents } from 'src/gql/types/listEvents';
 import EventsTable from './events-table';
 
 const EventsScreen: React.FC = () => {
-    const { loading, events, error } = useListEvents();
+    // const { loading, events, error } = useListEvents();
+
+    const { loading, data, error } = useListEventsQuery();
 
     return (
         <>
             {loading && <div>loading</div>}
-            {!loading && <EventsTable events={events} />}
+            {!loading && <EventsTable events={data.listEvents} />}
         </>
     );
 };
