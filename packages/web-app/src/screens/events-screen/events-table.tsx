@@ -9,9 +9,10 @@ import { Grid } from '@material-ui/core';
 
 import { useHistory } from 'react-router';
 import { ListEvent } from 'src/gql/custom-hooks/use-list-events';
+import { ListEventsQuery } from 'src/generated-types';
 
 interface EventsTableProps {
-    events: ListEvent[];
+    events: ListEventsQuery['listEvents'];
 }
 
 const EventsTable: React.FC<EventsTableProps> = ({ events }) => {

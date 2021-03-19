@@ -9,6 +9,7 @@ import introspectionQueryResultData from 'src/graphql/fragment-types.json';
 
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache, PossibleTypesMap } from '@apollo/client';
 import Routes from 'src/routes';
+import { parseISO } from 'date-fns';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import initStore from './config/store';
@@ -46,7 +47,31 @@ const client = new ApolloClient({
     link: createHttpLink({
         fetch: ApiFetch.awsApiFetch,
     }),
-    cache: new InMemoryCache({ possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData) }),
+    cache: new InMemoryCache({
+        possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
+        typePolicies: {
+            // Type policy map
+            Event: {
+                fields: {
+                    // Field policy map for the Product type
+                    startTime: {
+                        // Field policy for the isInCart field
+                        read(date) {
+                            // The read function for the isInCart field
+                            return parseISO(date);
+                        },
+                    },
+                },
+            },
+            // DateTime: {
+            //     // Field policy for the isInCart field
+            //     read(date) {
+            //         // The read function for the isInCart field
+            //         return parseISO(date);
+            //     },
+            // },
+        },
+    }),
 });
 
 const App: React.FC = () => (

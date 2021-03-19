@@ -9,6 +9,8 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: Date,
 };
 
 
@@ -84,7 +86,7 @@ export type CreateEventInput = {
   adminUserId?: Maybe<Scalars['String']>,
   selectedHeatId?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['ID']>,
-  startTime: Scalars['String'],
+  startTime: Scalars['DateTime'],
 };
 
 export type CreateRiderAllocationInput = {
@@ -107,6 +109,7 @@ export type DataEntity = {
   name: Scalars['String'],
 };
 
+
 export type Event = DataEntity & Identifiable & Creatable & {
    __typename?: 'Event',
   createdAt: Scalars['String'],
@@ -114,7 +117,8 @@ export type Event = DataEntity & Identifiable & Creatable & {
   id?: Maybe<Scalars['ID']>,
   name: Scalars['String'],
   description: Scalars['String'],
-  startTime: Scalars['String'],
+  startTime: Scalars['DateTime'],
+  startTime2?: Maybe<Scalars['DateTime']>,
   status: EventStatus,
   adminUserId: Scalars['String'],
   selectedHeatId: Scalars['String'],
@@ -469,7 +473,7 @@ export type UpdateEventInput = {
   adminUserId?: Maybe<Scalars['String']>,
   selectedHeatId?: Maybe<Scalars['String']>,
   id: Scalars['ID'],
-  startTime?: Maybe<Scalars['String']>,
+  startTime?: Maybe<Scalars['DateTime']>,
 };
 
 export type UpdateRiderAllocationInput = {

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { useListEventsQuery } from 'src/gql/custom-hooks/use-list-events';
+import { useListEventsQuery } from 'src/generated-types';
+// import { useListEventsQuery } from 'src/gql/custom-hooks/use-list-events';
 // import { listEvents } from 'src/gql/types/listEvents';
 import EventsTable from './events-table';
 
