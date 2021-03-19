@@ -12,3 +12,13 @@ export const LIST_EVENTS = gql`
         }
     }
 `;
+
+export const CREATE_EVENT = gql`
+    mutation createEvent($input: CreateEventInput!) {
+        createEvent(input: $input) {
+            id
+            adminUserId
+            startTime
+        }
+    }
+`;

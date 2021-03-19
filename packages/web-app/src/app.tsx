@@ -18,14 +18,15 @@ import * as ApiFetch from './utils/aws-api-fetch';
 const introspectionToPossibleTypes = (recievedMap): PossibleTypesMap => {
     const possibleTypes = {};
 
-    recievedMap.__schema.types.forEach((supertype) => {
+    recievedMap.__schema.types.forEach(supertype => {
         if (supertype.possibleTypes) {
-            possibleTypes[supertype.name] = supertype.possibleTypes.map((subtype) => subtype.name);
+            possibleTypes[supertype.name] = supertype.possibleTypes.map(subtype => subtype.name);
         }
     });
 
     return possibleTypes;
 };
+console.log('bla');
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
@@ -45,7 +46,7 @@ document.title = envConfig.title;
 
 const client = new ApolloClient({
     link: createHttpLink({
-        fetch: ApiFetch.awsApiFetch,
+        fetch: ApiFetch.awsApiFetch
     }),
     cache: new InMemoryCache({
         possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
@@ -59,10 +60,10 @@ const client = new ApolloClient({
                         read(date) {
                             // The read function for the isInCart field
                             return parseISO(date);
-                        },
-                    },
-                },
-            },
+                        }
+                    }
+                }
+            }
             // DateTime: {
             //     // Field policy for the isInCart field
             //     read(date) {
@@ -70,8 +71,8 @@ const client = new ApolloClient({
             //         return parseISO(date);
             //     },
             // },
-        },
-    }),
+        }
+    })
 });
 
 const App: React.FC = () => (

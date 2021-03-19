@@ -5,11 +5,11 @@ import React from 'react';
 import MUIDataTable from 'mui-datatables';
 
 import _ from 'lodash';
-import { Grid } from '@material-ui/core';
+import { Button, Grid, useTheme } from '@material-ui/core';
 
 import { useHistory } from 'react-router';
-import { ListEvent } from 'src/gql/custom-hooks/use-list-events';
-import { ListEventsQuery } from 'src/generated-types';
+import { ListEventsQuery, useCreateEventMutation } from 'src/generated-types';
+import { LIST_EVENTS } from 'src/gql/event.gql';
 
 interface EventsTableProps {
     events: ListEventsQuery['listEvents'];
@@ -20,19 +20,30 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
 
     const history = useHistory();
 
-    const tableData = events.map((event) => [event.name, event?.startTime?.toString()]);
+    const theme = useTheme();
+
+    const tableData = events.map(event => [event.name, event?.startTime?.toString()]);
+
+    const [createEvent, { loading, data, error }] = useCreateEventMutation({
+        refetchQueries: [
+            {
+                query: LIST_EVENTS
+            }
+        ],
+        awaitRefetchQueries: true
+    });
 
     const columns = [
         {
             name: 'event',
             label: 'Event',
-            options: {},
+            options: {}
         },
         {
             name: 'date',
             label: 'Date',
-            options: {},
-        },
+            options: {}
+        }
     ];
 
     return (
@@ -44,11 +55,23 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
                         data={tableData}
                         columns={columns}
                         options={{
-                            onRowClick: (rowData) => {
+                            onRowClick: rowData => {
                                 console.log(`clicked`, rowData);
-                            },
+                            }
                         }}
                     />
+                </Grid>
+                <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
+                    <Grid item>
+                        <Button
+                            onClick={() => {
+                                // console.log('click');
+                                createEvent({ variables: { input: { name: 'Test Event', startTime: new Date() } } });
+                            }}
+                        >
+                            Create Event
+                        </Button>
+                    </Grid>
                 </Grid>
                 {/* {props.auth.isAuthenticated && (
                     <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
