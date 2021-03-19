@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import NavigationBar from 'src/components/organism/navigation-desktop';
 
 interface IProps {
@@ -11,7 +12,9 @@ const MainTemplate: React.FC<IProps> = ({ children, isAuthenticated }) => {
     return (
         <>
             <NavigationBar isAuthenticated={isAuthenticated} />
-            <Box p={2}>{children}</Box>
+            <Box p={2} display='flex' flexDirection='column' flexGrow={1}>
+                {children}
+            </Box>
         </>
     );
 };

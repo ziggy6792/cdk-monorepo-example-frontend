@@ -13,6 +13,7 @@ import envConfig from './config/env-config';
 const calcVh = () => {
     (document.querySelector(':root') as any).style.setProperty('--vh', `${window.innerHeight / 100}px`);
 };
+//   <div style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
 
 calcVh();
 window.addEventListener('resize', () => {
@@ -29,15 +30,13 @@ const Routes: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <div style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
-            <BrowserRouter>
-                <Switch>
-                    <Route path='/' component={LoginScreen} />
-                    <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
-                    <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
-                </Switch>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <Switch>
+                <Route path='/' component={LoginScreen} />
+                <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
+                <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
+            </Switch>
+        </BrowserRouter>
     );
 };
 
