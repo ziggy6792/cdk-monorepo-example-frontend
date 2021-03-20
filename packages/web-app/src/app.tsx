@@ -7,26 +7,14 @@ import { Provider } from 'react-redux';
 // import {  IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import introspectionQueryResultData from 'src/graphql/fragment-types.json';
 
-import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache, PossibleTypesMap } from '@apollo/client';
+import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import Routes from 'src/routes';
 import { parseISO } from 'date-fns';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import initStore from './config/store';
 import * as ApiFetch from './utils/aws-api-fetch';
-
-const introspectionToPossibleTypes = (recievedMap): PossibleTypesMap => {
-    const possibleTypes = {};
-
-    recievedMap.__schema.types.forEach(supertype => {
-        if (supertype.possibleTypes) {
-            possibleTypes[supertype.name] = supertype.possibleTypes.map(subtype => subtype.name);
-        }
-    });
-
-    return possibleTypes;
-};
-console.log('bla');
+import introspectionToPossibleTypes from './utils/intro-to-possible-types';
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
@@ -46,7 +34,7 @@ document.title = envConfig.title;
 
 const client = new ApolloClient({
     link: createHttpLink({
-        fetch: ApiFetch.awsApiFetch
+        fetch: ApiFetch.awsApiFetch,
     }),
     cache: new InMemoryCache({
         possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
@@ -57,26 +45,26 @@ const client = new ApolloClient({
                     createdAt: {
                         read(date) {
                             return parseISO(date);
-                        }
+                        },
                     },
                     modifiedAt: {
                         read(date) {
                             return parseISO(date);
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             },
             Event: {
                 fields: {
                     startTime: {
                         read(date) {
                             return parseISO(date);
-                        }
-                    }
-                }
-            }
-        }
-    })
+                        },
+                    },
+                },
+            },
+        },
+    }),
 });
 
 const App: React.FC = () => (

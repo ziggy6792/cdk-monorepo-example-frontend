@@ -23,29 +23,28 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
 
     const theme = useTheme();
 
-    // const tableData = events.map((event) => [event.name, event?.startTime?.toString()]);
     const tableData = events.map(event => [event.name, event.modifiedAt.toString()]);
 
-    const [createEvent, { loading, data, error }] = useCreateEventMutation({
+    const [createEvent] = useCreateEventMutation({
         refetchQueries: [
             {
-                query: LIST_EVENTS
-            }
+                query: LIST_EVENTS,
+            },
         ],
-        awaitRefetchQueries: true
+        awaitRefetchQueries: true,
     });
 
     const columns = [
         {
             name: 'event',
             label: 'Event',
-            options: {}
+            options: {},
         },
         {
             name: 'date',
             label: 'Date',
-            options: {}
-        }
+            options: {},
+        },
     ];
 
     return (
@@ -59,7 +58,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
                         options={{
                             onRowClick: rowData => {
                                 console.log(`clicked`, rowData);
-                            }
+                            },
                         }}
                     />
                 </Grid>
