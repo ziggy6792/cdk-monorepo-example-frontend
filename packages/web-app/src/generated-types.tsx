@@ -17,8 +17,8 @@ export type Competition = DataEntity &
     Identifiable &
     Creatable & {
         __typename?: 'Competition';
-        createdAt: Scalars['String'];
-        modifiedAt: Scalars['String'];
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
         id?: Maybe<Scalars['ID']>;
         name: Scalars['String'];
         description: Scalars['String'];
@@ -60,8 +60,8 @@ export enum CompetitionStatus {
 }
 
 export type Creatable = {
-    createdAt: Scalars['String'];
-    modifiedAt: Scalars['String'];
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
 };
 
 export type CreateCompetitionInput = {
@@ -104,8 +104,8 @@ export type CreateUserInput = {
 };
 
 export type DataEntity = {
-    createdAt: Scalars['String'];
-    modifiedAt: Scalars['String'];
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
     id?: Maybe<Scalars['ID']>;
     name: Scalars['String'];
 };
@@ -114,8 +114,8 @@ export type Event = DataEntity &
     Identifiable &
     Creatable & {
         __typename?: 'Event';
-        createdAt: Scalars['String'];
-        modifiedAt: Scalars['String'];
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
         id?: Maybe<Scalars['ID']>;
         name: Scalars['String'];
         description: Scalars['String'];
@@ -147,8 +147,8 @@ export type Heat = DataEntity &
     Identifiable &
     Creatable & {
         __typename?: 'Heat';
-        createdAt: Scalars['String'];
-        modifiedAt: Scalars['String'];
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
         id?: Maybe<Scalars['ID']>;
         name: Scalars['String'];
         startTime: Scalars['String'];
@@ -180,8 +180,8 @@ export enum HeatStatus {
 }
 
 export type Identifiable = {
-    createdAt: Scalars['String'];
-    modifiedAt: Scalars['String'];
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
     id?: Maybe<Scalars['ID']>;
 };
 
@@ -347,8 +347,8 @@ export type QueryGetDataEntityArgs = {
 
 export type RiderAllocation = Creatable & {
     __typename?: 'RiderAllocation';
-    createdAt: Scalars['String'];
-    modifiedAt: Scalars['String'];
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
     allocatableId: Scalars['ID'];
     userId: Scalars['ID'];
     startSeed: Scalars['Int'];
@@ -365,8 +365,8 @@ export type RiderAllocationList = {
 export type Round = Identifiable &
     Creatable & {
         __typename?: 'Round';
-        createdAt: Scalars['String'];
-        modifiedAt: Scalars['String'];
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
         id?: Maybe<Scalars['ID']>;
         roundNo: Scalars['Int'];
         type: RoundType;
@@ -469,8 +469,8 @@ export type UpdateUserInput = {
 export type User = Identifiable &
     Creatable & {
         __typename?: 'User';
-        createdAt: Scalars['String'];
-        modifiedAt: Scalars['String'];
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
         id?: Maybe<Scalars['ID']>;
         email: Scalars['String'];
         firstName: Scalars['String'];
