@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 
@@ -11,9 +12,15 @@ import { useHistory } from 'react-router';
 import { ListEventsQuery, useCreateEventMutation } from 'src/generated-types';
 import { LIST_EVENTS } from 'src/gql/event.gql';
 import { parseISO } from 'date-fns';
+import DateFormatter from 'src/utils/format/date-formatter';
+import DataTable, { IDataTableRow } from 'src/components/data-table';
 
 interface EventsTableProps {
     events: ListEventsQuery['listEvents'];
+}
+
+interface IEventRow extends IDataTableRow {
+    eventId: string;
 }
 
 const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
@@ -23,72 +30,38 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
 
     const theme = useTheme();
 
-    const tableData = events.map(event => [event.name, event.startTime.toString()]);
-
-    const [createEvent] = useCreateEventMutation({
-        refetchQueries: [
-            {
-                query: LIST_EVENTS,
-            },
-        ],
-        awaitRefetchQueries: true,
-    });
+    const tableData: IEventRow[] = events.map(event => ({
+        eventId: event.id,
+        rowData: {
+            name: event.name,
+            startTime: { displayText: DateFormatter.toShortDate(event.startTime), sortIndex: event.startTime.getTime() },
+        },
+    }));
 
     const columns = [
         {
-            name: 'event',
+            name: 'name',
             label: 'Event',
             options: {},
         },
         {
-            name: 'date',
+            name: 'startTime',
             label: 'Date',
             options: {},
         },
     ];
 
     return (
-        <>
-            <Grid container direction='column'>
-                <Grid item>
-                    <MUIDataTable
-                        title='Events'
-                        data={tableData}
-                        columns={columns}
-                        options={{
-                            onRowClick: rowData => {
-                                console.log(`clicked`, rowData);
-                            },
-                        }}
-                    />
-                </Grid>
-                <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-                    <Grid item>
-                        <Button
-                            onClick={() => {
-                                // console.log('click');
-                                createEvent({ variables: { input: { name: 'Test Event', startTime: new Date() } } });
-                            }}
-                        >
-                            Create Event
-                        </Button>
-                    </Grid>
-                </Grid>
-                {/* {props.auth.isAuthenticated && (
-                    <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-                        <Grid item>
-                            <Button
-                                onClick={() => {
-                                    setOpen(true);
-                                }}
-                            >
-                                Create Event
-                            </Button>
-                        </Grid>
-                    </Grid>
-                )} */}
-            </Grid>
-        </>
+        <DataTable
+            title='Events'
+            tableData={tableData}
+            columns={columns}
+            options={{
+                onRowClick: (row: IEventRow) => {
+                    console.log(`clicked`, row.eventId);
+                },
+            }}
+        />
     );
 };
 

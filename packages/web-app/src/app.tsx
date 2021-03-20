@@ -15,10 +15,12 @@ import awsConfig from './config/aws-config';
 import initStore from './config/store';
 import * as ApiFetch from './utils/aws-api-fetch';
 import introspectionToPossibleTypes from './utils/intro-to-possible-types';
+import initMui from './utils/mui/init-mui';
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
 const store = initStore();
+initMui();
 
 // Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
 const calcVh = () => {
@@ -45,7 +47,7 @@ const client = new ApolloClient({
         typePolicies: {
             Creatable: { fields: { createdAt: mapDateField, modifiedAt: mapDateField } },
             Schedulable: { fields: { startTime: mapDateField } },
-            // // Not sure why i have to explicity do this when they implement Schedulable
+            // Not sure why i have to explicity do this when they implement Schedulable
             Event: { fields: { startTime: mapDateField } },
             Round: { fields: { startTime: mapDateField } },
             Heat: { fields: { startTime: mapDateField } },
