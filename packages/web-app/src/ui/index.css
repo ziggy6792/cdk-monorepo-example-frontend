@@ -1,7 +1,8 @@
-body {
-    /* height: 100vh;
+body,
+html {
+    height: 100%;
     width: 100%;
-    margin: 0; */
+    margin: 0;
     background-color: rgb(235, 235, 235);
 }
 
@@ -9,18 +10,9 @@ body {
     height: 100vh;
 } */
 
-/* body,
-html {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
+/*
 
-#root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-} */
+*/
 
 /* old */
 

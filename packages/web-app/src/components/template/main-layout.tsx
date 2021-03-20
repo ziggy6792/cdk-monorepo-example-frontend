@@ -7,16 +7,12 @@ interface IProps {
     isAuthenticated: boolean;
 }
 
-const MainTemplate: React.FC<IProps> = ({ children, isAuthenticated }) => {
-    console.log('GO');
-    return (
-        <>
-            <NavigationBar isAuthenticated={isAuthenticated} />
-            <Box p={2} display='flex' flexDirection='column' flexGrow={1}>
-                {children}
-            </Box>
-        </>
-    );
-};
-
+const MainTemplate: React.FC<IProps> = ({ children, isAuthenticated }) => (
+    <>
+        <NavigationBar isAuthenticated={isAuthenticated} />
+        <Box p={2} display='flex' flexDirection='column' flexGrow={1}>
+            {children}
+        </Box>
+    </>
+);
 export default MainTemplate;

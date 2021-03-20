@@ -2,9 +2,12 @@ import React from 'react';
 
 import Card from 'src/components/atoms/card';
 import Grid from '@material-ui/core/Grid';
+import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+
 import Spinner from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import { useForm } from 'react-hook-form';
@@ -42,7 +45,7 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                 <Typography align='center' variant='h3'>
                     Welcome Back
                 </Typography>
-                <Typography align='center' color='secondary' variant='h5' style={{ marginTop: 10 }}>
+                <Typography align='center' color='textSecondary' variant='h5' style={{ marginTop: 10 }}>
                     Don&apos;t miss out the latest events, Sign in to stay updated!
                 </Typography>
             </Grid>
@@ -86,7 +89,7 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={12} style={{ height: 60 }}>
+                                <Grid item xs={12} style={{ height: 55 }}>
                                     <Button color='primary' fullWidth type='submit' variant='contained'>
                                         {loading ? <Spinner color='inherit' size={24} /> : 'Login'}
                                     </Button>
@@ -99,7 +102,15 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                     </Card>
 
                     <Typography align='center' color='primary' variant='h5' style={{ marginTop: 10 }}>
-                        Don&apos;t have an account? Sign up <span style={{ color: 'red' }}>HERE</span>
+                        <Link component={RouterLink} to='/' style={{ textDecoration: 'underline' }}>
+                            Forgot Password?
+                        </Link>
+                    </Typography>
+                    <Typography align='center' color='primary' variant='h5' style={{ marginTop: 10 }}>
+                        Don&apos;t have an account? Sign up{' '}
+                        <Link component={RouterLink} to='/' style={{ textDecoration: 'underline' }}>
+                            HERE
+                        </Link>
                     </Typography>
                 </Container>
             </Grid>

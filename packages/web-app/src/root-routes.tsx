@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { isAuthenticatedActionCreator } from 'src/domain/auth';
+import { selectIsAuthenticated } from 'src/domain/auth/selectors';
 import * as routeConfig from 'src/config/routes';
 import HomeScreen from 'src/screens/home-screen';
 import LoginScreen from 'src/screens/login-screen';
@@ -23,18 +24,19 @@ window.addEventListener('resize', () => {
 document.title = envConfig.title;
 
 const Routes: React.FC = () => {
+    const isAuthenticated = useSelector(selectIsAuthenticated);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(isAuthenticatedActionCreator());
     }, [dispatch]);
-
+    console.log('IS AUTHENCIATEd:', isAuthenticated);
     return (
         <BrowserRouter>
             <Switch>
-                <Route path='/' component={LoginScreen} />
-                <ProtectedRoute isAuthenticated exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
-                <ProtectedRoute isAuthenticated={false} exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
+                <Route path='/' exact component={LoginScreen} />
+                <ProtectedRoute isAuthenticated={isAuthenticated} exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
+                <ProtectedRoute isAuthenticated={isAuthenticated} exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
             </Switch>
         </BrowserRouter>
     );

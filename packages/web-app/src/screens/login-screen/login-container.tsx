@@ -1,18 +1,28 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 import MainLayout from 'src/components/template/main-layout';
 
 import { USER_TYPE } from 'src/domain/auth/user';
 import { loginActionCreator } from 'src/domain/auth';
-import { selectError, selectIsLoading } from 'src/domain/auth/selectors';
+import { selectError, selectIsLoading, selectUser } from 'src/domain/auth/selectors';
 
 import LoginView from './login-view';
 
-const LoginContainer = () => {
+const LoginContainer: React.FC<RouteComponentProps> = ({ history }) => {
     const dispatch = useDispatch();
+
     const error = useSelector(selectError);
     const loading = useSelector(selectIsLoading);
+    const user = useSelector(selectUser);
     // TODO - Move is Authenticated up to a higher level
+
+    React.useEffect(() => {
+        if (user) {
+            history.push('/home');
+        }
+    }, [history, user]);
+
     const onSubmit = (values) => {
         const { email, password } = values;
         dispatch(loginActionCreator({ type: USER_TYPE.EMAIL, email, password }));
