@@ -3,15 +3,12 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import MUIDataTable from 'mui-datatables';
 
 import _ from 'lodash';
-import { Button, Grid, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 
 import { useHistory } from 'react-router';
-import { ListEventsQuery, useCreateEventMutation } from 'src/generated-types';
-import { LIST_EVENTS } from 'src/gql/event.gql';
-import { parseISO } from 'date-fns';
+import { ListEventsQuery } from 'src/generated-types';
 import DateFormatter from 'src/utils/format/date-formatter';
 import DataTable, { IDataTableRow } from 'src/components/data-table';
 
@@ -42,12 +39,10 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
         {
             name: 'name',
             label: 'Event',
-            options: {},
         },
         {
             name: 'startTime',
             label: 'Date',
-            options: {},
         },
     ];
 

@@ -8,9 +8,16 @@ import MUIDataTable, { MUIDataTableProps, MUIDataTableColumn } from 'mui-datatab
 import _ from 'lodash';
 import { IDataTableRow } from './types';
 
-// interface IRowMeta {
-//     id: string;
-// }
+const defaultOptions = {
+    filterType: 'dropdown',
+    rowsPerPageOptions: [],
+    rowsPerPage: 5,
+    download: false,
+    print: false,
+    responsive: 'standard',
+    selectableRows: 'none',
+    rowHover: true,
+} as MUIDataTableProps['options'];
 
 export interface IMUIDataTableProps extends Omit<MUIDataTableProps['options'], 'onRowClick'> {
     onRowClick: (tableRow: IDataTableRow) => void;
@@ -19,6 +26,7 @@ export interface IMUIDataTableProps extends Omit<MUIDataTableProps['options'], '
 interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
     tableData: IDataTableRow[];
     options: IMUIDataTableProps;
+    columns: MUIDataTableColumn[];
     // myOnRowClick?: (
     //     rowData: string[],
     //     rowMeta: {
@@ -97,6 +105,7 @@ const DataTable: React.FC<IDataTableProps> = props => {
         <MUIDataTable
             {...props}
             options={{
+                ...defaultOptions,
                 ...props.options,
                 onRowClick: (rowData, rowMeta) => {
                     const { dataIndex } = rowMeta;
