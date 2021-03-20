@@ -86,7 +86,7 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={12} style={{ height: 75 }}>
+                                <Grid item xs={12} style={{ height: 60 }}>
                                     <Button color='primary' fullWidth type='submit' variant='contained'>
                                         {loading ? <Spinner color='inherit' size={24} /> : 'Login'}
                                     </Button>
@@ -97,6 +97,10 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                             </Grid>
                         </form>
                     </Card>
+
+                    <Typography align='center' color='primary' variant='h5' style={{ marginTop: 10 }}>
+                        Don&apos;t have an account? Sign up <span style={{ color: 'red' }}>HERE</span>
+                    </Typography>
                 </Container>
             </Grid>
         </Grid>
