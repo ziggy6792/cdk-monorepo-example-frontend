@@ -7,7 +7,6 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Spinner from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
-
 import { useForm } from 'react-hook-form';
 
 interface IProps {
@@ -37,15 +36,18 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
     return (
         <Grid container direction='column' justify='center' alignItems='center' spacing={3} style={{ height: '100%' }}>
             <Grid item>
+                <img alt='Logo' src='https://via.placeholder.com/150' />
+            </Grid>
+            <Grid item>
                 <Typography align='center' variant='h3'>
                     Welcome Back
                 </Typography>
-                <Typography color='secondary' variant='h5'>
-                    Don&apos;t miss out the latest events, Sing in to stay updated!
+                <Typography align='center' color='secondary' variant='h5' style={{ marginTop: 10 }}>
+                    Don&apos;t miss out the latest events, Sign in to stay updated!
                 </Typography>
             </Grid>
             <Grid item>
-                <Container maxWidth='sm'>
+                <Container maxWidth='xs'>
                     <Card>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Grid container spacing={3}>
@@ -84,13 +86,11 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} style={{ height: 75 }}>
                                     <Button color='primary' fullWidth type='submit' variant='contained'>
-                                        {loading ? <Spinner /> : 'Login'}
+                                        {loading ? <Spinner color='inherit' size={24} /> : 'Login'}
                                     </Button>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography color='error' variant='body2' style={{ fontSize: 12 }}>
+                                    <Typography align='center' color='error' variant='body2' style={{ fontSize: 12, marginTop: 10 }}>
                                         {error}
                                     </Typography>
                                 </Grid>
