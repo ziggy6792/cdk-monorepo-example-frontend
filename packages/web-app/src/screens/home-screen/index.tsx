@@ -1,1 +1,1 @@
-export { default } from './home-screen';
+export { default } from './home-container';

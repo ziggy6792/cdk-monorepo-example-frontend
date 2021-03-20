@@ -13,6 +13,14 @@ export const HELLO2 = gql`
     }
 `;
 
+export const LIST_COMPETITIONS = gql`
+    query listCompetitions {
+        listCompetitions {
+            id
+        }
+    }
+`;
+
 export const GET_COMPETITION = gql`
     query getCompetition($competitionId: ID!) {
         getCompetition(id: $competitionId) {
