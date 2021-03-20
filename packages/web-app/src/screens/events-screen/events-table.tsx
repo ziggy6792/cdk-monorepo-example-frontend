@@ -23,7 +23,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
 
     const theme = useTheme();
 
-    const tableData = events.map(event => [event.name, event.modifiedAt.toString()]);
+    const tableData = events.map(event => [event.name, event.startTime.toString()]);
 
     const [createEvent] = useCreateEventMutation({
         refetchQueries: [

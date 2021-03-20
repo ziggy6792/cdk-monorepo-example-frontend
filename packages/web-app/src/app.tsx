@@ -32,37 +32,23 @@ window.addEventListener('resize', () => {
 
 document.title = envConfig.title;
 
+const mapDateField = {
+    read(date) {
+        return parseISO(date);
+    },
+};
+
 const client = new ApolloClient({
-    link: createHttpLink({
-        fetch: ApiFetch.awsApiFetch,
-    }),
+    link: createHttpLink({ fetch: ApiFetch.awsApiFetch }),
     cache: new InMemoryCache({
         possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
         typePolicies: {
-            // Type policy map
-            Creatable: {
-                fields: {
-                    createdAt: {
-                        read(date) {
-                            return parseISO(date);
-                        },
-                    },
-                    modifiedAt: {
-                        read(date) {
-                            return parseISO(date);
-                        },
-                    },
-                },
-            },
-            Event: {
-                fields: {
-                    startTime: {
-                        read(date) {
-                            return parseISO(date);
-                        },
-                    },
-                },
-            },
+            Creatable: { fields: { createdAt: mapDateField, modifiedAt: mapDateField } },
+            Schedulable: { fields: { startTime: mapDateField } },
+            // // Not sure why i have to explicity do this when they implement Schedulable
+            Event: { fields: { startTime: mapDateField } },
+            Round: { fields: { startTime: mapDateField } },
+            Heat: { fields: { startTime: mapDateField } },
         },
     }),
 });
