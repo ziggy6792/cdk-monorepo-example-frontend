@@ -51,7 +51,7 @@
     },
     "scripts": {
         "start": "yarn fetch:gq:schema --useLocal=true && react-scripts start",
-        "build": "yarn fetch:gq:schema && react-scripts build",
+        "build": "react-scripts build",
         "fetch:gq:schema": "yarn gq-schema-helper fetch-schema --toFile=src/graphql/fragment-types.json",
         "builds:create": "yarn builds:add:staging && yarn builds:add:prod",
         "builds:add:staging": "rm -rfv builds/staging && mkdir -p builds/staging && cp -a build builds/staging && yarn builds:config:staging",

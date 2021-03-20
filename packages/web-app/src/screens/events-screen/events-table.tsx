@@ -10,6 +10,7 @@ import { Button, Grid, useTheme } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { ListEventsQuery, useCreateEventMutation } from 'src/generated-types';
 import { LIST_EVENTS } from 'src/gql/event.gql';
+import { parseISO } from 'date-fns';
 
 interface EventsTableProps {
     events: ListEventsQuery['listEvents'];
@@ -22,7 +23,8 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
 
     const theme = useTheme();
 
-    const tableData = events.map(event => [event.name, event?.startTime?.toString()]);
+    // const tableData = events.map((event) => [event.name, event?.startTime?.toString()]);
+    const tableData = events.map(event => [event.name, event.modifiedAt.toString()]);
 
     const [createEvent, { loading, data, error }] = useCreateEventMutation({
         refetchQueries: [

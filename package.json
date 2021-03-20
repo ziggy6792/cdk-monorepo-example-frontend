@@ -21,8 +21,8 @@
         "cdk:deploy": "cd packages/cdk-app && yarn deploy",
         "start": "lerna run start --stream --parallel",
         "generate": "lerna run generate --stream --parallel",
-        "build": "yarn build:helpers && lerna run build --ignore @alpaca-frontend/gq-schema-helper --ignore @alpaca-frontend/aws-config-helper --stream",
-        "build:helpers": "lerna run build --scope @alpaca-frontend/gq-schema-helper --scope @alpaca-frontend/aws-config-helper --stream && yarn --force",
+        "build": "yarn build:helpers && lerna run build --ignore '{@alpaca-frontend/gq-schema-helper,@alpaca-frontend/aws-config-helper}' --stream",
+        "build:helpers": "lerna run build --scope '{@alpaca-frontend/gq-schema-helper,@alpaca-frontend/aws-config-helper}' --stream && yarn --force",
         "prepare:deployment": "lerna run builds:create --scope @alpaca-frontend/web-app",
         "build:and:prepare:deployment": "yarn build && yarn prepare:deployment"
     },

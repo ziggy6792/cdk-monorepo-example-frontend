@@ -508,7 +508,9 @@ export type GetCompetitionQuery = { __typename?: 'Query' } & {
 
 export type ListEventsQueryVariables = {};
 
-export type ListEventsQuery = { __typename?: 'Query' } & { listEvents: Array<{ __typename?: 'Event' } & Pick<Event, 'id' | 'name' | 'startTime' | 'status'>> };
+export type ListEventsQuery = { __typename?: 'Query' } & {
+    listEvents: Array<{ __typename?: 'Event' } & Pick<Event, 'id' | 'name' | 'startTime' | 'status' | 'createdAt' | 'modifiedAt'>>;
+};
 
 export type CreateEventMutationVariables = {
     input: CreateEventInput;
@@ -586,6 +588,8 @@ export const ListEventsDocument = gql`
             name
             startTime
             status
+            createdAt
+            modifiedAt
         }
     }
 `;

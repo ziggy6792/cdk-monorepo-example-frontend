@@ -52,25 +52,29 @@ const client = new ApolloClient({
         possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
         typePolicies: {
             // Type policy map
+            Creatable: {
+                fields: {
+                    createdAt: {
+                        read(date) {
+                            return parseISO(date);
+                        }
+                    },
+                    modifiedAt: {
+                        read(date) {
+                            return parseISO(date);
+                        }
+                    }
+                }
+            },
             Event: {
                 fields: {
-                    // Field policy map for the Product type
                     startTime: {
-                        // Field policy for the isInCart field
                         read(date) {
-                            // The read function for the isInCart field
                             return parseISO(date);
                         }
                     }
                 }
             }
-            // DateTime: {
-            //     // Field policy for the isInCart field
-            //     read(date) {
-            //         // The read function for the isInCart field
-            //         return parseISO(date);
-            //     },
-            // },
         }
     })
 });

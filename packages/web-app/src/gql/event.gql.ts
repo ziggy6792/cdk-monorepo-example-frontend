@@ -9,6 +9,8 @@ export const LIST_EVENTS = gql`
             name
             startTime
             status
+            createdAt
+            modifiedAt
         }
     }
 `;
