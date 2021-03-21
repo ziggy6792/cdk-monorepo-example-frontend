@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Spinner from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import { Email, Facebook } from '@material-ui/icons';
 
 import { ROUTE_SIGNUP } from 'src/config/routes';
 
@@ -53,6 +55,9 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
             <Grid item>
                 <Container maxWidth='xs'>
                     <Card>
+                        <Typography align='center' color='textSecondary' variant='h4' style={{ marginBottom: 20 }}>
+                            Sign-in using your email
+                        </Typography>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
@@ -90,6 +95,7 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
+
                                 <Grid item xs={12} style={{ height: 55 }}>
                                     <Button color='primary' fullWidth type='submit' variant='contained'>
                                         {loading ? <Spinner color='inherit' size={24} /> : 'Login'}
@@ -102,11 +108,20 @@ const LoginView: React.FC<IProps> = ({ onSubmit, error, loading }) => {
                         </form>
                     </Card>
 
+                    <Box mt={4} mb={4}>
+                        <Card>
+                            <Button color='primary' variant='outlined' fullWidth endIcon={<Facebook />} onClick={() => console.log('HI')}>
+                                Sign in with facebook
+                            </Button>
+                        </Card>
+                    </Box>
+
                     <Typography align='center' color='primary' variant='h5' style={{ marginTop: 10 }}>
                         <Link component={RouterLink} to='/' style={{ textDecoration: 'underline' }}>
                             Forgot Password?
                         </Link>
                     </Typography>
+
                     <Typography align='center' color='primary' variant='h5' style={{ marginTop: 10 }}>
                         Don&apos;t have an account? Sign up{' '}
                         <Link component={RouterLink} to={ROUTE_SIGNUP} style={{ textDecoration: 'underline' }}>
