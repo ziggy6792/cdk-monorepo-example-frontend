@@ -1,13 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
 import { useCreateEventMutation } from 'src/generated-types';
 import { LIST_EVENTS } from 'src/gql/event.gql';
+import Dialog from 'src/components/ui/dialog';
+import CreateEventForm from 'src/modules/create-event-form/create-event-form';
 
 const CreateEvent: React.FC = () => {
     const theme = useTheme();
@@ -21,6 +23,8 @@ const CreateEvent: React.FC = () => {
         awaitRefetchQueries: true,
     });
 
+    const [open, setOpen] = useState(false);
+
     return (
         <>
             <Grid container direction='column'>
@@ -29,13 +33,18 @@ const CreateEvent: React.FC = () => {
                         <Button
                             onClick={() => {
                                 // console.log('click');
-                                createEvent({ variables: { input: { name: 'Test Event', startTime: new Date() } } });
+                                // createEvent({ variables: { input: { name: 'Test Event', startTime: new Date() } } });
+                                setOpen(true);
                             }}
                         >
                             Create Event
                         </Button>
                     </Grid>
                 </Grid>
+                <Dialog open={open} setOpen={setOpen}>
+                    <CreateEventForm />
+                    {/* <div>form</div> */}
+                </Dialog>
             </Grid>
         </>
     );
