@@ -8,7 +8,9 @@ import * as routeConfig from 'src/config/routes';
 import HomeScreen from 'src/screens/home-screen';
 import LoginScreen from 'src/screens/login-screen';
 import ProfileScreen from 'src/screens/profile-screen';
+import SignupScreen from 'src/screens/signup-screen';
 import ProtectedRoute from './hoc/protected-route/index';
+
 import envConfig from './config/env-config';
 // Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
 const calcVh = () => {
@@ -35,6 +37,7 @@ const Routes: React.FC = () => {
         <BrowserRouter>
             <Switch>
                 <Route path='/' exact component={LoginScreen} />
+                <Route path={routeConfig.ROUTE_SIGNUP} exact component={SignupScreen} />
                 <ProtectedRoute isAuthenticated={isAuthenticated} exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
                 <ProtectedRoute isAuthenticated={isAuthenticated} exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
             </Switch>

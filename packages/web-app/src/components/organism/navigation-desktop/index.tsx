@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import AvatarDropdown from 'src/components/molecule/avatar-dropdown';
 
 import { logoutActionCreator } from 'src/domain/auth';
+import { ROUTE_HOME } from 'src/config/routes';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -28,14 +30,16 @@ interface IProps {
 
 const NavigationBarDesktop: React.FC<IProps> = ({ isAuthenticated }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
 
     const onClickLogout = () => dispatch(logoutActionCreator());
+    const onClickHome = () => history.push(ROUTE_HOME);
     return (
         <div className={classes.root}>
             <AppBar position='static'>
                 <Toolbar>
-                    <Typography variant='h6' className={classes.title}>
+                    <Typography variant='h6' className={classes.title} onClick={onClickHome} style={{ cursor: 'pointer' }}>
                         Alpaca Tournament
                     </Typography>
                     {isAuthenticated && <AuthenticatedRoutes onClickLogout={onClickLogout} />}
