@@ -9,11 +9,15 @@ interface IProps {
 }
 
 const HomeView: React.FC<IProps> = ({ loading, data }) => {
-    console.log('DATA: ', data);
     if (loading) {
         return <LoadingCard title='Fetching data...' />;
     }
-    return <Container>Data</Container>;
+    const renderCompetitions = () => data.listCompetitions.map((comp) => <li>{comp.id}</li>);
+    return (
+        <Container>
+            <ul>{renderCompetitions()}</ul>
+        </Container>
+    );
 };
 
 export default HomeView;
