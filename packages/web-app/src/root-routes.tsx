@@ -30,7 +30,7 @@ const Routes: React.FC = () => {
     useEffect(() => {
         dispatch(isAuthenticatedActionCreator());
     }, [dispatch]);
-
+    console.log('AUTHG: ', isAuthenticated);
     return (
         <BrowserRouter>
             <Switch>

@@ -34,7 +34,7 @@ const ProtectedRoute: React.FC<IProps> = ({ component: Component, isAuthenticate
                 if (isAuthenticated) {
                     return <Component {...rest} {...props} />;
                 }
-                <Redirect to={routeConfig.ROUTE_HOME} />;
+                return <Redirect to='/' />;
             }
         }
     />

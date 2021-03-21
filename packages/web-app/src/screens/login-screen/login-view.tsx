@@ -2,7 +2,7 @@ import React from 'react';
 
 import Card from 'src/components/atoms/card';
 import Grid from '@material-ui/core/Grid';
-import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';

@@ -1,11 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import AvatarDropdown from 'src/components/molecule/avatar-dropdown';
+
+import { logoutActionCreator } from 'src/domain/auth';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,7 +27,10 @@ interface IProps {
 }
 
 const NavigationBarDesktop: React.FC<IProps> = ({ isAuthenticated }) => {
+    const dispatch = useDispatch();
     const classes = useStyles();
+
+    const onClickLogout = () => dispatch(logoutActionCreator());
     return (
         <div className={classes.root}>
             <AppBar position='static'>
@@ -34,17 +38,22 @@ const NavigationBarDesktop: React.FC<IProps> = ({ isAuthenticated }) => {
                     <Typography variant='h6' className={classes.title}>
                         Alpaca Tournament
                     </Typography>
-                    {isAuthenticated && <AuthenticatedRoutes />}
+                    {isAuthenticated && <AuthenticatedRoutes onClickLogout={onClickLogout} />}
                 </Toolbar>
             </AppBar>
         </div>
     );
 };
 
+interface IAuthenticatedRoutes {
+    onClickLogout: () => void;
+}
+
 // TODO - Refactor the way routes are defined in the Nav bar
-const AuthenticatedRoutes = () => (
+const AuthenticatedRoutes: React.FC<IAuthenticatedRoutes> = ({ onClickLogout }) => (
     <>
-        <Button color='inherit'>Profile</Button>{' '}
+        {/* <Button color='inherit'>Profile</Button>{' '} */}
+        <AvatarDropdown onClickLogout={onClickLogout} />
     </>
 );
 
