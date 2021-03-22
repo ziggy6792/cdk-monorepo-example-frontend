@@ -1,8 +1,10 @@
 import { IRootState } from 'src/config/store';
 import IUser from './user';
 
-export const selectUser = (state: IRootState): IUser | null => state.auth.user;
+const authSelectors = {
+    selectUser: (state: IRootState): IUser | null => state.auth.user,
+    selectIsAuthenticated: (state: IRootState): boolean => !!state.auth.user,
+    selectIsLoading: (state: IRootState): boolean => state.auth.isLoading,
+};
 
-export const selectIsAuthenticated = (state: IRootState): boolean => !!state.auth.user;
-
-export const selectIsLoading = (state: IRootState): boolean => state.auth.isLoading;
+export default authSelectors;

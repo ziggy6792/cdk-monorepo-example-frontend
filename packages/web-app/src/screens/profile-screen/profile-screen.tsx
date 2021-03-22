@@ -7,7 +7,7 @@ import Spinner from 'src/components/spinner';
 import Buttons from 'src/modules/login-form/buttons';
 import LoginForm from 'src/modules/login-form';
 
-import * as authSelectors from 'src/domain/auth/selectors';
+import authSelectors from 'src/domain/auth/selectors';
 import { useHistory } from 'react-router-dom';
 import * as routeConfig from 'src/config/routes';
 
