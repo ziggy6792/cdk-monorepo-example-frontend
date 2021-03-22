@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, CircularProgress } from '@material-ui/core';
 
-interface ISubmitButtonProps {
+export interface ISubmitButtonProps {
     isSubmitting: boolean;
     dirty: boolean;
     allowSubmitPristine?: boolean;

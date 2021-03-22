@@ -46,7 +46,7 @@ const CreateEvent: React.FC = () => {
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <CreateEventForm onSubmit={onCreateEvent} />
+                    <CreateEventForm onSubmit={onCreateEvent} title='Create New Event' onCancel={() => setOpen(false)} />
                 </Dialog>
             </Grid>
         </>
