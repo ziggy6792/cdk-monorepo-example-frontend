@@ -11,6 +11,7 @@ import { LIST_EVENTS } from 'src/gql/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import CreateEventForm from 'src/modules/create-event-form';
 import { useHistory } from 'react-router';
+import { ROUTE_EVENT } from 'src/config/routes';
 
 const CreateEvent: React.FC = () => {
     const theme = useTheme();
@@ -31,7 +32,7 @@ const CreateEvent: React.FC = () => {
     const onCreateEvent = async (event: CreateEventInput): Promise<void> => {
         const result = await createEvent({ variables: { input: event } });
         setOpen(false);
-        history.push(`/todo/event/${result.data.createEvent.id}`);
+        history.push(`${ROUTE_EVENT}/${result.data.createEvent.id}`);
         return null;
     };
 
