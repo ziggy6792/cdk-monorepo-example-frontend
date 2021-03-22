@@ -5,7 +5,7 @@ module.exports = {
     globals: {
         ...baseConfig.globals,
     },
-    ignorePatterns: ['build', '*.config.js', 'node_modules'],
+    ignorePatterns: ['build', '*.config.js', 'node_modules', 'src/gql/types/', 'src/generated-types.tsx'],
     extends: ['airbnb-typescript', 'airbnb/hooks', 'prettier', 'prettier/@typescript-eslint', 'prettier/react'],
     // plugins: ['react', '@typescript-eslint', 'jest'],
     plugins: ['react', '@typescript-eslint', 'prettier'],

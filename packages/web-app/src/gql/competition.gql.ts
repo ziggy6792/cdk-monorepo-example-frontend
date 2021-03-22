@@ -1,17 +1,6 @@
 import gql from 'graphql-tag';
 
 /* eslint-disable import/prefer-default-export */
-export const HELLO = gql`
-    query hello {
-        hello
-    }
-`;
-
-export const HELLO2 = gql`
-    query ListEvents {
-        hello
-    }
-`;
 
 export const GET_COMPETITION = gql`
     query getCompetition($competitionId: ID!) {
@@ -34,22 +23,6 @@ export const GET_COMPETITION = gql`
                         }
                     }
                 }
-            }
-        }
-    }
-`;
-
-export const GET_DATA_ENTITY = gql`
-    query getDataEntity($id: ID!) {
-        getDataEntity(id: $id) {
-            createdAt
-            id
-            name
-            ... on Competition {
-                judgeUserId
-            }
-            ... on Heat {
-                status
             }
         }
     }

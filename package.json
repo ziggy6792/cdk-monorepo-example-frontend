@@ -20,8 +20,9 @@
         "cdk:synth": "lerna run synth --scope @alpaca-frontend/cdk-app && rm -rf cdk.out && cp -r packages/cdk-app/cdk.out cdk.out",
         "cdk:deploy": "cd packages/cdk-app && yarn deploy",
         "start": "lerna run start --stream --parallel",
-        "build": "yarn build:helpers && lerna run build --ignore @alpaca-frontend/gq-schema-helper --ignore @alpaca-frontend/aws-config-helper --stream",
-        "build:helpers": "lerna run build --scope @alpaca-frontend/gq-schema-helper --scope @alpaca-frontend/aws-config-helper --stream && yarn --force",
+        "generate": "lerna run generate --stream --parallel",
+        "build": "yarn build:helpers && lerna run build --ignore '{@alpaca-frontend/gq-schema-helper,@alpaca-frontend/aws-config-helper}' --stream",
+        "build:helpers": "lerna run build --scope '{@alpaca-frontend/gq-schema-helper,@alpaca-frontend/aws-config-helper}' --stream && yarn --force",
         "prepare:deployment": "lerna run builds:create --scope @alpaca-frontend/web-app",
         "build:and:prepare:deployment": "yarn build && yarn prepare:deployment"
     },
@@ -71,5 +72,8 @@
         "hooks": {
             "pre-commit": "lint-staged && lerna run precommit --parallel --since HEAD"
         }
+    },
+    "dependencies": {
+        "npm-run-all": "^4.1.5"
     }
 }

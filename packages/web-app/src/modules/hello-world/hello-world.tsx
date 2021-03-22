@@ -1,9 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { useQuery } from 'react-apollo';
-import { GET_DATA_ENTITY, HELLO } from 'src/graphql/custom-queries';
+import { useGetDataEntityQuery } from 'src/generated-types';
 
 const HelloWorld: React.FC = () => {
-    const { loading, data, error } = useQuery(GET_DATA_ENTITY, { variables: { id: 'testCompetition' } });
+    const { loading, data, error } = useGetDataEntityQuery({ variables: { id: 'testCompetition' } });
 
     if (error) {
         console.log('error', error);

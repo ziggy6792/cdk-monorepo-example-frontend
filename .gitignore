@@ -137,5 +137,5 @@ dist
 
 */*.env-local
 
-**/fragment-types.json
+# **/fragment-types.json
 **/config/env.json
