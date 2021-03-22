@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
-import { useCreateEventMutation } from 'src/generated-types';
+import { CreateEventInput, useCreateEventMutation } from 'src/generated-types';
 import { LIST_EVENTS } from 'src/gql/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import CreateEventForm from 'src/modules/create-event-form/create-event-form';
@@ -25,6 +25,12 @@ const CreateEvent: React.FC = () => {
 
     const [open, setOpen] = useState(false);
 
+    const onCreateEvent = async (event: CreateEventInput): Promise<void> => {
+        await createEvent({ variables: { input: event } });
+        setOpen(false);
+        return null;
+    };
+
     return (
         <>
             <Grid container direction='column'>
@@ -32,8 +38,6 @@ const CreateEvent: React.FC = () => {
                     <Grid item>
                         <Button
                             onClick={() => {
-                                // console.log('click');
-                                // createEvent({ variables: { input: { name: 'Test Event', startTime: new Date() } } });
                                 setOpen(true);
                             }}
                         >
@@ -42,8 +46,7 @@ const CreateEvent: React.FC = () => {
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <CreateEventForm />
-                    {/* <div>form</div> */}
+                    <CreateEventForm onSubmit={onCreateEvent} />
                 </Dialog>
             </Grid>
         </>
