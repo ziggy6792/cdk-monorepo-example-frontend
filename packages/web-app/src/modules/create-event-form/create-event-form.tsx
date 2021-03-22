@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import { TextArea } from 'src/components/formik-material-ui/formik-material-ui';
 import { DateTimePicker } from 'formik-material-ui-pickers';
@@ -18,7 +18,7 @@ interface ICreateEventFormProps {
     title: string;
 }
 
-const CreateEventForm: React.FC<ICreateEventFormProps> = ({ onSubmit, onCancel }) => {
+const CreateEventForm: React.FC<ICreateEventFormProps> = ({ onSubmit, onCancel, title }) => {
     const minTime = startOfHour(addHours(new Date(), 1));
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -39,19 +39,26 @@ const CreateEventForm: React.FC<ICreateEventFormProps> = ({ onSubmit, onCancel }
                     return (
                         <Form>
                             <Grid container direction='column'>
-                                <Grid item>
-                                    <Field name='name' component={TextField} label='Name' />
+                                <Grid container direction='column' alignItems='center' spacing={0}>
+                                    <Grid item>
+                                        <Typography variant='h3' gutterBottom>
+                                            {title}
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <Field name='description' component={TextArea} placeholder='Description' />
-                                </Grid>
-                                <Grid item>
-                                    <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />
-                                </Grid>
-                                <Grid item>
-                                    <FormButtons isSubmitting={isSubmitting} dirty={dirty} allowSubmitPristine={false} isValid={isValid} onCancel={onCancel} />
+                                <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
+                                    <Grid item>
+                                        <Field name='name' component={TextField} label='Name' autoFocus />
+                                    </Grid>
+                                    <Grid item>
+                                        <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />
+                                    </Grid>
+                                    <Grid item>
+                                        <Field name='description' component={TextArea} placeholder='Description' />
+                                    </Grid>
                                 </Grid>
                             </Grid>
+                            <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
                         </Form>
                     );
                 }}
