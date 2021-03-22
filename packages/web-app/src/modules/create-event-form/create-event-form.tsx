@@ -6,7 +6,6 @@ import { TextField } from 'formik-material-ui';
 import { TextArea } from 'src/components/formik-material-ui/formik-material-ui';
 import { DateTimePicker } from 'formik-material-ui-pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-
 import DateFnsUtils from '@date-io/date-fns';
 import { CreateEventInput } from 'src/generated-types';
 import { addHours, startOfHour } from 'date-fns';

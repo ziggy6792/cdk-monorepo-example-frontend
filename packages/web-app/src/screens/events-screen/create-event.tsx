@@ -9,10 +9,13 @@ import { Button, Grid, useTheme } from '@material-ui/core';
 import { CreateEventInput, useCreateEventMutation } from 'src/generated-types';
 import { LIST_EVENTS } from 'src/gql/event.gql';
 import Dialog from 'src/components/ui/dialog';
-import CreateEventForm from 'src/modules/create-event-form/create-event-form';
+import CreateEventForm from 'src/modules/create-event-form';
+import { useHistory } from 'react-router';
 
 const CreateEvent: React.FC = () => {
     const theme = useTheme();
+
+    const history = useHistory();
 
     const [createEvent] = useCreateEventMutation({
         refetchQueries: [
@@ -26,8 +29,9 @@ const CreateEvent: React.FC = () => {
     const [open, setOpen] = useState(false);
 
     const onCreateEvent = async (event: CreateEventInput): Promise<void> => {
-        await createEvent({ variables: { input: event } });
+        const result = await createEvent({ variables: { input: event } });
         setOpen(false);
+        history.push(`/todo/event/${result.data.createEvent.id}`);
         return null;
     };
 
