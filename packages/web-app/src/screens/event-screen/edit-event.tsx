@@ -6,20 +6,29 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
-import { CreateEventInput, useCreateEventMutation } from 'src/generated-types';
-import { LIST_EVENTS } from 'src/gql/event.gql';
+import { UpdateEventInput, useUpdateEventMutation } from 'src/generated-types';
+import { GET_EVENT, LIST_EVENTS } from 'src/gql/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import EventForm from 'src/modules/event-form';
 import { useHistory } from 'react-router';
-import { ROUTE_EVENT } from 'src/config/routes';
 
-const CreateEvent: React.FC = () => {
+interface IEditEventProps {
+    eventToEdit: UpdateEventInput;
+}
+
+const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
+    const { id } = eventToEdit;
+
     const theme = useTheme();
 
     const history = useHistory();
 
-    const [createEvent] = useCreateEventMutation({
+    const [updateEvent] = useUpdateEventMutation({
         refetchQueries: [
+            {
+                query: GET_EVENT,
+                variables: { id },
+            },
             {
                 query: LIST_EVENTS,
             },
@@ -29,10 +38,10 @@ const CreateEvent: React.FC = () => {
 
     const [open, setOpen] = useState(false);
 
-    const onCreateEvent = async (event: CreateEventInput): Promise<void> => {
-        const result = await createEvent({ variables: { input: event } });
+    const onUpdateEvent = async (event: Omit<UpdateEventInput, 'id'>): Promise<void> => {
+        event = _.pickBy(event, _.identity) as UpdateEventInput;
+        await updateEvent({ variables: { input: { ...event, id } } });
         setOpen(false);
-        history.push(`${ROUTE_EVENT}/${result.data.createEvent.id}`);
         return null;
     };
 
@@ -46,16 +55,16 @@ const CreateEvent: React.FC = () => {
                                 setOpen(true);
                             }}
                         >
-                            Create Event
+                            Edit Event
                         </Button>
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <EventForm onSubmit={onCreateEvent} title='Create New Event' onCancel={() => setOpen(false)} />
+                    <EventForm onSubmit={onUpdateEvent} title='Edit Event' onCancel={() => setOpen(false)} initialValues={eventToEdit} />
                 </Dialog>
             </Grid>
         </>
     );
 };
 
-export default CreateEvent;
+export default EditEvent;

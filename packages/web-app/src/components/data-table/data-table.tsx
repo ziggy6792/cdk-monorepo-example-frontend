@@ -27,13 +27,6 @@ interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
     tableData: IDataTableRow[];
     options: IMUIDataTableProps;
     columns: MUIDataTableColumn[];
-    // myOnRowClick?: (
-    //     rowData: string[],
-    //     rowMeta: {
-    //         dataIndex: number;
-    //         rowIndex: number;
-    //     }
-    // ) => void;
 }
 
 const getSortRet = (value, order) => {
@@ -74,18 +67,12 @@ const DataTable: React.FC<IDataTableProps> = props => {
         tableDisplayData.push(cellDisplayData);
     });
 
-    console.log(tableDisplayData);
-
     const customSort = (dataToSort: any[], colIndex: number, order: 'desc' | 'asc'): any[] => {
         const reverse = false;
 
         const retData = _.orderBy(
             dataToSort,
             item => {
-                // console.log('index', item.index);
-                // console.log('original', tableRows[item.index]);
-                // const sortIndex = tableRows[item.index].cellData
-
                 const columKey = (props.columns[colIndex] as MUIDataTableColumn).name;
                 const origCellData = tableRows[item.index].rowData[columKey];
 
@@ -109,7 +96,6 @@ const DataTable: React.FC<IDataTableProps> = props => {
                 ...props.options,
                 onRowClick: (rowData, rowMeta) => {
                     const { dataIndex } = rowMeta;
-                    // console.log(`internal clicked`, tableRows[dataIndex].rowMetaData);
                     props.options.onRowClick(tableRows[dataIndex]);
                 },
             }}

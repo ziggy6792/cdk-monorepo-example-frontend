@@ -120,7 +120,7 @@ export type Event = DataEntity &
         id: Scalars['ID'];
         name: Scalars['String'];
         startTime: Scalars['DateTime'];
-        description: Scalars['String'];
+        description?: Maybe<Scalars['String']>;
         status: EventStatus;
         adminUserId: Scalars['String'];
         selectedHeatId: Scalars['String'];
@@ -522,7 +522,28 @@ export type CreateEventMutationVariables = {
     input: CreateEventInput;
 };
 
-export type CreateEventMutation = { __typename?: 'Mutation' } & { createEvent: { __typename?: 'Event' } & Pick<Event, 'id' | 'adminUserId' | 'startTime'> };
+export type CreateEventMutation = { __typename?: 'Mutation' } & { createEvent: { __typename?: 'Event' } & Pick<Event, 'id'> };
+
+export type UpdateEventMutationVariables = {
+    input: UpdateEventInput;
+};
+
+export type UpdateEventMutation = { __typename?: 'Mutation' } & { updateEvent: { __typename?: 'Event' } & Pick<Event, 'id'> };
+
+export type GetEventQueryVariables = {
+    id: Scalars['ID'];
+};
+
+export type GetEventQuery = { __typename?: 'Query' } & {
+    getEvent: { __typename?: 'Event' } & Pick<Event, 'name' | 'startTime' | 'description'> & {
+            adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
+            competitions: { __typename?: 'CompetitionList' } & {
+                items: Array<
+                    { __typename?: 'Competition' } & Pick<Competition, 'id' | 'name'> & { judgeUser: { __typename?: 'User' } & Pick<User, 'fullName'> }
+                >;
+            };
+        };
+};
 
 export type GetDataEntityQueryVariables = {
     id: Scalars['ID'];
@@ -628,8 +649,6 @@ export const CreateEventDocument = gql`
     mutation createEvent($input: CreateEventInput!) {
         createEvent(input: $input) {
             id
-            adminUserId
-            startTime
         }
     }
 `;
@@ -658,6 +677,85 @@ export function useCreateEventMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type CreateEventMutationHookResult = ReturnType<typeof useCreateEventMutation>;
 export type CreateEventMutationResult = ApolloReactCommon.MutationResult<CreateEventMutation>;
 export type CreateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEventMutation, CreateEventMutationVariables>;
+export const UpdateEventDocument = gql`
+    mutation updateEvent($input: UpdateEventInput!) {
+        updateEvent(input: $input) {
+            id
+        }
+    }
+`;
+export type UpdateEventMutationFn = ApolloReactCommon.MutationFunction<UpdateEventMutation, UpdateEventMutationVariables>;
+
+/**
+ * __useUpdateEventMutation__
+ *
+ * To run a mutation, you first call `useUpdateEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEventMutation, { data, loading, error }] = useUpdateEventMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateEventMutation, UpdateEventMutationVariables>) {
+    return ApolloReactHooks.useMutation<UpdateEventMutation, UpdateEventMutationVariables>(UpdateEventDocument, baseOptions);
+}
+export type UpdateEventMutationHookResult = ReturnType<typeof useUpdateEventMutation>;
+export type UpdateEventMutationResult = ApolloReactCommon.MutationResult<UpdateEventMutation>;
+export type UpdateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateEventMutation, UpdateEventMutationVariables>;
+export const GetEventDocument = gql`
+    query getEvent($id: ID!) {
+        getEvent(id: $id) {
+            name
+            adminUser {
+                fullName
+            }
+            startTime
+            description
+            competitions {
+                items {
+                    id
+                    name
+                    judgeUser {
+                        fullName
+                    }
+                }
+            }
+        }
+    }
+`;
+
+/**
+ * __useGetEventQuery__
+ *
+ * To run a query within a React component, call `useGetEventQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEventQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
+    return ApolloReactHooks.useQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, baseOptions);
+}
+export function useGetEventLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
+    return ApolloReactHooks.useLazyQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, baseOptions);
+}
+export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
+export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
+export type GetEventQueryResult = ApolloReactCommon.QueryResult<GetEventQuery, GetEventQueryVariables>;
 export const GetDataEntityDocument = gql`
     query getDataEntity($id: ID!) {
         getDataEntity(id: $id) {

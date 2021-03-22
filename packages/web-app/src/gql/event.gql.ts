@@ -19,8 +19,36 @@ export const CREATE_EVENT = gql`
     mutation createEvent($input: CreateEventInput!) {
         createEvent(input: $input) {
             id
-            adminUserId
+        }
+    }
+`;
+
+export const UPDATE_EVENT = gql`
+    mutation updateEvent($input: UpdateEventInput!) {
+        updateEvent(input: $input) {
+            id
+        }
+    }
+`;
+
+export const GET_EVENT = gql`
+    query getEvent($id: ID!) {
+        getEvent(id: $id) {
+            name
+            adminUser {
+                fullName
+            }
             startTime
+            description
+            competitions {
+                items {
+                    id
+                    name
+                    judgeUser {
+                        fullName
+                    }
+                }
+            }
         }
     }
 `;

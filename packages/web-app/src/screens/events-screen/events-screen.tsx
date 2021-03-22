@@ -2,20 +2,19 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Spinner from 'src/components/spinner';
 import authSelectors from 'src/domain/auth/selectors';
 import { useListEventsQuery } from 'src/generated-types';
 import CreateEvent from './create-event';
-// import { useListEventsQuery } from 'src/gql/custom-hooks/use-list-events';
-// import { listEvents } from 'src/gql/types/listEvents';
 import EventsTable from './events-table';
 
 const EventsScreen: React.FC = () => {
-    const { loading, data, error } = useListEventsQuery();
+    const { loading, data } = useListEventsQuery();
     const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
 
     return (
         <>
-            {loading && <div>loading</div>}
+            {loading && <Spinner />}
             {!loading && (
                 <Grid container direction='column'>
                     <Grid item>
