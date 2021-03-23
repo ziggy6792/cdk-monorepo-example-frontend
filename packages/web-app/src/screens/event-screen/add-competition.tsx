@@ -12,7 +12,7 @@ import Dialog from 'src/components/ui/dialog';
 import { useHistory } from 'react-router';
 import { ROUTE_EVENT } from 'src/config/routes';
 import ComepetitionForm from 'src/modules/competition-form';
-import { IUserOption } from 'src/modules/competition-form/competition-form';
+import { ICompetitionFormValues, IUserOption } from 'src/modules/competition-form/competition-form';
 
 interface IAddCompetitionProps {
     eventId: string;
@@ -35,10 +35,10 @@ const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
 
     const [open, setOpen] = useState(false);
 
-    const onCreateCompetition = async (competition: Omit<CreateCompetitionInput, 'eventId' | 'judgeUserId'> & { judgeUser: IUserOption }): Promise<void> => {
-        const { judgeUser, ...rest } = competition;
+    const onCreateCompetition = async (competition: ICompetitionFormValues): Promise<void> => {
+        const { judgeUser, maxRiders, ...rest } = competition;
 
-        const variables = { input: { ...rest, eventId, judgeUserId: judgeUser.id } };
+        const variables = { input: { ...rest, eventId, maxRiders: +maxRiders, judgeUserId: judgeUser.id } };
         console.log('variables', variables);
         const result = await createEvent({ variables });
         setOpen(false);
