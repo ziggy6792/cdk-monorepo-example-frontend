@@ -3,23 +3,28 @@ import gql from 'graphql-tag';
 /* eslint-disable import/prefer-default-export */
 
 export const GET_COMPETITION = gql`
-    query getCompetition($competitionId: ID!) {
-        getCompetition(id: $competitionId) {
+    query getCompetition($id: ID!) {
+        getCompetition(id: $id) {
+            riderAllocations {
+                items {
+                    user {
+                        id
+                        fullName
+                    }
+                    startSeed
+                }
+            }
             rounds {
                 items {
                     heats {
                         items {
+                            id
                             name
-                            riderAllocations {
-                                items {
-                                    userId
-                                    position
-                                    startSeed
-                                    runs {
-                                        score
-                                    }
-                                }
+                            round {
+                                roundNo
                             }
+                            size
+                            noAllocated
                         }
                     }
                 }

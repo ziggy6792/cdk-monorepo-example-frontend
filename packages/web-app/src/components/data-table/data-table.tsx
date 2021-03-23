@@ -59,8 +59,9 @@ const DataTable: React.FC<IDataTableProps> = props => {
 
             if (typeof value === 'string') {
                 cellDisplayData[key] = value;
-            }
-            if (typeof value === 'object' && value.displayText) {
+            } else if (typeof value === 'number') {
+                cellDisplayData[key] = value;
+            } else if (typeof value === 'object' && value.displayText) {
                 cellDisplayData[key] = value.displayText;
             }
         });
@@ -76,7 +77,7 @@ const DataTable: React.FC<IDataTableProps> = props => {
                 const columKey = (props.columns[colIndex] as MUIDataTableColumn).name;
                 const origCellData = tableRows[item.index].rowData[columKey];
 
-                const sortIndex = typeof origCellData === 'string' ? origCellData : origCellData.sortIndex;
+                const sortIndex = typeof origCellData === 'object' ? origCellData?.sortIndex : origCellData;
 
                 const val = getSortRet(sortIndex, order);
                 return val;

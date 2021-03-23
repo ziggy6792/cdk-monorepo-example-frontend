@@ -158,8 +158,10 @@ export type Heat = DataEntity &
         progressionsPerHeat: Scalars['Int'];
         round: Round;
         seedSlots: Array<SeedSlot>;
+        size: Scalars['Int'];
         getSortedRiderAllocations: RiderAllocationList;
         riderAllocations: RiderAllocationList;
+        noAllocated: Scalars['Int'];
     };
 
 export type HeatList = {
@@ -355,7 +357,7 @@ export type RiderAllocation = Creatable & {
     startSeed: Scalars['Int'];
     runs?: Maybe<Array<Run>>;
     position?: Maybe<Scalars['Int']>;
-    user: User;
+    user?: Maybe<User>;
 };
 
 export type RiderAllocationList = {
@@ -485,24 +487,25 @@ export type User = Identifiable &
     };
 
 export type GetCompetitionQueryVariables = {
-    competitionId: Scalars['ID'];
+    id: Scalars['ID'];
 };
 
 export type GetCompetitionQuery = { __typename?: 'Query' } & {
     getCompetition: { __typename?: 'Competition' } & {
+        riderAllocations: { __typename?: 'RiderAllocationList' } & {
+            items: Array<
+                { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'startSeed'> & {
+                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
+                    }
+            >;
+        };
         rounds: { __typename?: 'RoundList' } & {
             items: Array<
                 { __typename?: 'Round' } & {
                     heats: { __typename?: 'HeatList' } & {
                         items: Array<
-                            { __typename?: 'Heat' } & Pick<Heat, 'name'> & {
-                                    riderAllocations: { __typename?: 'RiderAllocationList' } & {
-                                        items: Array<
-                                            { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'userId' | 'position' | 'startSeed'> & {
-                                                    runs: Maybe<Array<{ __typename?: 'Run' } & Pick<Run, 'score'>>>;
-                                                }
-                                        >;
-                                    };
+                            { __typename?: 'Heat' } & Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated'> & {
+                                    round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
                                 }
                         >;
                     };
@@ -568,23 +571,28 @@ export type ListUsersQueryVariables = {};
 export type ListUsersQuery = { __typename?: 'Query' } & { listUsers: Array<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>> };
 
 export const GetCompetitionDocument = gql`
-    query getCompetition($competitionId: ID!) {
-        getCompetition(id: $competitionId) {
+    query getCompetition($id: ID!) {
+        getCompetition(id: $id) {
+            riderAllocations {
+                items {
+                    user {
+                        id
+                        fullName
+                    }
+                    startSeed
+                }
+            }
             rounds {
                 items {
                     heats {
                         items {
+                            id
                             name
-                            riderAllocations {
-                                items {
-                                    userId
-                                    position
-                                    startSeed
-                                    runs {
-                                        score
-                                    }
-                                }
+                            round {
+                                roundNo
                             }
+                            size
+                            noAllocated
                         }
                     }
                 }
@@ -605,7 +613,7 @@ export const GetCompetitionDocument = gql`
  * @example
  * const { data, loading, error } = useGetCompetitionQuery({
  *   variables: {
- *      competitionId: // value for 'competitionId'
+ *      id: // value for 'id'
  *   },
  * });
  */
