@@ -39,7 +39,6 @@ const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
         const { judgeUser, maxRiders, ...rest } = competition;
 
         const variables = { input: { ...rest, eventId, maxRiders: +maxRiders, judgeUserId: judgeUser.id } };
-        console.log('variables', variables);
         const result = await createEvent({ variables });
         setOpen(false);
         // history.push(`${ROUTE_EVENT}/${result.data.createCompetition.id}`);

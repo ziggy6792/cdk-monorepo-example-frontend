@@ -7,7 +7,7 @@ import { TextField } from 'formik-material-ui';
 import { TextArea, Select, NumericField } from 'src/components/formik-material-ui/formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { Gender, Level, Sport } from 'src/generated-types';
+import { Gender, Level, Sport, useListUsersQuery } from 'src/generated-types';
 
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import { CATALOG_GENDER, CATALOG_LEVEL, CATALOG_SPORT, ICatalogItem } from 'src/config/catalogs';
@@ -36,10 +36,10 @@ interface ICompetitionFormProps {
     title: string;
 }
 
-const options: IUserOption[] = [
-    { id: 'Facebook_10224795420532374', fullName: 'Simon' },
-    { id: 'babbbafe-f229-4a30-9dd4-b1bc55b4ed9a', fullName: 'User 2' },
-];
+// const options: IUserOption[] = [
+//     { id: 'Facebook_10224795420532374', fullName: 'Simon' },
+//     { id: 'babbbafe-f229-4a30-9dd4-b1bc55b4ed9a', fullName: 'User 2' },
+// ];
 
 const defaultFormValue = {
     name: '',
@@ -48,13 +48,18 @@ const defaultFormValue = {
     sport: Sport.Wakeboard,
     level: Level.Any,
     maxRiders: '',
-    judgeUser: options[0],
+    judgeUser: null,
 };
 
 const getOptionLabel = (option: ICatalogItem) => option.description;
 
 const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
     console.log('ComepetitionForm');
+
+    const { data, loading, error } = useListUsersQuery();
+
+    const options = !loading ? data.listUsers : [];
+
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik

@@ -32,7 +32,7 @@ export type Competition = DataEntity &
         gender: Gender;
         sport: Sport;
         level: Level;
-        judgeUser: User;
+        judgeUser?: Maybe<User>;
         event: Event;
         rounds: RoundList;
         riderAllocations: RiderAllocationList;
@@ -545,7 +545,7 @@ export type GetEventQuery = { __typename?: 'Query' } & {
             adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
             competitions: { __typename?: 'CompetitionList' } & {
                 items: Array<
-                    { __typename?: 'Competition' } & Pick<Competition, 'id' | 'name'> & { judgeUser: { __typename?: 'User' } & Pick<User, 'fullName'> }
+                    { __typename?: 'Competition' } & Pick<Competition, 'id' | 'name'> & { judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>> }
                 >;
             };
         };
@@ -562,6 +562,10 @@ export type GetDataEntityQuery = { __typename?: 'Query' } & {
         | ({ __typename?: 'Competition' } & Pick<Competition, 'judgeUserId' | 'createdAt' | 'id' | 'name'>)
     >;
 };
+
+export type ListUsersQueryVariables = {};
+
+export type ListUsersQuery = { __typename?: 'Query' } & { listUsers: Array<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>> };
 
 export const GetCompetitionDocument = gql`
     query getCompetition($competitionId: ID!) {
@@ -837,3 +841,36 @@ export function useGetDataEntityLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type GetDataEntityQueryHookResult = ReturnType<typeof useGetDataEntityQuery>;
 export type GetDataEntityLazyQueryHookResult = ReturnType<typeof useGetDataEntityLazyQuery>;
 export type GetDataEntityQueryResult = ApolloReactCommon.QueryResult<GetDataEntityQuery, GetDataEntityQueryVariables>;
+export const ListUsersDocument = gql`
+    query listUsers {
+        listUsers {
+            id
+            fullName
+        }
+    }
+`;
+
+/**
+ * __useListUsersQuery__
+ *
+ * To run a query within a React component, call `useListUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListUsersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListUsersQuery, ListUsersQueryVariables>) {
+    return ApolloReactHooks.useQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
+}
+export function useListUsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListUsersQuery, ListUsersQueryVariables>) {
+    return ApolloReactHooks.useLazyQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
+}
+export type ListUsersQueryHookResult = ReturnType<typeof useListUsersQuery>;
+export type ListUsersLazyQueryHookResult = ReturnType<typeof useListUsersLazyQuery>;
+export type ListUsersQueryResult = ApolloReactCommon.QueryResult<ListUsersQuery, ListUsersQueryVariables>;
