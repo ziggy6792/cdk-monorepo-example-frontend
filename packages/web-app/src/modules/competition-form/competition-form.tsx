@@ -36,11 +36,6 @@ interface ICompetitionFormProps {
     title: string;
 }
 
-// const options: IUserOption[] = [
-//     { id: 'Facebook_10224795420532374', fullName: 'Simon' },
-//     { id: 'babbbafe-f229-4a30-9dd4-b1bc55b4ed9a', fullName: 'User 2' },
-// ];
-
 const defaultFormValue = {
     name: '',
     description: '',
@@ -56,27 +51,23 @@ const getOptionLabel = (option: ICatalogItem) => option.description;
 const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
     console.log('ComepetitionForm');
 
-    const { data, loading, error } = useListUsersQuery();
+    const { data, loading } = useListUsersQuery();
 
-    const options = !loading ? data.listUsers : [];
+    const judgeOptions = !loading ? data.listUsers : [];
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik
                 initialValues={initialValues || defaultFormValue}
                 validationSchema={Yup.object({
-                    name: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
-                        .required('Required'),
-                    judgeUser: Yup.object()
-                        .nullable()
-                        .required('Required'),
+                    name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+                    judgeUser: Yup.object().nullable().required('Required'),
                 })}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await onSubmit(values as ICompetitionFormValues);
                 }}
             >
-                {props => {
+                {(props) => {
                     const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
                         <Form>
@@ -117,7 +108,7 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
                                             name='judgeUser'
                                             component={Autocomplete}
                                             autoComplete
-                                            options={options}
+                                            options={judgeOptions}
                                             getOptionLabel={(option: IUserOption) => option.fullName}
                                             style={{ width: 300 }}
                                             renderInput={(params: AutocompleteRenderInputParams) => (
