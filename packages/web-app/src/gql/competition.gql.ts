@@ -27,3 +27,11 @@ export const GET_COMPETITION = gql`
         }
     }
 `;
+
+export const CREATE_COMPETITION = gql`
+    mutation createCompetition($input: CreateCompetitionInput!) {
+        createCompetition(input: $input) {
+            id
+        }
+    }
+`;

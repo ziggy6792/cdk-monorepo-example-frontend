@@ -1,34 +1,37 @@
 import React from 'react';
 import { Field, Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { TextArea } from 'src/components/formik-material-ui/formik-material-ui';
-import { DateTimePicker } from 'formik-material-ui-pickers';
+import { TextArea, Select } from 'src/components/formik-material-ui/formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { CreateEventInput, UpdateEventInput } from 'src/generated-types';
+import { CreateCompetitionInput, Gender, UpdateCompetitionInput } from 'src/generated-types';
 import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
+import { CATALOG_GENDER, CATALOG_LEVEL, CATALOG_SPORT, ICatalogItem } from 'src/config/catalogs';
 
-interface IEventFormProps {
-    onSubmit: (event: CreateEventInput | Omit<UpdateEventInput, 'id'>) => Promise<void>;
+interface ICompetitionFormProps {
+    onSubmit: (event: Omit<CreateCompetitionInput, 'eventId'> | Omit<UpdateCompetitionInput, 'id' | 'eventId'>) => Promise<void>;
     onCancel: () => void;
-    initialValues?: Omit<UpdateEventInput, 'id'>;
+    initialValues?: Omit<UpdateCompetitionInput, 'id' | 'eventId'>;
     title: string;
 }
 
-const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
-    const minTime = startOfHour(addHours(new Date(), 1));
+const defaultFormValue = { name: '', description: '', gender: Gender.Any };
+
+const getOptionLabel = (option: ICatalogItem) => option.description;
+
+const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
+    console.log('ComepetitionForm');
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik
-                initialValues={initialValues || { name: '', startTime: minTime, description: '' }}
+                initialValues={initialValues || defaultFormValue}
                 validationSchema={Yup.object({
                     name: Yup.string()
                         .max(15, 'Must be 15 characters or less')
                         .required('Required'),
-                    startTime: Yup.date().min(minTime, 'Please pick a later date'),
                 })}
                 onSubmit={async values => {
                     await onSubmit(values);
@@ -51,10 +54,19 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initi
                                         <Field name='name' component={TextField} label='Name' autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />
-                                    </Grid>
-                                    <Grid item>
                                         <Field name='description' component={TextArea} placeholder='Description' />
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Field name='sport' component={Select} label='Sport' options={CATALOG_SPORT} getOptionLabel={getOptionLabel} />
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Field name='gender' component={Select} label='Gender' options={CATALOG_GENDER} getOptionLabel={getOptionLabel} />
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Field name='level' component={Select} label='Skill Level' options={CATALOG_LEVEL} getOptionLabel={getOptionLabel} />
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -67,4 +79,4 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initi
     );
 };
 
-export default EventForm;
+export default ComepetitionForm;

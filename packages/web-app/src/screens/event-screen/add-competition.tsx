@@ -6,31 +6,27 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
-import { UpdateEventInput, useUpdateEventMutation } from 'src/generated-types';
+import { CreateCompetitionInput, useCreateCompetitionMutation } from 'src/generated-types';
 import { GET_EVENT, LIST_EVENTS } from 'src/gql/event.gql';
 import Dialog from 'src/components/ui/dialog';
-import EventForm from 'src/modules/event-form';
 import { useHistory } from 'react-router';
+import { ROUTE_EVENT } from 'src/config/routes';
+import ComepetitionForm from 'src/modules/competition-form';
 
-interface IEditEventProps {
-    eventToEdit: UpdateEventInput;
+interface IAddCompetitionProps {
+    eventId: string;
 }
 
-const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
-    const { id } = eventToEdit;
-
+const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
     const theme = useTheme();
 
     const history = useHistory();
 
-    const [updateEvent] = useUpdateEventMutation({
+    const [createEvent] = useCreateCompetitionMutation({
         refetchQueries: [
             {
                 query: GET_EVENT,
-                variables: { id },
-            },
-            {
-                query: LIST_EVENTS,
+                variables: { id: eventId },
             },
         ],
         awaitRefetchQueries: true,
@@ -38,9 +34,12 @@ const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
 
     const [open, setOpen] = useState(false);
 
-    const onUpdateEvent = async (event: Omit<UpdateEventInput, 'id'>): Promise<void> => {
-        await updateEvent({ variables: { input: { ...event, id } } });
+    const onCreateCompetition = async (competition: Omit<CreateCompetitionInput, 'eventId'>): Promise<void> => {
+        const variables = { input: { ...competition, eventId } };
+        console.log('variables', variables);
+        const result = await createEvent({ variables });
         setOpen(false);
+        // history.push(`${ROUTE_EVENT}/${result.data.createCompetition.id}`);
         return null;
     };
 
@@ -54,16 +53,16 @@ const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
                                 setOpen(true);
                             }}
                         >
-                            Edit Event
+                            Add Competition
                         </Button>
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <EventForm onSubmit={onUpdateEvent} title='Edit Event' onCancel={() => setOpen(false)} initialValues={eventToEdit} />
+                    <ComepetitionForm onSubmit={onCreateCompetition} title='Add New Competition' onCancel={() => setOpen(false)} />
                 </Dialog>
             </Grid>
         </>
     );
 };
 
-export default EditEvent;
+export default AddCompetition;

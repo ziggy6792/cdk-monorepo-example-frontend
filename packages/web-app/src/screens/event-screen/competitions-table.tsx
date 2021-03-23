@@ -7,9 +7,8 @@ import _ from 'lodash';
 import { useHistory } from 'react-router';
 import { Competition, User } from 'src/generated-types';
 import DataTable, { IDataTableRow } from 'src/components/data-table';
-import { ROUTE_EVENT } from 'src/config/routes';
 
-type CompetitionItem = Pick<Competition, 'id' | 'name'> & { judgeUser: Pick<User, 'fullName'> };
+type CompetitionItem = Pick<Competition, 'id' | 'name'> & { judgeUser?: Pick<User, 'fullName'> };
 
 interface IEventsTableProps {
     competitions: CompetitionItem[];
@@ -20,13 +19,11 @@ interface ICompetitionRow extends IDataTableRow {
 }
 
 const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
-    const history = useHistory();
-
     const tableData: ICompetitionRow[] = competitions.map(competition => ({
         competitionId: competition.id,
         rowData: {
             name: competition.name,
-            judge: competition.judgeUser.fullName,
+            judge: competition.judgeUser?.fullName,
         },
     }));
 
@@ -43,7 +40,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
 
     return (
         <DataTable
-            title='Events'
+            title='Competitions'
             tableData={tableData}
             columns={columns}
             options={{

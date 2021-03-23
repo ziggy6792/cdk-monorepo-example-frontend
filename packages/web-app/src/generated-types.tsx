@@ -512,6 +512,12 @@ export type GetCompetitionQuery = { __typename?: 'Query' } & {
     };
 };
 
+export type CreateCompetitionMutationVariables = {
+    input: CreateCompetitionInput;
+};
+
+export type CreateCompetitionMutation = { __typename?: 'Mutation' } & { createCompetition: { __typename?: 'Competition' } & Pick<Competition, 'id'> };
+
 export type ListEventsQueryVariables = {};
 
 export type ListEventsQuery = { __typename?: 'Query' } & {
@@ -608,6 +614,40 @@ export function useGetCompetitionLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GetCompetitionQueryHookResult = ReturnType<typeof useGetCompetitionQuery>;
 export type GetCompetitionLazyQueryHookResult = ReturnType<typeof useGetCompetitionLazyQuery>;
 export type GetCompetitionQueryResult = ApolloReactCommon.QueryResult<GetCompetitionQuery, GetCompetitionQueryVariables>;
+export const CreateCompetitionDocument = gql`
+    mutation createCompetition($input: CreateCompetitionInput!) {
+        createCompetition(input: $input) {
+            id
+        }
+    }
+`;
+export type CreateCompetitionMutationFn = ApolloReactCommon.MutationFunction<CreateCompetitionMutation, CreateCompetitionMutationVariables>;
+
+/**
+ * __useCreateCompetitionMutation__
+ *
+ * To run a mutation, you first call `useCreateCompetitionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCompetitionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCompetitionMutation, { data, loading, error }] = useCreateCompetitionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCompetitionMutation(
+    baseOptions?: ApolloReactHooks.MutationHookOptions<CreateCompetitionMutation, CreateCompetitionMutationVariables>
+) {
+    return ApolloReactHooks.useMutation<CreateCompetitionMutation, CreateCompetitionMutationVariables>(CreateCompetitionDocument, baseOptions);
+}
+export type CreateCompetitionMutationHookResult = ReturnType<typeof useCreateCompetitionMutation>;
+export type CreateCompetitionMutationResult = ApolloReactCommon.MutationResult<CreateCompetitionMutation>;
+export type CreateCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateCompetitionMutation, CreateCompetitionMutationVariables>;
 export const ListEventsDocument = gql`
     query listEvents {
         listEvents {

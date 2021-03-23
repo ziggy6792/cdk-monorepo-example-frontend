@@ -4,6 +4,7 @@ import { useGetEventQuery, UpdateEventInput } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
 import CompetitionsTable from './competitions-table';
 import EditEvent from './edit-event';
+import AddCompetition from './add-competition';
 
 interface IEventsScreenProps {
     eventId: string;
@@ -34,15 +35,20 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                 <Grid item>
                     <Typography>{description}</Typography>
                 </Grid>
-                <Grid item>
-                    <EditEvent
-                        eventToEdit={{
-                            id: eventId,
-                            description,
-                            name,
-                            startTime,
-                        }}
-                    />
+                <Grid container justify='center' alignItems='center'>
+                    <Grid item>
+                        <EditEvent
+                            eventToEdit={{
+                                id: eventId,
+                                description,
+                                name,
+                                startTime,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <AddCompetition eventId={eventId} />
+                    </Grid>
                 </Grid>
 
                 <Grid container>
