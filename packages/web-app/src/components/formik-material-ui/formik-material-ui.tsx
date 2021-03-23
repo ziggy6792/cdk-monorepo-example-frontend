@@ -23,6 +23,21 @@ export const TextArea: React.FC<TextFieldProps> = props => {
     return <TextField {...props} multiline rows={10} className={classes.message} />;
 };
 
+export const NumericField: React.FC<TextFieldProps> = props => {
+    const classes = useStyles();
+    return (
+        <TextField
+            {...props}
+            label='Max Riders'
+            type='number'
+            InputLabelProps={{
+                shrink: true,
+            }}
+            inputProps={{ inputMode: 'decimal', step: 'any', min: '0' }}
+        />
+    );
+};
+
 interface IMySelectProps extends SelectProps {
     options: Catalog;
     idField: string;

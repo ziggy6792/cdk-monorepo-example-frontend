@@ -3,7 +3,7 @@ import { Field, Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { TextArea, Select } from 'src/components/formik-material-ui/formik-material-ui';
+import { TextArea, Select, NumericField } from 'src/components/formik-material-ui/formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { CreateCompetitionInput, Gender, UpdateCompetitionInput } from 'src/generated-types';
@@ -67,6 +67,10 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
 
                                     <Grid item>
                                         <Field name='level' component={Select} label='Skill Level' options={CATALOG_LEVEL} getOptionLabel={getOptionLabel} />
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Field name='maxRiders' component={NumericField} />
                                     </Grid>
                                 </Grid>
                             </Grid>
