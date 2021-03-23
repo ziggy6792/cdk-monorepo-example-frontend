@@ -20,12 +20,12 @@ const defaultOptions = {
 } as MUIDataTableProps['options'];
 
 export interface IMUIDataTableProps extends Omit<MUIDataTableProps['options'], 'onRowClick'> {
-    onRowClick: (tableRow: IDataTableRow) => void;
+    onRowClick?: (tableRow: IDataTableRow) => void;
 }
 
 interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
     tableData: IDataTableRow[];
-    options: IMUIDataTableProps;
+    options?: IMUIDataTableProps;
     columns: MUIDataTableColumn[];
 }
 
@@ -87,18 +87,19 @@ const DataTable: React.FC<IDataTableProps> = props => {
         return reverse ? retData.reverse() : retData;
     };
 
-    props.options.customSort = customSort;
-
     return (
         <MUIDataTable
             {...props}
             options={{
                 ...defaultOptions,
                 ...props.options,
-                onRowClick: (rowData, rowMeta) => {
-                    const { dataIndex } = rowMeta;
-                    props.options.onRowClick(tableRows[dataIndex]);
-                },
+                customSort,
+                onRowClick: props.options?.onRowClick
+                    ? (rowData, rowMeta) => {
+                          const { dataIndex } = rowMeta;
+                          props.options.onRowClick(tableRows[dataIndex]);
+                      }
+                    : undefined,
             }}
             data={tableDisplayData}
         />

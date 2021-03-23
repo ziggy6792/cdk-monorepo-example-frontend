@@ -27,18 +27,7 @@ const RiderAllocationsTable: React.FC<RiderAllocationsTableProps> = ({ rierAlloc
         { name: 'seed', label: 'Seed' },
     ];
 
-    return (
-        <DataTable
-            title='Registered Riders'
-            tableData={tableData}
-            columns={columns}
-            options={{
-                onRowClick: row => {
-                    console.log('clicked');
-                },
-            }}
-        />
-    );
+    return <DataTable title='Registered Riders' tableData={tableData} columns={columns} />;
 };
 
 export default RiderAllocationsTable;
