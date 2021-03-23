@@ -6,12 +6,13 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
-import { CreateCompetitionInput, useCreateCompetitionMutation } from 'src/generated-types';
+import { CreateCompetitionInput, useCreateCompetitionMutation, User } from 'src/generated-types';
 import { GET_EVENT, LIST_EVENTS } from 'src/gql/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import { useHistory } from 'react-router';
 import { ROUTE_EVENT } from 'src/config/routes';
 import ComepetitionForm from 'src/modules/competition-form';
+import { IUserOption } from 'src/modules/competition-form/competition-form';
 
 interface IAddCompetitionProps {
     eventId: string;
@@ -34,8 +35,10 @@ const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
 
     const [open, setOpen] = useState(false);
 
-    const onCreateCompetition = async (competition: Omit<CreateCompetitionInput, 'eventId'>): Promise<void> => {
-        const variables = { input: { ...competition, eventId } };
+    const onCreateCompetition = async (competition: Omit<CreateCompetitionInput, 'eventId' | 'judgeUserId'> & { judgeUser: IUserOption }): Promise<void> => {
+        const { judgeUser, ...rest } = competition;
+
+        const variables = { input: { ...rest, eventId, judgeUserId: judgeUser.id } };
         console.log('variables', variables);
         const result = await createEvent({ variables });
         setOpen(false);

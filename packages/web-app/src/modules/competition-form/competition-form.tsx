@@ -7,7 +7,7 @@ import { TextField } from 'formik-material-ui';
 import { TextArea, Select, NumericField } from 'src/components/formik-material-ui/formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { CreateCompetitionInput, Gender, UpdateCompetitionInput } from 'src/generated-types';
+import { CreateCompetitionInput, Gender, Level, Sport, UpdateCompetitionInput } from 'src/generated-types';
 
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import { CATALOG_GENDER, CATALOG_LEVEL, CATALOG_SPORT, ICatalogItem } from 'src/config/catalogs';
@@ -31,7 +31,7 @@ const options: IUserOption[] = [
     { id: 'babbbafe-f229-4a30-9dd4-b1bc55b4ed9a', fullName: 'User 2' },
 ];
 
-const defaultFormValue = { name: '', description: '', gender: Gender.Any, judgeUser: options[0] };
+const defaultFormValue = { name: '', description: '', gender: Gender.Any, sport: Sport.Wakeboard, level: Level.Any, judgeUser: options[0] };
 
 const getOptionLabel = (option: ICatalogItem) => option.description;
 
@@ -42,14 +42,18 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
             <Formik
                 initialValues={initialValues || defaultFormValue}
                 validationSchema={Yup.object({
-                    name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
-                    judgeUser: Yup.object().nullable().required('Required'),
+                    name: Yup.string()
+                        .max(15, 'Must be 15 characters or less')
+                        .required('Required'),
+                    judgeUser: Yup.object()
+                        .nullable()
+                        .required('Required'),
                 })}
-                onSubmit={async (values) => {
+                onSubmit={async values => {
                     await onSubmit(values);
                 }}
             >
-                {(props) => {
+                {props => {
                     const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
                         <Form>
@@ -89,7 +93,7 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
                                         <Field
                                             name='judgeUser'
                                             component={Autocomplete}
-                                            autocomplete
+                                            autoComplete
                                             options={options}
                                             getOptionLabel={(option: IUserOption) => option.fullName}
                                             style={{ width: 300 }}
