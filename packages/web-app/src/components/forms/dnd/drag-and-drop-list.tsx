@@ -19,14 +19,14 @@ export const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface CustomInputProps {
+interface CustomInputProps extends FieldProps {
     options: any[];
     getOptionLabel: (option: any, index: number) => string;
     idField: string;
     label: string;
 }
 
-const DragAndDropList: React.FC<CustomInputProps & FieldProps> = (props) => {
+const DragAndDropList: React.FC<CustomInputProps> = (props) => {
     const { field, label, idField = 'id', options, getOptionLabel } = props;
     const classes = useStyles();
 
@@ -43,11 +43,7 @@ const DragAndDropList: React.FC<CustomInputProps & FieldProps> = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [options]);
 
-    const dndInput = { ...field };
-
-    dndInput.value = (optionsMap && dndInput.value.map((id) => optionsMap[id])) || [];
-
-    // delete dndInput.onBlur;
+    const orderedOptions: any[] = (optionsMap && field?.value.map((id) => optionsMap[id])) || [];
 
     const colors = {
         background: 'white',
@@ -92,7 +88,7 @@ const DragAndDropList: React.FC<CustomInputProps & FieldProps> = (props) => {
         if (!result.destination) {
             return;
         }
-        const retItems = reorder(dndInput.value, result.source.index, result.destination.index);
+        const retItems = reorder(orderedOptions, result.source.index, result.destination.index);
 
         props.form.setFieldValue(
             field.name,
@@ -121,7 +117,7 @@ const DragAndDropList: React.FC<CustomInputProps & FieldProps> = (props) => {
                                 <Droppable droppableId='droppable'>
                                     {(provided, snapshot) => (
                                         <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
-                                            {dndInput.value.map((item, index) => (
+                                            {orderedOptions.map((item, index) => (
                                                 <Draggable key={item[idField]} draggableId={item[idField]} index={index}>
                                                     {
                                                         // eslint-disable-next-line no-shadow
