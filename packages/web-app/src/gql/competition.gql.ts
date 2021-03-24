@@ -38,6 +38,7 @@ export const GET_COMPETITION = gql`
                             }
                             size
                             noAllocated
+                            createdAt
                         }
                     }
                 }

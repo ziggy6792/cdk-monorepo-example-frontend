@@ -5,5 +5,5 @@ export interface ICallMeta {
 
 export interface IDataTableRow {
     // rowMetaData: IRowMeta;
-    rowData: { [key in string]: ICallMeta | any };
+    rowData: { [key in string]: ICallMeta | string | number };
 }

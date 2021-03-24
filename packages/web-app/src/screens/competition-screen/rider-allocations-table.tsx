@@ -15,7 +15,7 @@ interface RiderAllocationsTableProps {
 }
 
 const RiderAllocationsTable: React.FC<RiderAllocationsTableProps> = ({ rierAllocations }) => {
-    const tableData: IDataTableRow[] = rierAllocations.map(riderAllocation => ({
+    const tableData: IDataTableRow[] = rierAllocations.map((riderAllocation) => ({
         rowData: {
             rider: riderAllocation.user?.fullName,
             seed: riderAllocation.startSeed,
@@ -27,7 +27,19 @@ const RiderAllocationsTable: React.FC<RiderAllocationsTableProps> = ({ rierAlloc
         { name: 'seed', label: 'Seed' },
     ];
 
-    return <DataTable title='Registered Riders' tableData={tableData} columns={columns} />;
+    return (
+        <DataTable
+            title='Registered Riders'
+            tableData={tableData}
+            columns={columns}
+            options={{
+                sortOrder: {
+                    name: 'seed',
+                    direction: 'asc',
+                },
+            }}
+        />
+    );
 };
 
 export default RiderAllocationsTable;

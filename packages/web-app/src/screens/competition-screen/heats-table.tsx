@@ -8,7 +8,7 @@ import { Heat, Round } from 'src/generated-types';
 import DataTable, { IDataTableRow } from 'src/components/data-table';
 import { ROUTE_HEAT } from 'src/config/routes';
 
-type HeatItem = Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated'> & {
+type HeatItem = Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated' | 'createdAt'> & {
     round: Pick<Round, 'roundNo'>;
 };
 
@@ -23,11 +23,11 @@ interface IHeatRow extends IDataTableRow {
 const HeatsTable: React.FC<EventsTableProps> = ({ heats }) => {
     const history = useHistory();
 
-    const tableData: IHeatRow[] = heats.map(heat => ({
+    const tableData: IHeatRow[] = heats.map((heat) => ({
         heatId: heat.id,
         rowData: {
             name: heat.name,
-            round: heat.round.roundNo,
+            round: { displayText: `${heat.round.roundNo}`, sortIndex: heat.createdAt },
             size: heat.size,
             allocated: heat.noAllocated,
         },
@@ -48,6 +48,10 @@ const HeatsTable: React.FC<EventsTableProps> = ({ heats }) => {
             options={{
                 onRowClick: (row: IHeatRow) => {
                     history.push(`${ROUTE_HEAT}/${row.heatId}`);
+                },
+                sortOrder: {
+                    name: 'round',
+                    direction: 'asc',
                 },
             }}
         />

@@ -536,7 +536,7 @@ export type GetCompetitionQuery = (
           { __typename?: 'HeatList' }
           & { items: Array<(
             { __typename?: 'Heat' }
-            & Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated'>
+            & Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated' | 'createdAt'>
             & { round: (
               { __typename?: 'Round' }
               & Pick<Round, 'roundNo'>
@@ -718,6 +718,7 @@ export const GetCompetitionDocument = gql`
             }
             size
             noAllocated
+            createdAt
           }
         }
       }
