@@ -5,6 +5,8 @@ import _ from 'lodash';
 import Spinner from 'src/components/spinner';
 import HeatsTable from './heats-table';
 import RiderAllocationsTable from './rider-allocations-table';
+import CompetitionSummary from './competition-summary';
+import EditCompetition from './edit-competition';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -16,13 +18,28 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
-    console.log('heats', heats);
-
     return (
         <>
             {loading && <Spinner />}
             {!loading && (
                 <Grid container direction='column' justify='center' alignItems='center'>
+                    <Grid item style={{ width: '100%' }}>
+                        <CompetitionSummary summary={data.getCompetition} />
+                    </Grid>
+                    <Grid item>
+                        <EditCompetition
+                            competitionToEdit={{
+                                id: data.getCompetition.id,
+                                description: data.getCompetition.description,
+                                name: data.getCompetition.name,
+                                level: data.getCompetition.level,
+                                sport: data.getCompetition.sport,
+                                gender: data.getCompetition.gender,
+                                maxRiders: data.getCompetition.maxRiders,
+                            }}
+                            judgeUser={data.getCompetition.judgeUser}
+                        />
+                    </Grid>
                     <Grid container>
                         {/* ToDo fix this */}
                         <Grid item style={{ width: '100%' }}>

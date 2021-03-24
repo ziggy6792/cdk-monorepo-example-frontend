@@ -28,7 +28,7 @@ export type Competition = DataEntity &
         startTime: Scalars['DateTime'];
         status: CompetitionStatus;
         params: CompetitionParams;
-        maxRiders: Scalars['Int'];
+        maxRiders?: Maybe<Scalars['Int']>;
         gender: Gender;
         sport: Sport;
         level: Level;
@@ -491,28 +491,32 @@ export type GetCompetitionQueryVariables = {
 };
 
 export type GetCompetitionQuery = { __typename?: 'Query' } & {
-    getCompetition: { __typename?: 'Competition' } & {
-        riderAllocations: { __typename?: 'RiderAllocationList' } & {
-            items: Array<
-                { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'startSeed'> & {
-                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
+    getCompetition: { __typename?: 'Competition' } & Pick<
+        Competition,
+        'id' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
+    > & {
+            judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
+            riderAllocations: { __typename?: 'RiderAllocationList' } & {
+                items: Array<
+                    { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'startSeed'> & {
+                            user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
+                        }
+                >;
+            };
+            rounds: { __typename?: 'RoundList' } & {
+                items: Array<
+                    { __typename?: 'Round' } & {
+                        heats: { __typename?: 'HeatList' } & {
+                            items: Array<
+                                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated'> & {
+                                        round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
+                                    }
+                            >;
+                        };
                     }
-            >;
+                >;
+            };
         };
-        rounds: { __typename?: 'RoundList' } & {
-            items: Array<
-                { __typename?: 'Round' } & {
-                    heats: { __typename?: 'HeatList' } & {
-                        items: Array<
-                            { __typename?: 'Heat' } & Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated'> & {
-                                    round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
-                                }
-                        >;
-                    };
-                }
-            >;
-        };
-    };
 };
 
 export type CreateCompetitionMutationVariables = {
@@ -520,6 +524,12 @@ export type CreateCompetitionMutationVariables = {
 };
 
 export type CreateCompetitionMutation = { __typename?: 'Mutation' } & { createCompetition: { __typename?: 'Competition' } & Pick<Competition, 'id'> };
+
+export type UpdateCompetitionMutationVariables = {
+    input: UpdateCompetitionInput;
+};
+
+export type UpdateCompetitionMutation = { __typename?: 'Mutation' } & { updateCompetition: { __typename?: 'Competition' } & Pick<Competition, 'id'> };
 
 export type ListEventsQueryVariables = {};
 
@@ -573,6 +583,18 @@ export type ListUsersQuery = { __typename?: 'Query' } & { listUsers: Array<{ __t
 export const GetCompetitionDocument = gql`
     query getCompetition($id: ID!) {
         getCompetition(id: $id) {
+            id
+            name
+            description
+            level
+            gender
+            sport
+            maxRiders
+            judgeUserId
+            judgeUser {
+                id
+                fullName
+            }
             riderAllocations {
                 items {
                     user {
@@ -660,6 +682,40 @@ export function useCreateCompetitionMutation(
 export type CreateCompetitionMutationHookResult = ReturnType<typeof useCreateCompetitionMutation>;
 export type CreateCompetitionMutationResult = ApolloReactCommon.MutationResult<CreateCompetitionMutation>;
 export type CreateCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateCompetitionMutation, CreateCompetitionMutationVariables>;
+export const UpdateCompetitionDocument = gql`
+    mutation updateCompetition($input: UpdateCompetitionInput!) {
+        updateCompetition(input: $input) {
+            id
+        }
+    }
+`;
+export type UpdateCompetitionMutationFn = ApolloReactCommon.MutationFunction<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>;
+
+/**
+ * __useUpdateCompetitionMutation__
+ *
+ * To run a mutation, you first call `useUpdateCompetitionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCompetitionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCompetitionMutation, { data, loading, error }] = useUpdateCompetitionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCompetitionMutation(
+    baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>
+) {
+    return ApolloReactHooks.useMutation<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>(UpdateCompetitionDocument, baseOptions);
+}
+export type UpdateCompetitionMutationHookResult = ReturnType<typeof useUpdateCompetitionMutation>;
+export type UpdateCompetitionMutationResult = ApolloReactCommon.MutationResult<UpdateCompetitionMutation>;
+export type UpdateCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>;
 export const ListEventsDocument = gql`
     query listEvents {
         listEvents {

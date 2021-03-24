@@ -26,7 +26,7 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initi
                 initialValues={initialValues || { name: '', startTime: minTime, description: '' }}
                 validationSchema={Yup.object({
                     name: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
+                        .max(30, 'Must be 30 characters or less')
                         .required('Required'),
                     startTime: Yup.date().min(minTime, 'Please pick a later date'),
                 })}
