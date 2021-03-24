@@ -17,74 +17,71 @@ export interface IUserOption {
     fullName: string;
 }
 
-export interface ICompetitionFormValues {
+export interface ISeedsFormValues {
     riders: string[];
 }
 
 interface ISeedsFormProps {
-    onSubmit: (formValues: ICompetitionFormValues) => Promise<void>;
+    onSubmit: (formValues: ISeedsFormValues) => Promise<void>;
     onCancel: () => void;
-    initialValues?: ICompetitionFormValues;
+    initialValues?: ISeedsFormValues;
     riderOptions: RiderOption[];
     title: string;
 }
 
 const getRiderOptionLabel = (option: RiderOption, index: number): string => `${index + 1} ${option.user.fullName}`;
 
-const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initialValues, riderOptions }) => {
-    console.log('riderOptions', riderOptions);
+const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initialValues, riderOptions }) => (
+    // console.log('riderOptions', riderOptions);
 
-    return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={async (values) => {
-                    await onSubmit(values);
-                }}
-            >
-                {(props) => {
-                    const { isSubmitting, isValid, dirty, errors, touched, setFieldValue, values } = props;
-                    return (
-                        <Form>
-                            <Grid container direction='column'>
-                                <Grid container direction='column' alignItems='center' spacing={0}>
-                                    <Grid item>
-                                        <Typography variant='h3' gutterBottom>
-                                            {title}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                                <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
-                                    <Grid item>
-                                        <Button
-                                            variant='outlined'
-                                            size='small'
-                                            onClick={() => {
-                                                setFieldValue('riders', _.shuffle(values.riders));
-                                            }}
-                                        >
-                                            Randomize Order
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Field
-                                            name='riders'
-                                            component={DragAndDropList}
-                                            options={riderOptions}
-                                            idField='userId'
-                                            loading={false}
-                                            getOptionLabel={getRiderOptionLabel}
-                                        />
-                                    </Grid>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Formik
+            initialValues={initialValues}
+            onSubmit={async (values) => {
+                await onSubmit(values);
+            }}
+        >
+            {(props) => {
+                const { isSubmitting, isValid, dirty, errors, touched, setFieldValue, values } = props;
+                return (
+                    <Form>
+                        <Grid container direction='column'>
+                            <Grid container direction='column' alignItems='center' spacing={0}>
+                                <Grid item>
+                                    <Typography variant='h3' gutterBottom>
+                                        {title}
+                                    </Typography>
                                 </Grid>
                             </Grid>
-                            <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
-                        </Form>
-                    );
-                }}
-            </Formik>
-        </MuiPickersUtilsProvider>
-    );
-};
-
+                            <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
+                                <Grid item>
+                                    <Button
+                                        variant='outlined'
+                                        size='small'
+                                        onClick={() => {
+                                            setFieldValue('riders', _.shuffle(values.riders));
+                                        }}
+                                    >
+                                        Randomize Order
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Field
+                                        name='riders'
+                                        component={DragAndDropList}
+                                        options={riderOptions}
+                                        idField='userId'
+                                        loading={false}
+                                        getOptionLabel={getRiderOptionLabel}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
+                    </Form>
+                );
+            }}
+        </Formik>
+    </MuiPickersUtilsProvider>
+);
 export default SeedsForm;

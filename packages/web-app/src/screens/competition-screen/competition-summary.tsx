@@ -14,7 +14,7 @@ interface CompetitionSummaryProps {
     summary: CompSummary;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
     },
@@ -24,8 +24,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CompetitionSummary: React.FC<CompetitionSummaryProps> = ({ summary }) => {
-    console.log('CompetitionSummary');
-
     const classes = useStyles();
 
     return (

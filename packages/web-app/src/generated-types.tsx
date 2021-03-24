@@ -657,6 +657,19 @@ export type GetDataEntityQuery = (
   )> }
 );
 
+export type UpdateRiderAllocationsMutationVariables = {
+  input: Array<UpdateRiderAllocationInput>
+};
+
+
+export type UpdateRiderAllocationsMutation = (
+  { __typename?: 'Mutation' }
+  & { updateRiderAllocations: Array<(
+    { __typename?: 'RiderAllocation' }
+    & Pick<RiderAllocation, 'allocatableId'>
+  )> }
+);
+
 export type ListUsersQueryVariables = {};
 
 
@@ -991,6 +1004,38 @@ export function useGetDataEntityLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type GetDataEntityQueryHookResult = ReturnType<typeof useGetDataEntityQuery>;
 export type GetDataEntityLazyQueryHookResult = ReturnType<typeof useGetDataEntityLazyQuery>;
 export type GetDataEntityQueryResult = ApolloReactCommon.QueryResult<GetDataEntityQuery, GetDataEntityQueryVariables>;
+export const UpdateRiderAllocationsDocument = gql`
+    mutation updateRiderAllocations($input: [UpdateRiderAllocationInput!]!) {
+  updateRiderAllocations(input: $input) {
+    allocatableId
+  }
+}
+    `;
+export type UpdateRiderAllocationsMutationFn = ApolloReactCommon.MutationFunction<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>;
+
+/**
+ * __useUpdateRiderAllocationsMutation__
+ *
+ * To run a mutation, you first call `useUpdateRiderAllocationsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRiderAllocationsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateRiderAllocationsMutation, { data, loading, error }] = useUpdateRiderAllocationsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateRiderAllocationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>(UpdateRiderAllocationsDocument, baseOptions);
+      }
+export type UpdateRiderAllocationsMutationHookResult = ReturnType<typeof useUpdateRiderAllocationsMutation>;
+export type UpdateRiderAllocationsMutationResult = ApolloReactCommon.MutationResult<UpdateRiderAllocationsMutation>;
+export type UpdateRiderAllocationsMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>;
 export const ListUsersDocument = gql`
     query listUsers {
   listUsers {

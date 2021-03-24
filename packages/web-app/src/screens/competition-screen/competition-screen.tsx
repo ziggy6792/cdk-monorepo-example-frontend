@@ -43,7 +43,7 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                             />
                         </Grid>
                         <Grid item>
-                            <EditSeeds riderOptions={data.getCompetition.riderAllocations.items} />
+                            <EditSeeds riderAllocations={data.getCompetition.riderAllocations.items} competitionId={competitionId} />
                         </Grid>
                     </Grid>
 
