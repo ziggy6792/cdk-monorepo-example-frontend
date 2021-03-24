@@ -19,6 +19,7 @@ export const GET_COMPETITION = gql`
             }
             riderAllocations {
                 items {
+                    userId
                     user {
                         id
                         fullName

@@ -4,7 +4,7 @@ import { Field, Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography, TextField as MUITextField } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { TextArea, Select, NumericField } from 'src/components/formik-material-ui/formik-material-ui';
+import { TextArea, Select, NumericField } from 'src/components/forms/formik-material-ui/formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { Gender, Level, Sport, useListUsersQuery } from 'src/generated-types';
@@ -60,18 +60,14 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
             <Formik
                 initialValues={initialValues || defaultFormValue}
                 validationSchema={Yup.object({
-                    name: Yup.string()
-                        .max(30, 'Must be 30 characters or less')
-                        .required('Required'),
-                    judgeUser: Yup.object()
-                        .nullable()
-                        .required('Required'),
+                    name: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
+                    judgeUser: Yup.object().nullable().required('Required'),
                 })}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await onSubmit(values as ICompetitionFormValues);
                 }}
             >
-                {props => {
+                {(props) => {
                     const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
                         <Form>

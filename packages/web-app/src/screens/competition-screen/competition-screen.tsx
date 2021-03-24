@@ -7,6 +7,7 @@ import HeatsTable from './heats-table';
 import RiderAllocationsTable from './rider-allocations-table';
 import CompetitionSummary from './competition-summary';
 import EditCompetition from './edit-competition';
+import EditSeeds from './edit-seeds';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -15,7 +16,7 @@ interface IEventsScreenProps {
 const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
+    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
     return (
@@ -26,20 +27,26 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                     <Grid item style={{ width: '100%' }}>
                         <CompetitionSummary summary={data.getCompetition} />
                     </Grid>
-                    <Grid item>
-                        <EditCompetition
-                            competitionToEdit={{
-                                id: data.getCompetition.id,
-                                description: data.getCompetition.description,
-                                name: data.getCompetition.name,
-                                level: data.getCompetition.level,
-                                sport: data.getCompetition.sport,
-                                gender: data.getCompetition.gender,
-                                maxRiders: data.getCompetition.maxRiders,
-                            }}
-                            judgeUser={data.getCompetition.judgeUser}
-                        />
+                    <Grid container direction='row' justify='center' alignItems='center'>
+                        <Grid item>
+                            <EditCompetition
+                                competitionToEdit={{
+                                    id: data.getCompetition.id,
+                                    description: data.getCompetition.description,
+                                    name: data.getCompetition.name,
+                                    level: data.getCompetition.level,
+                                    sport: data.getCompetition.sport,
+                                    gender: data.getCompetition.gender,
+                                    maxRiders: data.getCompetition.maxRiders,
+                                }}
+                                judgeUser={data.getCompetition.judgeUser}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <EditSeeds riderOptions={data.getCompetition.riderAllocations.items} />
+                        </Grid>
                     </Grid>
+
                     <Grid container>
                         {/* ToDo fix this */}
                         <Grid item style={{ width: '100%' }}>

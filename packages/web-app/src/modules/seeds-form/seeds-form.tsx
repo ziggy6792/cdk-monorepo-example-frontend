@@ -1,39 +1,48 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Field, Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import { Grid, Typography } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { TextArea } from 'src/components/forms/formik-material-ui/formik-material-ui';
-import { DateTimePicker } from 'formik-material-ui-pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { CreateEventInput, UpdateEventInput } from 'src/generated-types';
-import { addHours, startOfHour } from 'date-fns';
+import { useListUsersQuery } from 'src/generated-types';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
+import { ICatalogItem } from 'src/config/catalogs';
+import DragAndDropList from 'src/components/forms/dnd/drag-and-drop-list';
+import { RiderOption } from 'src/gql/common/types';
 
-interface IEventFormProps {
-    onSubmit: (event: CreateEventInput | Omit<UpdateEventInput, 'id'>) => Promise<void>;
+export interface IUserOption {
+    id: string;
+    fullName: string;
+}
+
+export interface ICompetitionFormValues {
+    riders: string[];
+}
+
+interface ISeedsFormProps {
+    onSubmit: (formValues: ICompetitionFormValues) => Promise<void>;
     onCancel: () => void;
-    initialValues?: Omit<UpdateEventInput, 'id'>;
+    initialValues?: ICompetitionFormValues;
+    riderOptions: RiderOption[];
     title: string;
 }
 
-const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
-    const minTime = startOfHour(addHours(new Date(), 1));
+const getRiderOptionLabel = (option: RiderOption, index: number): string => `${index + 1} ${option.user.fullName}`;
+
+const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initialValues, riderOptions }) => {
+    console.log('riderOptions', riderOptions);
+
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik
-                initialValues={initialValues || { name: '', startTime: minTime, description: '' }}
-                validationSchema={Yup.object({
-                    name: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
-                    startTime: Yup.date().min(minTime, 'Please pick a later date'),
-                })}
+                initialValues={initialValues}
                 onSubmit={async (values) => {
                     await onSubmit(values);
                 }}
             >
                 {(props) => {
-                    const { isSubmitting, isValid, dirty } = props;
+                    const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
                         <Form>
                             <Grid container direction='column'>
@@ -46,13 +55,14 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initi
                                 </Grid>
                                 <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                     <Grid item>
-                                        <Field name='name' component={TextField} label='Name' autoFocus />
-                                    </Grid>
-                                    <Grid item>
-                                        <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />
-                                    </Grid>
-                                    <Grid item>
-                                        <Field name='description' component={TextArea} placeholder='Description' />
+                                        <Field
+                                            name='riders'
+                                            component={DragAndDropList}
+                                            options={riderOptions}
+                                            idField='userId'
+                                            loading={false}
+                                            getOptionLabel={getRiderOptionLabel}
+                                        />
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -65,4 +75,4 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initi
     );
 };
 
-export default EventForm;
+export default SeedsForm;

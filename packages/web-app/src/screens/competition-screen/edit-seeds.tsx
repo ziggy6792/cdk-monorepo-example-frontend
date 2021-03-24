@@ -3,47 +3,19 @@
 
 import React, { useState } from 'react';
 import { Button, Grid, useTheme } from '@material-ui/core';
-import { UpdateCompetitionInput, useUpdateCompetitionMutation, User } from 'src/generated-types';
-import { LIST_EVENTS } from 'src/gql/event.gql';
+import { RiderAllocation, User } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
-import { GET_COMPETITION } from 'src/gql/competition.gql';
-import ComepetitionForm from 'src/modules/competition-form';
-import { ICompetitionFormValues } from 'src/modules/competition-form/competition-form';
+import SeedsForm from 'src/modules/seeds-form';
+import { RiderOption } from 'src/gql/common/types';
 
-interface IEditCompetitionProps {
-    competitionToEdit: UpdateCompetitionInput;
-    judgeUser: Pick<User, 'id' | 'fullName'>;
+interface IEditSeedsProps {
+    riderOptions: RiderOption[];
 }
 
-const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, judgeUser }) => {
-    const { id } = competitionToEdit;
-
+const EditSeeds: React.FC<IEditSeedsProps> = ({ riderOptions }) => {
     const theme = useTheme();
 
-    const [updateCompetition] = useUpdateCompetitionMutation({
-        refetchQueries: [
-            {
-                query: GET_COMPETITION,
-                variables: { id },
-            },
-            {
-                query: LIST_EVENTS,
-            },
-        ],
-        awaitRefetchQueries: true,
-    });
-
     const [open, setOpen] = useState(false);
-
-    const onUpdateCompetition = async (competition: ICompetitionFormValues): Promise<void> => {
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const { judgeUser, maxRiders, ...rest } = competition;
-
-        const variables = { input: { ...rest, id: competitionToEdit.id, maxRiders: +maxRiders, judgeUserId: judgeUser.id } };
-        const result = await updateCompetition({ variables });
-        setOpen(false);
-        return null;
-    };
 
     return (
         <>
@@ -55,16 +27,17 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
                                 setOpen(true);
                             }}
                         >
-                            Edit
+                            Edit Seeds
                         </Button>
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <ComepetitionForm
-                        onSubmit={onUpdateCompetition}
-                        title='Edit Competition'
+                    <SeedsForm
+                        onSubmit={async (values) => console.log('values', values)}
+                        title='Edit Seeds'
                         onCancel={() => setOpen(false)}
-                        initialValues={{ ...competitionToEdit, judgeUser }}
+                        initialValues={{ riders: riderOptions.map(({ userId }) => userId) }}
+                        riderOptions={riderOptions}
                     />
                 </Dialog>
             </Grid>
@@ -72,4 +45,4 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
     );
 };
 
-export default EditCompetition;
+export default EditSeeds;
