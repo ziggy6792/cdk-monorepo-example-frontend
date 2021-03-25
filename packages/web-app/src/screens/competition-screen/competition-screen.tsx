@@ -8,6 +8,7 @@ import RiderAllocationsTable from './rider-allocations-table';
 import CompetitionSummary from './competition-summary';
 import EditCompetition from './buttons/edit-competition';
 import EditSeeds from './buttons/edit-seeds';
+import BuildCompetition from './buttons/build-competition';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -44,6 +45,9 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                         </Grid>
                         <Grid item>
                             <EditSeeds riderAllocations={data.getCompetition.riderAllocations.items} competitionId={competitionId} />
+                        </Grid>
+                        <Grid item>
+                            <BuildCompetition riderAllocations={data.getCompetition.riderAllocations.items} competitionId={competitionId} />
                         </Grid>
                     </Grid>
 

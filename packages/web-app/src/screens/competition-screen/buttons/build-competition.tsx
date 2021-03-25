@@ -3,20 +3,21 @@
 
 import React, { useState } from 'react';
 import { Button, Grid, useTheme } from '@material-ui/core';
-import { RiderAllocation, UpdateRiderAllocationInput, User, useUpdateRiderAllocationsMutation } from 'src/generated-types';
+import { UpdateRiderAllocationInput, useUpdateRiderAllocationsMutation } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
 import SeedsForm from 'src/modules/seeds-form';
 import { RiderOption } from 'src/gql/common/types';
 import { GET_COMPETITION } from 'src/gql/competition.gql';
 import { ISeedsFormValues } from 'src/modules/seeds-form/seeds-form';
 import _ from 'lodash';
+import BuildCompetitionForm from 'src/modules/build-competition-form';
 
-interface IEditSeedsProps {
+interface IBuildCompetitionProps {
     competitionId: string;
     riderAllocations: RiderOption[];
 }
 
-const BuildCompetition: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId }) => {
+const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ riderAllocations, competitionId }) => {
     const theme = useTheme();
 
     const [open, setOpen] = useState(false);
@@ -30,23 +31,6 @@ const BuildCompetition: React.FC<IEditSeedsProps> = ({ riderAllocations, competi
         ],
         awaitRefetchQueries: true,
     });
-
-    const onUpdateSeeds = async (formData: ISeedsFormValues): Promise<void> => {
-        const { riders } = formData;
-        const riderSortMap: { [key in string]: number } = {};
-        riders.forEach((userId, i) => {
-            riderSortMap[userId] = i;
-        });
-        const orderedRiderAllocations = _.orderBy(riderAllocations, ra => riderSortMap[ra.userId]);
-        const updateRiderAllocationInputs: UpdateRiderAllocationInput[] = orderedRiderAllocations.map((riderOption, i) => ({
-            allocatableId: competitionId,
-            userId: riderOption.userId,
-            startSeed: i + 1,
-        }));
-        await updateRiderAllocations({ variables: { input: updateRiderAllocationInputs } });
-        setOpen(false);
-        return null;
-    };
 
     return (
         <>
@@ -63,12 +47,11 @@ const BuildCompetition: React.FC<IEditSeedsProps> = ({ riderAllocations, competi
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <SeedsForm
-                        onSubmit={onUpdateSeeds}
-                        title='Seeds Order'
+                    <BuildCompetitionForm
+                        onSubmit={async formValues => console.log('formValues', formValues)}
+                        title='Build Competition'
                         onCancel={() => setOpen(false)}
                         initialValues={{ riders: riderAllocations.map(({ userId }) => userId) }}
-                        riderOptions={riderAllocations}
                     />
                 </Dialog>
             </Grid>
