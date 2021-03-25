@@ -62,3 +62,11 @@ export const UPDATE_COMPETITION = gql`
         }
     }
 `;
+
+export const BUILD_COMPETITION = gql`
+    mutation buildCompetition($params: CompetitionParamsInput!, $id: ID!) {
+        buildCompetition(id: $id, params: $params) {
+            id
+        }
+    }
+`;

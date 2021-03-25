@@ -17,7 +17,7 @@ interface IEventsScreenProps {
 const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
+    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
     return (
@@ -47,7 +47,7 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                             <EditSeeds riderAllocations={data.getCompetition.riderAllocations.items} competitionId={competitionId} />
                         </Grid>
                         <Grid item>
-                            <BuildCompetition riderAllocations={data.getCompetition.riderAllocations.items} competitionId={competitionId} />
+                            <BuildCompetition competitionId={competitionId} />
                         </Grid>
                     </Grid>
 

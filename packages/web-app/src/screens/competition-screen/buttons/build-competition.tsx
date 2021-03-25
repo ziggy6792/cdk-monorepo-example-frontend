@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { Button, Grid, useTheme } from '@material-ui/core';
-import { useUpdateRiderAllocationsMutation, CompetitionParams } from 'src/generated-types';
+import { useUpdateRiderAllocationsMutation, CompetitionParams, useBuildCompetitionMutation } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
 import SeedsForm from 'src/modules/seeds-form';
 import { RiderOption } from 'src/gql/common/types';
@@ -13,14 +13,15 @@ import _ from 'lodash';
 import BuildCompetitionForm from 'src/modules/build-competition-form';
 import YAML from 'yaml';
 import defaultCompetition from 'src/gql/default-competition.json';
+import { IBuildCompetitionFormValues } from 'src/modules/build-competition-form/build-competition-form';
+import jsYaml from 'js-yaml';
 
 interface IBuildCompetitionProps {
     competitionId: string;
-    riderAllocations: RiderOption[];
     params?: CompetitionParams;
 }
 
-const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ riderAllocations, competitionId, params }) => {
+const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, params }) => {
     const ymlDocument = new YAML.Document();
     let allowSubmitPristine = false;
     if (params) {
@@ -34,7 +35,7 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ riderAllocations, 
 
     const [open, setOpen] = useState(false);
 
-    const [updateRiderAllocations] = useUpdateRiderAllocationsMutation({
+    const [buildCompetition] = useBuildCompetitionMutation({
         refetchQueries: [
             {
                 query: GET_COMPETITION,
@@ -43,6 +44,18 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ riderAllocations, 
         ],
         awaitRefetchQueries: true,
     });
+
+    const onSubmit = async (formData: IBuildCompetitionFormValues) => {
+        const parsedParams = { rounds: jsYaml.load(formData.params) };
+        console.log('parsedParams', parsedParams);
+        await buildCompetition({
+            variables: {
+                id: competitionId,
+                params: parsedParams,
+            },
+        });
+        setOpen(false);
+    };
 
     return (
         <>
@@ -60,7 +73,8 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ riderAllocations, 
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
                     <BuildCompetitionForm
-                        onSubmit={async formValues => console.log('formValues', formValues)}
+                        onSubmit={onSubmit}
+                        allowSubmitPristine={allowSubmitPristine}
                         title='Build Competition'
                         onCancel={() => setOpen(false)}
                         initialValues={{ params: ymlDocument.toString() }}

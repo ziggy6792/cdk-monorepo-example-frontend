@@ -21,6 +21,7 @@ interface IBuildCompetitionFormProps {
     onSubmit: (formValues: IBuildCompetitionFormValues) => Promise<void>;
     onCancel: () => void;
     initialValues?: IBuildCompetitionFormValues;
+    allowSubmitPristine?: boolean;
     title: string;
 }
 
@@ -39,7 +40,7 @@ const validate = (values: IBuildCompetitionFormValues) => {
     return {};
 };
 
-const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues }) => (
+const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues, allowSubmitPristine }) => (
     // console.log('riderOptions', riderOptions);
 
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -71,7 +72,13 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
+                        <FormButtons
+                            isSubmitting={isSubmitting}
+                            dirty={dirty}
+                            isValid={isValid}
+                            onCancel={onCancel}
+                            allowSubmitPristine={allowSubmitPristine}
+                        />
                     </Form>
                 );
             }}
