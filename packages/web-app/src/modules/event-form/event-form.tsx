@@ -3,37 +3,36 @@ import { Field, Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { TextArea } from 'src/components/formik-material-ui/formik-material-ui';
+import { TextArea } from 'src/components/forms/formik-material-ui/formik-material-ui';
 import { DateTimePicker } from 'formik-material-ui-pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { CreateEventInput } from 'src/generated-types';
+import { CreateEventInput, UpdateEventInput } from 'src/generated-types';
 import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 
-interface ICreateEventFormProps {
-    onSubmit: (event: CreateEventInput) => Promise<void>;
+interface IEventFormProps {
+    onSubmit: (event: CreateEventInput | Omit<UpdateEventInput, 'id'>) => Promise<void>;
     onCancel: () => void;
+    initialValues?: Omit<UpdateEventInput, 'id'>;
     title: string;
 }
 
-const CreateEventForm: React.FC<ICreateEventFormProps> = ({ onSubmit, onCancel, title }) => {
+const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
     const minTime = startOfHour(addHours(new Date(), 1));
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik
-                initialValues={{ name: '', startTime: minTime, description: null as string }}
+                initialValues={initialValues || { name: '', startTime: minTime, description: '' }}
                 validationSchema={Yup.object({
-                    name: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
-                        .required('Required'),
+                    name: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
                     startTime: Yup.date().min(minTime, 'Please pick a later date'),
                 })}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await onSubmit(values);
                 }}
             >
-                {props => {
+                {(props) => {
                     const { isSubmitting, isValid, dirty } = props;
                     return (
                         <Form>
@@ -66,4 +65,4 @@ const CreateEventForm: React.FC<ICreateEventFormProps> = ({ onSubmit, onCancel, 
     );
 };
 
-export default CreateEventForm;
+export default EventForm;

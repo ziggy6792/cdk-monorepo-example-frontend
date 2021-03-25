@@ -20,20 +20,13 @@ const defaultOptions = {
 } as MUIDataTableProps['options'];
 
 export interface IMUIDataTableProps extends Omit<MUIDataTableProps['options'], 'onRowClick'> {
-    onRowClick: (tableRow: IDataTableRow) => void;
+    onRowClick?: (tableRow: IDataTableRow) => void;
 }
 
 interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
     tableData: IDataTableRow[];
-    options: IMUIDataTableProps;
+    options?: IMUIDataTableProps;
     columns: MUIDataTableColumn[];
-    // myOnRowClick?: (
-    //     rowData: string[],
-    //     rowMeta: {
-    //         dataIndex: number;
-    //         rowIndex: number;
-    //     }
-    // ) => void;
 }
 
 const getSortRet = (value, order) => {
@@ -66,15 +59,14 @@ const DataTable: React.FC<IDataTableProps> = props => {
 
             if (typeof value === 'string') {
                 cellDisplayData[key] = value;
-            }
-            if (typeof value === 'object' && value.displayText) {
+            } else if (typeof value === 'number') {
+                cellDisplayData[key] = value;
+            } else if (typeof value === 'object' && value.displayText) {
                 cellDisplayData[key] = value.displayText;
             }
         });
         tableDisplayData.push(cellDisplayData);
     });
-
-    console.log(tableDisplayData);
 
     const customSort = (dataToSort: any[], colIndex: number, order: 'desc' | 'asc'): any[] => {
         const reverse = false;
@@ -82,14 +74,10 @@ const DataTable: React.FC<IDataTableProps> = props => {
         const retData = _.orderBy(
             dataToSort,
             item => {
-                // console.log('index', item.index);
-                // console.log('original', tableRows[item.index]);
-                // const sortIndex = tableRows[item.index].cellData
-
                 const columKey = (props.columns[colIndex] as MUIDataTableColumn).name;
                 const origCellData = tableRows[item.index].rowData[columKey];
 
-                const sortIndex = typeof origCellData === 'string' ? origCellData : origCellData.sortIndex;
+                const sortIndex = typeof origCellData === 'object' ? origCellData?.sortIndex : origCellData;
 
                 const val = getSortRet(sortIndex, order);
                 return val;
@@ -99,19 +87,19 @@ const DataTable: React.FC<IDataTableProps> = props => {
         return reverse ? retData.reverse() : retData;
     };
 
-    props.options.customSort = customSort;
-
     return (
         <MUIDataTable
             {...props}
             options={{
                 ...defaultOptions,
                 ...props.options,
-                onRowClick: (rowData, rowMeta) => {
-                    const { dataIndex } = rowMeta;
-                    // console.log(`internal clicked`, tableRows[dataIndex].rowMetaData);
-                    props.options.onRowClick(tableRows[dataIndex]);
-                },
+                customSort,
+                onRowClick: props.options?.onRowClick
+                    ? (rowData, rowMeta) => {
+                          const { dataIndex } = rowMeta;
+                          props.options.onRowClick(tableRows[dataIndex]);
+                      }
+                    : undefined,
             }}
             data={tableDisplayData}
         />

@@ -7,10 +7,11 @@ import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
 import { CreateEventInput, useCreateEventMutation } from 'src/generated-types';
-import { LIST_EVENTS } from 'src/gql/event.gql';
+import { LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
-import CreateEventForm from 'src/modules/create-event-form';
+import EventForm from 'src/modules/event-form';
 import { useHistory } from 'react-router';
+import { ROUTE_EVENT } from 'src/config/routes';
 
 const CreateEvent: React.FC = () => {
     const theme = useTheme();
@@ -31,7 +32,7 @@ const CreateEvent: React.FC = () => {
     const onCreateEvent = async (event: CreateEventInput): Promise<void> => {
         const result = await createEvent({ variables: { input: event } });
         setOpen(false);
-        history.push(`/todo/event/${result.data.createEvent.id}`);
+        history.push(`${ROUTE_EVENT}/${result.data.createEvent.id}`);
         return null;
     };
 
@@ -50,7 +51,7 @@ const CreateEvent: React.FC = () => {
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <CreateEventForm onSubmit={onCreateEvent} title='Create New Event' onCancel={() => setOpen(false)} />
+                    <EventForm onSubmit={onCreateEvent} title='Create New Event' onCancel={() => setOpen(false)} />
                 </Dialog>
             </Grid>
         </>

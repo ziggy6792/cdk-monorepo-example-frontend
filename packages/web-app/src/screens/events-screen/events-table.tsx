@@ -11,6 +11,7 @@ import { useHistory } from 'react-router';
 import { ListEventsQuery } from 'src/generated-types';
 import DateFormatter from 'src/utils/format/date-formatter';
 import DataTable, { IDataTableRow } from 'src/components/data-table';
+import { ROUTE_EVENT } from 'src/config/routes';
 
 interface EventsTableProps {
     events: ListEventsQuery['listEvents'];
@@ -53,7 +54,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
             columns={columns}
             options={{
                 onRowClick: (row: IEventRow) => {
-                    console.log(`clicked`, row.eventId);
+                    history.push(`${ROUTE_EVENT}/${row.eventId}`);
                 },
             }}
         />
