@@ -9,19 +9,21 @@ import FormButtons from 'src/components/ui/buttons/form-buttons';
 import _ from 'lodash';
 import AceEditor from 'src/components/forms/ace-editor/ace-editor';
 
+import { CompetitionParamsInput } from 'src/generated-types';
+
 export interface IUserOption {
     id: string;
     fullName: string;
 }
 
-export interface ISeedsFormValues {
-    riders: string[];
+export interface IBuildCompetitionFormValues {
+    params: string;
 }
 
 interface IBuildCompetitionFormProps {
-    onSubmit: (formValues: ISeedsFormValues) => Promise<void>;
+    onSubmit: (formValues: IBuildCompetitionFormValues) => Promise<void>;
     onCancel: () => void;
-    initialValues?: ISeedsFormValues;
+    initialValues?: IBuildCompetitionFormValues;
     title: string;
 }
 
@@ -49,7 +51,7 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
                             </Grid>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
-                                    <Field name='params' component={AceEditor} autoFocus />
+                                    <Field name='params' component={AceEditor} autoFocus placeholder='Enter competition build params' />
                                 </Grid>
                             </Grid>
                         </Grid>

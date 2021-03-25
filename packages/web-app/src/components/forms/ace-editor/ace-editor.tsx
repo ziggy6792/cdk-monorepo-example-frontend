@@ -9,12 +9,13 @@ import { FieldProps } from 'formik';
 interface IAceEditorProps extends FieldProps {
     label?: string;
     autoFocus: boolean;
+    placeholder: string;
 }
 
-const AceEditor: React.FC<IAceEditorProps> = ({ field, label, autoFocus, form }) => (
+const AceEditor: React.FC<IAceEditorProps> = ({ field, autoFocus, placeholder, form }) => (
     <Paper>
         <RaceAceAceEditor
-            placeholder='Enter competition build params'
+            placeholder={placeholder}
             mode='sass'
             theme='github'
             name='blah2'

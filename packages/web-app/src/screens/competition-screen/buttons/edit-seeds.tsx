@@ -7,7 +7,7 @@ import { RiderAllocation, UpdateRiderAllocationInput, User, useUpdateRiderAlloca
 import Dialog from 'src/components/ui/dialog';
 import SeedsForm from 'src/modules/seeds-form';
 import { RiderOption } from 'src/gql/common/types';
-import { GET_COMPETITION } from 'src/gql/competition.gql';
+import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import { ISeedsFormValues } from 'src/modules/seeds-form/seeds-form';
 import _ from 'lodash';
 

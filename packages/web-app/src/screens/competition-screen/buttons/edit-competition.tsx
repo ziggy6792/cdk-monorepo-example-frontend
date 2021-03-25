@@ -4,9 +4,9 @@
 import React, { useState } from 'react';
 import { Button, Grid, useTheme } from '@material-ui/core';
 import { UpdateCompetitionInput, useUpdateCompetitionMutation, User } from 'src/generated-types';
-import { LIST_EVENTS } from 'src/gql/event.gql';
+import { LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
-import { GET_COMPETITION } from 'src/gql/competition.gql';
+import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import ComepetitionForm from 'src/modules/competition-form';
 import { ICompetitionFormValues } from 'src/modules/competition-form/competition-form';
 

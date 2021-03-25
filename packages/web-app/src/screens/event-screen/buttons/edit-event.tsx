@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
 import { UpdateEventInput, useUpdateEventMutation } from 'src/generated-types';
-import { GET_EVENT, LIST_EVENTS } from 'src/gql/event.gql';
+import { GET_EVENT, LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import EventForm from 'src/modules/event-form';
 import { useHistory } from 'react-router';
