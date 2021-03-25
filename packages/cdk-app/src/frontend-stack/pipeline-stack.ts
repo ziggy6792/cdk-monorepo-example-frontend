@@ -8,6 +8,7 @@ import * as codepipelineActions from '@aws-cdk/aws-codepipeline-actions';
 import * as utils from 'src/utils';
 import * as config from 'src/config';
 import * as iam from '@aws-cdk/aws-iam';
+import * as codeBuild from '@aws-cdk/aws-codebuild';
 import { DeploymentStage } from './deployment-stage';
 
 class PipelineStack extends cdk.Stack {
@@ -61,6 +62,7 @@ class PipelineStack extends cdk.Stack {
             additionalArtifacts: [sourceArtifact],
             runOrder: 1,
             commands: ['yarn install', 'yarn build', 'yarn test'],
+            environment: { computeType: codeBuild.ComputeType.LARGE },
         });
 
         pipeline.codePipeline.stages[1].addAction(testAction);
