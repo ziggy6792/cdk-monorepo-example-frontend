@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import RaceAceAceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-sass';
 import 'ace-builds/src-noconflict/theme-github';
@@ -13,20 +13,21 @@ interface IAceEditorProps extends FieldProps {
 }
 
 const AceEditor: React.FC<IAceEditorProps> = ({ field, autoFocus, placeholder, form }) => {
-    console.log('field', field);
+    const editorId = `AceEditor${field.name}`;
+
     return (
         <Paper>
             <RaceAceAceEditor
                 placeholder={placeholder}
                 mode='sass'
                 theme='github'
-                name={field.name}
-                onChange={text => form.setFieldValue(field.name, text)}
+                name={editorId}
+                onChange={(text) => form.setFieldValue(field.name, text)}
                 focus={autoFocus}
-                onBlur={e => field.onBlur(e)}
+                onBlur={(e) => field.onBlur(e)}
                 fontSize={14}
                 showPrintMargin
-                onLoad={() => document.querySelectorAll(`#${field.name} textarea`)[0].setAttribute('id', field.name)}
+                onLoad={() => document.querySelectorAll(`#${editorId} textarea`)[0].setAttribute('id', field.name)}
                 showGutter
                 highlightActiveLine
                 value={field.value}

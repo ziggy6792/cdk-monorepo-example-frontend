@@ -2,17 +2,11 @@
 import React from 'react';
 import { Field, Formik, Form, ErrorMessage } from 'formik';
 import { Grid, Typography } from '@material-ui/core';
-import { TextField } from 'formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
-import _ from 'lodash';
 import AceEditor from 'src/components/forms/ace-editor/ace-editor';
 import jsYaml from 'js-yaml';
-
-import { CompetitionParamsInput } from 'src/generated-types';
-import { AnyAaaaRecord } from 'node:dns';
-import * as Yup from 'yup';
 
 export interface IUserOption {
     id: string;
@@ -52,11 +46,11 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
         <Formik
             initialValues={initialValues}
             validate={validate}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await onSubmit(values);
             }}
         >
-            {props => {
+            {(props) => {
                 const { isSubmitting, isValid, dirty } = props;
                 return (
                     <Form>
