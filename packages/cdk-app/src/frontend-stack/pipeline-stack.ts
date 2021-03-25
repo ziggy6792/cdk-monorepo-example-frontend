@@ -8,7 +8,7 @@ import * as codepipelineActions from '@aws-cdk/aws-codepipeline-actions';
 import * as utils from 'src/utils';
 import * as config from 'src/config';
 import * as iam from '@aws-cdk/aws-iam';
-import * as codeBuild from '@aws-cdk/aws-codebuild';
+import * as codebuild from '@aws-cdk/aws-codebuild';
 import { DeploymentStage } from './deployment-stage';
 
 class PipelineStack extends cdk.Stack {
@@ -21,6 +21,8 @@ class PipelineStack extends cdk.Stack {
 
         const sourceArtifact = new codepipeline.Artifact();
         const cloudAssemblyArtifact = new codepipeline.Artifact();
+
+        const codeBuildEnvironment = { computeType: codebuild.ComputeType.MEDIUM };
 
         const pipeline = new cdkPipeline.CdkPipeline(this, utils.getConstructId('pipeline'), {
             pipelineName: utils.getConstructId('pipeline'),
@@ -52,7 +54,7 @@ class PipelineStack extends cdk.Stack {
                         effect: iam.Effect.ALLOW,
                     }),
                 ],
-                environment: { computeType: codeBuild.ComputeType.LARGE },
+                environment: codeBuildEnvironment,
 
                 // subdirectory: 'packages/cdk-app',
             }),
@@ -63,7 +65,7 @@ class PipelineStack extends cdk.Stack {
             additionalArtifacts: [sourceArtifact],
             runOrder: 1,
             commands: ['yarn install', 'yarn build', 'yarn test'],
-            environment: { computeType: codeBuild.ComputeType.LARGE },
+            environment: codeBuildEnvironment,
         });
 
         pipeline.codePipeline.stages[1].addAction(testAction);
