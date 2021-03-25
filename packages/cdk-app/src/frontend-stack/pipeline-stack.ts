@@ -73,6 +73,7 @@ class PipelineStack extends cdk.Stack {
 
         // Do this as many times as necessary with any account and region
         // Account and region may be different from the pipeline's.
+
         const deployedStagingStage = new DeploymentStage(this, utils.getConstructId('staging'), {
             stageName: 'staging',
             env: {
