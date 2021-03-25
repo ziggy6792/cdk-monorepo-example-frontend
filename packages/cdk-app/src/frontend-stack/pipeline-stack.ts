@@ -52,6 +52,7 @@ class PipelineStack extends cdk.Stack {
                         effect: iam.Effect.ALLOW,
                     }),
                 ],
+                environment: { computeType: codeBuild.ComputeType.LARGE },
 
                 // subdirectory: 'packages/cdk-app',
             }),
