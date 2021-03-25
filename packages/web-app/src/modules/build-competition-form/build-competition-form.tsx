@@ -7,6 +7,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import _ from 'lodash';
+import AceEditor from 'src/components/forms/ace-editor/ace-editor';
 
 export interface IUserOption {
     id: string;
@@ -48,7 +49,7 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
                             </Grid>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
-                                    <Field name='name' component={TextField} label='Name' autoFocus />
+                                    <Field name='params' component={AceEditor} autoFocus />
                                 </Grid>
                             </Grid>
                         </Grid>

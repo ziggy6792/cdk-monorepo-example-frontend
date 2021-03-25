@@ -7,7 +7,7 @@ import DragHandleIcon from '@material-ui/icons/DragHandle';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { FieldProps } from 'formik';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
     formControl: {
         minWidth: '100%',
     },
@@ -19,14 +19,14 @@ export const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface CustomInputProps extends FieldProps {
+interface IDragAndDropListProps extends FieldProps {
     options: any[];
     getOptionLabel: (option: any, index: number) => string;
     idField: string;
     label: string;
 }
 
-const DragAndDropList: React.FC<CustomInputProps> = (props) => {
+const DragAndDropList: React.FC<IDragAndDropListProps> = props => {
     const { field, label, idField = 'id', options, getOptionLabel } = props;
     const classes = useStyles();
 
@@ -36,14 +36,14 @@ const DragAndDropList: React.FC<CustomInputProps> = (props) => {
 
     useEffect(() => {
         const optnsMap = {};
-        options.forEach((option) => {
+        options.forEach(option => {
             optnsMap[option[idField]] = option;
         });
         setOptionsMap(optnsMap);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [options]);
 
-    const orderedOptions: any[] = (optionsMap && field?.value.map((id) => optionsMap[id])) || [];
+    const orderedOptions: any[] = (optionsMap && field?.value.map(id => optionsMap[id])) || [];
 
     const colors = {
         background: 'white',
@@ -77,13 +77,13 @@ const DragAndDropList: React.FC<CustomInputProps> = (props) => {
         ...draggableStyle,
     });
 
-    const getListStyle = (isDraggingOver) => ({
+    const getListStyle = isDraggingOver => ({
         background: isDraggingOver ? colors.backgroundWhileDragging : colors.background,
         padding: grid,
         width: 250,
     });
 
-    const onDragEnd = (result) => {
+    const onDragEnd = result => {
         // dropped outside the list
         if (!result.destination) {
             return;
@@ -119,39 +119,37 @@ const DragAndDropList: React.FC<CustomInputProps> = (props) => {
                                         <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
                                             {orderedOptions.map((item, index) => (
                                                 <Draggable key={item[idField]} draggableId={item[idField]} index={index}>
-                                                    {
-                                                        // eslint-disable-next-line no-shadow
-                                                        (provided, snapshot) => (
-                                                            <Grid
-                                                                container
-                                                                justify='space-between'
-                                                                alignItems='center'
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}
-                                                                style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                                                            >
-                                                                <Grid item>
-                                                                    <Typography variant='h5' style={{ color: 'white' }}>
-                                                                        {getOptionLabel(item, index)}
-                                                                    </Typography>
-                                                                </Grid>
-                                                                <Grid item>
-                                                                    {/* #ToDo WHY CANT I VERTICAL ALIGN THIS!!!! */}
-                                                                    {/* <Typography variant='h5' style={{ color: 'white', marginTop: '5px' }} justify='center'>
+                                                    {// eslint-disable-next-line no-shadow
+                                                    (provided, snapshot) => (
+                                                        <Grid
+                                                            container
+                                                            justify='space-between'
+                                                            alignItems='center'
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                            style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                                                        >
+                                                            <Grid item>
+                                                                <Typography variant='h5' style={{ color: 'white' }}>
+                                                                    {getOptionLabel(item, index)}
+                                                                </Typography>
+                                                            </Grid>
+                                                            <Grid item>
+                                                                {/* #ToDo WHY CANT I VERTICAL ALIGN THIS!!!! */}
+                                                                {/* <Typography variant='h5' style={{ color: 'white', marginTop: '5px' }} justify='center'>
                                     <DragHandleIcon />
                                   </Typography> */}
-                                                                    <Grid container alignItems='center'>
-                                                                        <Grid item>
-                                                                            <Typography variant='h5' style={{ color: 'white', marginTop: '5px' }}>
-                                                                                <DragHandleIcon />
-                                                                            </Typography>
-                                                                        </Grid>
+                                                                <Grid container alignItems='center'>
+                                                                    <Grid item>
+                                                                        <Typography variant='h5' style={{ color: 'white', marginTop: '5px' }}>
+                                                                            <DragHandleIcon />
+                                                                        </Typography>
                                                                     </Grid>
                                                                 </Grid>
                                                             </Grid>
-                                                        )
-                                                    }
+                                                        </Grid>
+                                                    )}
                                                 </Draggable>
                                             ))}
                                             {provided.placeholder}
