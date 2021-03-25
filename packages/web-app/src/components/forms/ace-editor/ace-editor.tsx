@@ -12,30 +12,34 @@ interface IAceEditorProps extends FieldProps {
     placeholder: string;
 }
 
-const AceEditor: React.FC<IAceEditorProps> = ({ field, autoFocus, placeholder, form }) => (
-    <Paper>
-        <RaceAceAceEditor
-            placeholder={placeholder}
-            mode='sass'
-            theme='github'
-            name='blah2'
-            onChange={text => form.setFieldValue(field.name, text)}
-            focus={autoFocus}
-            onBlur={() => form.handleBlur(field.name)}
-            fontSize={14}
-            showPrintMargin
-            showGutter
-            highlightActiveLine
-            value={field.value}
-            setOptions={{
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-                enableSnippets: false,
-                showLineNumbers: true,
-                tabSize: 2,
-            }}
-        />
-    </Paper>
-);
+const AceEditor: React.FC<IAceEditorProps> = ({ field, autoFocus, placeholder, form }) => {
+    console.log('field', field);
+    return (
+        <Paper>
+            <RaceAceAceEditor
+                placeholder={placeholder}
+                mode='sass'
+                theme='github'
+                name={field.name}
+                onChange={text => form.setFieldValue(field.name, text)}
+                focus={autoFocus}
+                onBlur={e => field.onBlur(e)}
+                fontSize={14}
+                showPrintMargin
+                onLoad={() => document.querySelectorAll(`#${field.name} textarea`)[0].setAttribute('id', field.name)}
+                showGutter
+                highlightActiveLine
+                value={field.value}
+                setOptions={{
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    enableSnippets: false,
+                    showLineNumbers: true,
+                    tabSize: 2,
+                }}
+            />
+        </Paper>
+    );
+};
 
 export default AceEditor;
