@@ -1,10 +1,10 @@
 import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
-import { useGetEventQuery, UpdateEventInput } from 'src/generated-types';
+import { useGetEventQuery } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
 import CompetitionsTable from './competitions-table';
-import EditEvent from './edit-event';
-import AddCompetition from './add-competition';
+import EditEvent from './buttons/edit-event';
+import AddCompetition from './buttons/add-competition';
 
 interface IEventsScreenProps {
     eventId: string;

@@ -16,7 +16,7 @@ interface IEditSeedsProps {
     riderAllocations: RiderOption[];
 }
 
-const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId }) => {
+const BuildCompetition: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId }) => {
     const theme = useTheme();
 
     const [open, setOpen] = useState(false);
@@ -37,7 +37,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId 
         riders.forEach((userId, i) => {
             riderSortMap[userId] = i;
         });
-        const orderedRiderAllocations = _.orderBy(riderAllocations, (ra) => riderSortMap[ra.userId]);
+        const orderedRiderAllocations = _.orderBy(riderAllocations, ra => riderSortMap[ra.userId]);
         const updateRiderAllocationInputs: UpdateRiderAllocationInput[] = orderedRiderAllocations.map((riderOption, i) => ({
             allocatableId: competitionId,
             userId: riderOption.userId,
@@ -58,7 +58,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId 
                                 setOpen(true);
                             }}
                         >
-                            Seed Order
+                            Build
                         </Button>
                     </Grid>
                 </Grid>
@@ -76,4 +76,4 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId 
     );
 };
 
-export default EditSeeds;
+export default BuildCompetition;

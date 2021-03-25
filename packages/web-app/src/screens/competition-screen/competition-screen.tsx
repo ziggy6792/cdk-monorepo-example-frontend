@@ -6,8 +6,8 @@ import Spinner from 'src/components/spinner';
 import HeatsTable from './heats-table';
 import RiderAllocationsTable from './rider-allocations-table';
 import CompetitionSummary from './competition-summary';
-import EditCompetition from './edit-competition';
-import EditSeeds from './edit-seeds';
+import EditCompetition from './buttons/edit-competition';
+import EditSeeds from './buttons/edit-seeds';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -16,7 +16,7 @@ interface IEventsScreenProps {
 const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
+    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
     return (

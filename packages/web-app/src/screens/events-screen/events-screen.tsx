@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Spinner from 'src/components/spinner';
 import authSelectors from 'src/domain/auth/selectors';
 import { useListEventsQuery } from 'src/generated-types';
-import CreateEvent from './create-event';
+import CreateEvent from './buttons/create-event';
 import EventsTable from './events-table';
 
 const EventsScreen: React.FC = () => {
