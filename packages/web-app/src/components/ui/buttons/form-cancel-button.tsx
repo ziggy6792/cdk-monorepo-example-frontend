@@ -6,7 +6,7 @@ interface ICancelButtonProps {
     onClick: () => void;
 }
 
-const CancelButton: React.FC<ICancelButtonProps> = props => {
+const FormCancelButton: React.FC<ICancelButtonProps> = props => {
     const { isSubmitting, onClick } = props;
     return (
         <Button type='button' variant='contained' color='secondary' onClick={onClick} disabled={isSubmitting}>
@@ -15,4 +15,4 @@ const CancelButton: React.FC<ICancelButtonProps> = props => {
     );
 };
 
-export default CancelButton;
+export default FormCancelButton;

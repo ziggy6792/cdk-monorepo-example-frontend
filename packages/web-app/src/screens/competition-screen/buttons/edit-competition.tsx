@@ -26,9 +26,6 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
                 query: GET_COMPETITION,
                 variables: { id },
             },
-            {
-                query: LIST_EVENTS,
-            },
         ],
         awaitRefetchQueries: true,
     });
