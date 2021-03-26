@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import { Button, Grid, useTheme } from '@material-ui/core';
+import { Grid, useTheme } from '@material-ui/core';
 import { useAllocateRidersMutation } from 'src/generated-types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
