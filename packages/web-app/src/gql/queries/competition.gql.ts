@@ -70,3 +70,27 @@ export const BUILD_COMPETITION = gql`
         }
     }
 `;
+
+export const ALLOCATE_RIDERS = gql`
+    mutation allocateRiders($id: ID!) {
+        allocateRiders(id: $id) {
+            id
+            rounds {
+                items {
+                    id
+                    heats {
+                        items {
+                            name
+                            riderAllocations {
+                                items {
+                                    userId
+                                    startSeed
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;

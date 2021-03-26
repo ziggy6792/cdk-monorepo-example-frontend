@@ -9,6 +9,7 @@ import CompetitionSummary from './competition-summary';
 import EditCompetition from './buttons/edit-competition';
 import EditSeeds from './buttons/edit-seeds';
 import BuildCompetition from './buttons/build-competition';
+import AllocateRiders from './buttons/allocate-riders';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -17,7 +18,7 @@ interface IEventsScreenProps {
 const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
+    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
     return (
@@ -48,6 +49,9 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                         </Grid>
                         <Grid item>
                             <BuildCompetition competitionId={competitionId} />
+                        </Grid>
+                        <Grid item>
+                            <AllocateRiders competitionId={competitionId} />
                         </Grid>
                     </Grid>
 

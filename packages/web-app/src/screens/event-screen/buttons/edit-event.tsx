@@ -10,7 +10,6 @@ import { UpdateEventInput, useUpdateEventMutation } from 'src/generated-types';
 import { GET_EVENT, LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import EventForm from 'src/modules/event-form';
-import { useHistory } from 'react-router';
 
 interface IEditEventProps {
     eventToEdit: UpdateEventInput;
@@ -20,8 +19,6 @@ const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
     const { id } = eventToEdit;
 
     const theme = useTheme();
-
-    const history = useHistory();
 
     const [updateEvent] = useUpdateEventMutation({
         refetchQueries: [
