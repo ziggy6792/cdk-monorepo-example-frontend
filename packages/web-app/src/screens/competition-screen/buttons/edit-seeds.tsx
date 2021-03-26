@@ -57,6 +57,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId 
                             onClick={() => {
                                 setOpen(true);
                             }}
+                            disabled={riderAllocations.length < 1}
                         >
                             Seed Order
                         </Button>
