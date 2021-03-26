@@ -22,7 +22,7 @@ class PipelineStack extends cdk.Stack {
         const sourceArtifact = new codepipeline.Artifact();
         const cloudAssemblyArtifact = new codepipeline.Artifact();
 
-        const codeBuildEnvironment = { computeType: codebuild.ComputeType.LARGE };
+        const codeBuildEnvironment = { computeType: codebuild.ComputeType.MEDIUM };
 
         const pipeline = new cdkPipeline.CdkPipeline(this, utils.getConstructId('pipeline'), {
             pipelineName: utils.getConstructId('pipeline'),
