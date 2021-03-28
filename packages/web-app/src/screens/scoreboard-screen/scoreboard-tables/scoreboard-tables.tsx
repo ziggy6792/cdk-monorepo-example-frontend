@@ -3,18 +3,18 @@ import _ from 'lodash';
 import useTabState from 'src/hooks/use-tab-state/use-tab-state';
 import { useLocation } from 'react-router';
 import { RiderAllocationItem } from 'src/gql/common/types';
-import { scoresTableTabs, ScoreTableTab } from './score-tabs';
-import ScoresDataTable, { IRiderAllocationRow } from './scores-data-table';
+import { scoreboardTabs, ScoreboardTab } from './scoreboard-tabs';
+import ScoreboardDataTable, { IRiderAllocationRow } from './scoreboard-data-table';
 import EnterScoresTable from './enter-scores-table';
 
 export interface IScoresTableProps {
     riderAllocations: RiderAllocationItem[];
 }
 
-const ScoresTables: React.FC<IScoresTableProps> = ({ riderAllocations }) => {
+const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations }) => {
     const { pathname } = useLocation();
 
-    const [selectedTab] = useTabState({ tabKey: pathname, initialValue: scoresTableTabs[0].value });
+    const [selectedTab] = useTabState({ tabKey: pathname, initialValue: scoreboardTabs[0].value });
 
     const scoresTableData: IRiderAllocationRow[] = riderAllocations.map(riderAllocation => ({
         userId: riderAllocation.userId,
@@ -30,9 +30,9 @@ const ScoresTables: React.FC<IScoresTableProps> = ({ riderAllocations }) => {
 
     return (
         <>
-            {selectedTab === ScoreTableTab.ENTER_SCORES && <EnterScoresTable tableData={scoresTableData} noOfRuns={noOfRuns} />}
-            {selectedTab === ScoreTableTab.START_LIST && <StartListTable tableData={scoresTableData} />}
-            {selectedTab === ScoreTableTab.RESULTS && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} />}
+            {selectedTab === ScoreboardTab.ENTER_SCORES && <EnterScoresTable tableData={scoresTableData} noOfRuns={noOfRuns} />}
+            {selectedTab === ScoreboardTab.START_LIST && <StartListTable tableData={scoresTableData} />}
+            {selectedTab === ScoreboardTab.RESULTS && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} />}
         </>
     );
 };
@@ -47,7 +47,7 @@ const StartListTable: React.FC<IStartListTableProps> = ({ tableData }) => {
         { name: 'rider', label: 'Rider' },
     ];
 
-    return <ScoresDataTable tableData={tableData} columns={startlistTableColumns} />;
+    return <ScoreboardDataTable tableData={tableData} columns={startlistTableColumns} />;
 };
 
 export interface IResultsTableProps {
@@ -65,7 +65,7 @@ const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns }) => 
         { name: 'position', label: 'Rank' },
     ];
 
-    return <ScoresDataTable tableData={tableData} columns={scoresTableColumns} />;
+    return <ScoreboardDataTable tableData={tableData} columns={scoresTableColumns} />;
 };
 
-export default ScoresTables;
+export default ScoreboardTables;

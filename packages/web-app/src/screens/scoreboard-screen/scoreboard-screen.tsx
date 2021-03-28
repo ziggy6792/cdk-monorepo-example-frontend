@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core';
 import React from 'react';
 import Spinner from 'src/components/spinner';
 import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-get-selected-heat';
-import ScoresTables from './scores-tables';
+import ScoresTables from './scoreboard-tables';
 
 interface IScoreboardScreenProps {
     eventId: string;

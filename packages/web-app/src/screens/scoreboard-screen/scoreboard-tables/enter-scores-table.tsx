@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import ScoresDataTable, { IRiderAllocationRow } from './scores-data-table';
+import ScoreboardDataTable, { IRiderAllocationRow } from './scoreboard-data-table';
 
 export interface IEnterScoresTableProps {
     tableData: IRiderAllocationRow[];
@@ -19,7 +19,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
     ];
 
     return (
-        <ScoresDataTable
+        <ScoreboardDataTable
             tableData={tableData}
             columns={scoresTableColumns}
             options={{
