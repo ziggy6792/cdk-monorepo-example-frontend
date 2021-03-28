@@ -23,16 +23,6 @@ interface IRiderAllocationRow extends IDataTableRow {
 }
 
 const ScoresTable: React.FC<EventsTableProps> = ({ riderAllocations }) => {
-    enum TAB {
-        START_LIST = 'START_LIST',
-        RESULTS = 'RESULTS',
-    }
-
-    const tableTabs = [
-        { label: 'Start List', value: TAB.START_LIST },
-        { label: 'Results', value: TAB.RESULTS },
-    ];
-
     let noRuns = 0;
     try {
         noRuns = riderAllocations[0].runs.length;
@@ -87,7 +77,20 @@ const ScoresTable: React.FC<EventsTableProps> = ({ riderAllocations }) => {
                     ),
                 }}
             />
-            <DataTable title='Scores' tableData={scoresTableData} columns={scoresTableColumns} options={{ rowsPerPage: riderAllocations.length }} />
+            <DataTable
+                title='Scores'
+                tableData={scoresTableData}
+                columns={scoresTableColumns}
+                options={{
+                    rowsPerPage: riderAllocations.length,
+                    customToolbar: () => (
+                        <Grid container>
+                            {/* <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabs={tableTabs} /> */}
+                            <ScoreTabs />
+                        </Grid>
+                    ),
+                }}
+            />
         </>
     );
 };

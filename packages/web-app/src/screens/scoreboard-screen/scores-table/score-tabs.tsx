@@ -18,9 +18,7 @@ const tableTabs = [
 ];
 
 const ScoreTabs: React.FC = () => {
-    console.log('hi');
-
-    const [selectedTab, setSelectedTab] = useTabState('scoreboard', tableTabs[1].value);
+    const [selectedTab, setSelectedTab] = useTabState({ initialValue: tableTabs[0].value });
 
     return <Tabs tabs={tableTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />;
 };

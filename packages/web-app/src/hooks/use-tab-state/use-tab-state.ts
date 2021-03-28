@@ -1,11 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 import { setTabActionCreator } from 'src/domain/tabs';
 import tabSelectors from 'src/domain/tabs/selectors';
 
-const useTabState = (tabKey: string, initialValue?: string): [string, (tabValue: string) => void] => {
+interface IUseTabStateOptions {
+    tabKey?: string;
+    initialValue?: string;
+}
+
+const useTabState = ({ tabKey, initialValue }: IUseTabStateOptions): [string, (tabValue: string) => void] => {
     const dispatch = useDispatch();
+
+    const { pathname } = useLocation();
+
+    tabKey = tabKey || pathname;
 
     const tabState = useSelector(tabSelectors.selectTabState);
     const selectedTab = tabState[tabKey];
