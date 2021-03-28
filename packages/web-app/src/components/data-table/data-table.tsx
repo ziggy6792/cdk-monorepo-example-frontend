@@ -23,7 +23,7 @@ export interface IMUIDataTableProps extends Omit<MUIDataTableProps['options'], '
     onRowClick?: (tableRow: IDataTableRow) => void;
 }
 
-interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
+export interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
     tableData: IDataTableRow[];
     options?: IMUIDataTableProps;
     columns: MUIDataTableColumn[];
