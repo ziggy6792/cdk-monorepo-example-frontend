@@ -1,9 +1,8 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
 import Spinner from 'src/components/spinner';
-import { useHistory } from 'react-router';
 import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-get-selected-heat';
-import StartListTable from './scores-table/scores-table';
+import ScoresTables from './scores-tables';
 
 interface IScoreboardScreenProps {
     eventId: string;
@@ -12,19 +11,15 @@ interface IScoreboardScreenProps {
 const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     const { loading, data } = useCustomGetSelectedHeatQuery({ variables: { id: eventId } });
 
-    const history = useHistory();
-
     if (loading) {
         return <Spinner />;
     }
-
-    console.log('data', data);
 
     return (
         <>
             <Grid container direction='column' justify='center' alignItems='center'>
                 <Grid item style={{ width: '100%' }}>
-                    <StartListTable riderAllocations={data.selectedHeat.riderAllocations.items} />
+                    <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} />
                 </Grid>
             </Grid>
         </>
