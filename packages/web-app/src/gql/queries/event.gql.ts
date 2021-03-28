@@ -34,6 +34,7 @@ export const UPDATE_EVENT = gql`
 export const GET_EVENT = gql`
     query getEvent($id: ID!) {
         getEvent(id: $id) {
+            id
             name
             adminUser {
                 fullName

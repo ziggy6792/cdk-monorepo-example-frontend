@@ -1,7 +1,9 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { useGetEventQuery } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
+import { useHistory } from 'react-router';
+import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import CompetitionsTable from './competitions-table';
 import EditEvent from './buttons/edit-event';
 import AddCompetition from './buttons/add-competition';
@@ -12,6 +14,8 @@ interface IEventsScreenProps {
 
 const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
     const { loading, data } = useGetEventQuery({ variables: { id: eventId } });
+
+    const history = useHistory();
 
     if (loading) {
         return <Spinner />;
@@ -48,6 +52,15 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                     </Grid>
                     <Grid item>
                         <AddCompetition eventId={eventId} />
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            onClick={() => {
+                                history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
+                            }}
+                        >
+                            Scoreboard
+                        </Button>
                     </Grid>
                 </Grid>
 
