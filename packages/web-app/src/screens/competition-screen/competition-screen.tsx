@@ -21,6 +21,8 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
+    const disabledRiderAllocationButtons = data?.getCompetition.riderAllocations.items.length < 1;
+
     return (
         <>
             {loading && <Spinner />}
@@ -45,13 +47,17 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                             />
                         </Grid>
                         <Grid item>
-                            <EditSeeds riderAllocations={data.getCompetition.riderAllocations.items} competitionId={competitionId} />
-                        </Grid>
-                        <Grid item>
                             <BuildCompetition competitionId={competitionId} />
                         </Grid>
                         <Grid item>
-                            <AllocateRiders competitionId={competitionId} />
+                            <EditSeeds
+                                riderAllocations={data.getCompetition.riderAllocations.items}
+                                competitionId={competitionId}
+                                disabled={disabledRiderAllocationButtons}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <AllocateRiders competitionId={competitionId} disabled={disabledRiderAllocationButtons} />
                         </Grid>
                     </Grid>
 

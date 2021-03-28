@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { Button, Grid, useTheme } from '@material-ui/core';
-import { RiderAllocation, UpdateRiderAllocationInput, User, useUpdateRiderAllocationsMutation } from 'src/generated-types';
+import { UpdateRiderAllocationInput, useUpdateRiderAllocationsMutation } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
 import SeedsForm from 'src/modules/seeds-form';
 import { RiderOption } from 'src/gql/common/types';
@@ -14,9 +14,10 @@ import _ from 'lodash';
 interface IEditSeedsProps {
     competitionId: string;
     riderAllocations: RiderOption[];
+    disabled?: boolean;
 }
 
-const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId }) => {
+const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId, disabled }) => {
     const theme = useTheme();
 
     const [open, setOpen] = useState(false);
@@ -57,7 +58,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId 
                             onClick={() => {
                                 setOpen(true);
                             }}
-                            disabled={riderAllocations.length < 1}
+                            disabled={disabled}
                         >
                             Seed Order
                         </Button>
