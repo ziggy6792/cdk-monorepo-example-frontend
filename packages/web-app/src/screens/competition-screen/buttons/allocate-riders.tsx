@@ -9,9 +9,10 @@ import ProgressButton from 'src/components/ui/buttons/progress-button';
 
 interface IEditCompetitionProps {
     competitionId: string;
+    disabled?: boolean;
 }
 
-const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId }) => {
+const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabled }) => {
     const theme = useTheme();
 
     const [allocateRiders] = useAllocateRidersMutation({
@@ -34,7 +35,9 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId }) => {
             <Grid container direction='column'>
                 <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
                     <Grid item>
-                        <ProgressButton onClick={onAllocateRiders}>Allocate Riders</ProgressButton>
+                        <ProgressButton onClick={onAllocateRiders} disabled={disabled}>
+                            Allocate Riders
+                        </ProgressButton>
                     </Grid>
                 </Grid>
             </Grid>
