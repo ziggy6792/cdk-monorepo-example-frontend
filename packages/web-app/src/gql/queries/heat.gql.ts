@@ -19,6 +19,12 @@ export const GET_SELECTED_HEAT = gql`
                 riderAllocations {
                     items {
                         userId
+                        user {
+                            fullName
+                        }
+                        startSeed
+                        startOrder
+                        rankOrder
                         allocatableId
                         position
                         runs {

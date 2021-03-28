@@ -357,6 +357,8 @@ export type RiderAllocation = Creatable & {
     startSeed: Scalars['Int'];
     runs?: Maybe<Array<Run>>;
     position?: Maybe<Scalars['Int']>;
+    rankOrder?: Maybe<Scalars['Int']>;
+    startOrder?: Maybe<Scalars['Int']>;
     user?: Maybe<User>;
 };
 
@@ -608,7 +610,11 @@ export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
                         round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
                         riderAllocations: { __typename?: 'RiderAllocationList' } & {
                             items: Array<
-                                { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'userId' | 'allocatableId' | 'position'> & {
+                                { __typename?: 'RiderAllocation' } & Pick<
+                                    RiderAllocation,
+                                    'userId' | 'startSeed' | 'startOrder' | 'rankOrder' | 'allocatableId' | 'position'
+                                > & {
+                                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>>;
                                         runs: Maybe<Array<{ __typename?: 'Run' } & Pick<Run, 'score'>>>;
                                     }
                             >;
@@ -1027,6 +1033,12 @@ export const GetSelectedHeatDocument = gql`
                 riderAllocations {
                     items {
                         userId
+                        user {
+                            fullName
+                        }
+                        startSeed
+                        startOrder
+                        rankOrder
                         allocatableId
                         position
                         runs {

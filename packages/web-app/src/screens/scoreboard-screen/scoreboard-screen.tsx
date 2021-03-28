@@ -3,7 +3,7 @@ import React from 'react';
 import Spinner from 'src/components/spinner';
 import { useHistory } from 'react-router';
 import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-get-selected-heat';
-import ScoresTable from './scores-table';
+import ScoresTable from './scores-table/scores-table';
 
 interface IScoreboardScreenProps {
     eventId: string;

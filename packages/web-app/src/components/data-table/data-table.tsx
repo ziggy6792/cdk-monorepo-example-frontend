@@ -61,7 +61,7 @@ const DataTable: React.FC<IDataTableProps> = props => {
                 cellDisplayData[key] = value;
             } else if (typeof value === 'number') {
                 cellDisplayData[key] = value;
-            } else if (typeof value === 'object' && value.displayText) {
+            } else if (typeof value === 'object' && value?.displayText) {
                 cellDisplayData[key] = value.displayText;
             }
         });
