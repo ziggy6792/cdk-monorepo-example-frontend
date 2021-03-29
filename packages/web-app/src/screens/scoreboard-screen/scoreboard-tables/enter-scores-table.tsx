@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import Dialog from 'src/components/ui/dialog';
-import ScoreRunForm from 'src/modules/score-run-form';
+import ScoreRunForm, { IScoreRunFormValues, IScoreFormPosition } from 'src/modules/score-run-form';
 import { IRiderAllocationItem } from 'src/gql/common/types';
-import { useScoreRunMutation, ScorRunInput } from 'src/generated-types';
+import { useScoreRunMutation, ScorRunInput, Run } from 'src/generated-types';
 import { GET_SELECTED_HEAT } from 'src/gql/queries/heat.gql';
-import { IScoreRunFormValues } from 'src/modules/score-run-form/score-run-form';
 import ScoreboardDataTable, { IRiderAllocationRow } from './scoreboard-data-table';
 
 export interface IEnterScoresTableProps {
@@ -18,7 +17,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
     const scoresTableColumns = [
         { name: 'order', label: 'Order' },
         { name: 'rider', label: 'Rider' },
-        ..._.range(noOfRuns).map(v => ({
+        ..._.range(noOfRuns).map((v) => ({
             name: `run${v + 1}`,
             label: `Run\u00A0${v + 1}`,
         })),
@@ -50,16 +49,38 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
 
     const [selectedRiderAllocation, setSelectedRiderAllocation] = useState<IRiderAllocationItem>(null);
 
+    const getUpdatedPosition = (formValues: IScoreRunFormValues): IScoreFormPosition => {
+        const getBestScore = (runs: number[]) => {
+            const bestRun = _.max(runs);
+            return bestRun || -1;
+        };
+        if (getBestScore(formValues.runScores) < 0) {
+            return { position: null, isJoint: false };
+        }
+        const copyRiderAllocations = _.cloneDeep(tableData.map(({ riderAllocation }) => riderAllocation));
+        const scoredRun = copyRiderAllocations.find(({ userId }) => selectedRiderAllocation.userId === userId);
+        scoredRun.runs = scoredRun.runs.map((run, i) => ({ score: formValues.runScores[i] }));
+        const riderBestScores = copyRiderAllocations.map((ra) => ({ ...ra, bestScore: getBestScore(ra.runs.map(({ score }) => score)) }));
+        const sortedRiderAllocations = _.orderBy(riderBestScores, ({ bestScore }) => bestScore, 'desc');
+        const findFirstIndex = sortedRiderAllocations.findIndex(({ userId }) => selectedRiderAllocation.userId === userId);
+        const matchingRuns = _.filter(sortedRiderAllocations, ({ bestScore }) => bestScore === sortedRiderAllocations[findFirstIndex].bestScore);
+        return { position: findFirstIndex + 1, isJoint: matchingRuns.length > 1 };
+    };
+
     return (
         <>
-            <Dialog open={open} setOpen={setOpen}>
-                <ScoreRunForm
-                    onSubmit={onScoreRun}
-                    title='Score Run'
-                    onCancel={() => setOpen(false)}
-                    initialValues={{ runScores: selectedRiderAllocation?.runs?.map(({ score }) => score) }}
-                />
-            </Dialog>
+            {selectedRiderAllocation && (
+                <Dialog open={open} setOpen={setOpen}>
+                    <ScoreRunForm
+                        onSubmit={onScoreRun}
+                        title={selectedRiderAllocation.user.fullName}
+                        onCancel={() => setOpen(false)}
+                        initialValues={{ runScores: selectedRiderAllocation?.runs?.map(({ score }) => score) }}
+                        currentPosition={{ position: selectedRiderAllocation.position }}
+                        getUpdatedPosition={getUpdatedPosition}
+                    />
+                </Dialog>
+            )}
             <ScoreboardDataTable
                 tableData={tableData}
                 columns={scoresTableColumns}

@@ -9,7 +9,7 @@ interface IScoreboardScreenProps {
 }
 
 const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
-    const { loading, data } = useCustomGetSelectedHeatQuery({ variables: { id: eventId } });
+    const { loading, data } = useCustomGetSelectedHeatQuery({ variables: { id: eventId }, pollInterval: 5000 });
 
     if (loading) {
         return <Spinner />;
