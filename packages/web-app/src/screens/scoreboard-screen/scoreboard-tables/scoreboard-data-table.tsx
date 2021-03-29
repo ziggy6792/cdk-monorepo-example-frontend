@@ -2,6 +2,7 @@
 import React from 'react';
 import DataTable, { IDataTableProps, IDataTableRow } from 'src/components/data-table';
 import { Grid } from '@material-ui/core';
+import { IRiderAllocationItem } from 'src/gql/common/types';
 import ScoreboardTabs from './scoreboard-tabs';
 
 interface ScoresDataTableProps extends Omit<IDataTableProps, 'title'> {
@@ -9,10 +10,10 @@ interface ScoresDataTableProps extends Omit<IDataTableProps, 'title'> {
 }
 
 export interface IRiderAllocationRow extends IDataTableRow {
-    userId: string;
+    riderAllocation: IRiderAllocationItem;
 }
 
-const ScoreboardDataTable: React.FC<ScoresDataTableProps> = props => (
+const ScoreboardDataTable: React.FC<ScoresDataTableProps> = (props) => (
     <DataTable
         {...props}
         title='Scores'

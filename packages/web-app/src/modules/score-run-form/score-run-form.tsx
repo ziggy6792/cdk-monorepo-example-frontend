@@ -3,31 +3,33 @@ import { Field, Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 
-export interface IIScoreRunFormValues {
-    name: string;
+export interface IScoreRunFormRunScore {
+    score?: number;
+}
+export interface IScoreRunFormValues {
+    runs?: IScoreRunFormRunScore[];
 }
 
 interface IScoreRunFormProps {
-    onSubmit: (formValues: IIScoreRunFormValues) => Promise<void>;
+    onSubmit: (formValues: IScoreRunFormValues) => Promise<void>;
     onCancel: () => void;
-    initialValues?: IIScoreRunFormValues;
+    initialValues?: IScoreRunFormValues;
     title: string;
 }
 
 const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
-    const minTime = startOfHour(addHours(new Date(), 1));
+    console.log('initialValues', initialValues);
     return (
         <Formik
-            initialValues={initialValues || { name: '', startTime: minTime, description: '' }}
+            initialValues={initialValues}
             validationSchema={Yup.object({})}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await onSubmit(values);
             }}
         >
-            {props => {
+            {(props) => {
                 const { isSubmitting, isValid, dirty } = props;
                 return (
                     <Form>

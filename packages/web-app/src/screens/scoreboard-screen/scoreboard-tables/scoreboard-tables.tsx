@@ -2,13 +2,13 @@ import React from 'react';
 import _ from 'lodash';
 import useTabState from 'src/hooks/use-tab-state/use-tab-state';
 import { useLocation } from 'react-router';
-import { RiderAllocationItem } from 'src/gql/common/types';
+import { IRiderAllocationItem } from 'src/gql/common/types';
 import { scoreboardTabs, ScoreboardTab } from './scoreboard-tabs';
 import ScoreboardDataTable, { IRiderAllocationRow } from './scoreboard-data-table';
 import EnterScoresTable from './enter-scores-table';
 
 export interface IScoresTableProps {
-    riderAllocations: RiderAllocationItem[];
+    riderAllocations: IRiderAllocationItem[];
 }
 
 const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations }) => {
@@ -16,8 +16,8 @@ const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations }) => 
 
     const [selectedTab] = useTabState({ tabKey: pathname, initialValue: scoreboardTabs[0].value });
 
-    const scoresTableData: IRiderAllocationRow[] = riderAllocations.map(riderAllocation => ({
-        userId: riderAllocation.userId,
+    const scoresTableData: IRiderAllocationRow[] = riderAllocations.map((riderAllocation) => ({
+        riderAllocation,
         rowData: {
             order: riderAllocation.startOrder,
             rider: riderAllocation.user.fullName,
@@ -58,7 +58,7 @@ export interface IResultsTableProps {
 const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns }) => {
     const scoresTableColumns = [
         { name: 'rider', label: 'Rider' },
-        ..._.range(noOfRuns).map(v => ({
+        ..._.range(noOfRuns).map((v) => ({
             name: `run${v + 1}`,
             label: `Run\u00A0${v + 1}`,
         })),

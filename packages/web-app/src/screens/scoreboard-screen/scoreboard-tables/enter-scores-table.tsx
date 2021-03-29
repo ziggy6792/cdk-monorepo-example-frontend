@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import Dialog from 'src/components/ui/dialog';
 import ScoreRunForm from 'src/modules/score-run-form';
+import { IRiderAllocationItem } from 'src/gql/common/types';
 import ScoreboardDataTable, { IRiderAllocationRow } from './scoreboard-data-table';
 
 export interface IEnterScoresTableProps {
@@ -13,7 +14,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
     const scoresTableColumns = [
         { name: 'order', label: 'Order' },
         { name: 'rider', label: 'Rider' },
-        ..._.range(noOfRuns).map(v => ({
+        ..._.range(noOfRuns).map((v) => ({
             name: `run${v + 1}`,
             label: `Run\u00A0${v + 1}`,
         })),
@@ -22,16 +23,18 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
 
     const [open, setOpen] = useState(false);
 
+    const [selectedRiderAllocation, setSelectedRiderAllocation] = useState<IRiderAllocationItem>(null);
+
     return (
         <>
             <Dialog open={open} setOpen={setOpen}>
                 <ScoreRunForm
-                    onSubmit={async formValues => {
+                    onSubmit={async (formValues) => {
                         console.log(formValues);
                     }}
                     title='Score Run'
                     onCancel={() => setOpen(false)}
-                    // initialValues={{  }}
+                    initialValues={selectedRiderAllocation}
                 />
             </Dialog>
             <ScoreboardDataTable
@@ -39,7 +42,8 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
                 columns={scoresTableColumns}
                 options={{
                     onRowClick: (rowData: IRiderAllocationRow) => {
-                        console.log(`Clicked ${rowData.userId}`);
+                        console.log(`Clicked ${JSON.stringify(rowData.riderAllocation)}`);
+                        setSelectedRiderAllocation(rowData.riderAllocation);
                         setOpen(true);
                     },
                 }}
