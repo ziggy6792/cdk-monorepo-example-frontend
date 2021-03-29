@@ -624,6 +624,12 @@ export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
         };
 };
 
+export type ScoreRunMutationVariables = {
+    input: ScorRunInput;
+};
+
+export type ScoreRunMutation = { __typename?: 'Mutation' } & { scoreRun: { __typename?: 'Heat' } & Pick<Heat, 'id'> };
+
 export type GetDataEntityQueryVariables = {
     id: Scalars['ID'];
 };
@@ -1076,6 +1082,38 @@ export function useGetSelectedHeatLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type GetSelectedHeatQueryHookResult = ReturnType<typeof useGetSelectedHeatQuery>;
 export type GetSelectedHeatLazyQueryHookResult = ReturnType<typeof useGetSelectedHeatLazyQuery>;
 export type GetSelectedHeatQueryResult = ApolloReactCommon.QueryResult<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>;
+export const ScoreRunDocument = gql`
+    mutation scoreRun($input: ScorRunInput!) {
+        scoreRun(input: $input) {
+            id
+        }
+    }
+`;
+export type ScoreRunMutationFn = ApolloReactCommon.MutationFunction<ScoreRunMutation, ScoreRunMutationVariables>;
+
+/**
+ * __useScoreRunMutation__
+ *
+ * To run a mutation, you first call `useScoreRunMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useScoreRunMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [scoreRunMutation, { data, loading, error }] = useScoreRunMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useScoreRunMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ScoreRunMutation, ScoreRunMutationVariables>) {
+    return ApolloReactHooks.useMutation<ScoreRunMutation, ScoreRunMutationVariables>(ScoreRunDocument, baseOptions);
+}
+export type ScoreRunMutationHookResult = ReturnType<typeof useScoreRunMutation>;
+export type ScoreRunMutationResult = ApolloReactCommon.MutationResult<ScoreRunMutation>;
+export type ScoreRunMutationOptions = ApolloReactCommon.BaseMutationOptions<ScoreRunMutation, ScoreRunMutationVariables>;
 export const GetDataEntityDocument = gql`
     query getDataEntity($id: ID!) {
         getDataEntity(id: $id) {

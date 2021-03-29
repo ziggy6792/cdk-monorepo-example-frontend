@@ -9,14 +9,15 @@ import EnterScoresTable from './enter-scores-table';
 
 export interface IScoresTableProps {
     riderAllocations: IRiderAllocationItem[];
+    eventId: string;
 }
 
-const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations }) => {
+const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, eventId }) => {
     const { pathname } = useLocation();
 
     const [selectedTab] = useTabState({ tabKey: pathname, initialValue: scoreboardTabs[0].value });
 
-    const scoresTableData: IRiderAllocationRow[] = riderAllocations.map((riderAllocation) => ({
+    const scoresTableData: IRiderAllocationRow[] = riderAllocations.map(riderAllocation => ({
         riderAllocation,
         rowData: {
             order: riderAllocation.startOrder,
@@ -30,7 +31,7 @@ const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations }) => 
 
     return (
         <>
-            {selectedTab === ScoreboardTab.ENTER_SCORES && <EnterScoresTable tableData={scoresTableData} noOfRuns={noOfRuns} />}
+            {selectedTab === ScoreboardTab.ENTER_SCORES && <EnterScoresTable tableData={scoresTableData} noOfRuns={noOfRuns} eventId={eventId} />}
             {selectedTab === ScoreboardTab.START_LIST && <StartListTable tableData={scoresTableData} />}
             {selectedTab === ScoreboardTab.RESULTS && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} />}
         </>
@@ -58,7 +59,7 @@ export interface IResultsTableProps {
 const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns }) => {
     const scoresTableColumns = [
         { name: 'rider', label: 'Rider' },
-        ..._.range(noOfRuns).map((v) => ({
+        ..._.range(noOfRuns).map(v => ({
             name: `run${v + 1}`,
             label: `Run\u00A0${v + 1}`,
         })),

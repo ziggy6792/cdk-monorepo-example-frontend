@@ -36,3 +36,11 @@ export const GET_SELECTED_HEAT = gql`
         }
     }
 `;
+
+export const SCORE_RUN = gql`
+    mutation scoreRun($input: ScorRunInput!) {
+        scoreRun(input: $input) {
+            id
+        }
+    }
+`;

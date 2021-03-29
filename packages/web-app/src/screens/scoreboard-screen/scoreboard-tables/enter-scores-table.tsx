@@ -3,14 +3,18 @@ import _ from 'lodash';
 import Dialog from 'src/components/ui/dialog';
 import ScoreRunForm from 'src/modules/score-run-form';
 import { IRiderAllocationItem } from 'src/gql/common/types';
+import { useScoreRunMutation, ScorRunInput } from 'src/generated-types';
+import { GET_SELECTED_HEAT } from 'src/gql/queries/heat.gql';
+import { IScoreRunFormValues } from 'src/modules/score-run-form/score-run-form';
 import ScoreboardDataTable, { IRiderAllocationRow } from './scoreboard-data-table';
 
 export interface IEnterScoresTableProps {
     tableData: IRiderAllocationRow[];
+    eventId: string;
     noOfRuns?: number;
 }
 
-const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRuns }) => {
+const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRuns, eventId }) => {
     const scoresTableColumns = [
         { name: 'order', label: 'Order' },
         { name: 'rider', label: 'Rider' },
@@ -23,15 +27,34 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
 
     const [open, setOpen] = useState(false);
 
+    const [scoreRun] = useScoreRunMutation({
+        refetchQueries: [
+            {
+                query: GET_SELECTED_HEAT,
+                variables: { id: eventId },
+            },
+        ],
+        awaitRefetchQueries: true,
+    });
+
+    const onScoreRun = async (formValues: IScoreRunFormValues): Promise<void> => {
+        const scoreRunInput: ScorRunInput = {
+            heatId: selectedRiderAllocation.allocatableId,
+            userId: selectedRiderAllocation.userId,
+            runs: selectedRiderAllocation.runs.map((run, i) => ({ score: formValues.runScores[i] })),
+        };
+        const variables = { input: scoreRunInput };
+        await scoreRun({ variables });
+        setOpen(false);
+    };
+
     const [selectedRiderAllocation, setSelectedRiderAllocation] = useState<IRiderAllocationItem>(null);
 
     return (
         <>
             <Dialog open={open} setOpen={setOpen}>
                 <ScoreRunForm
-                    onSubmit={async formValues => {
-                        console.log(formValues);
-                    }}
+                    onSubmit={onScoreRun}
                     title='Score Run'
                     onCancel={() => setOpen(false)}
                     initialValues={{ runScores: selectedRiderAllocation?.runs?.map(({ score }) => score) }}
