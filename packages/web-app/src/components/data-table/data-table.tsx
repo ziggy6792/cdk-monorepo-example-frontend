@@ -64,6 +64,10 @@ const DataTable: React.FC<IDataTableProps> = props => {
             } else if (typeof value === 'object' && value?.displayText) {
                 cellDisplayData[key] = value.displayText;
             }
+            // If cell is empty then add empty char to stop row being shrunk
+            if (!cellDisplayData[key]) {
+                cellDisplayData[key] = '\u00A0';
+            }
         });
         tableDisplayData.push(cellDisplayData);
     });

@@ -22,6 +22,7 @@ const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, event
         rowData: {
             order: riderAllocation.startOrder,
             rider: riderAllocation.user.fullName,
+            rankedRider: riderAllocation.position ? riderAllocation.user.fullName : null,
             position: riderAllocation.position,
             ..._.reduce(riderAllocation.runs, (obj, v, i) => ({ ...obj, [`run${i + 1}`]: v.score }), {}),
         },
@@ -58,7 +59,7 @@ export interface IResultsTableProps {
 
 const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns }) => {
     const scoresTableColumns = [
-        { name: 'rider', label: 'Rider' },
+        { name: 'rankedRider', label: 'Rider' },
         ..._.range(noOfRuns).map(v => ({
             name: `run${v + 1}`,
             label: `Run\u00A0${v + 1}`,
