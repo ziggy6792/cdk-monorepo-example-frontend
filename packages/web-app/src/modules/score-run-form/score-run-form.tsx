@@ -1,15 +1,14 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Field, Formik, Form } from 'formik';
+import { Field, Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
+import { NumericField } from 'src/components/forms/formik-material-ui/formik-material-ui';
 
-export interface IScoreRunFormRunScore {
-    score?: number;
-}
 export interface IScoreRunFormValues {
-    runs?: IScoreRunFormRunScore[];
+    runScores: number[];
 }
 
 interface IScoreRunFormProps {
@@ -21,16 +20,17 @@ interface IScoreRunFormProps {
 
 const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
     console.log('initialValues', initialValues);
+    const theme = useTheme();
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={Yup.object({})}
-            onSubmit={async (values) => {
+            onSubmit={async values => {
                 await onSubmit(values);
             }}
         >
-            {(props) => {
-                const { isSubmitting, isValid, dirty } = props;
+            {props => {
+                const { isSubmitting, isValid, dirty, values } = props;
                 return (
                     <Form>
                         <Grid container direction='column'>
@@ -41,10 +41,20 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, title,
                                     </Typography>
                                 </Grid>
                             </Grid>
-                            <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
-                                <Grid item>
-                                    <Field name='name' component={TextField} label='Name' autoFocus />
-                                </Grid>
+
+                            <Grid container direction='column' spacing={2}>
+                                <FieldArray
+                                    name='scores'
+                                    render={() => (
+                                        <>
+                                            {values?.runScores.map((run, i) => (
+                                                <Grid item key={`score${i}`}>
+                                                    <Field name={`runScores.${i}`} component={NumericField} label={`Run ${i + 1}`} autoFocus={i === 0} />
+                                                </Grid>
+                                            ))}
+                                        </>
+                                    )}
+                                />
                             </Grid>
                         </Grid>
                         <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />

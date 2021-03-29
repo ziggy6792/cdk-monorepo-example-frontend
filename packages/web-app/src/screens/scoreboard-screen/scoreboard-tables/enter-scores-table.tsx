@@ -14,7 +14,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
     const scoresTableColumns = [
         { name: 'order', label: 'Order' },
         { name: 'rider', label: 'Rider' },
-        ..._.range(noOfRuns).map((v) => ({
+        ..._.range(noOfRuns).map(v => ({
             name: `run${v + 1}`,
             label: `Run\u00A0${v + 1}`,
         })),
@@ -29,12 +29,12 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
         <>
             <Dialog open={open} setOpen={setOpen}>
                 <ScoreRunForm
-                    onSubmit={async (formValues) => {
+                    onSubmit={async formValues => {
                         console.log(formValues);
                     }}
                     title='Score Run'
                     onCancel={() => setOpen(false)}
-                    initialValues={selectedRiderAllocation}
+                    initialValues={{ runScores: selectedRiderAllocation?.runs?.map(({ score }) => score) }}
                 />
             </Dialog>
             <ScoreboardDataTable
