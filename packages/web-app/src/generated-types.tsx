@@ -162,6 +162,7 @@ export type Heat = DataEntity &
         getSortedRiderAllocations: RiderAllocationList;
         riderAllocations: RiderAllocationList;
         noAllocated: Scalars['Int'];
+        noProgressing: Scalars['Int'];
     };
 
 export type HeatList = {
@@ -426,6 +427,7 @@ export type SeedSlot = {
     seed: Scalars['Int'];
     nextHeatId?: Maybe<Scalars['ID']>;
     nextHeat?: Maybe<Heat>;
+    isProgressing?: Maybe<Scalars['Boolean']>;
 };
 
 export type SeedSlotParamsInput = {
@@ -606,7 +608,7 @@ export type GetSelectedHeatQueryVariables = {
 export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
     getEvent: { __typename?: 'Event' } & Pick<Event, 'id'> & {
             selectedHeat: Maybe<
-                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'status' | 'name' | 'size' | 'noAllocated' | 'createdAt'> & {
+                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'status' | 'name' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'> & {
                         round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
                         riderAllocations: { __typename?: 'RiderAllocationList' } & {
                             items: Array<
@@ -1035,6 +1037,7 @@ export const GetSelectedHeatDocument = gql`
                 }
                 size
                 noAllocated
+                noProgressing
                 createdAt
                 riderAllocations {
                     items {

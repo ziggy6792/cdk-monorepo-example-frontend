@@ -74,7 +74,7 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, title,
                                                         name={`runScores.${i}`}
                                                         component={NumericField}
                                                         label={`Run ${i + 1}`}
-                                                        autoFocus={i === values?.runScores.findIndex(score => score === null) || i === 0}
+                                                        autoFocus={i === values?.runScores.findIndex(score => score === '') || i === 0}
                                                     />
                                                 </Grid>
                                             ))}

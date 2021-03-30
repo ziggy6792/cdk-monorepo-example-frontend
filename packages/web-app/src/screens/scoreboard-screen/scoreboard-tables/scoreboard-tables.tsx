@@ -9,10 +9,11 @@ import EnterScoresTable from './enter-scores-table';
 
 export interface IScoresTableProps {
     riderAllocations: IRiderAllocationItem[];
+    noProgressing: number;
     eventId: string;
 }
 
-const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, eventId }) => {
+const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, eventId, noProgressing }) => {
     const { pathname } = useLocation();
 
     const [selectedTab] = useTabState({ tabKey: pathname, initialValue: scoreboardTabs[0].value });
@@ -32,32 +33,42 @@ const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, event
 
     return (
         <>
-            {selectedTab === ScoreboardTab.ENTER_SCORES && <EnterScoresTable tableData={scoresTableData} noOfRuns={noOfRuns} eventId={eventId} />}
-            {selectedTab === ScoreboardTab.START_LIST && <StartListTable tableData={scoresTableData} />}
-            {selectedTab === ScoreboardTab.RESULTS && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} />}
+            {selectedTab === ScoreboardTab.ENTER_SCORES && (
+                <EnterScoresTable eventId={eventId} tableData={scoresTableData} noOfRuns={noOfRuns} noProgressing={noProgressing} />
+            )}
+            {selectedTab === ScoreboardTab.START_LIST && <StartListTable tableData={scoresTableData} noProgressing={noProgressing} />}
+            {selectedTab === ScoreboardTab.RESULTS && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} noProgressing={noProgressing} />}
         </>
     );
 };
 
 export interface IStartListTableProps {
+    noProgressing: number;
     tableData: IRiderAllocationRow[];
 }
 
-const StartListTable: React.FC<IStartListTableProps> = ({ tableData }) => {
+const StartListTable: React.FC<IStartListTableProps> = ({ tableData, noProgressing }) => {
     const startlistTableColumns = [
         { name: 'order', label: 'Order' },
         { name: 'rider', label: 'Rider' },
     ];
 
-    return <ScoreboardDataTable tableData={tableData} columns={startlistTableColumns} />;
+    return (
+        <ScoreboardDataTable
+            tableData={_.orderBy(tableData, row => row.riderAllocation.startOrder)}
+            columns={startlistTableColumns}
+            highlightedProgressors={noProgressing}
+        />
+    );
 };
 
 export interface IResultsTableProps {
     tableData: IRiderAllocationRow[];
+    noProgressing: number;
     noOfRuns?: number;
 }
 
-const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns }) => {
+const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns, noProgressing }) => {
     const scoresTableColumns = [
         { name: 'rankedRider', label: 'Rider' },
         ..._.range(noOfRuns).map(v => ({
@@ -67,7 +78,21 @@ const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns }) => 
         { name: 'position', label: 'Rank' },
     ];
 
-    return <ScoreboardDataTable tableData={tableData} columns={scoresTableColumns} />;
+    return (
+        <ScoreboardDataTable
+            tableData={tableData}
+            columns={scoresTableColumns}
+            highlightedProgressors={noProgressing}
+            options={
+                {
+                    // sortOrder: {
+                    //     name: 'position',
+                    //     direction: 'asc',
+                    // },
+                }
+            }
+        />
+    );
 };
 
 export default ScoreboardTables;

@@ -11,9 +11,10 @@ export interface IEnterScoresTableProps {
     tableData: IRiderAllocationRow[];
     eventId: string;
     noOfRuns?: number;
+    noProgressing: number;
 }
 
-const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRuns, eventId }) => {
+const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRuns, eventId, noProgressing }) => {
     const scoresTableColumns = [
         { name: 'order', label: 'Order' },
         { name: 'rider', label: 'Rider' },
@@ -82,11 +83,11 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
                 </Dialog>
             )}
             <ScoreboardDataTable
-                tableData={tableData}
+                tableData={_.orderBy(tableData, row => row.riderAllocation.startOrder)}
                 columns={scoresTableColumns}
+                highlightedProgressors={noProgressing}
                 options={{
                     onRowClick: (rowData: IRiderAllocationRow) => {
-                        console.log(`Clicked ${JSON.stringify(rowData.riderAllocation)}`);
                         setSelectedRiderAllocation(rowData.riderAllocation);
                         setOpen(true);
                     },

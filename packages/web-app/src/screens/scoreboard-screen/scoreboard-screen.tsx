@@ -19,7 +19,11 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
         <>
             <Grid container direction='column' justify='center' alignItems='center'>
                 <Grid item style={{ width: '100%' }}>
-                    <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} />
+                    <ScoresTables
+                        riderAllocations={data.selectedHeat.riderAllocations.items}
+                        eventId={eventId}
+                        noProgressing={data.selectedHeat.noProgressing}
+                    />
                 </Grid>
             </Grid>
         </>

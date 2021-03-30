@@ -37,12 +37,12 @@ const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initi
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}
-            onSubmit={async (values) => {
+            onSubmit={async values => {
                 await onSubmit(values);
             }}
         >
-            {(props) => {
-                const { isSubmitting, isValid, dirty, errors, touched, setFieldValue, values } = props;
+            {props => {
+                const { isSubmitting, isValid, dirty, setFieldValue, values } = props;
                 return (
                     <Form>
                         <Grid container direction='column'>

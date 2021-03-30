@@ -15,6 +15,7 @@ export const GET_SELECTED_HEAT = gql`
                 }
                 size
                 noAllocated
+                noProgressing
                 createdAt
                 riderAllocations {
                     items {
