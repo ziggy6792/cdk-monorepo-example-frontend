@@ -20,8 +20,6 @@ const ProfileScreen: React.FC = () => {
     const isLoading = useSelector(authSelectors.selectIsLoading);
     const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
 
-    console.log('isLoading', isLoading);
-
     const history = useHistory();
 
     if (isLoading) {

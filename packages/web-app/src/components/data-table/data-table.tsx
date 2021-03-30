@@ -23,7 +23,7 @@ export interface IMUIDataTableProps extends Omit<MUIDataTableProps['options'], '
     onRowClick?: (tableRow: IDataTableRow) => void;
 }
 
-interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
+export interface IDataTableProps extends Omit<MUIDataTableProps, 'data' | 'options'> {
     tableData: IDataTableRow[];
     options?: IMUIDataTableProps;
     columns: MUIDataTableColumn[];
@@ -61,8 +61,12 @@ const DataTable: React.FC<IDataTableProps> = props => {
                 cellDisplayData[key] = value;
             } else if (typeof value === 'number') {
                 cellDisplayData[key] = value;
-            } else if (typeof value === 'object' && value.displayText) {
+            } else if (typeof value === 'object' && value?.displayText) {
                 cellDisplayData[key] = value.displayText;
+            }
+            // If cell is empty then add empty char to stop row being shrunk
+            if (!cellDisplayData[key]) {
+                cellDisplayData[key] = '\u00A0';
             }
         });
         tableDisplayData.push(cellDisplayData);

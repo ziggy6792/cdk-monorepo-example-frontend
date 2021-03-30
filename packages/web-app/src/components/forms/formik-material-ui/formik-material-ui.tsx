@@ -24,11 +24,11 @@ export const TextArea: React.FC<TextFieldProps> = props => {
 };
 
 export const NumericField: React.FC<TextFieldProps> = props => {
-    const classes = useStyles();
+    const { label } = props;
     return (
         <TextField
             {...props}
-            label='Max Riders'
+            label={label}
             type='number'
             InputLabelProps={{
                 shrink: true,

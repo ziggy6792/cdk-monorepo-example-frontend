@@ -10,6 +10,8 @@ import introspectionQueryResultData from 'src/graphql/fragment-types.json';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import Routes from 'src/routes';
 import { parseISO } from 'date-fns';
+import Theme from 'src/ui/theme';
+import { ThemeProvider } from '@material-ui/core/styles';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import initStore from './config/store';
@@ -60,11 +62,13 @@ const App: React.FC = () => (
 );
 
 const WithProvider: React.FC = () => (
+    // <ThemeProvider theme={Theme}>
     <Provider store={store}>
         <ApolloProvider client={client}>
             <App />
         </ApolloProvider>
     </Provider>
+    // </ThemeProvider>
 );
 
 export default WithProvider;

@@ -49,8 +49,6 @@ const defaultFormValue = {
 const getOptionLabel = (option: ICatalogItem) => option.description;
 
 const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
-    console.log('ComepetitionForm');
-
     const { data, loading } = useListUsersQuery();
 
     const judgeOptions = !loading ? data.listUsers : [];
@@ -60,14 +58,18 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
             <Formik
                 initialValues={initialValues || defaultFormValue}
                 validationSchema={Yup.object({
-                    name: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
-                    judgeUser: Yup.object().nullable().required('Required'),
+                    name: Yup.string()
+                        .max(30, 'Must be 30 characters or less')
+                        .required('Required'),
+                    judgeUser: Yup.object()
+                        .nullable()
+                        .required('Required'),
                 })}
-                onSubmit={async (values) => {
+                onSubmit={async values => {
                     await onSubmit(values as ICompetitionFormValues);
                 }}
             >
-                {(props) => {
+                {props => {
                     const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
                         <Form>

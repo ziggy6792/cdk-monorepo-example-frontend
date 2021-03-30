@@ -49,7 +49,6 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
             options={{
                 onRowClick: (row: ICompetitionRow) => {
                     history.push(`${ROUTE_COMPETITION}/${row.competitionId}`);
-                    console.log(row.competitionId);
                 },
             }}
         />

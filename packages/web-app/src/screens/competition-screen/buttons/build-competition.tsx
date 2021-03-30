@@ -6,7 +6,7 @@ import { Button, Grid, useTheme } from '@material-ui/core';
 import { useUpdateRiderAllocationsMutation, CompetitionParams, useBuildCompetitionMutation } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
 import SeedsForm from 'src/modules/seeds-form';
-import { RiderOption } from 'src/gql/common/types';
+import { IRiderOption } from 'src/gql/common/types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import { ISeedsFormValues } from 'src/modules/seeds-form/seeds-form';
 import _ from 'lodash';
@@ -47,7 +47,6 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
 
     const onSubmit = async (formData: IBuildCompetitionFormValues) => {
         const parsedParams = { rounds: jsYaml.load(formData.params) };
-        console.log('parsedParams', parsedParams);
         await buildCompetition({
             variables: {
                 id: competitionId,

@@ -6,7 +6,7 @@ import ProfileScreen from './profile-screen';
 
 describe('Profile Screen', () => {
     it('should show login form', async () => {
-        renderWithAllProviders(<ProfileScreen />, { initialState: { auth: { isLoading: false, error: null, user: null } } });
+        renderWithAllProviders(<ProfileScreen />, { initialState: { auth: { isLoading: false, error: null, user: null }, tabs: {} } });
 
         expect(await screen.findByText(/Sign in with Email/i)).toBeInTheDocument();
     });

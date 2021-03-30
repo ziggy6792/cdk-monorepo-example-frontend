@@ -125,7 +125,7 @@ export type Event = DataEntity &
         adminUserId: Scalars['String'];
         selectedHeatId: Scalars['String'];
         adminUser: User;
-        selectedHeat: Heat;
+        selectedHeat?: Maybe<Heat>;
         competitions: CompetitionList;
     };
 
@@ -162,6 +162,7 @@ export type Heat = DataEntity &
         getSortedRiderAllocations: RiderAllocationList;
         riderAllocations: RiderAllocationList;
         noAllocated: Scalars['Int'];
+        noProgressing: Scalars['Int'];
     };
 
 export type HeatList = {
@@ -357,6 +358,8 @@ export type RiderAllocation = Creatable & {
     startSeed: Scalars['Int'];
     runs?: Maybe<Array<Run>>;
     position?: Maybe<Scalars['Int']>;
+    rankOrder?: Maybe<Scalars['Int']>;
+    startOrder?: Maybe<Scalars['Int']>;
     user?: Maybe<User>;
 };
 
@@ -424,6 +427,7 @@ export type SeedSlot = {
     seed: Scalars['Int'];
     nextHeatId?: Maybe<Scalars['ID']>;
     nextHeat?: Maybe<Heat>;
+    isProgressing?: Maybe<Scalars['Boolean']>;
 };
 
 export type SeedSlotParamsInput = {
@@ -587,7 +591,7 @@ export type GetEventQueryVariables = {
 };
 
 export type GetEventQuery = { __typename?: 'Query' } & {
-    getEvent: { __typename?: 'Event' } & Pick<Event, 'name' | 'startTime' | 'description'> & {
+    getEvent: { __typename?: 'Event' } & Pick<Event, 'id' | 'name' | 'startTime' | 'description'> & {
             adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
             competitions: { __typename?: 'CompetitionList' } & {
                 items: Array<
@@ -596,6 +600,37 @@ export type GetEventQuery = { __typename?: 'Query' } & {
             };
         };
 };
+
+export type GetSelectedHeatQueryVariables = {
+    id: Scalars['ID'];
+};
+
+export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
+    getEvent: { __typename?: 'Event' } & Pick<Event, 'id'> & {
+            selectedHeat: Maybe<
+                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'status' | 'name' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'> & {
+                        round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
+                        riderAllocations: { __typename?: 'RiderAllocationList' } & {
+                            items: Array<
+                                { __typename?: 'RiderAllocation' } & Pick<
+                                    RiderAllocation,
+                                    'userId' | 'startSeed' | 'startOrder' | 'rankOrder' | 'allocatableId' | 'position'
+                                > & {
+                                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>>;
+                                        runs: Maybe<Array<{ __typename?: 'Run' } & Pick<Run, 'score'>>>;
+                                    }
+                            >;
+                        };
+                    }
+            >;
+        };
+};
+
+export type ScoreRunMutationVariables = {
+    input: ScorRunInput;
+};
+
+export type ScoreRunMutation = { __typename?: 'Mutation' } & { scoreRun: { __typename?: 'Heat' } & Pick<Heat, 'id'> };
 
 export type GetDataEntityQueryVariables = {
     id: Scalars['ID'];
@@ -944,6 +979,7 @@ export type UpdateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<U
 export const GetEventDocument = gql`
     query getEvent($id: ID!) {
         getEvent(id: $id) {
+            id
             name
             adminUser {
                 fullName
@@ -988,6 +1024,99 @@ export function useGetEventLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = ApolloReactCommon.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetSelectedHeatDocument = gql`
+    query getSelectedHeat($id: ID!) {
+        getEvent(id: $id) {
+            id
+            selectedHeat {
+                id
+                status
+                name
+                round {
+                    roundNo
+                }
+                size
+                noAllocated
+                noProgressing
+                createdAt
+                riderAllocations {
+                    items {
+                        userId
+                        user {
+                            fullName
+                        }
+                        startSeed
+                        startOrder
+                        rankOrder
+                        allocatableId
+                        position
+                        runs {
+                            score
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
+/**
+ * __useGetSelectedHeatQuery__
+ *
+ * To run a query within a React component, call `useGetSelectedHeatQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSelectedHeatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSelectedHeatQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSelectedHeatQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>) {
+    return ApolloReactHooks.useQuery<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>(GetSelectedHeatDocument, baseOptions);
+}
+export function useGetSelectedHeatLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>) {
+    return ApolloReactHooks.useLazyQuery<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>(GetSelectedHeatDocument, baseOptions);
+}
+export type GetSelectedHeatQueryHookResult = ReturnType<typeof useGetSelectedHeatQuery>;
+export type GetSelectedHeatLazyQueryHookResult = ReturnType<typeof useGetSelectedHeatLazyQuery>;
+export type GetSelectedHeatQueryResult = ApolloReactCommon.QueryResult<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>;
+export const ScoreRunDocument = gql`
+    mutation scoreRun($input: ScorRunInput!) {
+        scoreRun(input: $input) {
+            id
+        }
+    }
+`;
+export type ScoreRunMutationFn = ApolloReactCommon.MutationFunction<ScoreRunMutation, ScoreRunMutationVariables>;
+
+/**
+ * __useScoreRunMutation__
+ *
+ * To run a mutation, you first call `useScoreRunMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useScoreRunMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [scoreRunMutation, { data, loading, error }] = useScoreRunMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useScoreRunMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ScoreRunMutation, ScoreRunMutationVariables>) {
+    return ApolloReactHooks.useMutation<ScoreRunMutation, ScoreRunMutationVariables>(ScoreRunDocument, baseOptions);
+}
+export type ScoreRunMutationHookResult = ReturnType<typeof useScoreRunMutation>;
+export type ScoreRunMutationResult = ApolloReactCommon.MutationResult<ScoreRunMutation>;
+export type ScoreRunMutationOptions = ApolloReactCommon.BaseMutationOptions<ScoreRunMutation, ScoreRunMutationVariables>;
 export const GetDataEntityDocument = gql`
     query getDataEntity($id: ID!) {
         getDataEntity(id: $id) {

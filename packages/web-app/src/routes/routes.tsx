@@ -10,6 +10,7 @@ import ProfileScreen from 'src/screens/profile-screen';
 import EventsScreen from 'src/screens/events-screen';
 import EventScreen from 'src/screens/event-screen';
 import CompetitionScreen from 'src/screens/competition-screen';
+import ScoreboardScreen from 'src/screens/scoreboard-screen';
 
 const Routes: React.FC = () => {
     const dispatch = useDispatch();
@@ -22,18 +23,23 @@ const Routes: React.FC = () => {
         <ThemeProvider theme={Theme}>
             <BrowserRouter>
                 <Route exact path='/'>
-                    <Redirect to={routeConfig.ROUTE_PROFILE} />
+                    <Redirect to={routeConfig.ROUTE_EVENTS} />
                 </Route>
                 <Switch>
-                    <Route exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
                     <Route exact path={routeConfig.ROUTE_EVENTS} component={EventsScreen} />
+                    <Route exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
+                    <Route exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
                     <Route exact path={`${routeConfig.ROUTE_EVENT}/:eventId`} render={({ match: { params } }) => <EventScreen eventId={params.eventId} />} />
                     <Route
                         exact
                         path={`${routeConfig.ROUTE_COMPETITION}/:competitionId`}
                         render={({ match: { params } }) => <CompetitionScreen competitionId={params.competitionId} />}
                     />
-                    <Route exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
+                    <Route
+                        exact
+                        path={`${routeConfig.ROUTE_SCOREBOARD}/:eventId`}
+                        render={({ match: { params } }) => <ScoreboardScreen eventId={params.eventId} />}
+                    />
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
