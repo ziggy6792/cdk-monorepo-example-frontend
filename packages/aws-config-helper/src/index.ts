@@ -8,10 +8,8 @@ main()
         log('SUCCESS');
         process.exit(0);
     })
-    .catch((err) => {
+    .catch(err => {
         log('ERROR', err);
 
         process.exit(1);
     });
-
-// console.log('aws-config-helper bla');

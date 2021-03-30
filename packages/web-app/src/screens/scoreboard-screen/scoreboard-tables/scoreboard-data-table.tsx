@@ -8,9 +8,7 @@ import ScoreboardTabs from './scoreboard-tabs';
 
 interface ScoresDataTableProps extends Omit<IDataTableProps, 'title'> {
     title?: string;
-    // dividerLine?: number;
-    // isRowHighlighted?: (row: IDataTableRow) => boolean;
-    highlightedProgressors?: number;
+    highlightedPositions?: number;
 }
 
 export interface IRiderAllocationRow extends IDataTableRow {
@@ -18,16 +16,7 @@ export interface IRiderAllocationRow extends IDataTableRow {
 }
 
 const useStyles = makeStyles(theme => ({
-    button: {
-        margin: theme.spacing(1),
-    },
-    BusinessAnalystRow: {
-        '& td': { backgroundColor: '#FAA' },
-    },
-    GreyLine: {
-        '& td': { backgroundColor: theme.palette.grey[200] },
-    },
-    DividerLine: {
+    highlight: {
         '& td': {
             borderBottomWidth: '2px',
             borderBottomStyle: 'solid',
@@ -35,17 +24,11 @@ const useStyles = makeStyles(theme => ({
             color: 'white',
         },
     },
-    Bold: {
-        '& td': { fontWeight: 900 },
-    },
-    BoldCell: {
-        fontWeight: 900,
-    },
 }));
 
 const ScoreboardDataTable: React.FC<ScoresDataTableProps> = props => {
     const classes = useStyles();
-    const { highlightedProgressors, tableData } = props;
+    const { highlightedPositions, tableData } = props;
 
     return (
         <DataTable
@@ -63,12 +46,16 @@ const ScoreboardDataTable: React.FC<ScoresDataTableProps> = props => {
                         <ScoreboardTabs />
                     </Grid>
                 ),
-                setRowProps: highlightedProgressors
-                    ? (row, dataIndex, rowIndex) => ({
-                          className: clsx({
-                              [classes.DividerLine]: (tableData[dataIndex] as IRiderAllocationRow).riderAllocation.position <= highlightedProgressors,
-                          }),
-                      })
+                setRowProps: highlightedPositions
+                    ? (row, dataIndex) => {
+                          const riderAllocationRow = tableData[dataIndex] as IRiderAllocationRow;
+                          return {
+                              className: clsx({
+                                  [classes.highlight]:
+                                      riderAllocationRow.riderAllocation.position && riderAllocationRow.riderAllocation.position <= highlightedPositions,
+                              }),
+                          };
+                      }
                     : undefined,
             }}
         />

@@ -22,11 +22,7 @@ interface IEventRow extends IDataTableRow {
 }
 
 const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
-    console.log(events);
-
     const history = useHistory();
-
-    const theme = useTheme();
 
     const tableData: IEventRow[] = events.map(event => ({
         eventId: event.id,

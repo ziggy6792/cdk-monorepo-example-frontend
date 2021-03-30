@@ -57,7 +57,7 @@ const StartListTable: React.FC<IStartListTableProps> = ({ tableData, noProgressi
         <ScoreboardDataTable
             tableData={_.orderBy(tableData, row => row.riderAllocation.startOrder)}
             columns={startlistTableColumns}
-            highlightedProgressors={noProgressing}
+            highlightedPositions={noProgressing}
         />
     );
 };
@@ -82,7 +82,7 @@ const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns, noPro
         <ScoreboardDataTable
             tableData={tableData}
             columns={scoresTableColumns}
-            highlightedProgressors={noProgressing}
+            highlightedPositions={noProgressing}
             options={
                 {
                     // sortOrder: {

@@ -47,7 +47,6 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
 
     const onSubmit = async (formData: IBuildCompetitionFormValues) => {
         const parsedParams = { rounds: jsYaml.load(formData.params) };
-        console.log('parsedParams', parsedParams);
         await buildCompetition({
             variables: {
                 id: competitionId,

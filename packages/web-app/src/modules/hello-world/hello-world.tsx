@@ -9,12 +9,6 @@ const HelloWorld: React.FC = () => {
         console.log('error', error);
     }
 
-    // const apollo = useApolloClient();
-
-    // useEffect(() => {
-    //   apollo.query({ query: HELLO });
-    // }, []);
-
     return (
         <>
             {loading && <div>loading</div>}

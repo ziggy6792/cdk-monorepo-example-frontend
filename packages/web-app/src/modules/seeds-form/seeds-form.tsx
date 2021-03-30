@@ -32,8 +32,6 @@ interface ISeedsFormProps {
 const getRiderOptionLabel = (option: IRiderOption, index: number): string => `${index + 1} ${option.user.fullName}`;
 
 const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initialValues, riderOptions }) => (
-    // console.log('riderOptions', riderOptions);
-
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}

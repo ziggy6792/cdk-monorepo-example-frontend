@@ -85,7 +85,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
             <ScoreboardDataTable
                 tableData={_.orderBy(tableData, row => row.riderAllocation.startOrder)}
                 columns={scoresTableColumns}
-                highlightedProgressors={noProgressing}
+                highlightedPositions={noProgressing}
                 options={{
                     onRowClick: (rowData: IRiderAllocationRow) => {
                         setSelectedRiderAllocation(rowData.riderAllocation);

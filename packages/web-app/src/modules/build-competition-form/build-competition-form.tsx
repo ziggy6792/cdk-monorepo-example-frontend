@@ -41,17 +41,15 @@ const validate = (values: IBuildCompetitionFormValues) => {
 };
 
 const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues, allowSubmitPristine }) => (
-    // console.log('riderOptions', riderOptions);
-
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}
             validate={validate}
-            onSubmit={async (values) => {
+            onSubmit={async values => {
                 await onSubmit(values);
             }}
         >
-            {(props) => {
+            {props => {
                 const { isSubmitting, isValid, dirty } = props;
                 return (
                     <Form>
