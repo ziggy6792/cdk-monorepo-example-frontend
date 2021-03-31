@@ -11,6 +11,7 @@ import EventsScreen from 'src/screens/events-screen';
 import EventScreen from 'src/screens/event-screen';
 import CompetitionScreen from 'src/screens/competition-screen';
 import ScoreboardScreen from 'src/screens/scoreboard-screen';
+import TimetableScreen from 'src/screens/timetable-screen';
 
 const Routes: React.FC = () => {
     const dispatch = useDispatch();
@@ -39,6 +40,11 @@ const Routes: React.FC = () => {
                         exact
                         path={`${routeConfig.ROUTE_SCOREBOARD}/:eventId`}
                         render={({ match: { params } }) => <ScoreboardScreen eventId={params.eventId} />}
+                    />
+                    <Route
+                        exact
+                        path={`${routeConfig.ROUTE_TIMETABLE}/:eventId`}
+                        render={({ match: { params } }) => <TimetableScreen eventId={params.eventId} />}
                     />
                 </Switch>
             </BrowserRouter>

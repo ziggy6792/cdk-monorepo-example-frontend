@@ -15,17 +15,18 @@ export type Scalars = {
 
 export type Competition = DataEntity &
     Identifiable &
-    Creatable & {
+    Creatable &
+    Schedule & {
         __typename?: 'Competition';
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
         name: Scalars['String'];
+        scheduleItems: ScheduleItemList;
         description: Scalars['String'];
         category: Scalars['String'];
         eventId: Scalars['ID'];
         judgeUserId: Scalars['ID'];
-        startTime: Scalars['DateTime'];
         status: CompetitionStatus;
         params: CompetitionParams;
         maxRiders?: Maybe<Scalars['Int']>;
@@ -69,7 +70,6 @@ export type CreateCompetitionInput = {
     description?: Maybe<Scalars['String']>;
     category?: Maybe<Scalars['String']>;
     judgeUserId?: Maybe<Scalars['ID']>;
-    startTime?: Maybe<Scalars['DateTime']>;
     status?: Maybe<CompetitionStatus>;
     selectedHeatId?: Maybe<Scalars['String']>;
     maxRiders?: Maybe<Scalars['Int']>;
@@ -113,14 +113,15 @@ export type DataEntity = {
 export type Event = DataEntity &
     Identifiable &
     Creatable &
-    Schedulable & {
+    Schedule & {
         __typename?: 'Event';
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
         name: Scalars['String'];
-        startTime: Scalars['DateTime'];
+        scheduleItems: ScheduleItemList;
         description?: Maybe<Scalars['String']>;
+        startTime?: Maybe<Scalars['DateTime']>;
         status: EventStatus;
         adminUserId: Scalars['String'];
         selectedHeatId: Scalars['String'];
@@ -145,14 +146,12 @@ export enum Gender {
 
 export type Heat = DataEntity &
     Identifiable &
-    Creatable &
-    Schedulable & {
+    Creatable & {
         __typename?: 'Heat';
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
         name: Scalars['String'];
-        startTime: Scalars['DateTime'];
         roundId: Scalars['ID'];
         status: HeatStatus;
         progressionsPerHeat: Scalars['Int'];
@@ -288,6 +287,18 @@ export type MutationEndHeatArgs = {
     id: Scalars['ID'];
 };
 
+export type Notice = Identifiable &
+    Creatable &
+    Schedulable & {
+        __typename?: 'Notice';
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
+        id: Scalars['ID'];
+        scheduleItem: ScheduleItem;
+        startTime?: Maybe<Scalars['DateTime']>;
+        notice: Scalars['String'];
+    };
+
 export type Query = {
     __typename?: 'Query';
     getMe?: Maybe<User>;
@@ -375,13 +386,15 @@ export type Round = Identifiable &
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
-        startTime: Scalars['DateTime'];
+        scheduleItem: ScheduleItem;
+        startTime?: Maybe<Scalars['DateTime']>;
         roundNo: Scalars['Int'];
         type: RoundType;
         competitionId: Scalars['ID'];
         getHeats: HeatList;
         heats: HeatList;
         competition: Competition;
+        name: Scalars['String'];
     };
 
 export type RoundList = {
@@ -413,7 +426,34 @@ export type RunInput = {
 };
 
 export type Schedulable = {
-    startTime: Scalars['DateTime'];
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
+    id: Scalars['ID'];
+    scheduleItem: ScheduleItem;
+    startTime?: Maybe<Scalars['DateTime']>;
+};
+
+export type Schedule = {
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
+    id: Scalars['ID'];
+    name: Scalars['String'];
+    scheduleItems: ScheduleItemList;
+};
+
+export type ScheduleItem = Creatable & {
+    __typename?: 'ScheduleItem';
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
+    scheduleId: Scalars['ID'];
+    schedulableId: Scalars['ID'];
+    startTime?: Maybe<Scalars['DateTime']>;
+    scheduledItem: Schedulable;
+};
+
+export type ScheduleItemList = {
+    __typename?: 'ScheduleItemList';
+    items: Array<ScheduleItem>;
 };
 
 export type ScorRunInput = {
@@ -445,7 +485,6 @@ export type UpdateCompetitionInput = {
     description?: Maybe<Scalars['String']>;
     category?: Maybe<Scalars['String']>;
     judgeUserId?: Maybe<Scalars['ID']>;
-    startTime?: Maybe<Scalars['DateTime']>;
     status?: Maybe<CompetitionStatus>;
     selectedHeatId?: Maybe<Scalars['String']>;
     maxRiders?: Maybe<Scalars['Int']>;
@@ -596,6 +635,26 @@ export type GetEventQuery = { __typename?: 'Query' } & {
             competitions: { __typename?: 'CompetitionList' } & {
                 items: Array<
                     { __typename?: 'Competition' } & Pick<Competition, 'id' | 'name'> & { judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>> }
+                >;
+            };
+        };
+};
+
+export type GetEventScheduleQueryVariables = {
+    id: Scalars['ID'];
+};
+
+export type GetEventScheduleQuery = { __typename?: 'Query' } & {
+    getEvent: { __typename?: 'Event' } & Pick<Event, 'name'> & {
+            scheduleItems: { __typename?: 'ScheduleItemList' } & {
+                items: Array<
+                    { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'schedulableId' | 'startTime'> & {
+                            scheduledItem:
+                                | ({ __typename?: 'Round' } & Pick<Round, 'roundNo' | 'name'> & {
+                                          heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
+                                      })
+                                | ({ __typename?: 'Notice' } & Pick<Notice, 'notice'>);
+                        }
                 >;
             };
         };
@@ -1024,6 +1083,61 @@ export function useGetEventLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = ApolloReactCommon.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetEventScheduleDocument = gql`
+    query getEventSchedule($id: ID!) {
+        getEvent(id: $id) {
+            name
+            scheduleItems {
+                items {
+                    scheduleId
+                    schedulableId
+                    startTime
+                    scheduledItem {
+                        ... on Round {
+                            roundNo
+                            name
+                            heats {
+                                items {
+                                    id
+                                    name
+                                }
+                            }
+                        }
+                        ... on Notice {
+                            notice
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
+/**
+ * __useGetEventScheduleQuery__
+ *
+ * To run a query within a React component, call `useGetEventScheduleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventScheduleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventScheduleQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEventScheduleQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetEventScheduleQuery, GetEventScheduleQueryVariables>) {
+    return ApolloReactHooks.useQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
+}
+export function useGetEventScheduleLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetEventScheduleQuery, GetEventScheduleQueryVariables>) {
+    return ApolloReactHooks.useLazyQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
+}
+export type GetEventScheduleQueryHookResult = ReturnType<typeof useGetEventScheduleQuery>;
+export type GetEventScheduleLazyQueryHookResult = ReturnType<typeof useGetEventScheduleLazyQuery>;
+export type GetEventScheduleQueryResult = ApolloReactCommon.QueryResult<GetEventScheduleQuery, GetEventScheduleQueryVariables>;
 export const GetSelectedHeatDocument = gql`
     query getSelectedHeat($id: ID!) {
         getEvent(id: $id) {
