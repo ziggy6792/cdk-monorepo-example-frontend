@@ -4,11 +4,12 @@
 
 import React from 'react';
 import _ from 'lodash';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
 import { startOfDay, parseISO } from 'date-fns';
 import DateFormatter from 'src/utils/format/date-formatter';
 import { TimetableScheduleItem } from 'src/gql/common/types';
 import TimetableEntry from './timetable-entry';
+import TimetableRow from './timetable-row';
 
 export interface TimetableProps {
     scheduleItems: TimetableScheduleItem[];
@@ -30,33 +31,35 @@ const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
 );
 
 const Timetable: React.FC<TimetableProps> = ({ scheduleItems }) => {
-    const groupedItems = _.groupBy(scheduleItems, scheduleItem =>
+    const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>
         scheduleItem.startTime ? startOfDay(scheduleItem.startTime).toISOString() : new Date(0).toISOString()
     );
 
-    const scheduleDays = Object.keys(groupedItems).map(key => ({
+    const scheduleDays = Object.keys(groupedItems).map((key) => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
-        scheduleItems: groupedItems[key],
+        scheduleItems: groupedItems[key] as TimetableScheduleItem[],
     }));
 
+    const theme = useTheme();
+
     return (
-        <Grid container direction='column' justify='center' alignItems='center' spacing={2}>
-            {scheduleDays.map(({ day, scheduleItems }) => (
-                <Grid item key={day?.toISOString() || 'null'} style={{ width: '500px' }}>
-                    {day && <DayPartition day={day} />}
-                    {scheduleItems.map(scheduleItem => (
-                        <Grid container spacing={1}>
-                            <Grid item xs={4}>
-                                {scheduleItem.startTime ? DateFormatter.toTime(scheduleItem.startTime) : 'Select time...'}
-                            </Grid>
-                            <Grid item xs={8}>
-                                <TimetableEntry scheduledItem={scheduleItem.scheduledItem} key={scheduleItem.schedulableId} />
-                            </Grid>
-                        </Grid>
-                    ))}
+        <>
+            <Grid container direction='column' justify='center' alignItems='center'>
+                <Grid item style={{ marginBottom: theme.spacing(2) }}>
+                    <Typography>Timetable</Typography>
                 </Grid>
-            ))}
-        </Grid>
+            </Grid>
+            <Grid container direction='column' justify='center' alignItems='center' spacing={2}>
+                {scheduleDays.map(({ day, scheduleItems }) => (
+                    <Grid item key={day?.toISOString() || 'null'} style={{ width: '500px' }}>
+                        {day && <DayPartition day={day} />}
+                        {scheduleItems.map((scheduleItem) => (
+                            <TimetableRow scheduleItem={scheduleItem} key={scheduleItem.schedulableId} />
+                        ))}
+                    </Grid>
+                ))}
+            </Grid>
+        </>
     );
 };
 
