@@ -13,6 +13,7 @@ import TimetableRow from './timetable-row';
 
 export interface TimetableProps {
     scheduleItems: TimetableScheduleItem[];
+    eventId: string;
 }
 
 interface DayPartitionProps {
@@ -26,12 +27,12 @@ const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
     </Grid>
 );
 
-const Timetable: React.FC<TimetableProps> = ({ scheduleItems }) => {
-    const groupedItems = _.groupBy(scheduleItems, scheduleItem =>
+const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
+    const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>
         scheduleItem.startTime ? startOfDay(scheduleItem.startTime).toISOString() : new Date(0).toISOString()
     );
 
-    const scheduleDays = Object.keys(groupedItems).map(key => ({
+    const scheduleDays = Object.keys(groupedItems).map((key) => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
         scheduleItems: groupedItems[key] as TimetableScheduleItem[],
     }));
@@ -49,8 +50,8 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems }) => {
                 {scheduleDays.map(({ day, scheduleItems }) => (
                     <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px' }}>
                         {day && <DayPartition day={day} />}
-                        {scheduleItems.map(scheduleItem => (
-                            <TimetableRow scheduleItem={scheduleItem} key={scheduleItem.id} />
+                        {scheduleItems.map((scheduleItem) => (
+                            <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} />
                         ))}
                     </Grid>
                 ))}

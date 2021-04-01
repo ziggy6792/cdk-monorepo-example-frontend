@@ -10,7 +10,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 
-interface ITimetableFormValues {
+export interface ITimetableFormValues {
     startTime: Date;
 }
 
@@ -30,11 +30,11 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, titl
                 validationSchema={Yup.object({
                     startTime: Yup.date().min(minTime, 'Please pick a later date'),
                 })}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await onSubmit(values);
                 }}
             >
-                {props => {
+                {(props) => {
                     const { isSubmitting, isValid, dirty } = props;
                     return (
                         <Form>
