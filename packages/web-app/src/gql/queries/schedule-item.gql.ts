@@ -10,3 +10,12 @@ export const UPDATE_SCHEDULE_ITEM = gql`
         }
     }
 `;
+
+export const CREATE_SCHEDULE_ITEM = gql`
+    mutation createScheduleItem($input: CreateScheduleItemInput!) {
+        createScheduleItem(input: $input) {
+            id
+            startTime
+        }
+    }
+`;

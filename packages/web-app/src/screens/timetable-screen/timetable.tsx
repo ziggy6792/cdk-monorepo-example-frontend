@@ -10,6 +10,7 @@ import DateFormatter from 'src/utils/format/date-formatter';
 import { TimetableScheduleItem } from 'src/gql/common/types';
 import TimetableEntry from './timetable-entry';
 import TimetableRow from './timetable-row';
+import AddNotice from './buttons/add-notice';
 
 export interface TimetableProps {
     scheduleItems: TimetableScheduleItem[];
@@ -28,11 +29,11 @@ const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
 );
 
 const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
-    const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>
+    const groupedItems = _.groupBy(scheduleItems, scheduleItem =>
         scheduleItem.startTime ? startOfDay(scheduleItem.startTime).toISOString() : new Date(0).toISOString()
     );
 
-    const scheduleDays = Object.keys(groupedItems).map((key) => ({
+    const scheduleDays = Object.keys(groupedItems).map(key => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
         scheduleItems: groupedItems[key] as TimetableScheduleItem[],
     }));
@@ -46,15 +47,20 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
                     <Typography>Timetable</Typography>
                 </Grid>
             </Grid>
-            <Grid container direction='column' justify='center' alignItems='center' spacing={2}>
+            <Grid container direction='column' justify='center' alignItems='center'>
                 {scheduleDays.map(({ day, scheduleItems }) => (
-                    <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px' }}>
+                    <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px', marginBottom: theme.spacing(2) }}>
                         {day && <DayPartition day={day} />}
-                        {scheduleItems.map((scheduleItem) => (
+                        {scheduleItems.map(scheduleItem => (
                             <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} />
                         ))}
                     </Grid>
                 ))}
+                <Grid container direction='column' justify='center' alignItems='center'>
+                    <Grid item>
+                        <AddNotice eventId={eventId} />
+                    </Grid>
+                </Grid>
             </Grid>
         </>
     );

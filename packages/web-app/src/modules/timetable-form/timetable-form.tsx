@@ -9,8 +9,10 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
+import _ from 'lodash';
 
 export interface ITimetableFormValues {
+    notice?: string;
     startTime: Date;
 }
 
@@ -18,23 +20,30 @@ interface ITimetableFormProps {
     onSubmit: (event: ITimetableFormValues) => Promise<void>;
     onCancel: () => void;
     initialValues?: ITimetableFormValues;
+    showNotice?: boolean;
     title: string;
 }
 
-const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
+const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, title, initialValues, showNotice }) => {
     const minTime = startOfHour(addHours(new Date(), 1));
+
+    const defaultValues = showNotice ? { notice: '', startTime: minTime } : { startTime: minTime };
+
+    // Overwrite defaults with all non null passed in values
+    const formikIinitalValues = { ...defaultValues, ..._.pickBy(initialValues, _.identity) };
+
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik
-                initialValues={initialValues || { startTime: minTime }}
+                initialValues={formikIinitalValues}
                 validationSchema={Yup.object({
                     startTime: Yup.date().min(minTime, 'Please pick a later date'),
                 })}
-                onSubmit={async (values) => {
+                onSubmit={async values => {
                     await onSubmit(values);
                 }}
             >
-                {(props) => {
+                {props => {
                     const { isSubmitting, isValid, dirty } = props;
                     return (
                         <Form>
@@ -50,6 +59,11 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, titl
                                     <Grid item>
                                         <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />
                                     </Grid>
+                                    {showNotice && (
+                                        <Grid item>
+                                            <Field name='notice' component={TextArea} placeholder='Notice' />
+                                        </Grid>
+                                    )}
                                 </Grid>
                             </Grid>
                             <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />

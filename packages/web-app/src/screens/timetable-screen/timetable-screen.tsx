@@ -15,7 +15,6 @@ const TimetableScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
         return <Spinner />;
     }
 
-    console.log('TimetableScreen', data.getEvent.scheduleItems);
     return (
         <>
             <Grid container direction='column' justify='center' alignItems='center'>
