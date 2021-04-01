@@ -23,8 +23,12 @@ interface DayPartitionProps {
 
 const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
     <Grid container spacing={1} justify='space-between'>
-        <Grid item>{DateFormatter.toShortDate(day)}</Grid>
-        <Grid item>{DateFormatter.toDay(day)}</Grid>
+        <Grid item>
+            <Typography>{DateFormatter.toShortDate(day)}</Typography>
+        </Grid>
+        <Grid item>
+            <Typography>{DateFormatter.toDay(day)}</Typography>
+        </Grid>
     </Grid>
 );
 

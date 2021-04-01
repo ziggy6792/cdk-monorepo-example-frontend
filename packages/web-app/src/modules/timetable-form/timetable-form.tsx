@@ -22,9 +22,10 @@ interface ITimetableFormProps {
     initialValues?: ITimetableFormValues;
     showNotice?: boolean;
     title: string;
+    allowSubmitPristine?: boolean;
 }
 
-const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, title, initialValues, showNotice }) => {
+const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, title, initialValues, showNotice, allowSubmitPristine }) => {
     const minTime = startOfHour(addHours(new Date(), 1));
 
     const defaultValues = showNotice ? { notice: '', startTime: minTime } : { startTime: minTime };
@@ -66,7 +67,13 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, titl
                                     )}
                                 </Grid>
                             </Grid>
-                            <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
+                            <FormButtons
+                                isSubmitting={isSubmitting}
+                                dirty={dirty}
+                                isValid={isValid}
+                                onCancel={onCancel}
+                                allowSubmitPristine={allowSubmitPristine}
+                            />
                         </Form>
                     );
                 }}

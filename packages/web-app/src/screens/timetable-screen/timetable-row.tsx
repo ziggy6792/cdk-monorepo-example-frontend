@@ -46,6 +46,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId }) =
                     title='Edit Timetable'
                     onCancel={() => setOpen(false)}
                     showNotice={!scheduleItem.scheduledItem}
+                    allowSubmitPristine={!scheduleItem.startTime}
                 />
             </Dialog>
             <Grid container spacing={1}>
