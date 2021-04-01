@@ -20,22 +20,18 @@ interface DayPartitionProps {
 }
 
 const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
-    <Grid container spacing={1}>
-        <Grid item xs={4}>
-            {DateFormatter.toShortDate(day)}
-        </Grid>
-        <Grid item xs={8}>
-            {DateFormatter.toDay(day)}
-        </Grid>
+    <Grid container spacing={1} justify='space-between'>
+        <Grid item>{DateFormatter.toShortDate(day)}</Grid>
+        <Grid item>{DateFormatter.toDay(day)}</Grid>
     </Grid>
 );
 
 const Timetable: React.FC<TimetableProps> = ({ scheduleItems }) => {
-    const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>
+    const groupedItems = _.groupBy(scheduleItems, scheduleItem =>
         scheduleItem.startTime ? startOfDay(scheduleItem.startTime).toISOString() : new Date(0).toISOString()
     );
 
-    const scheduleDays = Object.keys(groupedItems).map((key) => ({
+    const scheduleDays = Object.keys(groupedItems).map(key => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
         scheduleItems: groupedItems[key] as TimetableScheduleItem[],
     }));
@@ -51,9 +47,9 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems }) => {
             </Grid>
             <Grid container direction='column' justify='center' alignItems='center' spacing={2}>
                 {scheduleDays.map(({ day, scheduleItems }) => (
-                    <Grid item key={day?.toISOString() || 'null'} style={{ width: '500px' }}>
+                    <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px' }}>
                         {day && <DayPartition day={day} />}
-                        {scheduleItems.map((scheduleItem) => (
+                        {scheduleItems.map(scheduleItem => (
                             <TimetableRow scheduleItem={scheduleItem} key={scheduleItem.schedulableId} />
                         ))}
                     </Grid>
