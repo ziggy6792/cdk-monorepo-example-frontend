@@ -11,10 +11,6 @@ import Dialog from 'src/components/ui/dialog';
 import TimetableForm from 'src/modules/timetable-form/timetable-form';
 import TimetableEntry from './timetable-entry';
 
-export interface TimetableProps {
-    scheduleItems: TimetableScheduleItem[];
-}
-
 interface ITimetableRowProps {
     scheduleItem: TimetableScheduleItem;
 }
@@ -38,7 +34,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem }) => {
                     </Link>
                 </Grid>
                 <Grid item xs={8}>
-                    <TimetableEntry scheduledItem={scheduleItem.scheduledItem} key={scheduleItem.schedulableId} />
+                    <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} />
                 </Grid>
             </Grid>
         </>

@@ -50,7 +50,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems }) => {
                     <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px' }}>
                         {day && <DayPartition day={day} />}
                         {scheduleItems.map(scheduleItem => (
-                            <TimetableRow scheduleItem={scheduleItem} key={scheduleItem.schedulableId} />
+                            <TimetableRow scheduleItem={scheduleItem} key={scheduleItem.id} />
                         ))}
                     </Grid>
                 ))}

@@ -96,6 +96,12 @@ export type CreateRiderAllocationInput = {
     startSeed: Scalars['Int'];
 };
 
+export type CreateScheduleItemInput = {
+    scheduleId: Scalars['ID'];
+    startTime?: Maybe<Scalars['DateTime']>;
+    schedulableId: Scalars['ID'];
+};
+
 export type CreateUserInput = {
     firstName: Scalars['String'];
     lastName: Scalars['String'];
@@ -208,6 +214,9 @@ export type Mutation = {
     createCompetition: Competition;
     updateCompetition: Competition;
     deleteCompetition: Competition;
+    createScheduleItem: ScheduleItem;
+    updateScheduleItem: ScheduleItem;
+    deleteScheduleItem: ScheduleItem;
     createRiderAllocation: RiderAllocation;
     createRiderAllocations: Array<RiderAllocation>;
     updateRiderAllocations: Array<RiderAllocation>;
@@ -254,6 +263,18 @@ export type MutationDeleteCompetitionArgs = {
     id: Scalars['ID'];
 };
 
+export type MutationCreateScheduleItemArgs = {
+    input: CreateScheduleItemInput;
+};
+
+export type MutationUpdateScheduleItemArgs = {
+    input: UpdateScheduleItemInput;
+};
+
+export type MutationDeleteScheduleItemArgs = {
+    id: Scalars['ID'];
+};
+
 export type MutationCreateRiderAllocationArgs = {
     input: CreateRiderAllocationInput;
 };
@@ -286,18 +307,6 @@ export type MutationScoreRunArgs = {
 export type MutationEndHeatArgs = {
     id: Scalars['ID'];
 };
-
-export type Notice = Identifiable &
-    Creatable &
-    Schedulable & {
-        __typename?: 'Notice';
-        createdAt: Scalars['DateTime'];
-        modifiedAt: Scalars['DateTime'];
-        id: Scalars['ID'];
-        scheduleItem: ScheduleItem;
-        startTime?: Maybe<Scalars['DateTime']>;
-        notice: Scalars['String'];
-    };
 
 export type Query = {
     __typename?: 'Query';
@@ -441,15 +450,18 @@ export type Schedule = {
     scheduleItems: ScheduleItemList;
 };
 
-export type ScheduleItem = Creatable & {
-    __typename?: 'ScheduleItem';
-    createdAt: Scalars['DateTime'];
-    modifiedAt: Scalars['DateTime'];
-    scheduleId: Scalars['ID'];
-    schedulableId: Scalars['ID'];
-    startTime?: Maybe<Scalars['DateTime']>;
-    scheduledItem: Schedulable;
-};
+export type ScheduleItem = Identifiable &
+    Creatable & {
+        __typename?: 'ScheduleItem';
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
+        id: Scalars['ID'];
+        scheduleId: Scalars['ID'];
+        schedulableId: Scalars['ID'];
+        startTime?: Maybe<Scalars['DateTime']>;
+        notice?: Maybe<Scalars['String']>;
+        scheduledItem?: Maybe<Schedulable>;
+    };
 
 export type ScheduleItemList = {
     __typename?: 'ScheduleItemList';
@@ -508,6 +520,11 @@ export type UpdateRiderAllocationInput = {
     allocatableId: Scalars['ID'];
     userId?: Maybe<Scalars['ID']>;
     startSeed: Scalars['Int'];
+};
+
+export type UpdateScheduleItemInput = {
+    scheduleId: Scalars['ID'];
+    startTime?: Maybe<Scalars['DateTime']>;
 };
 
 export type UpdateUserInput = {
@@ -648,12 +665,12 @@ export type GetEventScheduleQuery = { __typename?: 'Query' } & {
     getEvent: { __typename?: 'Event' } & Pick<Event, 'name'> & {
             scheduleItems: { __typename?: 'ScheduleItemList' } & {
                 items: Array<
-                    { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'schedulableId' | 'startTime'> & {
-                            scheduledItem:
-                                | ({ __typename?: 'Round' } & Pick<Round, 'roundNo' | 'name'> & {
-                                          heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
-                                      })
-                                | ({ __typename?: 'Notice' } & Pick<Notice, 'notice'>);
+                    { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice'> & {
+                            scheduledItem: Maybe<
+                                { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'name'> & {
+                                        heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
+                                    }
+                            >;
                         }
                 >;
             };
@@ -1090,8 +1107,9 @@ export const GetEventScheduleDocument = gql`
             scheduleItems {
                 items {
                     scheduleId
-                    schedulableId
+                    id
                     startTime
+                    notice
                     scheduledItem {
                         ... on Round {
                             roundNo
@@ -1102,9 +1120,6 @@ export const GetEventScheduleDocument = gql`
                                     name
                                 }
                             }
-                        }
-                        ... on Notice {
-                            notice
                         }
                     }
                 }

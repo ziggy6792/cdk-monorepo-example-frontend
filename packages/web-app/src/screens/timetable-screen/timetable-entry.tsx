@@ -4,26 +4,29 @@
 
 import React from 'react';
 import { Grid, useTheme } from '@material-ui/core';
-import { TimetableNotice, TimetableRound, TimetableScheduledItem } from 'src/gql/common/types';
+import { TimetableRound, TimetableScheduleItem } from 'src/gql/common/types';
 
 interface TimetableEntryProps {
-    scheduledItem: TimetableScheduledItem;
+    scheduleItem: TimetableScheduleItem;
 }
 
-const TimetableEntry: React.FC<TimetableEntryProps> = ({ scheduledItem }) => (
-    <>
-        {scheduledItem.__typename === 'Round' && <TimetableRoundEntry round={scheduledItem} />}
-        {scheduledItem.__typename === 'Notice' && <TimetableNoticeEntry notice={scheduledItem} />}
-    </>
-);
+const TimetableEntry: React.FC<TimetableEntryProps> = ({ scheduleItem }) => {
+    const { notice, scheduledItem } = scheduleItem;
+    return (
+        <>
+            {scheduledItem?.__typename === 'Round' && <TimetableRoundEntry round={scheduledItem} />}
+            {notice && <TimetableNoticeEntry notice={notice} />}
+        </>
+    );
+};
 
 interface TimetableNoticeEntryProps {
-    notice: TimetableNotice;
+    notice: string;
 }
 
 const TimetableNoticeEntry: React.FC<TimetableNoticeEntryProps> = ({ notice }) => (
     <>
-        <Grid item>{notice.notice}</Grid>
+        <Grid item>{notice}</Grid>
     </>
 );
 

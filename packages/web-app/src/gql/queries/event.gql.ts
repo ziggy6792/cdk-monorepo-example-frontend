@@ -61,8 +61,9 @@ export const GET_EVENT_SCHEDULE = gql`
             scheduleItems {
                 items {
                     scheduleId
-                    schedulableId
+                    id
                     startTime
+                    notice
                     scheduledItem {
                         ... on Round {
                             roundNo
@@ -73,9 +74,6 @@ export const GET_EVENT_SCHEDULE = gql`
                                     name
                                 }
                             }
-                        }
-                        ... on Notice {
-                            notice
                         }
                     }
                 }
