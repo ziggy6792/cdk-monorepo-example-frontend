@@ -15,17 +15,18 @@ export type Scalars = {
 
 export type Competition = DataEntity &
     Identifiable &
-    Creatable & {
+    Creatable &
+    Schedule & {
         __typename?: 'Competition';
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
         name: Scalars['String'];
+        scheduleItems: ScheduleItemList;
         description: Scalars['String'];
         category: Scalars['String'];
         eventId: Scalars['ID'];
         judgeUserId: Scalars['ID'];
-        startTime: Scalars['DateTime'];
         status: CompetitionStatus;
         params: CompetitionParams;
         maxRiders?: Maybe<Scalars['Int']>;
@@ -69,7 +70,6 @@ export type CreateCompetitionInput = {
     description?: Maybe<Scalars['String']>;
     category?: Maybe<Scalars['String']>;
     judgeUserId?: Maybe<Scalars['ID']>;
-    startTime?: Maybe<Scalars['DateTime']>;
     status?: Maybe<CompetitionStatus>;
     selectedHeatId?: Maybe<Scalars['String']>;
     maxRiders?: Maybe<Scalars['Int']>;
@@ -96,6 +96,12 @@ export type CreateRiderAllocationInput = {
     startSeed: Scalars['Int'];
 };
 
+export type CreateScheduleItemInput = {
+    startTime?: Maybe<Scalars['DateTime']>;
+    notice?: Maybe<Scalars['String']>;
+    scheduleId: Scalars['ID'];
+};
+
 export type CreateUserInput = {
     firstName: Scalars['String'];
     lastName: Scalars['String'];
@@ -113,14 +119,15 @@ export type DataEntity = {
 export type Event = DataEntity &
     Identifiable &
     Creatable &
-    Schedulable & {
+    Schedule & {
         __typename?: 'Event';
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
         name: Scalars['String'];
-        startTime: Scalars['DateTime'];
+        scheduleItems: ScheduleItemList;
         description?: Maybe<Scalars['String']>;
+        startTime?: Maybe<Scalars['DateTime']>;
         status: EventStatus;
         adminUserId: Scalars['String'];
         selectedHeatId: Scalars['String'];
@@ -145,14 +152,12 @@ export enum Gender {
 
 export type Heat = DataEntity &
     Identifiable &
-    Creatable &
-    Schedulable & {
+    Creatable & {
         __typename?: 'Heat';
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
         name: Scalars['String'];
-        startTime: Scalars['DateTime'];
         roundId: Scalars['ID'];
         status: HeatStatus;
         progressionsPerHeat: Scalars['Int'];
@@ -209,6 +214,9 @@ export type Mutation = {
     createCompetition: Competition;
     updateCompetition: Competition;
     deleteCompetition: Competition;
+    createScheduleItem: ScheduleItem;
+    updateScheduleItem: ScheduleItem;
+    deleteScheduleItem: ScheduleItem;
     createRiderAllocation: RiderAllocation;
     createRiderAllocations: Array<RiderAllocation>;
     updateRiderAllocations: Array<RiderAllocation>;
@@ -252,6 +260,18 @@ export type MutationUpdateCompetitionArgs = {
 };
 
 export type MutationDeleteCompetitionArgs = {
+    id: Scalars['ID'];
+};
+
+export type MutationCreateScheduleItemArgs = {
+    input: CreateScheduleItemInput;
+};
+
+export type MutationUpdateScheduleItemArgs = {
+    input: UpdateScheduleItemInput;
+};
+
+export type MutationDeleteScheduleItemArgs = {
     id: Scalars['ID'];
 };
 
@@ -370,12 +390,15 @@ export type RiderAllocationList = {
 
 export type Round = Identifiable &
     Creatable &
-    Schedulable & {
+    Schedulable &
+    DataEntity & {
         __typename?: 'Round';
         createdAt: Scalars['DateTime'];
         modifiedAt: Scalars['DateTime'];
         id: Scalars['ID'];
-        startTime: Scalars['DateTime'];
+        name: Scalars['String'];
+        scheduleItem: ScheduleItem;
+        startTime?: Maybe<Scalars['DateTime']>;
         roundNo: Scalars['Int'];
         type: RoundType;
         competitionId: Scalars['ID'];
@@ -413,7 +436,38 @@ export type RunInput = {
 };
 
 export type Schedulable = {
-    startTime: Scalars['DateTime'];
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
+    id: Scalars['ID'];
+    name: Scalars['String'];
+    scheduleItem: ScheduleItem;
+    startTime?: Maybe<Scalars['DateTime']>;
+};
+
+export type Schedule = {
+    createdAt: Scalars['DateTime'];
+    modifiedAt: Scalars['DateTime'];
+    id: Scalars['ID'];
+    name: Scalars['String'];
+    scheduleItems: ScheduleItemList;
+};
+
+export type ScheduleItem = Identifiable &
+    Creatable & {
+        __typename?: 'ScheduleItem';
+        createdAt: Scalars['DateTime'];
+        modifiedAt: Scalars['DateTime'];
+        id: Scalars['ID'];
+        scheduleId: Scalars['ID'];
+        schedulableId: Scalars['ID'];
+        startTime?: Maybe<Scalars['DateTime']>;
+        notice?: Maybe<Scalars['String']>;
+        scheduledItem?: Maybe<Schedulable>;
+    };
+
+export type ScheduleItemList = {
+    __typename?: 'ScheduleItemList';
+    items: Array<ScheduleItem>;
 };
 
 export type ScorRunInput = {
@@ -445,7 +499,6 @@ export type UpdateCompetitionInput = {
     description?: Maybe<Scalars['String']>;
     category?: Maybe<Scalars['String']>;
     judgeUserId?: Maybe<Scalars['ID']>;
-    startTime?: Maybe<Scalars['DateTime']>;
     status?: Maybe<CompetitionStatus>;
     selectedHeatId?: Maybe<Scalars['String']>;
     maxRiders?: Maybe<Scalars['Int']>;
@@ -469,6 +522,12 @@ export type UpdateRiderAllocationInput = {
     allocatableId: Scalars['ID'];
     userId?: Maybe<Scalars['ID']>;
     startSeed: Scalars['Int'];
+};
+
+export type UpdateScheduleItemInput = {
+    startTime?: Maybe<Scalars['DateTime']>;
+    notice?: Maybe<Scalars['String']>;
+    id: Scalars['ID'];
 };
 
 export type UpdateUserInput = {
@@ -601,6 +660,26 @@ export type GetEventQuery = { __typename?: 'Query' } & {
         };
 };
 
+export type GetEventScheduleQueryVariables = {
+    id: Scalars['ID'];
+};
+
+export type GetEventScheduleQuery = { __typename?: 'Query' } & {
+    getEvent: { __typename?: 'Event' } & Pick<Event, 'name'> & {
+            scheduleItems: { __typename?: 'ScheduleItemList' } & {
+                items: Array<
+                    { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice'> & {
+                            scheduledItem: Maybe<
+                                { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'name'> & {
+                                        heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
+                                    }
+                            >;
+                        }
+                >;
+            };
+        };
+};
+
 export type GetSelectedHeatQueryVariables = {
     id: Scalars['ID'];
 };
@@ -640,6 +719,7 @@ export type GetDataEntityQuery = { __typename?: 'Query' } & {
     getDataEntity: Maybe<
         | ({ __typename?: 'Event' } & Pick<Event, 'createdAt' | 'id' | 'name'>)
         | ({ __typename?: 'Heat' } & Pick<Heat, 'status' | 'createdAt' | 'id' | 'name'>)
+        | ({ __typename?: 'Round' } & Pick<Round, 'createdAt' | 'id' | 'name'>)
         | ({ __typename?: 'Competition' } & Pick<Competition, 'judgeUserId' | 'createdAt' | 'id' | 'name'>)
     >;
 };
@@ -650,6 +730,22 @@ export type UpdateRiderAllocationsMutationVariables = {
 
 export type UpdateRiderAllocationsMutation = { __typename?: 'Mutation' } & {
     updateRiderAllocations: Array<{ __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'allocatableId'>>;
+};
+
+export type UpdateScheduleItemMutationVariables = {
+    input: UpdateScheduleItemInput;
+};
+
+export type UpdateScheduleItemMutation = { __typename?: 'Mutation' } & {
+    updateScheduleItem: { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'id' | 'startTime'>;
+};
+
+export type CreateScheduleItemMutationVariables = {
+    input: CreateScheduleItemInput;
+};
+
+export type CreateScheduleItemMutation = { __typename?: 'Mutation' } & {
+    createScheduleItem: { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'id' | 'startTime'>;
 };
 
 export type ListUsersQueryVariables = {};
@@ -1024,6 +1120,59 @@ export function useGetEventLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = ApolloReactCommon.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetEventScheduleDocument = gql`
+    query getEventSchedule($id: ID!) {
+        getEvent(id: $id) {
+            name
+            scheduleItems {
+                items {
+                    scheduleId
+                    id
+                    startTime
+                    notice
+                    scheduledItem {
+                        ... on Round {
+                            roundNo
+                            name
+                            heats {
+                                items {
+                                    id
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
+/**
+ * __useGetEventScheduleQuery__
+ *
+ * To run a query within a React component, call `useGetEventScheduleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventScheduleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventScheduleQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEventScheduleQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetEventScheduleQuery, GetEventScheduleQueryVariables>) {
+    return ApolloReactHooks.useQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
+}
+export function useGetEventScheduleLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetEventScheduleQuery, GetEventScheduleQueryVariables>) {
+    return ApolloReactHooks.useLazyQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
+}
+export type GetEventScheduleQueryHookResult = ReturnType<typeof useGetEventScheduleQuery>;
+export type GetEventScheduleLazyQueryHookResult = ReturnType<typeof useGetEventScheduleLazyQuery>;
+export type GetEventScheduleQueryResult = ApolloReactCommon.QueryResult<GetEventScheduleQuery, GetEventScheduleQueryVariables>;
 export const GetSelectedHeatDocument = gql`
     query getSelectedHeat($id: ID!) {
         getEvent(id: $id) {
@@ -1195,6 +1344,76 @@ export type UpdateRiderAllocationsMutationOptions = ApolloReactCommon.BaseMutati
     UpdateRiderAllocationsMutation,
     UpdateRiderAllocationsMutationVariables
 >;
+export const UpdateScheduleItemDocument = gql`
+    mutation updateScheduleItem($input: UpdateScheduleItemInput!) {
+        updateScheduleItem(input: $input) {
+            id
+            startTime
+        }
+    }
+`;
+export type UpdateScheduleItemMutationFn = ApolloReactCommon.MutationFunction<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>;
+
+/**
+ * __useUpdateScheduleItemMutation__
+ *
+ * To run a mutation, you first call `useUpdateScheduleItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateScheduleItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateScheduleItemMutation, { data, loading, error }] = useUpdateScheduleItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateScheduleItemMutation(
+    baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>
+) {
+    return ApolloReactHooks.useMutation<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>(UpdateScheduleItemDocument, baseOptions);
+}
+export type UpdateScheduleItemMutationHookResult = ReturnType<typeof useUpdateScheduleItemMutation>;
+export type UpdateScheduleItemMutationResult = ApolloReactCommon.MutationResult<UpdateScheduleItemMutation>;
+export type UpdateScheduleItemMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>;
+export const CreateScheduleItemDocument = gql`
+    mutation createScheduleItem($input: CreateScheduleItemInput!) {
+        createScheduleItem(input: $input) {
+            id
+            startTime
+        }
+    }
+`;
+export type CreateScheduleItemMutationFn = ApolloReactCommon.MutationFunction<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>;
+
+/**
+ * __useCreateScheduleItemMutation__
+ *
+ * To run a mutation, you first call `useCreateScheduleItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateScheduleItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createScheduleItemMutation, { data, loading, error }] = useCreateScheduleItemMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateScheduleItemMutation(
+    baseOptions?: ApolloReactHooks.MutationHookOptions<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>
+) {
+    return ApolloReactHooks.useMutation<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>(CreateScheduleItemDocument, baseOptions);
+}
+export type CreateScheduleItemMutationHookResult = ReturnType<typeof useCreateScheduleItemMutation>;
+export type CreateScheduleItemMutationResult = ApolloReactCommon.MutationResult<CreateScheduleItemMutation>;
+export type CreateScheduleItemMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>;
 export const ListUsersDocument = gql`
     query listUsers {
         listUsers {

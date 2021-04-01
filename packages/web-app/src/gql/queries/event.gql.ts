@@ -53,3 +53,31 @@ export const GET_EVENT = gql`
         }
     }
 `;
+
+export const GET_EVENT_SCHEDULE = gql`
+    query getEventSchedule($id: ID!) {
+        getEvent(id: $id) {
+            name
+            scheduleItems {
+                items {
+                    scheduleId
+                    id
+                    startTime
+                    notice
+                    scheduledItem {
+                        ... on Round {
+                            roundNo
+                            name
+                            heats {
+                                items {
+                                    id
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;

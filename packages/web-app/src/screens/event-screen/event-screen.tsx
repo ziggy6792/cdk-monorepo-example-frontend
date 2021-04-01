@@ -3,7 +3,7 @@ import React from 'react';
 import { useGetEventQuery } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
 import { useHistory } from 'react-router';
-import { ROUTE_SCOREBOARD } from 'src/config/routes';
+import { ROUTE_SCOREBOARD, ROUTE_TIMETABLE } from 'src/config/routes';
 import CompetitionsTable from './competitions-table';
 import EditEvent from './buttons/edit-event';
 import AddCompetition from './buttons/add-competition';
@@ -53,14 +53,25 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                     <Grid item>
                         <AddCompetition eventId={eventId} />
                     </Grid>
-                    <Grid item>
-                        <Button
-                            onClick={() => {
-                                history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
-                            }}
-                        >
-                            Scoreboard
-                        </Button>
+                    <Grid container justify='center' alignItems='center'>
+                        <Grid item>
+                            <Button
+                                onClick={() => {
+                                    history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
+                                }}
+                            >
+                                Scoreboard
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                onClick={() => {
+                                    history.push(`${ROUTE_TIMETABLE}/${eventId}`);
+                                }}
+                            >
+                                Timetable
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
 

@@ -36,7 +36,7 @@ document.title = envConfig.title;
 
 const mapDateField = {
     read(date) {
-        return parseISO(date);
+        return date ? parseISO(date) : null;
     },
 };
 
@@ -51,6 +51,7 @@ const client = new ApolloClient({
             Event: { fields: { startTime: mapDateField } },
             Round: { fields: { startTime: mapDateField } },
             Heat: { fields: { startTime: mapDateField } },
+            ScheduleItem: { fields: { startTime: mapDateField } },
         },
     }),
 });
