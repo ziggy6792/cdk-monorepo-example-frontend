@@ -5,7 +5,7 @@
             {
                 "kind": "INTERFACE",
                 "name": "DataEntity",
-                "possibleTypes": [{ "name": "Heat" }, { "name": "Competition" }, { "name": "Event" }]
+                "possibleTypes": [{ "name": "Heat" }, { "name": "Round" }, { "name": "Competition" }, { "name": "Event" }]
             },
             {
                 "kind": "INTERFACE",
@@ -14,7 +14,7 @@
                     { "name": "Heat" },
                     { "name": "User" },
                     { "name": "Round" },
-                    { "name": "Notice" },
+                    { "name": "ScheduleItem" },
                     { "name": "Competition" },
                     { "name": "Event" }
                 ]
@@ -28,7 +28,6 @@
                     { "name": "User" },
                     { "name": "Round" },
                     { "name": "ScheduleItem" },
-                    { "name": "Notice" },
                     { "name": "Competition" },
                     { "name": "Event" }
                 ]
@@ -46,22 +45,17 @@
             { "kind": "SCALAR", "name": "Float", "possibleTypes": null },
             { "kind": "OBJECT", "name": "User", "possibleTypes": null },
             { "kind": "OBJECT", "name": "Round", "possibleTypes": null },
-            {
-                "kind": "INTERFACE",
-                "name": "Schedulable",
-                "possibleTypes": [{ "name": "Round" }, { "name": "Notice" }]
-            },
+            { "kind": "INTERFACE", "name": "Schedulable", "possibleTypes": [{ "name": "Round" }] },
             { "kind": "OBJECT", "name": "ScheduleItem", "possibleTypes": null },
-            { "kind": "ENUM", "name": "RoundType", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "HeatList", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Notice", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Competition", "possibleTypes": null },
             {
                 "kind": "INTERFACE",
                 "name": "Schedule",
                 "possibleTypes": [{ "name": "Competition" }, { "name": "Event" }]
             },
             { "kind": "OBJECT", "name": "ScheduleItemList", "possibleTypes": null },
+            { "kind": "ENUM", "name": "RoundType", "possibleTypes": null },
+            { "kind": "OBJECT", "name": "HeatList", "possibleTypes": null },
+            { "kind": "OBJECT", "name": "Competition", "possibleTypes": null },
             { "kind": "ENUM", "name": "CompetitionStatus", "possibleTypes": null },
             { "kind": "OBJECT", "name": "CompetitionParams", "possibleTypes": null },
             { "kind": "ENUM", "name": "Gender", "possibleTypes": null },
@@ -79,6 +73,8 @@
             { "kind": "INPUT_OBJECT", "name": "UpdateEventInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "CreateCompetitionInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "UpdateCompetitionInput", "possibleTypes": null },
+            { "kind": "INPUT_OBJECT", "name": "CreateScheduleItemInput", "possibleTypes": null },
+            { "kind": "INPUT_OBJECT", "name": "UpdateScheduleItemInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "CreateRiderAllocationInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "UpdateRiderAllocationInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "CompetitionParamsInput", "possibleTypes": null },
