@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Container, makeStyles, Typography } from '@material-ui/core';
+import { Grid, Container, makeStyles, Typography, useTheme } from '@material-ui/core';
 import TrophyIcon from '@material-ui/icons/EmojiEvents';
 import { Heat, Round, Maybe, User, HeatStatus } from 'src/generated-types';
 import _ from 'lodash';
@@ -8,7 +8,7 @@ import DateFormatter from 'src/utils/format/date-formatter';
 import HeatCard, { HeatCardStatus } from './heat-card';
 
 const useStyles = makeStyles(() => ({
-    container: { margin: 8 },
+    container: {},
     dateHeader: {
         background: '#17a2b8',
         color: 'white',
@@ -35,7 +35,7 @@ const DateHeader: React.FC<IDateHeaderProps> = ({ header }) => {
     );
 };
 
-type HeatsStructureRound = Pick<Round, 'id' | 'startTime'> & {
+type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'shortName'> & {
     heats: { __typename?: 'HeatList' } & {
         items: Array<
             { __typename?: 'Heat' } & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'> & {
@@ -59,52 +59,64 @@ interface IHeatsStructureProps {
 }
 
 const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds }) => {
-    const groupedItems = _.groupBy(rounds, round => (round.startTime ? startOfDay(round.startTime).toISOString() : new Date(0).toISOString()));
+    const groupedItems = _.groupBy(rounds, (round) => (round.startTime ? startOfDay(round.startTime).toISOString() : new Date(0).toISOString()));
 
-    const roundsByDay = Object.keys(groupedItems).map(key => ({
+    const roundsByDay = Object.keys(groupedItems).map((key) => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
         dayRounds: groupedItems[key] as HeatsStructureRound[],
     }));
 
     const classes = useStyles();
+    const theme = useTheme();
     return (
         <Container className={classes.container}>
             {roundsByDay.map(({ day, dayRounds }) => (
                 <Grid item key={day ? day.toISOString() : 'TBD'}>
                     <DateHeader header={day ? DateFormatter.toLongDay(day) : 'Date TBD'} />
-                    {dayRounds.map(round => (
-                        <Grid container spacing={2} justify='center'>
-                            {round.heats.items.map(heat => (
+                    {dayRounds.map((round) => (
+                        <>
+                            <Grid
+                                container
+                                justify='flex-start'
+                                style={{ marginTop: theme.spacing(1), marginBottom: theme.spacing(1), marginLeft: theme.spacing(2) }}
+                            >
                                 <Grid item>
-                                    <HeatCard
-                                        title={
-                                            heat.isFinal ? (
-                                                <>
-                                                    <TrophyIcon style={{ color: '#f1c40f' }} />
-                                                    {heat.name}
-                                                </>
-                                            ) : (
-                                                heat.name
-                                            )
-                                        }
-                                        width={heat.isFinal ? 260 : undefined}
-                                        status={statusLookup[heat.status]}
-                                        content={
-                                            <>
-                                                {heat.riderAllocations.items.map(ra => (
-                                                    <li>{ra.user?.fullName}</li>
-                                                ))}
-                                            </>
-                                        }
-                                    />
+                                    <Typography>{round.shortName}</Typography>
                                 </Grid>
-                            ))}
-                        </Grid>
+                            </Grid>
+                            <Grid container spacing={2} justify='center'>
+                                {round.heats.items.map((heat) => (
+                                    <Grid item>
+                                        <HeatCard
+                                            title={
+                                                heat.isFinal ? (
+                                                    <>
+                                                        <TrophyIcon style={{ color: '#f1c40f' }} />
+                                                        {heat.name}
+                                                    </>
+                                                ) : (
+                                                    heat.name
+                                                )
+                                            }
+                                            width={heat.isFinal ? 260 : undefined}
+                                            status={statusLookup[heat.status]}
+                                            content={
+                                                <>
+                                                    {heat.riderAllocations.items.map((ra) => (
+                                                        <li>{ra.user?.fullName}</li>
+                                                    ))}
+                                                </>
+                                            }
+                                        />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </>
                     ))}
                 </Grid>
             ))}
 
-            <>
+            {/* <>
                 <DateHeader header='SATURDAY, AUGUST 8' />
                 <Grid container spacing={2} justify='center'>
                     <Grid item>
@@ -162,7 +174,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds }) => {
                         />
                     </Grid>
                 </Grid>
-            </>
+            </> */}
         </Container>
     );
 };

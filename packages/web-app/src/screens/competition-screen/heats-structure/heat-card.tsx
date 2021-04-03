@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, makeStyles, Typography } from '@material-ui/core';
+import { Card, Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
 import LiveIndicator from './live-indicator';
 
 interface StyleProps {
@@ -59,19 +59,26 @@ interface IHeatCardProps {
     width?: number;
 }
 
-const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width = 130 }) => {
+const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width = 151 }) => {
     const classes = useStyles({
         highlightColor: statusColors[status] || '#ffffffff',
         cursor: statusCursor[status] || 'default',
         cardWidth: width,
     });
+    const theme = useTheme();
 
     return (
         <Card className={classes.heatCard}>
-            <Typography component='div' className={classes.heatCardTitle}>
-                {title}
-            </Typography>
-            {status === HeatCardStatus.IN_PROGRESS && <LiveIndicator />}
+            <Grid container direction='row' justify='space-between'>
+                <Grid item>
+                    <Typography component='div' className={classes.heatCardTitle}>
+                        {title}
+                    </Typography>
+                </Grid>
+                <Grid item style={{ marginTop: '4px' }}>
+                    {status === HeatCardStatus.IN_PROGRESS && <LiveIndicator />}
+                </Grid>
+            </Grid>
 
             <Typography
                 style={{

@@ -26,7 +26,7 @@ const LiveIndicator: React.FC = () => {
     const classes = useStyles();
     return (
         <Typography component='div' className={classes.wrapper} style={{}}>
-            <CircleIcon className={classes.circleIcon} /> LIVE NOW
+            <CircleIcon className={classes.circleIcon} /> LIVE
         </Typography>
     );
 };

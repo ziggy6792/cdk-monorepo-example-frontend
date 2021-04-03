@@ -30,6 +30,7 @@ export const GET_COMPETITION = gql`
             rounds {
                 items {
                     id
+                    shortName
                     startTime
                     heats {
                         items {
