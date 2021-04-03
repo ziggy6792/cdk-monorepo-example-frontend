@@ -1,39 +1,11 @@
 import React from 'react';
-import { Grid, Card, Container, makeStyles, Typography, createStyles } from '@material-ui/core';
+import { Grid, Container, makeStyles, Typography, createStyles } from '@material-ui/core';
 import TrophyIcon from '@material-ui/icons/EmojiEvents';
-import LiveIndicator from './live-indicator';
+import HeatCard, { HeatCardStatus } from './heat-card';
 
-interface StyleProps {
-    cardWidth?: number;
-    highlightColor?: string;
-    cursor?: string;
-}
-
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         container: { margin: 8 },
-        heatCard: (props: StyleProps) => ({
-            width: props.cardWidth,
-            height: 120,
-            borderLeft: `3px solid ${props.highlightColor}`,
-            background: `${props.highlightColor}1a`,
-            cursor: props.cursor,
-            opacity: props.cursor === 'default' && '0.2',
-            '&:hover': {
-                opacity: 1,
-                boxShadow: theme.shadows[5],
-            },
-        }),
-        heatCardTitle: {
-            fontSize: '1rem',
-            lineHeight: 1,
-            whiteSpace: 'nowrap',
-            padding: 8,
-            textTransform: 'uppercase',
-            fontWeight: 900,
-            letterSpacing: '2px',
-            color: '#111',
-        },
         dateHeader: {
             background: '#17a2b8',
             color: 'white',
@@ -48,64 +20,12 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-enum HeatStatus {
-    NOT_STARTED = 'NOT_STARTED',
-    IN_PROGRESS = 'IN_PROGRESS',
-    FINISHED = 'FINISHED',
-}
-
-const statusColors = {
-    [HeatStatus.NOT_STARTED]: '#34495e',
-    [HeatStatus.IN_PROGRESS]: '#17a2b8',
-    [HeatStatus.FINISHED]: '#ecf0f1',
-};
-
-const statusCursor = {
-    [HeatStatus.NOT_STARTED]: 'default',
-    [HeatStatus.IN_PROGRESS]: 'pointer',
-    [HeatStatus.FINISHED]: 'pointer',
-};
-
-interface HeatCardProps {
-    title: React.ReactNode;
-    content?: React.ReactNode;
-    status?: HeatStatus;
-    width?: number;
-}
-
-const HeatCard: React.FC<HeatCardProps> = ({ title = 'Finals', content = '', status, width = 100 }) => {
-    const classes = useStyles({
-        highlightColor: statusColors[status] || '#ffffffff',
-        cursor: statusCursor[status] || 'default',
-        cardWidth: width,
-    });
-
-    return (
-        <Card className={classes.heatCard}>
-            <Typography component='div' className={classes.heatCardTitle}>
-                {title}
-            </Typography>
-            <Typography
-                style={{
-                    fontSize: '0.9rem',
-                    whiteSpace: 'nowrap',
-                    lineHeight: 0.9,
-                    paddingLeft: 4,
-                }}
-            >
-                {content}
-            </Typography>
-            {status === 'IN_PROGRESS' && <LiveIndicator />}
-        </Card>
-    );
-};
-
 interface DateHeaderProps {
     header: string;
 }
 
 const DateHeader: React.FC<DateHeaderProps> = ({ header }) => {
-    const classes = useStyles({});
+    const classes = useStyles();
     return (
         <Typography component='div' className={classes.dateHeader}>
             {header}
@@ -114,15 +34,16 @@ const DateHeader: React.FC<DateHeaderProps> = ({ header }) => {
 };
 
 const HeatsStructure: React.FC = () => {
-    const classes = useStyles({});
+    const classes = useStyles();
     return (
         <Container className={classes.container}>
             <DateHeader header='SATURDAY, AUGUST 8' />
             <Grid container spacing={2} justify='center'>
                 <Grid item>
                     <HeatCard
-                        title='Heats #1'
-                        status={HeatStatus.FINISHED}
+                        title='Hea
+                        ts #1'
+                        status={HeatCardStatus.FINISHED}
                         content={
                             <>
                                 <li>Jonathan</li>
@@ -135,10 +56,10 @@ const HeatsStructure: React.FC = () => {
                     />
                 </Grid>
                 <Grid item>
-                    <HeatCard title='Heats #2' status={HeatStatus.FINISHED} />
+                    <HeatCard title='Heats #2' status={HeatCardStatus.FINISHED} />
                 </Grid>
                 <Grid item>
-                    <HeatCard title='Heats #3' status={HeatStatus.IN_PROGRESS} />
+                    <HeatCard title='Heats #3' status={HeatCardStatus.IN_PROGRESS} />
                 </Grid>
                 <Grid item>
                     <HeatCard title='Heats #4' />
