@@ -14,11 +14,11 @@ export enum HeatCardStatus {
     FINISHED = 'FINISHED',
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     container: { margin: 8 },
     heatCard: (props: StyleProps) => ({
         width: props.cardWidth,
-        height: 120,
+        height: 140,
         borderLeft: `3px solid ${props.highlightColor}`,
         background: `${props.highlightColor}1a`,
         cursor: props.cursor,
@@ -52,14 +52,14 @@ const statusCursor = {
     [HeatCardStatus.FINISHED]: 'pointer',
 };
 
-interface HeatCardProps {
+interface IHeatCardProps {
     title: React.ReactNode;
     content?: React.ReactNode;
     status?: HeatCardStatus;
     width?: number;
 }
 
-const HeatCard: React.FC<HeatCardProps> = ({ title = 'Finals', content = '', status, width = 100 }) => {
+const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width = 130 }) => {
     const classes = useStyles({
         highlightColor: statusColors[status] || '#ffffffff',
         cursor: statusCursor[status] || 'default',
@@ -71,6 +71,8 @@ const HeatCard: React.FC<HeatCardProps> = ({ title = 'Finals', content = '', sta
             <Typography component='div' className={classes.heatCardTitle}>
                 {title}
             </Typography>
+            {status === HeatCardStatus.IN_PROGRESS && <LiveIndicator />}
+
             <Typography
                 style={{
                     fontSize: '0.9rem',
@@ -81,7 +83,6 @@ const HeatCard: React.FC<HeatCardProps> = ({ title = 'Finals', content = '', sta
             >
                 {content}
             </Typography>
-            {status === HeatCardStatus.IN_PROGRESS && <LiveIndicator />}
         </Card>
     );
 };

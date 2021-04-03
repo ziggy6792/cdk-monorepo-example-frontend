@@ -168,6 +168,7 @@ export type Heat = DataEntity &
         riderAllocations: RiderAllocationList;
         noAllocated: Scalars['Int'];
         noProgressing: Scalars['Int'];
+        isFinal: Scalars['Boolean'];
     };
 
 export type HeatList = {
@@ -216,7 +217,6 @@ export type Mutation = {
     deleteCompetition: Competition;
     createScheduleItem: ScheduleItem;
     updateScheduleItem: ScheduleItem;
-    deleteScheduleItem: ScheduleItem;
     createRiderAllocation: RiderAllocation;
     createRiderAllocations: Array<RiderAllocation>;
     updateRiderAllocations: Array<RiderAllocation>;
@@ -269,10 +269,6 @@ export type MutationCreateScheduleItemArgs = {
 
 export type MutationUpdateScheduleItemArgs = {
     input: UpdateScheduleItemInput;
-};
-
-export type MutationDeleteScheduleItemArgs = {
-    id: Scalars['ID'];
 };
 
 export type MutationCreateRiderAllocationArgs = {
@@ -463,6 +459,7 @@ export type ScheduleItem = Identifiable &
         startTime?: Maybe<Scalars['DateTime']>;
         notice?: Maybe<Scalars['String']>;
         scheduledItem?: Maybe<Schedulable>;
+        schedule?: Maybe<Schedule>;
     };
 
 export type ScheduleItemList = {
@@ -568,15 +565,22 @@ export type GetCompetitionQuery = { __typename?: 'Query' } & {
             };
             rounds: { __typename?: 'RoundList' } & {
                 items: Array<
-                    { __typename?: 'Round' } & {
-                        heats: { __typename?: 'HeatList' } & {
-                            items: Array<
-                                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'name' | 'size' | 'noAllocated' | 'createdAt'> & {
-                                        round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
-                                    }
-                            >;
-                        };
-                    }
+                    { __typename?: 'Round' } & Pick<Round, 'id' | 'startTime'> & {
+                            heats: { __typename?: 'HeatList' } & {
+                                items: Array<
+                                    { __typename?: 'Heat' } & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'> & {
+                                            round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
+                                            riderAllocations: { __typename?: 'RiderAllocationList' } & {
+                                                items: Array<
+                                                    { __typename?: 'RiderAllocation' } & {
+                                                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
+                                                    }
+                                                >;
+                                            };
+                                        }
+                                >;
+                            };
+                        }
                 >;
             };
         };
@@ -668,7 +672,7 @@ export type GetEventScheduleQuery = { __typename?: 'Query' } & {
     getEvent: { __typename?: 'Event' } & Pick<Event, 'name'> & {
             scheduleItems: { __typename?: 'ScheduleItemList' } & {
                 items: Array<
-                    { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice'> & {
+                    { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'> & {
                             scheduledItem: Maybe<
                                 { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'name'> & {
                                         heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
@@ -779,9 +783,12 @@ export const GetCompetitionDocument = gql`
             }
             rounds {
                 items {
+                    id
+                    startTime
                     heats {
                         items {
                             id
+                            isFinal
                             name
                             round {
                                 roundNo
@@ -789,6 +796,15 @@ export const GetCompetitionDocument = gql`
                             size
                             noAllocated
                             createdAt
+                            status
+                            riderAllocations {
+                                items {
+                                    user {
+                                        id
+                                        fullName
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -1130,6 +1146,7 @@ export const GetEventScheduleDocument = gql`
                     id
                     startTime
                     notice
+                    createdAt
                     scheduledItem {
                         ... on Round {
                             roundNo

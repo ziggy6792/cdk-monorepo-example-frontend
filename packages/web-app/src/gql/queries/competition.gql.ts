@@ -29,9 +29,12 @@ export const GET_COMPETITION = gql`
             }
             rounds {
                 items {
+                    id
+                    startTime
                     heats {
                         items {
                             id
+                            isFinal
                             name
                             round {
                                 roundNo
@@ -39,6 +42,15 @@ export const GET_COMPETITION = gql`
                             size
                             noAllocated
                             createdAt
+                            status
+                            riderAllocations {
+                                items {
+                                    user {
+                                        id
+                                        fullName
+                                    }
+                                }
+                            }
                         }
                     }
                 }
