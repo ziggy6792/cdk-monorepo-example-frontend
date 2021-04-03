@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Button, Grid, Typography, Container, Box } from '@material-ui/core';
+import { Button, Grid, Typography, Container } from '@material-ui/core';
 import { useGetEventQuery } from 'src/generated-types';
 import TopNavigation from 'src/components/ui/top-navigation';
+import FabMenu from 'src/components/ui/fab-menu';
 import Spinner from 'src/components/spinner';
 import { useHistory } from 'react-router';
 import { ROUTE_SCOREBOARD, ROUTE_TIMETABLE } from 'src/config/routes';
@@ -33,6 +34,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
     /* 
     TODO
     - TopNavigation should be made more complex and moved up a layer in UI
+    - Edit Event / Add Comp logic should not be so tightly coupled to button
     */
 
     return (
@@ -80,26 +82,27 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid container justify='flex-end'>
-                        <Grid item>
-                            <EditEvent
-                                eventToEdit={{
-                                    id: eventId,
-                                    description,
-                                    name,
-                                    startTime,
-                                }}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <AddCompetition eventId={eventId} />
-                        </Grid>
-                    </Grid>
 
                     <Container maxWidth='lg' style={{ padding: 0 }}>
                         <CompetitionsTable competitions={data.getEvent.competitions.items} />
                     </Container>
                 </Grid>
+                {/* FAB Menu will be rendered based on UAC role */}
+                <FabMenu>
+                    <FabMenu.Item>
+                        <AddCompetition eventId={eventId} />
+                    </FabMenu.Item>
+                    <FabMenu.Item>
+                        <EditEvent
+                            eventToEdit={{
+                                id: eventId,
+                                description,
+                                name,
+                                startTime,
+                            }}
+                        />
+                    </FabMenu.Item>
+                </FabMenu>
             </Container>
         </>
     );
