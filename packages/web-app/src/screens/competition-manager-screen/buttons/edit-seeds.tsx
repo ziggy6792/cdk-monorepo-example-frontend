@@ -38,7 +38,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
         riders.forEach((userId, i) => {
             riderSortMap[userId] = i;
         });
-        const orderedRiderAllocations = _.orderBy(riderAllocations, (ra) => riderSortMap[ra.userId]);
+        const orderedRiderAllocations = _.orderBy(riderAllocations, ra => riderSortMap[ra.userId]);
         const updateRiderAllocationInputs: UpdateRiderAllocationInput[] = orderedRiderAllocations.map((riderOption, i) => ({
             allocatableId: competitionId,
             userId: riderOption.userId,

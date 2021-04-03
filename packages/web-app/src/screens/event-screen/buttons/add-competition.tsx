@@ -10,7 +10,7 @@ import { CreateCompetitionInput, useCreateCompetitionMutation, User } from 'src/
 import { GET_EVENT, LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import { useHistory } from 'react-router';
-import { ROUTE_COMPETITION } from 'src/config/routes';
+import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
 import ComepetitionForm from 'src/modules/competition-form';
 import { ICompetitionFormValues, IUserOption } from 'src/modules/competition-form/competition-form';
 
@@ -41,7 +41,7 @@ const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
         const variables = { input: { ...rest, eventId, maxRiders: +maxRiders, judgeUserId: judgeUser.id } };
         const result = await createEvent({ variables });
         setOpen(false);
-        history.push(`${ROUTE_COMPETITION}/${result.data.createCompetition.id}`);
+        history.push(`${ROUTE_COMPETITION_MANAGER}/${result.data.createCompetition.id}`);
         return null;
     };
 

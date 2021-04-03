@@ -14,7 +14,7 @@ interface CompetitionSummaryProps {
     summary: CompSummary;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     button: {
         margin: theme.spacing(1),
     },
@@ -28,7 +28,7 @@ const CompetitionSummary: React.FC<CompetitionSummaryProps> = ({ summary }) => {
 
     return (
         <>
-            <Grid container spacing={3} style={{ padding: 16 }}>
+            <Grid container style={{ padding: 16 }}>
                 <Grid item>
                     <Typography variant='h4'>{summary.name}</Typography>
                     <Typography>
