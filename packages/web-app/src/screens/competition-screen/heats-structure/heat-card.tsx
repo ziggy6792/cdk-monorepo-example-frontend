@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, makeStyles, Typography, createStyles } from '@material-ui/core';
+import { Card, makeStyles, Typography } from '@material-ui/core';
 import LiveIndicator from './live-indicator';
 
 interface StyleProps {
@@ -14,33 +14,31 @@ export enum HeatCardStatus {
     FINISHED = 'FINISHED',
 }
 
-const useStyles = makeStyles((theme) =>
-    createStyles({
-        container: { margin: 8 },
-        heatCard: (props: StyleProps) => ({
-            width: props.cardWidth,
-            height: 120,
-            borderLeft: `3px solid ${props.highlightColor}`,
-            background: `${props.highlightColor}1a`,
-            cursor: props.cursor,
-            opacity: props.cursor === 'default' && '0.2',
-            '&:hover': {
-                opacity: 1,
-                boxShadow: theme.shadows[5],
-            },
-        }),
-        heatCardTitle: {
-            fontSize: '1rem',
-            lineHeight: 1,
-            whiteSpace: 'nowrap',
-            padding: 8,
-            textTransform: 'uppercase',
-            fontWeight: 900,
-            letterSpacing: '2px',
-            color: '#111',
+const useStyles = makeStyles(theme => ({
+    container: { margin: 8 },
+    heatCard: (props: StyleProps) => ({
+        width: props.cardWidth,
+        height: 120,
+        borderLeft: `3px solid ${props.highlightColor}`,
+        background: `${props.highlightColor}1a`,
+        cursor: props.cursor,
+        opacity: props.cursor === 'default' && '0.2',
+        '&:hover': {
+            opacity: 1,
+            boxShadow: theme.shadows[5],
         },
-    })
-);
+    }),
+    heatCardTitle: {
+        fontSize: '1rem',
+        lineHeight: 1,
+        whiteSpace: 'nowrap',
+        padding: 8,
+        textTransform: 'uppercase',
+        fontWeight: 900,
+        letterSpacing: '2px',
+        color: '#111',
+    },
+}));
 
 const statusColors = {
     [HeatCardStatus.NOT_STARTED]: '#34495e',
@@ -83,7 +81,7 @@ const HeatCard: React.FC<HeatCardProps> = ({ title = 'Finals', content = '', sta
             >
                 {content}
             </Typography>
-            {status === 'IN_PROGRESS' && <LiveIndicator />}
+            {status === HeatCardStatus.IN_PROGRESS && <LiveIndicator />}
         </Card>
     );
 };

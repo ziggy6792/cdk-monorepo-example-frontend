@@ -1,24 +1,22 @@
 import React from 'react';
-import { Grid, Container, makeStyles, Typography, createStyles } from '@material-ui/core';
+import { Grid, Container, makeStyles, Typography } from '@material-ui/core';
 import TrophyIcon from '@material-ui/icons/EmojiEvents';
 import HeatCard, { HeatCardStatus } from './heat-card';
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        container: { margin: 8 },
-        dateHeader: {
-            background: '#17a2b8',
-            color: 'white',
-            padding: '0 12px',
-            margin: '12px 0 8px',
-            borderRadius: 20,
-            width: 'fit-content',
-            fontWeight: 600,
-            fontSize: '1rem',
-            letterSpacing: '2px',
-        },
-    })
-);
+const useStyles = makeStyles(() => ({
+    container: { margin: 8 },
+    dateHeader: {
+        background: '#17a2b8',
+        color: 'white',
+        padding: '0 12px',
+        margin: '12px 0 8px',
+        borderRadius: 20,
+        width: 'fit-content',
+        fontWeight: 600,
+        fontSize: '1rem',
+        letterSpacing: '2px',
+    },
+}));
 
 interface DateHeaderProps {
     header: string;
