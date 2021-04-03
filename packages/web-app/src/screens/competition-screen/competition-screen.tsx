@@ -6,6 +6,7 @@ import Spinner from 'src/components/spinner';
 import CompetitionSummary from 'src/modules/competition-summary';
 import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
 import { useHistory } from 'react-router';
+import HeatsStructure from './heats-structure';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -37,9 +38,12 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                             </Button>
                         </Grid>
                     </Grid>
-
+                    {/* ToDo: Fix this */}
                     <Grid item style={{ width: '100%' }}>
                         <CompetitionSummary summary={data.getCompetition} />
+                    </Grid>
+                    <Grid item style={{ width: '90%' }}>
+                        <HeatsStructure />
                     </Grid>
                 </Grid>
             )}
