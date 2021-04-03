@@ -62,6 +62,26 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                     </Grid>
                     <Grid container justify='center' alignItems='center'>
                         <Grid item>
+                            <Button
+                                onClick={() => {
+                                    history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
+                                }}
+                            >
+                                Scoreboard
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                onClick={() => {
+                                    history.push(`${ROUTE_TIMETABLE}/${eventId}`);
+                                }}
+                            >
+                                Timetable
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container justify='flex-end'>
+                        <Grid item>
                             <EditEvent
                                 eventToEdit={{
                                     id: eventId,
@@ -73,26 +93,6 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                         </Grid>
                         <Grid item>
                             <AddCompetition eventId={eventId} />
-                        </Grid>
-                        <Grid container justify='center' alignItems='center'>
-                            <Grid item>
-                                <Button
-                                    onClick={() => {
-                                        history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
-                                    }}
-                                >
-                                    Scoreboard
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Button
-                                    onClick={() => {
-                                        history.push(`${ROUTE_TIMETABLE}/${eventId}`);
-                                    }}
-                                >
-                                    Timetable
-                                </Button>
-                            </Grid>
                         </Grid>
                     </Grid>
 
