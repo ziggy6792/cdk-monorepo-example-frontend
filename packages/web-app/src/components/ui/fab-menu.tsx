@@ -53,15 +53,33 @@ interface IPropsItem {
     onClick?: () => void;
 }
 
-const DropdownItem: React.FC<IPropsItem> = ({ handleClose, onClick, children }) => {
+// const DropdownItem: React.FC<IPropsItem> = ({ handleClose, onClick, children }) => {
+//     const handleOnClick = () => {
+//         handleClose();
+//         if (typeof onClick === 'function') {
+//             onClick();
+//         }
+//     };
+//     return (
+//         // eslint-disable-next-line react/jsx-props-no-spreading
+//         <MenuItem onClick={handleOnClick}>{children}</MenuItem>
+//     );
+// };
+
+const DropdownItem: React.FC<IPropsItem> = React.forwardRef(({ handleClose, onClick, children }, ref) => {
     const handleOnClick = () => {
         handleClose();
         if (typeof onClick === 'function') {
             onClick();
         }
     };
-    return <MenuItem onClick={handleOnClick}>{children}</MenuItem>;
-};
+    return (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <MenuItem innerRef={ref} onClick={handleOnClick}>
+            {children}
+        </MenuItem>
+    );
+});
 
 FabDropdownMenu.Item = DropdownItem;
 
