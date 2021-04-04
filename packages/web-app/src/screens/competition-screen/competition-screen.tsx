@@ -43,7 +43,7 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                         <CompetitionSummary summary={data.getCompetition} />
                     </Grid>
                     <Grid item style={{ width: '95%' }}>
-                        <HeatsStructure rounds={data.getCompetition.rounds.items} />
+                        <HeatsStructure rounds={data.getCompetition.rounds.items} eventId={data.getCompetition.event.id} />
                     </Grid>
                 </Grid>
             )}

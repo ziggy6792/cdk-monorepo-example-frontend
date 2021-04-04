@@ -5,6 +5,8 @@ import { Heat, Round, Maybe, User, HeatStatus } from 'src/generated-types';
 import _ from 'lodash';
 import { parseISO, startOfDay } from 'date-fns';
 import DateFormatter from 'src/utils/format/date-formatter';
+import { useHistory } from 'react-router';
+import { ROUTE_HEAT, ROUTE_SCOREBOARD } from 'src/config/routes';
 import HeatCard, { HeatCardStatus } from './heat-card';
 
 const useStyles = makeStyles(() => ({
@@ -56,24 +58,27 @@ const statusLookup = {
 
 interface IHeatsStructureProps {
     rounds: HeatsStructureRound[];
+    eventId: string;
 }
 
-const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds }) => {
-    const groupedItems = _.groupBy(rounds, (round) => (round.startTime ? startOfDay(round.startTime).toISOString() : new Date(0).toISOString()));
+const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => {
+    const groupedItems = _.groupBy(rounds, round => (round.startTime ? startOfDay(round.startTime).toISOString() : new Date(0).toISOString()));
 
-    const roundsByDay = Object.keys(groupedItems).map((key) => ({
+    const roundsByDay = Object.keys(groupedItems).map(key => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
         dayRounds: groupedItems[key] as HeatsStructureRound[],
     }));
 
     const classes = useStyles();
     const theme = useTheme();
+    const history = useHistory();
+
     return (
         <Container className={classes.container}>
             {roundsByDay.map(({ day, dayRounds }) => (
                 <Grid item key={day ? day.toISOString() : 'TBD'}>
                     <DateHeader header={day ? DateFormatter.toLongDay(day) : 'Date TBD'} />
-                    {dayRounds.map((round) => (
+                    {dayRounds.map(round => (
                         <>
                             <Grid
                                 container
@@ -85,9 +90,16 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds }) => {
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2} justify='center'>
-                                {round.heats.items.map((heat) => (
+                                {round.heats.items.map(heat => (
                                     <Grid item>
                                         <HeatCard
+                                            onClick={() => {
+                                                if (heat.status === HeatStatus.Open) {
+                                                    history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
+                                                } else {
+                                                    history.push(`${ROUTE_HEAT}/${heat.id}`);
+                                                }
+                                            }}
                                             title={
                                                 heat.isFinal ? (
                                                     <>
@@ -102,7 +114,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds }) => {
                                             status={statusLookup[heat.status]}
                                             content={
                                                 <>
-                                                    {heat.riderAllocations.items.map((ra) => (
+                                                    {heat.riderAllocations.items.map(ra => (
                                                         <li>{ra.user?.fullName}</li>
                                                     ))}
                                                 </>

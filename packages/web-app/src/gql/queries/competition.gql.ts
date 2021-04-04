@@ -6,6 +6,9 @@ export const GET_COMPETITION = gql`
     query getCompetition($id: ID!) {
         getCompetition(id: $id) {
             id
+            event {
+                id
+            }
             name
             description
             level

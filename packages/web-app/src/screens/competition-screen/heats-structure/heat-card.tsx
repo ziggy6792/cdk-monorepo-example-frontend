@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
+import { useHistory } from 'react-router';
 import LiveIndicator from './live-indicator';
 
 interface StyleProps {
@@ -14,7 +15,7 @@ export enum HeatCardStatus {
     FINISHED = 'FINISHED',
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     container: { margin: 8 },
     heatCard: (props: StyleProps) => ({
         width: props.cardWidth,
@@ -54,12 +55,13 @@ const statusCursor = {
 
 interface IHeatCardProps {
     title: React.ReactNode;
+    onClick: () => void;
     content?: React.ReactNode;
     status?: HeatCardStatus;
     width?: number;
 }
 
-const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width = 151 }) => {
+const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width = 151, onClick }) => {
     const classes = useStyles({
         highlightColor: statusColors[status] || '#ffffffff',
         cursor: statusCursor[status] || 'default',
@@ -68,7 +70,7 @@ const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width
     const theme = useTheme();
 
     return (
-        <Card className={classes.heatCard}>
+        <Card className={classes.heatCard} onClick={onClick}>
             <Grid container direction='row' justify='space-between'>
                 <Grid item>
                     <Typography component='div' className={classes.heatCardTitle}>
