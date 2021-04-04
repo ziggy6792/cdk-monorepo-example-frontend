@@ -58,7 +58,7 @@ const transformerLink = createTransformerLink(transformers as any);
 const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
 
 const client = new ApolloClient({
-    link: createHttpLink({ fetch: ApiFetch.awsApiFetch }),
+    link: enhancedHttpLink as any,
     cache: new InMemoryCache({
         possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
     }),

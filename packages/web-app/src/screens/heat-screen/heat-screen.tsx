@@ -11,7 +11,7 @@ interface IScoreboardScreenProps {
 }
 
 const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
-    const { loading, data } = useGetHeatQuery({ variables: { id: heatId }, pollInterval: 5000 });
+    const { loading, data } = useGetHeatQuery({ variables: { id: heatId } });
     if (loading) {
         return <Spinner />;
     }
