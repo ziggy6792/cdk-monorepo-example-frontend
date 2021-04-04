@@ -2,11 +2,10 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import { useEndHeatMutation, useSelectHeatMutation } from 'src/generated-types';
+import { useEndHeatMutation } from 'src/generated-types';
 import { useHistory } from 'react-router';
-import { ROUTE_SCOREBOARD } from 'src/config/routes';
+import { ROUTE_COMPETITION } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
-import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 
 interface IJudgeHeat {
     heatId: string;
@@ -19,6 +18,8 @@ const EndHeat: React.FC<IJudgeHeat> = ({ heatId }) => {
 
     const onEndHeat = async (): Promise<void> => {
         const response = await endHeat({ variables: { id: heatId } });
+        history.push(`${ROUTE_COMPETITION}/${response.data.endHeat.id}`);
+
         return null;
     };
 

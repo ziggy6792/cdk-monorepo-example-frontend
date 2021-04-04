@@ -118,14 +118,6 @@ export const ALLOCATE_RIDERS = gql`
     }
 `;
 
-// export const END_HEATd = gql`
-//     mutation endHeat($id: ID!) {
-//         endHeat(id: $id) {
-//             id
-//         }
-//     }
-// `;
-
 export const END_HEAT = gql`
     ${CORE_COMPETITION_FIELDS}
     mutation endHeat($id: ID!) {

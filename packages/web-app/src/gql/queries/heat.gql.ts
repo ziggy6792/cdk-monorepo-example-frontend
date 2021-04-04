@@ -31,18 +31,6 @@ export const CORE_HEAT_FIELDS = gql`
     }
 `;
 
-export const GET_SELECTED_HEAT = gql`
-    ${CORE_HEAT_FIELDS}
-    query getSelectedHeat($id: ID!) {
-        getEvent(id: $id) {
-            id
-            selectedHeat {
-                ...CoreHeatFields
-            }
-        }
-    }
-`;
-
 export const GET_HEAT = gql`
     ${CORE_HEAT_FIELDS}
     query getHeat($id: ID!) {

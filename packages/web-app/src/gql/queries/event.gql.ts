@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { CORE_HEAT_FIELDS } from './heat.gql';
 
 /* eslint-disable import/prefer-default-export */
 
@@ -84,9 +85,25 @@ export const GET_EVENT_SCHEDULE = gql`
 `;
 
 export const SELECT_HEAT = gql`
+    ${CORE_HEAT_FIELDS}
     mutation selectHeat($id: ID!) {
         selectHeat(id: $id) {
             id
+            selectedHeat {
+                ...CoreHeatFields
+            }
+        }
+    }
+`;
+
+export const GET_SELECTED_HEAT = gql`
+    ${CORE_HEAT_FIELDS}
+    query getSelectedHeat($id: ID!) {
+        getEvent(id: $id) {
+            id
+            selectedHeat {
+                ...CoreHeatFields
+            }
         }
     }
 `;
