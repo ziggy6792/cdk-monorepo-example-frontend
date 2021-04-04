@@ -1,5 +1,8 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import { Button, Grid, Typography, Container } from '@material-ui/core';
 import { useGetEventQuery } from 'src/generated-types';
 import TopNavigation from 'src/components/ui/top-navigation';
@@ -15,7 +18,20 @@ interface IEventsScreenProps {
     eventId: string;
 }
 
+const useStyles = makeStyles(theme => ({
+    tableCtaButtons: {
+        marginTop: 20,
+        marginBottom: 20,
+        justifyContent: 'center',
+        [theme.breakpoints.up('sm')]: {
+            marginTop: 0,
+            justifyContent: 'flex-end',
+        },
+    },
+}));
+
 const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
+    const classes = useStyles();
     const { loading, data } = useGetEventQuery({ variables: { id: eventId } });
 
     const history = useHistory();
@@ -44,7 +60,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
             <Container>
                 <Grid container direction='column'>
                     <Grid item style={{ marginTop: 20, marginBottom: 15 }}>
-                        <Typography variant='h5'>PLACEGHOLDER - BREADCRUMS</Typography>
+                        <Typography variant='h5'>PLACEHOLDER - BREADCRUMS</Typography>
                     </Grid>
                     <Grid item>
                         {/* <Typography>
@@ -62,9 +78,13 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                             {description}
                         </Typography>
                     </Grid>
-                    <Grid container justify='center' alignItems='center'>
+                    <Grid container className={classes.tableCtaButtons} spacing={2}>
                         <Grid item>
+                            {/* Find a Trophy Icon */}
                             <Button
+                                color='primary'
+                                variant='contained'
+                                startIcon={<LocalCafeIcon />}
                                 onClick={() => {
                                     history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
                                 }}
@@ -74,6 +94,9 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                         </Grid>
                         <Grid item>
                             <Button
+                                variant='contained'
+                                color='primary'
+                                startIcon={<ScheduleIcon />}
                                 onClick={() => {
                                     history.push(`${ROUTE_TIMETABLE}/${eventId}`);
                                 }}
