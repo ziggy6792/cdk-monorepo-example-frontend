@@ -82,3 +82,11 @@ export const GET_EVENT_SCHEDULE = gql`
         }
     }
 `;
+
+export const SELECT_HEAT = gql`
+    mutation selectHeat($id: ID!) {
+        selectHeat(id: $id) {
+            id
+        }
+    }
+`;
