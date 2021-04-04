@@ -1,5 +1,5 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
+// https://material-ui.com/customization/theming/#unstable-createmuistrictmodetheme-options-args-theme
 const arcBlue = '#2a6db0';
 const arcGrey = '#868686';
 const swtRed = '#b02a2a';
