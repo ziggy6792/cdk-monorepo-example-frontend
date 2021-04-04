@@ -12,6 +12,7 @@ import Routes from 'src/routes';
 import { parseISO } from 'date-fns';
 import Theme from 'src/ui/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { createTransformerLink } from 'apollo-client-transform';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import initStore from './config/store';
@@ -34,25 +35,32 @@ window.addEventListener('resize', () => {
 
 document.title = envConfig.title;
 
-const mapDateField = {
-    read(date) {
+const DateTransformer = {
+    parseValue(date: string) {
         return date ? parseISO(date) : null;
     },
 };
 
+const CreatableTransformers = { createdAt: DateTransformer, modifiedAt: DateTransformer };
+const SchedulableTransformers = { ...CreatableTransformers, startTime: DateTransformer };
+
+const transformers = {
+    User: { ...CreatableTransformers },
+    Round: { ...SchedulableTransformers },
+    RiderAllocation: { ...CreatableTransformers },
+    Heat: { ...CreatableTransformers },
+    Event: { ...CreatableTransformers, startTime: DateTransformer },
+    Competition: { ...CreatableTransformers },
+    ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
+};
+
+const transformerLink = createTransformerLink(transformers as any);
+const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
+
 const client = new ApolloClient({
-    link: createHttpLink({ fetch: ApiFetch.awsApiFetch }),
+    link: enhancedHttpLink as any,
     cache: new InMemoryCache({
         possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
-        typePolicies: {
-            Creatable: { fields: { createdAt: mapDateField, modifiedAt: mapDateField } },
-            Schedulable: { fields: { startTime: mapDateField } },
-            // Not sure why i have to explicity do this when they implement Schedulable
-            Event: { fields: { startTime: mapDateField } },
-            Round: { fields: { startTime: mapDateField } },
-            Heat: { fields: { startTime: mapDateField } },
-            ScheduleItem: { fields: { startTime: mapDateField } },
-        },
     }),
 });
 
