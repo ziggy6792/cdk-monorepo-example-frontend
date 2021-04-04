@@ -6,10 +6,9 @@ import ResultsDataTable, { IRiderAllocationRow } from './results-data-table';
 export interface IScoresTableProps {
     riderAllocations: IRiderAllocationItem[];
     noProgressing: number;
-    eventId: string;
 }
 
-const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, eventId, noProgressing }) => {
+const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, noProgressing }) => {
     const scoresTableData: IRiderAllocationRow[] = riderAllocations.map(riderAllocation => ({
         riderAllocation,
         rowData: {
