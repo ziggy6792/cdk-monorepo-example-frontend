@@ -27,7 +27,7 @@ const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
             <Typography>{DateFormatter.toShortDate(day)}</Typography>
         </Grid>
         <Grid item>
-            <Typography>{DateFormatter.toDay(day)}</Typography>
+            <Typography>{DateFormatter.toShortDay(day)}</Typography>
         </Grid>
     </Grid>
 );
@@ -39,7 +39,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
 
     const scheduleDays = Object.keys(groupedItems).map(key => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
-        scheduleItems: groupedItems[key] as TimetableScheduleItem[],
+        scheduleItems: _.orderBy(groupedItems[key], [({ startTime }) => startTime, ({ createdAt }) => createdAt], ['asc', 'asc']) as TimetableScheduleItem[],
     }));
 
     const theme = useTheme();

@@ -5,4 +5,5 @@ export const ROUTE_EVENT = '/event';
 export const ROUTE_HEAT = '/heat';
 export const ROUTE_SCOREBOARD = '/scoreboard';
 export const ROUTE_TIMETABLE = '/timetable';
+export const ROUTE_COMPETITION_MANAGER = '/competition-manager';
 export const ROUTE_COMPETITION = '/competition';

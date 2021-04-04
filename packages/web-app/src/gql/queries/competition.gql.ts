@@ -6,6 +6,9 @@ export const GET_COMPETITION = gql`
     query getCompetition($id: ID!) {
         getCompetition(id: $id) {
             id
+            event {
+                id
+            }
             name
             description
             level
@@ -29,9 +32,13 @@ export const GET_COMPETITION = gql`
             }
             rounds {
                 items {
+                    id
+                    shortName
+                    startTime
                     heats {
                         items {
                             id
+                            isFinal
                             name
                             round {
                                 roundNo
@@ -39,6 +46,15 @@ export const GET_COMPETITION = gql`
                             size
                             noAllocated
                             createdAt
+                            status
+                            riderAllocations {
+                                items {
+                                    user {
+                                        id
+                                        fullName
+                                    }
+                                }
+                            }
                         }
                     }
                 }

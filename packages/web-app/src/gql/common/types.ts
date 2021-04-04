@@ -14,6 +14,6 @@ export type TimetableRound = { __typename?: 'Round' } & Pick<Round, 'roundNo' | 
 
 export type TimetableScheduledItem = TimetableRound;
 
-export type TimetableScheduleItem = { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice'> & {
+export type TimetableScheduleItem = { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'> & {
         scheduledItem: Maybe<TimetableScheduledItem>;
     };

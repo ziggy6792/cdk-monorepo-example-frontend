@@ -64,6 +64,7 @@ export const GET_EVENT_SCHEDULE = gql`
                     id
                     startTime
                     notice
+                    createdAt
                     scheduledItem {
                         ... on Round {
                             roundNo

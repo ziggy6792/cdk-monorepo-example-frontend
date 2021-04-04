@@ -23,7 +23,7 @@ interface IHeatRow extends IDataTableRow {
 const HeatsTable: React.FC<EventsTableProps> = ({ heats }) => {
     const history = useHistory();
 
-    const tableData: IHeatRow[] = heats.map((heat) => ({
+    const tableData: IHeatRow[] = heats.map(heat => ({
         heatId: heat.id,
         rowData: {
             name: heat.name,
