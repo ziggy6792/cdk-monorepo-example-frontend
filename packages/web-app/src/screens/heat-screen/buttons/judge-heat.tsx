@@ -59,6 +59,9 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
         [ValidationItemMessage.OpenheatToofewriders]: {
             message: () => 'There are not enough riders allocated to this heat.',
         },
+        [ValidationItemMessage.OpenheatAlreadyfinished]: {
+            message: () => 'This heat has been closed once already. Are you sue you want to re-open it?',
+        },
     };
 
     return (

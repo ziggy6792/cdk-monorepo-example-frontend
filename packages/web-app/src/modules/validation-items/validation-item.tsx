@@ -22,7 +22,7 @@ interface ValidationItemProps {
 const ValidationEntry: React.FC<ValidationItemProps> = ({ validationItem, validationItemContent }) => {
     const myValidationItemContent = validationItemContent && validationItemContent[validationItem.message];
 
-    const { message, action } = myValidationItemContent;
+    const { message, action } = myValidationItemContent || {};
 
     return (
         <>
