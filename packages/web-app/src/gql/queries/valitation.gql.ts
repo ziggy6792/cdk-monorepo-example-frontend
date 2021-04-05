@@ -9,6 +9,8 @@ export const CHECK_CAN_OPEN_HEAT = gql`
             checkCanOpen {
                 type
                 message
+                messageDisplayText
+                referenceId
             }
         }
     }

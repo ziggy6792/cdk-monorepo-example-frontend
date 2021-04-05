@@ -570,9 +570,14 @@ export type User = Identifiable & Creatable & {
 export type ValidationItem = {
    __typename?: 'ValidationItem',
   type: ValidationItemType,
-  message: Scalars['String'],
+  message: ValidationItemMessage,
+  messageDisplayText: Scalars['String'],
   referenceId?: Maybe<Scalars['ID']>,
 };
+
+export enum ValidationItemMessage {
+  OpenheatAlreadyopen = 'OPENHEAT_ALREADYOPEN'
+}
 
 export enum ValidationItemType {
   Error = 'ERROR',
@@ -988,7 +993,7 @@ export type CheckCanOpenHeatQuery = (
     & Pick<Heat, 'id'>
     & { checkCanOpen: Array<(
       { __typename?: 'ValidationItem' }
-      & Pick<ValidationItem, 'type' | 'message'>
+      & Pick<ValidationItem, 'type' | 'message' | 'messageDisplayText' | 'referenceId'>
     )> }
   ) }
 );
@@ -1809,6 +1814,8 @@ export const CheckCanOpenHeatDocument = gql`
     checkCanOpen {
       type
       message
+      messageDisplayText
+      referenceId
     }
   }
 }

@@ -1,14 +1,15 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { useSelectHeatMutation, useCheckCanOpenHeatQuery, ValidationItem, ValidationItemType } from 'src/generated-types';
+import { useSelectHeatMutation, useCheckCanOpenHeatQuery, ValidationItem, ValidationItemType, ValidationItemMessage } from 'src/generated-types';
 import { useHistory } from 'react-router';
 import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems from 'src/modules/validation-items/validation-items';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid, Link, Typography } from '@material-ui/core';
 
 interface IJudgeHeat {
     heatId: string;
@@ -38,6 +39,12 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
         return null;
     };
 
+    const validationActions = {
+        [ValidationItemMessage.OpenheatAlreadyopen]: (valItem: ValidationItem) => (
+            <Link href={`${ROUTE_SCOREBOARD}/${valItem.referenceId}`}>Open Scoreboard</Link>
+        ),
+    };
+
     return (
         <>
             <Dialog open={open} setOpen={setOpen}>
@@ -47,7 +54,8 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
                         <Typography>Judge {heatName}</Typography>
                     </Grid>
                 </Grid>
-                <ValidationItems validationItems={validationItems} />
+                <ValidationItems validationItems={validationItems} validationActions={validationActions} />
+
                 <Grid container direction='row' justify='center'>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
                     <ProgressButton onClick={onConfirm} disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}>
