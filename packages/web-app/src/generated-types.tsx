@@ -571,12 +571,14 @@ export type ValidationItem = {
    __typename?: 'ValidationItem',
   type: ValidationItemType,
   message: ValidationItemMessage,
-  messageDisplayText: Scalars['String'],
-  referenceId?: Maybe<Scalars['ID']>,
+  actionReferenceId?: Maybe<Scalars['ID']>,
 };
 
 export enum ValidationItemMessage {
-  OpenheatAlreadyopen = 'OPENHEAT_ALREADYOPEN'
+  OpenheatAlreadyopen = 'OPENHEAT_ALREADYOPEN',
+  OpenheatNoriders = 'OPENHEAT_NORIDERS',
+  OpenheatToofewriders = 'OPENHEAT_TOOFEWRIDERS',
+  OpenheatNotfull = 'OPENHEAT_NOTFULL'
 }
 
 export enum ValidationItemType {
@@ -993,7 +995,7 @@ export type CheckCanOpenHeatQuery = (
     & Pick<Heat, 'id'>
     & { checkCanOpen: Array<(
       { __typename?: 'ValidationItem' }
-      & Pick<ValidationItem, 'type' | 'message' | 'messageDisplayText' | 'referenceId'>
+      & Pick<ValidationItem, 'type' | 'message' | 'actionReferenceId'>
     )> }
   ) }
 );
@@ -1814,8 +1816,7 @@ export const CheckCanOpenHeatDocument = gql`
     checkCanOpen {
       type
       message
-      messageDisplayText
-      referenceId
+      actionReferenceId
     }
   }
 }

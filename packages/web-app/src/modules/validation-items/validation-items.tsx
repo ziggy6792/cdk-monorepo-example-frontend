@@ -4,15 +4,15 @@
 
 import { Grid } from '@material-ui/core';
 import React from 'react';
-import { ValidationItem, ValidationItemType, ValidationItemMessage } from 'src/generated-types';
-import ValidationEntry from './validation-item';
+import { ValidationItem, ValidationItemType } from 'src/generated-types';
+import ValidationEntry, { ValidationItemContent } from './validation-item';
 
 interface ValidationItemsProps {
     validationItems: ValidationItem[];
-    validationActions?: { [key in ValidationItemMessage]: (validationItem: ValidationItem) => React.ReactNode };
+    validationItemContent?: ValidationItemContent;
 }
 
-const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, validationActions }) => (
+const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, validationItemContent }) => (
     <>
         <Grid container style={{ padding: 16 }}>
             <>
@@ -20,7 +20,9 @@ const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, vali
                     <>
                         {validationItems.map((validationItem) => (
                             <Grid item key={type}>
-                                {validationItem.type === type && <ValidationEntry validationItem={validationItem} validationActions={validationActions} />}
+                                {validationItem.type === type && (
+                                    <ValidationEntry validationItem={validationItem} validationItemContent={validationItemContent} />
+                                )}
                             </Grid>
                         ))}
                     </>

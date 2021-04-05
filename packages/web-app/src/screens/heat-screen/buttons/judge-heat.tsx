@@ -10,6 +10,7 @@ import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems from 'src/modules/validation-items/validation-items';
 import { Button, Grid, Link, Typography } from '@material-ui/core';
+import { ValidationItemContent } from 'src/modules/validation-items/validation-item';
 
 interface IJudgeHeat {
     heatId: string;
@@ -28,21 +29,36 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
 
     const onClickJudgeHeat = async (): Promise<void> => {
         const response = await checkCanOpen({ id: heatId });
-        setValidationItems(response.data.getHeat.checkCanOpen);
-        setOpen(true);
+        const judgeHeatValidationItems = response.data.getHeat.checkCanOpen;
+        if (judgeHeatValidationItems.length > 0) {
+            setValidationItems(judgeHeatValidationItems);
+            setOpen(true);
+        } else {
+            await onSelectHeat();
+        }
         return null;
     };
 
-    const onConfirm = async (): Promise<void> => {
+    const onSelectHeat = async (): Promise<void> => {
         const response = await selectHeat({ variables: { id: heatId } });
         history.push(`${ROUTE_SCOREBOARD}/${response.data.selectHeat.id}`);
         return null;
     };
 
-    const validationActions = {
-        [ValidationItemMessage.OpenheatAlreadyopen]: (valItem: ValidationItem) => (
-            <Link href={`${ROUTE_SCOREBOARD}/${valItem.referenceId}`}>Open Scoreboard</Link>
-        ),
+    const validationItemContent: ValidationItemContent = {
+        [ValidationItemMessage.OpenheatAlreadyopen]: {
+            action: (valItem: ValidationItem) => <Link href={`${ROUTE_SCOREBOARD}/${valItem.actionReferenceId}`}>Open Scoreboard</Link>,
+            message: () => 'Another heat is already open in the event scorebaord. Please close it first.',
+        },
+        [ValidationItemMessage.OpenheatNoriders]: {
+            message: () => 'There are no riders allocated to this heat.',
+        },
+        [ValidationItemMessage.OpenheatNotfull]: {
+            message: () => 'This heat is not yet fully allocated.',
+        },
+        [ValidationItemMessage.OpenheatToofewriders]: {
+            message: () => 'There are not enough riders allocated to this heat.',
+        },
     };
 
     return (
@@ -54,11 +70,11 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
                         <Typography>Judge {heatName}</Typography>
                     </Grid>
                 </Grid>
-                <ValidationItems validationItems={validationItems} validationActions={validationActions} />
+                <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
 
                 <Grid container direction='row' justify='center'>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    <ProgressButton onClick={onConfirm} disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}>
+                    <ProgressButton onClick={onSelectHeat} disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}>
                         Judge Heat
                     </ProgressButton>
                 </Grid>
