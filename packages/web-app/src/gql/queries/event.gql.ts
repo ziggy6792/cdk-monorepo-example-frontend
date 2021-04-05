@@ -88,13 +88,43 @@ export const SELECT_HEAT = gql`
     ${CORE_HEAT_FIELDS}
     mutation selectHeat($id: ID!) {
         selectHeat(id: $id) {
-            id
-            selectedHeat {
-                ...CoreHeatFields
+            ... on Event {
+                id
+                selectedHeat {
+                    ...CoreHeatFields
+                }
+            }
+            ... on ValidationItemList {
+                items {
+                    message
+                    type
+                    actionReferenceId
+                }
             }
         }
     }
 `;
+
+// export const SELECT_HEAT = gql`
+//     ${CORE_HEAT_FIELDS}
+//     mutation selectHeat($id: ID!, validationLevel: ValidationItemType) {
+//         selectHeat(id: $id) {
+//             ... on Event {
+//                 id
+//                 selectedHeat {
+//                     ...CoreHeatFields
+//                 }
+//             }
+//             ... on ValidationItemList {
+//                 items {
+//                     message
+//                     type
+//                     actionReferenceId
+//                 }
+//             }
+//         }
+//     }
+// `;
 
 export const GET_SELECTED_HEAT = gql`
     ${CORE_HEAT_FIELDS}

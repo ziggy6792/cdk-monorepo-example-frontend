@@ -216,7 +216,7 @@ export type Mutation = {
   createRiderAllocations: Array<RiderAllocation>,
   updateRiderAllocations: Array<RiderAllocation>,
   buildCompetition?: Maybe<Competition>,
-  selectHeat: Event,
+  selectHeat: SelectHeatResult,
   allocateRiders?: Maybe<Competition>,
   scoreRun: Heat,
   endHeat: Competition,
@@ -300,6 +300,7 @@ export type MutationBuildCompetitionArgs = {
 
 
 export type MutationSelectHeatArgs = {
+  validationLevel?: Maybe<ValidationItemType>,
   id: Scalars['ID']
 };
 
@@ -507,6 +508,8 @@ export type SeedSlotParamsInput = {
   seed: Scalars['Int'],
 };
 
+export type SelectHeatResult = Event | ValidationItemList;
+
 /** Sport */
 export enum Sport {
   Wakeboard = 'WAKEBOARD',
@@ -572,6 +575,11 @@ export type ValidationItem = {
   type: ValidationItemType,
   message: ValidationItemMessage,
   actionReferenceId?: Maybe<Scalars['ID']>,
+};
+
+export type ValidationItemList = {
+   __typename?: 'ValidationItemList',
+  items: Array<ValidationItem>,
 };
 
 export enum ValidationItemMessage {
@@ -843,6 +851,12 @@ export type SelectHeatMutation = (
     & { selectedHeat: Maybe<(
       { __typename?: 'Heat' }
       & CoreHeatFieldsFragment
+    )> }
+  ) | (
+    { __typename?: 'ValidationItemList' }
+    & { items: Array<(
+      { __typename?: 'ValidationItem' }
+      & Pick<ValidationItem, 'message' | 'type' | 'actionReferenceId'>
     )> }
   ) }
 );
@@ -1505,9 +1519,18 @@ export type GetEventScheduleQueryResult = ApolloReactCommon.QueryResult<GetEvent
 export const SelectHeatDocument = gql`
     mutation selectHeat($id: ID!) {
   selectHeat(id: $id) {
-    id
-    selectedHeat {
-      ...CoreHeatFields
+    ... on Event {
+      id
+      selectedHeat {
+        ...CoreHeatFields
+      }
+    }
+    ... on ValidationItemList {
+      items {
+        message
+        type
+        actionReferenceId
+      }
     }
   }
 }

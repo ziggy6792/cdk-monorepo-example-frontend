@@ -22,26 +22,20 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
 
     const [selectHeat] = useSelectHeatMutation();
 
-    const { refetch: checkCanOpen } = useCheckCanOpenHeatQuery({ fetchPolicy: 'cache-and-network', skip: true });
+    // const { refetch: checkCanOpen } = useCheckCanOpenHeatQuery({ fetchPolicy: 'cache-and-network', skip: true });
 
     const [open, setOpen] = useState(false);
     const [validationItems, setValidationItems] = useState<ValidationItem[]>([]);
 
-    const onClickJudgeHeat = async (): Promise<void> => {
-        const response = await checkCanOpen({ id: heatId });
-        const judgeHeatValidationItems = response.data.getHeat.checkCanOpen;
-        if (judgeHeatValidationItems.length > 0) {
-            setValidationItems(judgeHeatValidationItems);
-            setOpen(true);
-        } else {
-            await onSelectHeat();
-        }
-        return null;
-    };
-
     const onSelectHeat = async (): Promise<void> => {
         const response = await selectHeat({ variables: { id: heatId } });
-        history.push(`${ROUTE_SCOREBOARD}/${response.data.selectHeat.id}`);
+        if (response.data.selectHeat.__typename === 'ValidationItemList') {
+            setValidationItems(response.data.selectHeat.items);
+            setOpen(true);
+        } else if (response.data.selectHeat.__typename === 'Event') {
+            history.push(`${ROUTE_SCOREBOARD}/${response.data.selectHeat.id}`);
+        }
+
         return null;
     };
 
@@ -82,7 +76,7 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
                     </ProgressButton>
                 </Grid>
             </Dialog>
-            <ProgressButton onClick={onClickJudgeHeat}>Judge Heat</ProgressButton>
+            <ProgressButton onClick={onSelectHeat}>Judge Heat</ProgressButton>
         </>
     );
 };

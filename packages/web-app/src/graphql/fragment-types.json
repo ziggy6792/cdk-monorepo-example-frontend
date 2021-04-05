@@ -89,6 +89,12 @@
       { "kind": "INPUT_OBJECT", "name": "RoundParamsInput", "possibleTypes": null },
       { "kind": "INPUT_OBJECT", "name": "HeatParamsInput", "possibleTypes": null },
       { "kind": "INPUT_OBJECT", "name": "SeedSlotParamsInput", "possibleTypes": null },
+      {
+        "kind": "UNION",
+        "name": "SelectHeatResult",
+        "possibleTypes": [ { "name": "Event" }, { "name": "ValidationItemList" } ]
+      },
+      { "kind": "OBJECT", "name": "ValidationItemList", "possibleTypes": null },
       { "kind": "INPUT_OBJECT", "name": "ScorRunInput", "possibleTypes": null },
       { "kind": "INPUT_OBJECT", "name": "RunInput", "possibleTypes": null },
       { "kind": "OBJECT", "name": "__Schema", "possibleTypes": null },
