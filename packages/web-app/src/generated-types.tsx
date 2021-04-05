@@ -315,7 +315,7 @@ export type MutationScoreRunArgs = {
 
 
 export type MutationEndHeatArgs = {
-  id: Scalars['ID']
+  id?: Maybe<Scalars['ID']>
 };
 
 export type Query = {

@@ -28,6 +28,10 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
         return <Spinner />;
     }
 
+    if (!data.selectedHeat) {
+        return <div>No Heat Selected</div>;
+    }
+
     return (
         <>
             <Grid container direction='column' justify='center' alignItems='center'>
