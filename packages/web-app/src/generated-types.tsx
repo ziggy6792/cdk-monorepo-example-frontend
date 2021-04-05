@@ -163,6 +163,7 @@ export type Heat = DataEntity & Identifiable & Creatable & {
   noAllocated: Scalars['Int'],
   noProgressing: Scalars['Int'],
   isFinal: Scalars['Boolean'],
+  checkCanOpen: Array<ValidationItem>,
 };
 
 export type HeatList = {
@@ -566,6 +567,18 @@ export type User = Identifiable & Creatable & {
   fullName: Scalars['String'],
 };
 
+export type ValidationItem = {
+   __typename?: 'ValidationItem',
+  type: ValidationItemType,
+  message: Scalars['String'],
+  referenceId?: Maybe<Scalars['ID']>,
+};
+
+export enum ValidationItemType {
+  Error = 'ERROR',
+  Warn = 'WARN'
+}
+
 export type CoreCompetitionFieldsFragment = (
   { __typename?: 'Competition' }
   & Pick<Competition, 'id' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'>
@@ -961,6 +974,23 @@ export type ListUsersQuery = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'fullName'>
   )> }
+);
+
+export type CheckCanOpenHeatQueryVariables = {
+  id: Scalars['ID']
+};
+
+
+export type CheckCanOpenHeatQuery = (
+  { __typename?: 'Query' }
+  & { getHeat: (
+    { __typename?: 'Heat' }
+    & Pick<Heat, 'id'>
+    & { checkCanOpen: Array<(
+      { __typename?: 'ValidationItem' }
+      & Pick<ValidationItem, 'type' | 'message'>
+    )> }
+  ) }
 );
 
 export const CoreCompetitionFieldsFragmentDoc = gql`
@@ -1772,3 +1802,40 @@ export function useListUsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type ListUsersQueryHookResult = ReturnType<typeof useListUsersQuery>;
 export type ListUsersLazyQueryHookResult = ReturnType<typeof useListUsersLazyQuery>;
 export type ListUsersQueryResult = ApolloReactCommon.QueryResult<ListUsersQuery, ListUsersQueryVariables>;
+export const CheckCanOpenHeatDocument = gql`
+    query checkCanOpenHeat($id: ID!) {
+  getHeat(id: $id) {
+    id
+    checkCanOpen {
+      type
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useCheckCanOpenHeatQuery__
+ *
+ * To run a query within a React component, call `useCheckCanOpenHeatQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckCanOpenHeatQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckCanOpenHeatQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCheckCanOpenHeatQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CheckCanOpenHeatQuery, CheckCanOpenHeatQueryVariables>) {
+        return ApolloReactHooks.useQuery<CheckCanOpenHeatQuery, CheckCanOpenHeatQueryVariables>(CheckCanOpenHeatDocument, baseOptions);
+      }
+export function useCheckCanOpenHeatLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CheckCanOpenHeatQuery, CheckCanOpenHeatQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<CheckCanOpenHeatQuery, CheckCanOpenHeatQueryVariables>(CheckCanOpenHeatDocument, baseOptions);
+        }
+export type CheckCanOpenHeatQueryHookResult = ReturnType<typeof useCheckCanOpenHeatQuery>;
+export type CheckCanOpenHeatLazyQueryHookResult = ReturnType<typeof useCheckCanOpenHeatLazyQuery>;
+export type CheckCanOpenHeatQueryResult = ApolloReactCommon.QueryResult<CheckCanOpenHeatQuery, CheckCanOpenHeatQueryVariables>;
