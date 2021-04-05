@@ -27,8 +27,8 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
     const [open, setOpen] = useState(false);
     const [validationItems, setValidationItems] = useState<ValidationItem[]>([]);
 
-    const onSelectHeat = async (): Promise<void> => {
-        const response = await selectHeat({ variables: { id: heatId } });
+    const onSelectHeat = async (validationLevel: ValidationItemType = ValidationItemType.Warn): Promise<void> => {
+        const response = await selectHeat({ variables: { id: heatId, validationLevel } });
         if (response.data.selectHeat.__typename === 'ValidationItemList') {
             setValidationItems(response.data.selectHeat.items);
             setOpen(true);
@@ -71,7 +71,10 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
 
                 <Grid container direction='row' justify='center'>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    <ProgressButton onClick={onSelectHeat} disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}>
+                    <ProgressButton
+                        onClick={() => onSelectHeat(ValidationItemType.Error)}
+                        disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}
+                    >
                         Judge Heat
                     </ProgressButton>
                 </Grid>

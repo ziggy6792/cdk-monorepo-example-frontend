@@ -86,8 +86,8 @@ export const GET_EVENT_SCHEDULE = gql`
 
 export const SELECT_HEAT = gql`
     ${CORE_HEAT_FIELDS}
-    mutation selectHeat($id: ID!) {
-        selectHeat(id: $id) {
+    mutation selectHeat($id: ID!, $validationLevel: ValidationItemType) {
+        selectHeat(id: $id, validationLevel: $validationLevel) {
             ... on Event {
                 id
                 selectedHeat {
@@ -108,7 +108,7 @@ export const SELECT_HEAT = gql`
 // export const SELECT_HEAT = gql`
 //     ${CORE_HEAT_FIELDS}
 //     mutation selectHeat($id: ID!, validationLevel: ValidationItemType) {
-//         selectHeat(id: $id) {
+//         selectHeat(id: $id,validationLevel: $validationLevel) {
 //             ... on Event {
 //                 id
 //                 selectedHeat {

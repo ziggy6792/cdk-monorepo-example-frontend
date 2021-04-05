@@ -839,7 +839,8 @@ export type GetEventScheduleQuery = (
 );
 
 export type SelectHeatMutationVariables = {
-  id: Scalars['ID']
+  id: Scalars['ID'],
+  validationLevel?: Maybe<ValidationItemType>
 };
 
 
@@ -1517,8 +1518,8 @@ export type GetEventScheduleQueryHookResult = ReturnType<typeof useGetEventSched
 export type GetEventScheduleLazyQueryHookResult = ReturnType<typeof useGetEventScheduleLazyQuery>;
 export type GetEventScheduleQueryResult = ApolloReactCommon.QueryResult<GetEventScheduleQuery, GetEventScheduleQueryVariables>;
 export const SelectHeatDocument = gql`
-    mutation selectHeat($id: ID!) {
-  selectHeat(id: $id) {
+    mutation selectHeat($id: ID!, $validationLevel: ValidationItemType) {
+  selectHeat(id: $id, validationLevel: $validationLevel) {
     ... on Event {
       id
       selectedHeat {
@@ -1551,6 +1552,7 @@ export type SelectHeatMutationFn = ApolloReactCommon.MutationFunction<SelectHeat
  * const [selectHeatMutation, { data, loading, error }] = useSelectHeatMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      validationLevel: // value for 'validationLevel'
  *   },
  * });
  */
