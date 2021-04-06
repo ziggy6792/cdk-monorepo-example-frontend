@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
 import { CORE_HEAT_FIELDS } from './heat.gql';
 
-/* eslint-disable import/prefer-default-export */
-
 export const LIST_EVENTS = gql`
     query listEvents {
         listEvents {
