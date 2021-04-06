@@ -69,7 +69,7 @@ export const GET_EVENT_SCHEDULE = gql`
                     scheduledItem {
                         ... on Round {
                             roundNo
-                            name
+                            longName
                             heats {
                                 items {
                                     id

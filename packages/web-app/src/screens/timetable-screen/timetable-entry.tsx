@@ -44,9 +44,9 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
 
     return (
         <>
-            <Grid item>{round.name}</Grid>
+            <Grid item>{round.longName}</Grid>
             <Grid container direction='row' spacing={2} style={{ marginLeft: theme.spacing(1) }}>
-                {round.heats.items.map(heat => (
+                {round.heats.items.map((heat) => (
                     <Grid item key={heat.name}>
                         {/* {heat.name} */}
 

@@ -32,7 +32,7 @@ const CORE_COMPETITION_FIELDS = gql`
         rounds {
             items {
                 id
-                shortName
+                name
                 startTime
                 heats {
                     items {

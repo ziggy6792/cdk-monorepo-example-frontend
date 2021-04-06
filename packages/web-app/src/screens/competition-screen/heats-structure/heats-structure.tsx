@@ -37,7 +37,7 @@ const DateHeader: React.FC<IDateHeaderProps> = ({ header }) => {
     );
 };
 
-type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'shortName'> & {
+type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'name'> & {
     heats: { __typename?: 'HeatList' } & {
         items: Array<
             { __typename?: 'Heat' } & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'> & {
@@ -86,7 +86,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                 style={{ marginTop: theme.spacing(1), marginBottom: theme.spacing(1), marginLeft: theme.spacing(2) }}
                             >
                                 <Grid item>
-                                    <Typography>{round.shortName}</Typography>
+                                    <Typography>{round.name}</Typography>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2} justify='center'>

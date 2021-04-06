@@ -424,7 +424,7 @@ export type Round = Identifiable & Creatable & Schedulable & DataEntity & {
   getHeats: HeatList,
   heats: HeatList,
   competition: Competition,
-  shortName: Scalars['String'],
+  longName: Scalars['String'],
 };
 
 export type RoundList = {
@@ -618,7 +618,7 @@ export type CoreCompetitionFieldsFragment = (
     { __typename?: 'RoundList' }
     & { items: Array<(
       { __typename?: 'Round' }
-      & Pick<Round, 'id' | 'shortName' | 'startTime'>
+      & Pick<Round, 'id' | 'name' | 'startTime'>
       & { heats: (
         { __typename?: 'HeatList' }
         & { items: Array<(
@@ -824,7 +824,7 @@ export type GetEventScheduleQuery = (
         & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'>
         & { scheduledItem: Maybe<(
           { __typename?: 'Round' }
-          & Pick<Round, 'roundNo' | 'name'>
+          & Pick<Round, 'roundNo' | 'longName'>
           & { heats: (
             { __typename?: 'HeatList' }
             & { items: Array<(
@@ -1046,7 +1046,7 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
   rounds {
     items {
       id
-      shortName
+      name
       startTime
       heats {
         items {
@@ -1477,7 +1477,7 @@ export const GetEventScheduleDocument = gql`
         scheduledItem {
           ... on Round {
             roundNo
-            name
+            longName
             heats {
               items {
                 id
