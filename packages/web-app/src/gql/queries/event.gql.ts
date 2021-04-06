@@ -98,7 +98,6 @@ export const SELECT_HEAT = gql`
                 items {
                     message
                     type
-                    actionReferenceId
                     ... on ValidationItemHeatAlreadyOpen {
                         eventId
                     }
@@ -107,27 +106,6 @@ export const SELECT_HEAT = gql`
         }
     }
 `;
-
-// export const SELECT_HEAT = gql`
-//     ${CORE_HEAT_FIELDS}
-//     mutation selectHeat($id: ID!, validationLevel: ValidationItemType) {
-//         selectHeat(id: $id,validationLevel: $validationLevel) {
-//             ... on Event {
-//                 id
-//                 selectedHeat {
-//                     ...CoreHeatFields
-//                 }
-//             }
-//             ... on ValidationItemList {
-//                 items {
-//                     message
-//                     type
-//                     actionReferenceId
-//                 }
-//             }
-//         }
-//     }
-// `;
 
 export const GET_SELECTED_HEAT = gql`
     ${CORE_HEAT_FIELDS}

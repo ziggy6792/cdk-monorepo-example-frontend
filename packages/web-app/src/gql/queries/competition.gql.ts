@@ -118,6 +118,14 @@ export const ALLOCATE_RIDERS = gql`
     }
 `;
 
+export const ADD_DEMO_RIDERS = gql`
+    mutation addDemoRiders($id: ID!) {
+        addDemoRiders(id: $id) {
+            id
+        }
+    }
+`;
+
 export const END_HEAT = gql`
     ${CORE_COMPETITION_FIELDS}
     mutation endHeat($id: ID!) {

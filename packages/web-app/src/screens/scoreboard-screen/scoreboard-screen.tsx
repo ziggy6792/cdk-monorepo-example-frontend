@@ -29,7 +29,7 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     }
 
     if (!data.selectedHeat) {
-        return <div>No Heat Selected</div>;
+        return <div>There is currently no live heat</div>;
     }
 
     return (

@@ -44,27 +44,21 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
 
     return (
         <>
-            <Grid container direction='column'>
-                <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-                    <Grid item>
-                        <Button
-                            onClick={() => {
-                                setOpen(true);
-                            }}
-                        >
-                            Edit
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Dialog open={open} setOpen={setOpen}>
-                    <ComepetitionForm
-                        onSubmit={onUpdateCompetition}
-                        title='Edit Competition'
-                        onCancel={() => setOpen(false)}
-                        initialValues={{ ...competitionToEdit, judgeUser }}
-                    />
-                </Dialog>
-            </Grid>
+            <Button
+                onClick={() => {
+                    setOpen(true);
+                }}
+            >
+                Edit
+            </Button>
+            <Dialog open={open} setOpen={setOpen}>
+                <ComepetitionForm
+                    onSubmit={onUpdateCompetition}
+                    title='Edit Competition'
+                    onCancel={() => setOpen(false)}
+                    initialValues={{ ...competitionToEdit, judgeUser }}
+                />
+            </Dialog>
         </>
     );
 };

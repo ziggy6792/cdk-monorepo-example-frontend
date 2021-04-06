@@ -38,7 +38,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
         riders.forEach((userId, i) => {
             riderSortMap[userId] = i;
         });
-        const orderedRiderAllocations = _.orderBy(riderAllocations, ra => riderSortMap[ra.userId]);
+        const orderedRiderAllocations = _.orderBy(riderAllocations, (ra) => riderSortMap[ra.userId]);
         const updateRiderAllocationInputs: UpdateRiderAllocationInput[] = orderedRiderAllocations.map((riderOption, i) => ({
             allocatableId: competitionId,
             userId: riderOption.userId,
@@ -51,29 +51,23 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
 
     return (
         <>
-            <Grid container direction='column'>
-                <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-                    <Grid item>
-                        <Button
-                            onClick={() => {
-                                setOpen(true);
-                            }}
-                            disabled={disabled}
-                        >
-                            Seed Order
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Dialog open={open} setOpen={setOpen}>
-                    <SeedsForm
-                        onSubmit={onUpdateSeeds}
-                        title='Seeds Order'
-                        onCancel={() => setOpen(false)}
-                        initialValues={{ riders: riderAllocations.map(({ userId }) => userId) }}
-                        riderOptions={riderAllocations}
-                    />
-                </Dialog>
-            </Grid>
+            <Button
+                onClick={() => {
+                    setOpen(true);
+                }}
+                disabled={disabled}
+            >
+                Seed Order
+            </Button>
+            <Dialog open={open} setOpen={setOpen}>
+                <SeedsForm
+                    onSubmit={onUpdateSeeds}
+                    title='Seeds Order'
+                    onCancel={() => setOpen(false)}
+                    initialValues={{ riders: riderAllocations.map(({ userId }) => userId) }}
+                    riderOptions={riderAllocations}
+                />
+            </Dialog>
         </>
     );
 };

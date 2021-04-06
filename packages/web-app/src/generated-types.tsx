@@ -155,6 +155,7 @@ export type Heat = DataEntity & Identifiable & Creatable & {
   roundId: Scalars['ID'],
   status: HeatStatus,
   progressionsPerHeat: Scalars['Int'],
+  longName: Scalars['String'],
   round: Round,
   seedSlots: Array<SeedSlot>,
   size: Scalars['Int'],
@@ -219,6 +220,7 @@ export type Mutation = {
   allocateRiders?: Maybe<Competition>,
   scoreRun: Heat,
   endHeat: Competition,
+  addDemoRiders?: Maybe<Competition>,
 };
 
 
@@ -316,6 +318,11 @@ export type MutationScoreRunArgs = {
 
 export type MutationEndHeatArgs = {
   id?: Maybe<Scalars['ID']>
+};
+
+
+export type MutationAddDemoRidersArgs = {
+  id: Scalars['ID']
 };
 
 export type Query = {
@@ -565,6 +572,7 @@ export type User = Identifiable & Creatable & {
   id: Scalars['ID'],
   email: Scalars['String'],
   firstName: Scalars['String'],
+  isDemo?: Maybe<Scalars['Boolean']>,
   lastName: Scalars['String'],
   fullName: Scalars['String'],
 };
@@ -573,20 +581,17 @@ export type ValidationItem = ValidationItemBase & {
    __typename?: 'ValidationItem',
   type: ValidationItemType,
   message: ValidationItemMessage,
-  actionReferenceId?: Maybe<Scalars['ID']>,
 };
 
 export type ValidationItemBase = {
   type: ValidationItemType,
   message: ValidationItemMessage,
-  actionReferenceId?: Maybe<Scalars['ID']>,
 };
 
 export type ValidationItemHeatAlreadyOpen = ValidationItemBase & {
    __typename?: 'ValidationItemHeatAlreadyOpen',
   type: ValidationItemType,
   message: ValidationItemMessage,
-  actionReferenceId?: Maybe<Scalars['ID']>,
   eventId: Scalars['ID'],
 };
 
@@ -743,6 +748,19 @@ export type AllocateRidersMutation = (
   )> }
 );
 
+export type AddDemoRidersMutationVariables = {
+  id: Scalars['ID']
+};
+
+
+export type AddDemoRidersMutation = (
+  { __typename?: 'Mutation' }
+  & { addDemoRiders: Maybe<(
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'id'>
+  )> }
+);
+
 export type EndHeatMutationVariables = {
   id: Scalars['ID']
 };
@@ -870,10 +888,10 @@ export type SelectHeatMutation = (
     { __typename?: 'ValidationItemList' }
     & { items: Array<(
       { __typename?: 'ValidationItem' }
-      & Pick<ValidationItem, 'message' | 'type' | 'actionReferenceId'>
+      & Pick<ValidationItem, 'message' | 'type'>
     ) | (
       { __typename?: 'ValidationItemHeatAlreadyOpen' }
-      & Pick<ValidationItemHeatAlreadyOpen, 'eventId' | 'message' | 'type' | 'actionReferenceId'>
+      & Pick<ValidationItemHeatAlreadyOpen, 'eventId' | 'message' | 'type'>
     )> }
   ) }
 );
@@ -897,7 +915,7 @@ export type GetSelectedHeatQuery = (
 
 export type CoreHeatFieldsFragment = (
   { __typename?: 'Heat' }
-  & Pick<Heat, 'id' | 'status' | 'name' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'>
+  & Pick<Heat, 'id' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'>
   & { round: (
     { __typename?: 'Round' }
     & Pick<Round, 'roundNo'>
@@ -1078,6 +1096,7 @@ export const CoreHeatFieldsFragmentDoc = gql`
   id
   status
   name
+  longName
   round {
     roundNo
   }
@@ -1281,6 +1300,38 @@ export function useAllocateRidersMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AllocateRidersMutationHookResult = ReturnType<typeof useAllocateRidersMutation>;
 export type AllocateRidersMutationResult = ApolloReactCommon.MutationResult<AllocateRidersMutation>;
 export type AllocateRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AllocateRidersMutation, AllocateRidersMutationVariables>;
+export const AddDemoRidersDocument = gql`
+    mutation addDemoRiders($id: ID!) {
+  addDemoRiders(id: $id) {
+    id
+  }
+}
+    `;
+export type AddDemoRidersMutationFn = ApolloReactCommon.MutationFunction<AddDemoRidersMutation, AddDemoRidersMutationVariables>;
+
+/**
+ * __useAddDemoRidersMutation__
+ *
+ * To run a mutation, you first call `useAddDemoRidersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddDemoRidersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addDemoRidersMutation, { data, loading, error }] = useAddDemoRidersMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAddDemoRidersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddDemoRidersMutation, AddDemoRidersMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddDemoRidersMutation, AddDemoRidersMutationVariables>(AddDemoRidersDocument, baseOptions);
+      }
+export type AddDemoRidersMutationHookResult = ReturnType<typeof useAddDemoRidersMutation>;
+export type AddDemoRidersMutationResult = ApolloReactCommon.MutationResult<AddDemoRidersMutation>;
+export type AddDemoRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AddDemoRidersMutation, AddDemoRidersMutationVariables>;
 export const EndHeatDocument = gql`
     mutation endHeat($id: ID!) {
   endHeat(id: $id) {
@@ -1529,7 +1580,6 @@ export const SelectHeatDocument = gql`
       items {
         message
         type
-        actionReferenceId
         ... on ValidationItemHeatAlreadyOpen {
           eventId
         }

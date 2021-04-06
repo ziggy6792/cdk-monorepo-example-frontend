@@ -5,6 +5,7 @@ export const CORE_HEAT_FIELDS = gql`
         id
         status
         name
+        longName
         round {
             roundNo
         }

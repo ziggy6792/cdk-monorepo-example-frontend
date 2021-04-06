@@ -58,28 +58,22 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
 
     return (
         <>
-            <Grid container direction='column'>
-                <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-                    <Grid item>
-                        <Button
-                            onClick={() => {
-                                setOpen(true);
-                            }}
-                        >
-                            Build
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Dialog open={open} setOpen={setOpen}>
-                    <BuildCompetitionForm
-                        onSubmit={onSubmit}
-                        allowSubmitPristine={allowSubmitPristine}
-                        title='Build Competition'
-                        onCancel={() => setOpen(false)}
-                        initialValues={{ params: ymlDocument.toString() }}
-                    />
-                </Dialog>
-            </Grid>
+            <Button
+                onClick={() => {
+                    setOpen(true);
+                }}
+            >
+                Build
+            </Button>
+            <Dialog open={open} setOpen={setOpen}>
+                <BuildCompetitionForm
+                    onSubmit={onSubmit}
+                    allowSubmitPristine={allowSubmitPristine}
+                    title='Build Competition'
+                    onCancel={() => setOpen(false)}
+                    initialValues={{ params: ymlDocument.toString() }}
+                />
+            </Dialog>
         </>
     );
 };

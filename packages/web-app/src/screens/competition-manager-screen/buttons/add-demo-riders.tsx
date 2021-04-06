@@ -2,20 +2,17 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import { Grid, useTheme } from '@material-ui/core';
-import { useAllocateRidersMutation } from 'src/generated-types';
-import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
+import _ from 'lodash';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
+import { useAddDemoRidersMutation } from 'src/generated-types';
+import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 
-interface IEditCompetitionProps {
+interface IEditSeedsProps {
     competitionId: string;
-    disabled?: boolean;
 }
 
-const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabled }) => {
-    const theme = useTheme();
-
-    const [allocateRiders] = useAllocateRidersMutation({
+const AddDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId }) => {
+    const [allocateRiders] = useAddDemoRidersMutation({
         refetchQueries: [
             {
                 query: GET_COMPETITION,
@@ -32,11 +29,9 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
 
     return (
         <>
-            <ProgressButton onClick={onAllocateRiders} disabled={disabled}>
-                Allocate Riders
-            </ProgressButton>
+            <ProgressButton onClick={onAllocateRiders}>Add Demo Riders</ProgressButton>
         </>
     );
 };
 
-export default AllocateRiders;
+export default AddDemoRiders;
