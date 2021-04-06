@@ -5,24 +5,24 @@
 
 import { Grid } from '@material-ui/core';
 import React from 'react';
-import { ValidationItem, ValidationItemMessage } from 'src/generated-types';
+import { ValidationItemBase } from 'src/generated-types';
 
-export type ValidationItemContent = Partial<
-    Record<
-        ValidationItemMessage,
-        { action?: (validationItem: ValidationItem) => React.ReactNode; message: (validationItem: ValidationItem) => React.ReactNode }
-    >
->;
+// export type ValidationItemContent = Partial<
+//     Record<
+//         ValidationItemMessage,
+//         { action?: (validationItem: ValidationItem) => React.ReactNode; message: (validationItem: ValidationItem) => React.ReactNode }
+//     >
+// >;
+
+export type ValidationItemContent = (ValidationItemBase: ValidationItemBase) => { action?: React.ReactNode; message: React.ReactNode };
 
 interface ValidationItemProps {
-    validationItem: ValidationItem;
+    validationItem: ValidationItemBase;
     validationItemContent?: ValidationItemContent;
 }
 
 const ValidationEntry: React.FC<ValidationItemProps> = ({ validationItem, validationItemContent }) => {
-    const myValidationItemContent = validationItemContent && validationItemContent[validationItem.message];
-
-    const { message, action } = myValidationItemContent || {};
+    const { message, action } = validationItemContent(validationItem);
 
     return (
         <>
@@ -31,10 +31,10 @@ const ValidationEntry: React.FC<ValidationItemProps> = ({ validationItem, valida
                     {validationItem.type}
                 </Grid>
                 <Grid item sm={8}>
-                    {message && message(validationItem)}
+                    {message}
                 </Grid>
                 <Grid item sm={2}>
-                    {action && action(validationItem)}
+                    {action}
                 </Grid>
             </Grid>
         </>

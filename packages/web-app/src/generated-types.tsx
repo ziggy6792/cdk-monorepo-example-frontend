@@ -569,16 +569,30 @@ export type User = Identifiable & Creatable & {
   fullName: Scalars['String'],
 };
 
-export type ValidationItem = {
+export type ValidationItem = ValidationItemBase & {
    __typename?: 'ValidationItem',
   type: ValidationItemType,
   message: ValidationItemMessage,
   actionReferenceId?: Maybe<Scalars['ID']>,
 };
 
+export type ValidationItemBase = {
+  type: ValidationItemType,
+  message: ValidationItemMessage,
+  actionReferenceId?: Maybe<Scalars['ID']>,
+};
+
+export type ValidationItemHeatAlreadyOpen = ValidationItemBase & {
+   __typename?: 'ValidationItemHeatAlreadyOpen',
+  type: ValidationItemType,
+  message: ValidationItemMessage,
+  actionReferenceId?: Maybe<Scalars['ID']>,
+  eventId: Scalars['ID'],
+};
+
 export type ValidationItemList = {
    __typename?: 'ValidationItemList',
-  items: Array<ValidationItem>,
+  items: Array<ValidationItemBase>,
 };
 
 export enum ValidationItemMessage {
@@ -857,6 +871,9 @@ export type SelectHeatMutation = (
     & { items: Array<(
       { __typename?: 'ValidationItem' }
       & Pick<ValidationItem, 'message' | 'type' | 'actionReferenceId'>
+    ) | (
+      { __typename?: 'ValidationItemHeatAlreadyOpen' }
+      & Pick<ValidationItemHeatAlreadyOpen, 'eventId' | 'message' | 'type' | 'actionReferenceId'>
     )> }
   ) }
 );
@@ -1513,6 +1530,9 @@ export const SelectHeatDocument = gql`
         message
         type
         actionReferenceId
+        ... on ValidationItemHeatAlreadyOpen {
+          eventId
+        }
       }
     }
   }

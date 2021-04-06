@@ -3,7 +3,14 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { useSelectHeatMutation, useCheckCanOpenHeatQuery, ValidationItem, ValidationItemType, ValidationItemMessage } from 'src/generated-types';
+import {
+    useSelectHeatMutation,
+    ValidationItem,
+    ValidationItemType,
+    ValidationItemMessage,
+    ValidationItemBase,
+    ValidationItemHeatAlreadyOpen,
+} from 'src/generated-types';
 import { useHistory } from 'react-router';
 import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
@@ -25,7 +32,7 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
     // const { refetch: checkCanOpen } = useCheckCanOpenHeatQuery({ fetchPolicy: 'cache-and-network', skip: true });
 
     const [open, setOpen] = useState(false);
-    const [validationItems, setValidationItems] = useState<ValidationItem[]>([]);
+    const [validationItems, setValidationItems] = useState<ValidationItemBase[]>([]);
 
     const onSelectHeat = async (validationLevel: ValidationItemType = ValidationItemType.Warn): Promise<void> => {
         const response = await selectHeat({ variables: { id: heatId, validationLevel } });
@@ -39,23 +46,25 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
         return null;
     };
 
-    const validationItemContent: ValidationItemContent = {
-        [ValidationItemMessage.OpenheatAlreadyopen]: {
-            action: (valItem: ValidationItem) => <Link href={`${ROUTE_SCOREBOARD}/${valItem.actionReferenceId}`}>Open Scoreboard</Link>,
-            message: () => 'Another heat is already open in the event scorebaord. Please close it first.',
-        },
-        [ValidationItemMessage.OpenheatNoriders]: {
-            message: () => 'There are no riders allocated to this heat.',
-        },
-        [ValidationItemMessage.OpenheatNotfull]: {
-            message: () => 'This heat is not yet fully allocated.',
-        },
-        [ValidationItemMessage.OpenheatToofewriders]: {
-            message: () => 'There are not enough riders allocated to this heat.',
-        },
-        [ValidationItemMessage.OpenheatAlreadyfinished]: {
-            message: () => 'This heat has been closed once already. Are you sue you want to re-open it?',
-        },
+    const validationMessageLookup = {
+        [ValidationItemMessage.OpenheatAlreadyopen]: 'Another heat is already open in the event scorebaord. Please close it first.',
+        [ValidationItemMessage.OpenheatNoriders]: 'There are no riders allocated to this heat.',
+        [ValidationItemMessage.OpenheatNotfull]: 'This heat is not yet fully allocated.',
+        [ValidationItemMessage.OpenheatToofewriders]: 'There are not enough riders allocated to this heat.',
+        [ValidationItemMessage.OpenheatAlreadyfinished]: 'This heat has been closed once already. Are you sue you want to re-open it?',
+    };
+
+    const validationItemContent: ValidationItemContent = (validationItem: ValidationItem | ValidationItemHeatAlreadyOpen) => {
+        const message = validationMessageLookup[validationItem.message];
+        if (validationItem.__typename === 'ValidationItemHeatAlreadyOpen') {
+            return {
+                action: <Link href={`${ROUTE_SCOREBOARD}/${validationItem.eventId}`}>Open Scoreboard</Link>,
+                message,
+            };
+        }
+        return {
+            message,
+        };
     };
 
     return (

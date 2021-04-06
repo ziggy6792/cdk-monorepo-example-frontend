@@ -99,6 +99,9 @@ export const SELECT_HEAT = gql`
                     message
                     type
                     actionReferenceId
+                    ... on ValidationItemHeatAlreadyOpen {
+                        eventId
+                    }
                 }
             }
         }
