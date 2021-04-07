@@ -159,10 +159,12 @@ export type Heat = DataEntity &
         id: Scalars['ID'];
         name: Scalars['String'];
         roundId: Scalars['ID'];
-        status: HeatStatus;
         progressionsPerHeat: Scalars['Int'];
+        isFinished: Scalars['Boolean'];
         longName: Scalars['String'];
         round: Round;
+        incomingHeats: Array<Heat>;
+        status: HeatStatus;
         seedSlots: Array<SeedSlot>;
         size: Scalars['Int'];
         getSortedRiderAllocations: RiderAllocationList;
@@ -183,10 +185,10 @@ export type HeatParamsInput = {
     seedSlots: Array<SeedSlotParamsInput>;
 };
 
-/** The Heat Status */
 export enum HeatStatus {
-    Open = 'OPEN',
-    Closed = 'CLOSED',
+    NotReady = 'NOT_READY',
+    Ready = 'READY',
+    InProgress = 'IN_PROGRESS',
     Finished = 'FINISHED',
 }
 
@@ -486,6 +488,8 @@ export type SeedSlot = {
     __typename?: 'SeedSlot';
     seed: Scalars['Int'];
     nextHeatId?: Maybe<Scalars['ID']>;
+    previousHeatId?: Maybe<Scalars['ID']>;
+    previousHeat?: Maybe<Heat>;
     nextHeat?: Maybe<Heat>;
     isProgressing?: Maybe<Scalars['Boolean']>;
 };

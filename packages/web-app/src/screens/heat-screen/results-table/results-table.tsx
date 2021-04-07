@@ -30,9 +30,9 @@ const ScoresTables: React.FC<IScoresTableProps> = ({ riderAllocations, noProgres
 
     return (
         <>
-            {tableType === ScoresTableType.RESULTS && <StartListTable tableData={scoresTableData} noProgressing={noProgressing} />}
+            {tableType === ScoresTableType.START_LIST && <StartListTable tableData={scoresTableData} noProgressing={noProgressing} />}
 
-            {tableType === ScoresTableType.START_LIST && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} noProgressing={noProgressing} />}
+            {tableType === ScoresTableType.RESULTS && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} noProgressing={noProgressing} />}
         </>
     );
 };

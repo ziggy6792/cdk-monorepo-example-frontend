@@ -51,9 +51,10 @@ type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'name'> & {
 };
 
 const statusLookup = {
-    [HeatStatus.Closed]: HeatCardStatus.NOT_STARTED,
-    [HeatStatus.Open]: HeatCardStatus.IN_PROGRESS,
-    [HeatStatus.Finished]: HeatCardStatus.FINISHED,
+    [HeatStatus.NotReady]: HeatCardStatus.NOT_STARTED,
+    [HeatStatus.InProgress]: HeatCardStatus.IN_PROGRESS,
+    [HeatStatus.Finished]: HeatCardStatus.READY_OR_FINISHED,
+    [HeatStatus.Ready]: HeatCardStatus.READY_OR_FINISHED,
 };
 
 interface IHeatsStructureProps {
@@ -94,7 +95,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                     <Grid item key={heat.id}>
                                         <HeatCard
                                             onClick={() => {
-                                                if (heat.status === HeatStatus.Open) {
+                                                if (heat.status === HeatStatus.InProgress) {
                                                     history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
                                                 } else {
                                                     history.push(`${ROUTE_HEAT}/${heat.id}`);
@@ -107,7 +108,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                                         {heat.name}
                                                     </>
                                                 ) : (
-                                                    `${heat.name} ${heat.status}`
+                                                    heat.name
                                                 )
                                             }
                                             width={heat.isFinal ? 260 : undefined}
