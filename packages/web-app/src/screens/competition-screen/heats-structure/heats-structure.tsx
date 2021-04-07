@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Grid, Container, makeStyles, Typography, useTheme } from '@material-ui/core';
 import TrophyIcon from '@material-ui/icons/EmojiEvents';
 import { Heat, Round, Maybe, User, HeatStatus } from 'src/generated-types';
@@ -80,7 +80,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                 <Grid item key={day ? day.toISOString() : 'TBD'}>
                     <DateHeader header={day ? DateFormatter.toLongDay(day) : 'Date TBD'} />
                     {dayRounds.map(round => (
-                        <>
+                        <Fragment key={round.id}>
                             <Grid
                                 container
                                 justify='flex-start'
@@ -116,7 +116,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                             content={
                                                 <>
                                                     {heat.riderAllocations.items.map(ra => (
-                                                        <li>{ra.user?.fullName}</li>
+                                                        <li key={ra.user?.fullName}>{ra.user?.fullName}</li>
                                                     ))}
                                                 </>
                                             }
@@ -124,7 +124,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                     </Grid>
                                 ))}
                             </Grid>
-                        </>
+                        </Fragment>
                     ))}
                 </Grid>
             ))}

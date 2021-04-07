@@ -589,6 +589,7 @@ export enum ValidationItemMessage {
     OpenheatAlreadyopen = 'OPENHEAT_ALREADYOPEN',
     OpenheatNoriders = 'OPENHEAT_NORIDERS',
     OpenheatToofewriders = 'OPENHEAT_TOOFEWRIDERS',
+    OpenheatNotready = 'OPENHEAT_NOTREADY',
     OpenheatNotfull = 'OPENHEAT_NOTFULL',
     OpenheatAlreadyfinished = 'OPENHEAT_ALREADYFINISHED',
 }

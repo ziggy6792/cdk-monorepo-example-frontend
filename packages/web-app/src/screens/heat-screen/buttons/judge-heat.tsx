@@ -50,6 +50,7 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
         [ValidationItemMessage.OpenheatAlreadyopen]: 'Another heat is already open in the event scorebaord. Please close it first.',
         [ValidationItemMessage.OpenheatNoriders]: 'There are no riders allocated to this heat.',
         [ValidationItemMessage.OpenheatNotfull]: 'This heat is not yet fully allocated.',
+        [ValidationItemMessage.OpenheatNotready]: 'This heat is not ready to judge as allocations will depend on the results of former heats.',
         [ValidationItemMessage.OpenheatToofewriders]: 'There are not enough riders allocated to this heat.',
         [ValidationItemMessage.OpenheatAlreadyfinished]: 'This heat has been closed once already. Are you sue you want to re-open it?',
     };
@@ -82,7 +83,7 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
                     <ProgressButton
                         onClick={() => onSelectHeat(ValidationItemType.Error)}
-                        disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}
+                        disabled={!!validationItems.find(item => item.type === ValidationItemType.Error)}
                     >
                         Judge Heat
                     </ProgressButton>
