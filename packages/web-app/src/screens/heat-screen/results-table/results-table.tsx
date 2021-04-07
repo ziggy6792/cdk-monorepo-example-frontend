@@ -3,12 +3,18 @@ import _ from 'lodash';
 import { IRiderAllocationItem } from 'src/gql/common/types';
 import ResultsDataTable, { IRiderAllocationRow } from './results-data-table';
 
+export enum ScoresTableType {
+    START_LIST = 'START_LIST',
+    RESULTS = 'RESULTS',
+}
+
 export interface IScoresTableProps {
     riderAllocations: IRiderAllocationItem[];
     noProgressing: number;
+    tableType?: ScoresTableType;
 }
 
-const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, noProgressing }) => {
+const ScoresTables: React.FC<IScoresTableProps> = ({ riderAllocations, noProgressing, tableType = ScoresTableType.RESULTS }) => {
     const scoresTableData: IRiderAllocationRow[] = riderAllocations.map(riderAllocation => ({
         riderAllocation,
         rowData: {
@@ -24,15 +30,12 @@ const ScoreboardTables: React.FC<IScoresTableProps> = ({ riderAllocations, noPro
 
     return (
         <>
-            <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} noProgressing={noProgressing} />
+            {tableType === ScoresTableType.RESULTS && <StartListTable tableData={scoresTableData} noProgressing={noProgressing} />}
+
+            {tableType === ScoresTableType.START_LIST && <ResultsTable tableData={scoresTableData} noOfRuns={noOfRuns} noProgressing={noProgressing} />}
         </>
     );
 };
-
-export interface IStartListTableProps {
-    noProgressing: number;
-    tableData: IRiderAllocationRow[];
-}
 
 export interface IResultsTableProps {
     tableData: IRiderAllocationRow[];
@@ -50,7 +53,28 @@ const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns, noPro
         { name: 'position', label: 'Rank' },
     ];
 
-    return <ResultsDataTable tableData={tableData} columns={scoresTableColumns} highlightedPositions={noProgressing} />;
+    return <ResultsDataTable title='Results' tableData={tableData} columns={scoresTableColumns} highlightedPositions={noProgressing} />;
 };
 
-export default ScoreboardTables;
+export interface IStartListTableProps {
+    noProgressing: number;
+    tableData: IRiderAllocationRow[];
+}
+
+const StartListTable: React.FC<IStartListTableProps> = ({ tableData, noProgressing }) => {
+    const startlistTableColumns = [
+        { name: 'order', label: 'Order' },
+        { name: 'rider', label: 'Rider' },
+    ];
+
+    return (
+        <ResultsDataTable
+            title='Start List'
+            tableData={_.orderBy(tableData, row => row.riderAllocation.startOrder)}
+            columns={startlistTableColumns}
+            highlightedPositions={noProgressing}
+        />
+    );
+};
+
+export default ScoresTables;

@@ -62,9 +62,9 @@ interface IHeatsStructureProps {
 }
 
 const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => {
-    const groupedItems = _.groupBy(rounds, (round) => (round.startTime ? startOfDay(round.startTime).toISOString() : new Date(0).toISOString()));
+    const groupedItems = _.groupBy(rounds, round => (round.startTime ? startOfDay(round.startTime).toISOString() : new Date(0).toISOString()));
 
-    const roundsByDay = Object.keys(groupedItems).map((key) => ({
+    const roundsByDay = Object.keys(groupedItems).map(key => ({
         day: key === new Date(0).toISOString() ? null : parseISO(key),
         dayRounds: groupedItems[key] as HeatsStructureRound[],
     }));
@@ -78,7 +78,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
             {roundsByDay.map(({ day, dayRounds }) => (
                 <Grid item key={day ? day.toISOString() : 'TBD'}>
                     <DateHeader header={day ? DateFormatter.toLongDay(day) : 'Date TBD'} />
-                    {dayRounds.map((round) => (
+                    {dayRounds.map(round => (
                         <>
                             <Grid
                                 container
@@ -90,7 +90,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2} justify='center'>
-                                {round.heats.items.map((heat) => (
+                                {round.heats.items.map(heat => (
                                     <Grid item key={heat.id}>
                                         <HeatCard
                                             onClick={() => {
@@ -107,14 +107,14 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                                         {heat.name}
                                                     </>
                                                 ) : (
-                                                    heat.name
+                                                    `${heat.name} ${heat.status}`
                                                 )
                                             }
                                             width={heat.isFinal ? 260 : undefined}
                                             status={statusLookup[heat.status]}
                                             content={
                                                 <>
-                                                    {heat.riderAllocations.items.map((ra) => (
+                                                    {heat.riderAllocations.items.map(ra => (
                                                         <li>{ra.user?.fullName}</li>
                                                     ))}
                                                 </>

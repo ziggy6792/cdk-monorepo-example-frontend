@@ -27,12 +27,12 @@ const useStyles = makeStyles(theme => ({
 
 const ResultsDataTable: React.FC<ScoresDataTableProps> = props => {
     const classes = useStyles();
-    const { highlightedPositions, tableData } = props;
+    const { highlightedPositions, tableData, title } = props;
 
     return (
         <DataTable
             {...props}
-            title='Results'
+            title={title}
             options={{
                 ...props.options,
                 rowsPerPage: undefined,
