@@ -3,7 +3,7 @@ import React from 'react';
 import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
 import Spinner from 'src/components/spinner';
-import CompetitionSummary from 'src/modules/competition-summary';
+import CompetitionSummary from 'src/modules/summary/competition-summary';
 import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
 import { useHistory } from 'react-router';
 import HeatsStructure from './heats-structure/heats-structure';

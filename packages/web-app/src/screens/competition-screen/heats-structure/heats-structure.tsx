@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Grid, Container, makeStyles, Typography, useTheme } from '@material-ui/core';
 import TrophyIcon from '@material-ui/icons/EmojiEvents';
 import { Heat, Round, Maybe, User, HeatStatus } from 'src/generated-types';
@@ -37,7 +37,7 @@ const DateHeader: React.FC<IDateHeaderProps> = ({ header }) => {
     );
 };
 
-type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'shortName'> & {
+type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'name'> & {
     heats: { __typename?: 'HeatList' } & {
         items: Array<
             { __typename?: 'Heat' } & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'> & {
@@ -51,9 +51,10 @@ type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'shortName'> & {
 };
 
 const statusLookup = {
-    [HeatStatus.Closed]: HeatCardStatus.NOT_STARTED,
-    [HeatStatus.Open]: HeatCardStatus.IN_PROGRESS,
-    [HeatStatus.Finished]: HeatCardStatus.FINISHED,
+    [HeatStatus.NotReady]: HeatCardStatus.NOT_STARTED,
+    [HeatStatus.InProgress]: HeatCardStatus.IN_PROGRESS,
+    [HeatStatus.Finished]: HeatCardStatus.READY_OR_FINISHED,
+    [HeatStatus.Ready]: HeatCardStatus.READY_OR_FINISHED,
 };
 
 interface IHeatsStructureProps {
@@ -79,22 +80,22 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                 <Grid item key={day ? day.toISOString() : 'TBD'}>
                     <DateHeader header={day ? DateFormatter.toLongDay(day) : 'Date TBD'} />
                     {dayRounds.map(round => (
-                        <>
+                        <Fragment key={round.id}>
                             <Grid
                                 container
                                 justify='flex-start'
                                 style={{ marginTop: theme.spacing(1), marginBottom: theme.spacing(1), marginLeft: theme.spacing(2) }}
                             >
                                 <Grid item>
-                                    <Typography>{round.shortName}</Typography>
+                                    <Typography>{round.name}</Typography>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2} justify='center'>
                                 {round.heats.items.map(heat => (
-                                    <Grid item>
+                                    <Grid item key={heat.id}>
                                         <HeatCard
                                             onClick={() => {
-                                                if (heat.status === HeatStatus.Open) {
+                                                if (heat.status === HeatStatus.InProgress) {
                                                     history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
                                                 } else {
                                                     history.push(`${ROUTE_HEAT}/${heat.id}`);
@@ -115,7 +116,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                             content={
                                                 <>
                                                     {heat.riderAllocations.items.map(ra => (
-                                                        <li>{ra.user?.fullName}</li>
+                                                        <li key={ra.user?.fullName}>{ra.user?.fullName}</li>
                                                     ))}
                                                 </>
                                             }
@@ -123,7 +124,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                                     </Grid>
                                 ))}
                             </Grid>
-                        </>
+                        </Fragment>
                     ))}
                 </Grid>
             ))}

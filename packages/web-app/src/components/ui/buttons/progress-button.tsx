@@ -4,21 +4,26 @@ import { Button, CircularProgress } from '@material-ui/core';
 export interface ISubmitButtonProps {
     disabled?: boolean;
     onClick?: () => Promise<any>;
+    isSubmitting?: boolean;
 }
 
-const ProgressButton: React.FC<ISubmitButtonProps> = ({ disabled, onClick, children }) => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
+const ProgressButton: React.FC<ISubmitButtonProps> = ({ disabled, onClick, children, isSubmitting }) => {
+    const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
     return (
         <Button
-            disabled={disabled || isSubmitting}
-            onClick={async () => {
-                setIsSubmitting(true);
-                await onClick();
-                setIsSubmitting(false);
-            }}
+            disabled={disabled || internalIsSubmitting}
+            onClick={
+                onClick
+                    ? async () => {
+                          setInternalIsSubmitting(true);
+                          await onClick();
+                          setInternalIsSubmitting(false);
+                      }
+                    : undefined
+            }
         >
             {children}
-            {isSubmitting && <CircularProgress size={20} style={{ marginLeft: '1em' }} />}
+            {(isSubmitting !== undefined ? isSubmitting : internalIsSubmitting) && <CircularProgress size={20} style={{ marginLeft: '1em' }} />}
         </Button>
     );
 };

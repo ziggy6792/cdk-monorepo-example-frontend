@@ -14,6 +14,7 @@ import CompetitionManagerScreen from 'src/screens/competition-manager-screen';
 import ScoreboardScreen from 'src/screens/scoreboard-screen';
 import TimetableScreen from 'src/screens/timetable-screen';
 import CompetitionScreen from 'src/screens/competition-screen';
+import HeatScreen from 'src/screens/heat-screen';
 
 const Routes: React.FC = () => {
     const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const Routes: React.FC = () => {
                         path={`${routeConfig.ROUTE_TIMETABLE}/:eventId`}
                         render={({ match: { params } }) => <TimetableScreen eventId={params.eventId} />}
                     />
+                    <Route exact path={`${routeConfig.ROUTE_HEAT}/:heatId`} render={({ match: { params } }) => <HeatScreen heatId={params.heatId} />} />
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

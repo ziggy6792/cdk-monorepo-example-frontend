@@ -12,7 +12,7 @@ interface StyleProps {
 export enum HeatCardStatus {
     NOT_STARTED = 'NOT_STARTED',
     IN_PROGRESS = 'IN_PROGRESS',
-    FINISHED = 'FINISHED',
+    READY_OR_FINISHED = 'READY_OR_FINISHED',
 }
 
 const useStyles = makeStyles(theme => ({
@@ -44,13 +44,13 @@ const useStyles = makeStyles(theme => ({
 const statusColors = {
     [HeatCardStatus.NOT_STARTED]: '#34495e',
     [HeatCardStatus.IN_PROGRESS]: '#17a2b8',
-    [HeatCardStatus.FINISHED]: '#ecf0f1',
+    [HeatCardStatus.READY_OR_FINISHED]: '#ecf0f1',
 };
 
 const statusCursor = {
     [HeatCardStatus.NOT_STARTED]: 'default',
     [HeatCardStatus.IN_PROGRESS]: 'pointer',
-    [HeatCardStatus.FINISHED]: 'pointer',
+    [HeatCardStatus.READY_OR_FINISHED]: 'pointer',
 };
 
 interface IHeatCardProps {

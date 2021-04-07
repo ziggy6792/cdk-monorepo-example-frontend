@@ -159,9 +159,12 @@ export type Heat = DataEntity &
         id: Scalars['ID'];
         name: Scalars['String'];
         roundId: Scalars['ID'];
-        status: HeatStatus;
         progressionsPerHeat: Scalars['Int'];
+        isFinished: Scalars['Boolean'];
+        longName: Scalars['String'];
         round: Round;
+        incomingHeats: Array<Heat>;
+        status: HeatStatus;
         seedSlots: Array<SeedSlot>;
         size: Scalars['Int'];
         getSortedRiderAllocations: RiderAllocationList;
@@ -182,10 +185,10 @@ export type HeatParamsInput = {
     seedSlots: Array<SeedSlotParamsInput>;
 };
 
-/** The Heat Status */
 export enum HeatStatus {
-    Open = 'OPEN',
-    Closed = 'CLOSED',
+    NotReady = 'NOT_READY',
+    Ready = 'READY',
+    InProgress = 'IN_PROGRESS',
     Finished = 'FINISHED',
 }
 
@@ -221,10 +224,11 @@ export type Mutation = {
     createRiderAllocations: Array<RiderAllocation>;
     updateRiderAllocations: Array<RiderAllocation>;
     buildCompetition?: Maybe<Competition>;
-    selectHeat: Event;
+    selectHeat: SelectHeatResult;
     allocateRiders?: Maybe<Competition>;
     scoreRun: Heat;
     endHeat: Competition;
+    addDemoRiders?: Maybe<Competition>;
 };
 
 export type MutationCreateUserArgs = {
@@ -289,6 +293,7 @@ export type MutationBuildCompetitionArgs = {
 };
 
 export type MutationSelectHeatArgs = {
+    validationLevel?: Maybe<ValidationItemType>;
     id: Scalars['ID'];
 };
 
@@ -301,6 +306,10 @@ export type MutationScoreRunArgs = {
 };
 
 export type MutationEndHeatArgs = {
+    id?: Maybe<Scalars['ID']>;
+};
+
+export type MutationAddDemoRidersArgs = {
     id: Scalars['ID'];
 };
 
@@ -372,6 +381,7 @@ export type RiderAllocation = Creatable & {
     allocatableId: Scalars['ID'];
     userId: Scalars['ID'];
     startSeed: Scalars['Int'];
+    previousHeatId: Scalars['ID'];
     runs?: Maybe<Array<Run>>;
     position?: Maybe<Scalars['Int']>;
     rankOrder?: Maybe<Scalars['Int']>;
@@ -401,7 +411,7 @@ export type Round = Identifiable &
         getHeats: HeatList;
         heats: HeatList;
         competition: Competition;
-        shortName: Scalars['String'];
+        longName: Scalars['String'];
     };
 
 export type RoundList = {
@@ -478,6 +488,8 @@ export type SeedSlot = {
     __typename?: 'SeedSlot';
     seed: Scalars['Int'];
     nextHeatId?: Maybe<Scalars['ID']>;
+    previousHeatId?: Maybe<Scalars['ID']>;
+    previousHeat?: Maybe<Heat>;
     nextHeat?: Maybe<Heat>;
     isProgressing?: Maybe<Scalars['Boolean']>;
 };
@@ -485,6 +497,8 @@ export type SeedSlot = {
 export type SeedSlotParamsInput = {
     seed: Scalars['Int'];
 };
+
+export type SelectHeatResult = Event | ValidationItemList;
 
 /** Sport */
 export enum Sport {
@@ -543,50 +557,86 @@ export type User = Identifiable &
         id: Scalars['ID'];
         email: Scalars['String'];
         firstName: Scalars['String'];
+        isDemo?: Maybe<Scalars['Boolean']>;
         lastName: Scalars['String'];
         fullName: Scalars['String'];
+    };
+
+export type ValidationItem = ValidationItemBase & {
+    __typename?: 'ValidationItem';
+    type: ValidationItemType;
+    message: ValidationItemMessage;
+};
+
+export type ValidationItemBase = {
+    type: ValidationItemType;
+    message: ValidationItemMessage;
+};
+
+export type ValidationItemHeatAlreadyOpen = ValidationItemBase & {
+    __typename?: 'ValidationItemHeatAlreadyOpen';
+    type: ValidationItemType;
+    message: ValidationItemMessage;
+    eventId: Scalars['ID'];
+};
+
+export type ValidationItemList = {
+    __typename?: 'ValidationItemList';
+    items: Array<ValidationItemBase>;
+};
+
+export enum ValidationItemMessage {
+    OpenheatAlreadyopen = 'OPENHEAT_ALREADYOPEN',
+    OpenheatNoriders = 'OPENHEAT_NORIDERS',
+    OpenheatToofewriders = 'OPENHEAT_TOOFEWRIDERS',
+    OpenheatNotready = 'OPENHEAT_NOTREADY',
+    OpenheatNotfull = 'OPENHEAT_NOTFULL',
+    OpenheatAlreadyfinished = 'OPENHEAT_ALREADYFINISHED',
+}
+
+export enum ValidationItemType {
+    Error = 'ERROR',
+    Warn = 'WARN',
+}
+
+export type CoreCompetitionFieldsFragment = { __typename?: 'Competition' } & Pick<
+    Competition,
+    'id' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
+> & {
+        event: { __typename?: 'Event' } & Pick<Event, 'id'>;
+        judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
+        riderAllocations: { __typename?: 'RiderAllocationList' } & {
+            items: Array<
+                { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'userId' | 'startSeed'> & {
+                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
+                    }
+            >;
+        };
+        rounds: { __typename?: 'RoundList' } & {
+            items: Array<
+                { __typename?: 'Round' } & Pick<Round, 'id' | 'name' | 'startTime'> & {
+                        heats: { __typename?: 'HeatList' } & {
+                            items: Array<
+                                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'> & {
+                                        round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
+                                        riderAllocations: { __typename?: 'RiderAllocationList' } & {
+                                            items: Array<
+                                                { __typename?: 'RiderAllocation' } & { user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>> }
+                                            >;
+                                        };
+                                    }
+                            >;
+                        };
+                    }
+            >;
+        };
     };
 
 export type GetCompetitionQueryVariables = {
     id: Scalars['ID'];
 };
 
-export type GetCompetitionQuery = { __typename?: 'Query' } & {
-    getCompetition: { __typename?: 'Competition' } & Pick<
-        Competition,
-        'id' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
-    > & {
-            event: { __typename?: 'Event' } & Pick<Event, 'id'>;
-            judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
-            riderAllocations: { __typename?: 'RiderAllocationList' } & {
-                items: Array<
-                    { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'userId' | 'startSeed'> & {
-                            user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
-                        }
-                >;
-            };
-            rounds: { __typename?: 'RoundList' } & {
-                items: Array<
-                    { __typename?: 'Round' } & Pick<Round, 'id' | 'shortName' | 'startTime'> & {
-                            heats: { __typename?: 'HeatList' } & {
-                                items: Array<
-                                    { __typename?: 'Heat' } & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'> & {
-                                            round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
-                                            riderAllocations: { __typename?: 'RiderAllocationList' } & {
-                                                items: Array<
-                                                    { __typename?: 'RiderAllocation' } & {
-                                                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
-                                                    }
-                                                >;
-                                            };
-                                        }
-                                >;
-                            };
-                        }
-                >;
-            };
-        };
-};
+export type GetCompetitionQuery = { __typename?: 'Query' } & { getCompetition: { __typename?: 'Competition' } & CoreCompetitionFieldsFragment };
 
 export type CreateCompetitionMutationVariables = {
     input: CreateCompetitionInput;
@@ -633,6 +683,18 @@ export type AllocateRidersMutation = { __typename?: 'Mutation' } & {
     >;
 };
 
+export type AddDemoRidersMutationVariables = {
+    id: Scalars['ID'];
+};
+
+export type AddDemoRidersMutation = { __typename?: 'Mutation' } & { addDemoRiders: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>> };
+
+export type EndHeatMutationVariables = {
+    id: Scalars['ID'];
+};
+
+export type EndHeatMutation = { __typename?: 'Mutation' } & { endHeat: { __typename?: 'Competition' } & CoreCompetitionFieldsFragment };
+
 export type ListEventsQueryVariables = {};
 
 export type ListEventsQuery = { __typename?: 'Query' } & {
@@ -676,7 +738,7 @@ export type GetEventScheduleQuery = { __typename?: 'Query' } & {
                 items: Array<
                     { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'> & {
                             scheduledItem: Maybe<
-                                { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'name'> & {
+                                { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'longName'> & {
                                         heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
                                     }
                             >;
@@ -686,30 +748,50 @@ export type GetEventScheduleQuery = { __typename?: 'Query' } & {
         };
 };
 
+export type SelectHeatMutationVariables = {
+    id: Scalars['ID'];
+    validationLevel?: Maybe<ValidationItemType>;
+};
+
+export type SelectHeatMutation = { __typename?: 'Mutation' } & {
+    selectHeat:
+        | ({ __typename?: 'Event' } & Pick<Event, 'id'> & { selectedHeat: Maybe<{ __typename?: 'Heat' } & CoreHeatFieldsFragment> })
+        | ({ __typename?: 'ValidationItemList' } & {
+              items: Array<
+                  | ({ __typename?: 'ValidationItem' } & Pick<ValidationItem, 'message' | 'type'>)
+                  | ({ __typename?: 'ValidationItemHeatAlreadyOpen' } & Pick<ValidationItemHeatAlreadyOpen, 'eventId' | 'message' | 'type'>)
+              >;
+          });
+};
+
 export type GetSelectedHeatQueryVariables = {
     id: Scalars['ID'];
 };
 
 export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
-    getEvent: { __typename?: 'Event' } & Pick<Event, 'id'> & {
-            selectedHeat: Maybe<
-                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'status' | 'name' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'> & {
-                        round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
-                        riderAllocations: { __typename?: 'RiderAllocationList' } & {
-                            items: Array<
-                                { __typename?: 'RiderAllocation' } & Pick<
-                                    RiderAllocation,
-                                    'userId' | 'startSeed' | 'startOrder' | 'rankOrder' | 'allocatableId' | 'position'
-                                > & {
-                                        user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>>;
-                                        runs: Maybe<Array<{ __typename?: 'Run' } & Pick<Run, 'score'>>>;
-                                    }
-                            >;
-                        };
-                    }
+    getEvent: { __typename?: 'Event' } & Pick<Event, 'id'> & { selectedHeat: Maybe<{ __typename?: 'Heat' } & CoreHeatFieldsFragment> };
+};
+
+export type CoreHeatFieldsFragment = { __typename?: 'Heat' } & Pick<
+    Heat,
+    'id' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'
+> & {
+        round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
+        riderAllocations: { __typename?: 'RiderAllocationList' } & {
+            items: Array<
+                { __typename?: 'RiderAllocation' } & Pick<
+                    RiderAllocation,
+                    'userId' | 'startSeed' | 'startOrder' | 'rankOrder' | 'allocatableId' | 'position'
+                > & { user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>>; runs: Maybe<Array<{ __typename?: 'Run' } & Pick<Run, 'score'>>> }
             >;
         };
+    };
+
+export type GetHeatQueryVariables = {
+    id: Scalars['ID'];
 };
+
+export type GetHeatQuery = { __typename?: 'Query' } & { getHeat: { __typename?: 'Heat' } & CoreHeatFieldsFragment };
 
 export type ScoreRunMutationVariables = {
     input: ScorRunInput;
@@ -758,57 +840,55 @@ export type ListUsersQueryVariables = {};
 
 export type ListUsersQuery = { __typename?: 'Query' } & { listUsers: Array<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>> };
 
-export const GetCompetitionDocument = gql`
-    query getCompetition($id: ID!) {
-        getCompetition(id: $id) {
+export const CoreCompetitionFieldsFragmentDoc = gql`
+    fragment CoreCompetitionFields on Competition {
+        id
+        event {
             id
-            event {
-                id
-            }
-            name
-            description
-            level
-            gender
-            sport
-            maxRiders
-            judgeUserId
-            judgeUser {
-                id
-                fullName
-            }
-            riderAllocations {
-                items {
-                    userId
-                    user {
-                        id
-                        fullName
-                    }
-                    startSeed
-                }
-            }
-            rounds {
-                items {
+        }
+        name
+        description
+        level
+        gender
+        sport
+        maxRiders
+        judgeUserId
+        judgeUser {
+            id
+            fullName
+        }
+        riderAllocations {
+            items {
+                userId
+                user {
                     id
-                    shortName
-                    startTime
-                    heats {
-                        items {
-                            id
-                            isFinal
-                            name
-                            round {
-                                roundNo
-                            }
-                            size
-                            noAllocated
-                            createdAt
-                            status
-                            riderAllocations {
-                                items {
-                                    user {
-                                        id
-                                        fullName
-                                    }
+                    fullName
+                }
+                startSeed
+            }
+        }
+        rounds {
+            items {
+                id
+                name
+                startTime
+                heats {
+                    items {
+                        id
+                        isFinal
+                        name
+                        round {
+                            roundNo
+                        }
+                        size
+                        noAllocated
+                        createdAt
+                        status
+                        riderAllocations {
+                            items {
+                                user {
+                                    id
+                                    fullName
                                 }
                             }
                         }
@@ -817,6 +897,45 @@ export const GetCompetitionDocument = gql`
             }
         }
     }
+`;
+export const CoreHeatFieldsFragmentDoc = gql`
+    fragment CoreHeatFields on Heat {
+        id
+        status
+        name
+        longName
+        round {
+            roundNo
+        }
+        size
+        noAllocated
+        noProgressing
+        createdAt
+        riderAllocations {
+            items {
+                userId
+                user {
+                    fullName
+                }
+                startSeed
+                startOrder
+                rankOrder
+                allocatableId
+                position
+                runs {
+                    score
+                }
+            }
+        }
+    }
+`;
+export const GetCompetitionDocument = gql`
+    query getCompetition($id: ID!) {
+        getCompetition(id: $id) {
+            ...CoreCompetitionFields
+        }
+    }
+    ${CoreCompetitionFieldsFragmentDoc}
 `;
 
 /**
@@ -993,6 +1112,71 @@ export function useAllocateRidersMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AllocateRidersMutationHookResult = ReturnType<typeof useAllocateRidersMutation>;
 export type AllocateRidersMutationResult = ApolloReactCommon.MutationResult<AllocateRidersMutation>;
 export type AllocateRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AllocateRidersMutation, AllocateRidersMutationVariables>;
+export const AddDemoRidersDocument = gql`
+    mutation addDemoRiders($id: ID!) {
+        addDemoRiders(id: $id) {
+            id
+        }
+    }
+`;
+export type AddDemoRidersMutationFn = ApolloReactCommon.MutationFunction<AddDemoRidersMutation, AddDemoRidersMutationVariables>;
+
+/**
+ * __useAddDemoRidersMutation__
+ *
+ * To run a mutation, you first call `useAddDemoRidersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddDemoRidersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addDemoRidersMutation, { data, loading, error }] = useAddDemoRidersMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAddDemoRidersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddDemoRidersMutation, AddDemoRidersMutationVariables>) {
+    return ApolloReactHooks.useMutation<AddDemoRidersMutation, AddDemoRidersMutationVariables>(AddDemoRidersDocument, baseOptions);
+}
+export type AddDemoRidersMutationHookResult = ReturnType<typeof useAddDemoRidersMutation>;
+export type AddDemoRidersMutationResult = ApolloReactCommon.MutationResult<AddDemoRidersMutation>;
+export type AddDemoRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AddDemoRidersMutation, AddDemoRidersMutationVariables>;
+export const EndHeatDocument = gql`
+    mutation endHeat($id: ID!) {
+        endHeat(id: $id) {
+            ...CoreCompetitionFields
+        }
+    }
+    ${CoreCompetitionFieldsFragmentDoc}
+`;
+export type EndHeatMutationFn = ApolloReactCommon.MutationFunction<EndHeatMutation, EndHeatMutationVariables>;
+
+/**
+ * __useEndHeatMutation__
+ *
+ * To run a mutation, you first call `useEndHeatMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEndHeatMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [endHeatMutation, { data, loading, error }] = useEndHeatMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useEndHeatMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EndHeatMutation, EndHeatMutationVariables>) {
+    return ApolloReactHooks.useMutation<EndHeatMutation, EndHeatMutationVariables>(EndHeatDocument, baseOptions);
+}
+export type EndHeatMutationHookResult = ReturnType<typeof useEndHeatMutation>;
+export type EndHeatMutationResult = ApolloReactCommon.MutationResult<EndHeatMutation>;
+export type EndHeatMutationOptions = ApolloReactCommon.BaseMutationOptions<EndHeatMutation, EndHeatMutationVariables>;
 export const ListEventsDocument = gql`
     query listEvents {
         listEvents {
@@ -1156,7 +1340,7 @@ export const GetEventScheduleDocument = gql`
                     scheduledItem {
                         ... on Round {
                             roundNo
-                            name
+                            longName
                             heats {
                                 items {
                                     id
@@ -1196,40 +1380,64 @@ export function useGetEventScheduleLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type GetEventScheduleQueryHookResult = ReturnType<typeof useGetEventScheduleQuery>;
 export type GetEventScheduleLazyQueryHookResult = ReturnType<typeof useGetEventScheduleLazyQuery>;
 export type GetEventScheduleQueryResult = ApolloReactCommon.QueryResult<GetEventScheduleQuery, GetEventScheduleQueryVariables>;
-export const GetSelectedHeatDocument = gql`
-    query getSelectedHeat($id: ID!) {
-        getEvent(id: $id) {
-            id
-            selectedHeat {
+export const SelectHeatDocument = gql`
+    mutation selectHeat($id: ID!, $validationLevel: ValidationItemType) {
+        selectHeat(id: $id, validationLevel: $validationLevel) {
+            ... on Event {
                 id
-                status
-                name
-                round {
-                    roundNo
+                selectedHeat {
+                    ...CoreHeatFields
                 }
-                size
-                noAllocated
-                noProgressing
-                createdAt
-                riderAllocations {
-                    items {
-                        userId
-                        user {
-                            fullName
-                        }
-                        startSeed
-                        startOrder
-                        rankOrder
-                        allocatableId
-                        position
-                        runs {
-                            score
-                        }
+            }
+            ... on ValidationItemList {
+                items {
+                    message
+                    type
+                    ... on ValidationItemHeatAlreadyOpen {
+                        eventId
                     }
                 }
             }
         }
     }
+    ${CoreHeatFieldsFragmentDoc}
+`;
+export type SelectHeatMutationFn = ApolloReactCommon.MutationFunction<SelectHeatMutation, SelectHeatMutationVariables>;
+
+/**
+ * __useSelectHeatMutation__
+ *
+ * To run a mutation, you first call `useSelectHeatMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSelectHeatMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [selectHeatMutation, { data, loading, error }] = useSelectHeatMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      validationLevel: // value for 'validationLevel'
+ *   },
+ * });
+ */
+export function useSelectHeatMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SelectHeatMutation, SelectHeatMutationVariables>) {
+    return ApolloReactHooks.useMutation<SelectHeatMutation, SelectHeatMutationVariables>(SelectHeatDocument, baseOptions);
+}
+export type SelectHeatMutationHookResult = ReturnType<typeof useSelectHeatMutation>;
+export type SelectHeatMutationResult = ApolloReactCommon.MutationResult<SelectHeatMutation>;
+export type SelectHeatMutationOptions = ApolloReactCommon.BaseMutationOptions<SelectHeatMutation, SelectHeatMutationVariables>;
+export const GetSelectedHeatDocument = gql`
+    query getSelectedHeat($id: ID!) {
+        getEvent(id: $id) {
+            id
+            selectedHeat {
+                ...CoreHeatFields
+            }
+        }
+    }
+    ${CoreHeatFieldsFragmentDoc}
 `;
 
 /**
@@ -1257,6 +1465,40 @@ export function useGetSelectedHeatLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type GetSelectedHeatQueryHookResult = ReturnType<typeof useGetSelectedHeatQuery>;
 export type GetSelectedHeatLazyQueryHookResult = ReturnType<typeof useGetSelectedHeatLazyQuery>;
 export type GetSelectedHeatQueryResult = ApolloReactCommon.QueryResult<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>;
+export const GetHeatDocument = gql`
+    query getHeat($id: ID!) {
+        getHeat(id: $id) {
+            ...CoreHeatFields
+        }
+    }
+    ${CoreHeatFieldsFragmentDoc}
+`;
+
+/**
+ * __useGetHeatQuery__
+ *
+ * To run a query within a React component, call `useGetHeatQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHeatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHeatQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetHeatQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetHeatQuery, GetHeatQueryVariables>) {
+    return ApolloReactHooks.useQuery<GetHeatQuery, GetHeatQueryVariables>(GetHeatDocument, baseOptions);
+}
+export function useGetHeatLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetHeatQuery, GetHeatQueryVariables>) {
+    return ApolloReactHooks.useLazyQuery<GetHeatQuery, GetHeatQueryVariables>(GetHeatDocument, baseOptions);
+}
+export type GetHeatQueryHookResult = ReturnType<typeof useGetHeatQuery>;
+export type GetHeatLazyQueryHookResult = ReturnType<typeof useGetHeatLazyQuery>;
+export type GetHeatQueryResult = ApolloReactCommon.QueryResult<GetHeatQuery, GetHeatQueryVariables>;
 export const ScoreRunDocument = gql`
     mutation scoreRun($input: ScorRunInput!) {
         scoreRun(input: $input) {

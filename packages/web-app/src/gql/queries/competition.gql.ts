@@ -2,63 +2,70 @@ import gql from 'graphql-tag';
 
 /* eslint-disable import/prefer-default-export */
 
-export const GET_COMPETITION = gql`
-    query getCompetition($id: ID!) {
-        getCompetition(id: $id) {
+const CORE_COMPETITION_FIELDS = gql`
+    fragment CoreCompetitionFields on Competition {
+        id
+        event {
             id
-            event {
-                id
-            }
-            name
-            description
-            level
-            gender
-            sport
-            maxRiders
-            judgeUserId
-            judgeUser {
-                id
-                fullName
-            }
-            riderAllocations {
-                items {
-                    userId
-                    user {
-                        id
-                        fullName
-                    }
-                    startSeed
-                }
-            }
-            rounds {
-                items {
+        }
+        name
+        description
+        level
+        gender
+        sport
+        maxRiders
+        judgeUserId
+        judgeUser {
+            id
+            fullName
+        }
+        riderAllocations {
+            items {
+                userId
+                user {
                     id
-                    shortName
-                    startTime
-                    heats {
-                        items {
-                            id
-                            isFinal
-                            name
-                            round {
-                                roundNo
-                            }
-                            size
-                            noAllocated
-                            createdAt
-                            status
-                            riderAllocations {
-                                items {
-                                    user {
-                                        id
-                                        fullName
-                                    }
+                    fullName
+                }
+                startSeed
+            }
+        }
+        rounds {
+            items {
+                id
+                name
+                startTime
+                heats {
+                    items {
+                        id
+                        isFinal
+                        name
+                        round {
+                            roundNo
+                        }
+                        size
+                        noAllocated
+                        createdAt
+                        status
+                        riderAllocations {
+                            items {
+                                user {
+                                    id
+                                    fullName
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+    }
+`;
+
+export const GET_COMPETITION = gql`
+    ${CORE_COMPETITION_FIELDS}
+    query getCompetition($id: ID!) {
+        getCompetition(id: $id) {
+            ...CoreCompetitionFields
         }
     }
 `;
@@ -107,6 +114,23 @@ export const ALLOCATE_RIDERS = gql`
                     }
                 }
             }
+        }
+    }
+`;
+
+export const ADD_DEMO_RIDERS = gql`
+    mutation addDemoRiders($id: ID!) {
+        addDemoRiders(id: $id) {
+            id
+        }
+    }
+`;
+
+export const END_HEAT = gql`
+    ${CORE_COMPETITION_FIELDS}
+    mutation endHeat($id: ID!) {
+        endHeat(id: $id) {
+            ...CoreCompetitionFields
         }
     }
 `;

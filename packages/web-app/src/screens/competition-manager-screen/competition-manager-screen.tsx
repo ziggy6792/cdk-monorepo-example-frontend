@@ -3,7 +3,7 @@ import React from 'react';
 import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
 import Spinner from 'src/components/spinner';
-import CompetitionSummary from 'src/modules/competition-summary';
+import CompetitionSummary from 'src/modules/summary/competition-summary';
 import { useHistory } from 'react-router';
 import { ROUTE_COMPETITION } from 'src/config/routes';
 import HeatsTable from './heats-table';
@@ -12,6 +12,7 @@ import EditCompetition from './buttons/edit-competition';
 import EditSeeds from './buttons/edit-seeds';
 import BuildCompetition from './buttons/build-competition';
 import AllocateRiders from './buttons/allocate-riders';
+import AddDemoRiders from './buttons/add-demo-riders';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -20,7 +21,7 @@ interface IEventsScreenProps {
 const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
+    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
     const disabledRiderAllocationButtons = data?.getCompetition.riderAllocations.items.length < 1;
@@ -75,6 +76,10 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
                         </Grid>
                         <Grid item>
                             <AllocateRiders competitionId={competitionId} disabled={disabledRiderAllocationButtons} />
+                        </Grid>
+
+                        <Grid item>
+                            <AddDemoRiders competitionId={competitionId} />
                         </Grid>
                     </Grid>
 

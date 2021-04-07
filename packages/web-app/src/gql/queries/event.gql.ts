@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
-
-/* eslint-disable import/prefer-default-export */
+import { CORE_HEAT_FIELDS } from './heat.gql';
 
 export const LIST_EVENTS = gql`
     query listEvents {
@@ -68,7 +67,7 @@ export const GET_EVENT_SCHEDULE = gql`
                     scheduledItem {
                         ... on Round {
                             roundNo
-                            name
+                            longName
                             heats {
                                 items {
                                     id
@@ -78,6 +77,41 @@ export const GET_EVENT_SCHEDULE = gql`
                         }
                     }
                 }
+            }
+        }
+    }
+`;
+
+export const SELECT_HEAT = gql`
+    ${CORE_HEAT_FIELDS}
+    mutation selectHeat($id: ID!, $validationLevel: ValidationItemType) {
+        selectHeat(id: $id, validationLevel: $validationLevel) {
+            ... on Event {
+                id
+                selectedHeat {
+                    ...CoreHeatFields
+                }
+            }
+            ... on ValidationItemList {
+                items {
+                    message
+                    type
+                    ... on ValidationItemHeatAlreadyOpen {
+                        eventId
+                    }
+                }
+            }
+        }
+    }
+`;
+
+export const GET_SELECTED_HEAT = gql`
+    ${CORE_HEAT_FIELDS}
+    query getSelectedHeat($id: ID!) {
+        getEvent(id: $id) {
+            id
+            selectedHeat {
+                ...CoreHeatFields
             }
         }
     }

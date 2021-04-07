@@ -1,39 +1,42 @@
 import gql from 'graphql-tag';
 
-/* eslint-disable import/prefer-default-export */
-
-export const GET_SELECTED_HEAT = gql`
-    query getSelectedHeat($id: ID!) {
-        getEvent(id: $id) {
-            id
-            selectedHeat {
-                id
-                status
-                name
-                round {
-                    roundNo
+export const CORE_HEAT_FIELDS = gql`
+    fragment CoreHeatFields on Heat {
+        id
+        status
+        name
+        longName
+        round {
+            roundNo
+        }
+        size
+        noAllocated
+        noProgressing
+        createdAt
+        riderAllocations {
+            items {
+                userId
+                user {
+                    fullName
                 }
-                size
-                noAllocated
-                noProgressing
-                createdAt
-                riderAllocations {
-                    items {
-                        userId
-                        user {
-                            fullName
-                        }
-                        startSeed
-                        startOrder
-                        rankOrder
-                        allocatableId
-                        position
-                        runs {
-                            score
-                        }
-                    }
+                startSeed
+                startOrder
+                rankOrder
+                allocatableId
+                position
+                runs {
+                    score
                 }
             }
+        }
+    }
+`;
+
+export const GET_HEAT = gql`
+    ${CORE_HEAT_FIELDS}
+    query getHeat($id: ID!) {
+        getHeat(id: $id) {
+            ...CoreHeatFields
         }
     }
 `;
