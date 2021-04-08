@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useMediaQuery, useTheme, Dialog as MUIDialog, DialogContent } from '@material-ui/core';
 
-const Dialog = props => {
+const Dialog = (props) => {
     const { open, setOpen } = props;
 
     const onClose = setOpen ? () => setOpen(false) : () => props.onClose();
@@ -19,6 +19,8 @@ const Dialog = props => {
             onClose={onClose}
             // style={{ zIndex: 1302 }}
             fullScreen={matchesXS}
+            disableBackdropClick
+            disableEscapeKeyDown
             PaperProps={{
                 style: {
                     paddingTop: matchesXS ? '1em' : '5em',

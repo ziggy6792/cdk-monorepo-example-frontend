@@ -15,7 +15,7 @@ export enum ValidationMessageType {
 export interface IValidationMessage {
     type: ValidationMessageType;
     message: React.ReactNode;
-    action: React.ReactNode;
+    action?: React.ReactNode;
 }
 
 export interface IValidationMessageProps {

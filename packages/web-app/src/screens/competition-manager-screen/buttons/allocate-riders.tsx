@@ -7,11 +7,17 @@ import { useAllocateRidersMutation } from 'src/generated-types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
+import ValidationMessages, { ValidationMessageType } from 'src/modules/validation/validation-messages';
 
 interface IEditCompetitionProps {
     competitionId: string;
     disabled?: boolean;
 }
+
+const areYouSureMessage = {
+    type: ValidationMessageType.WARN,
+    message: 'Are you sure',
+};
 
 const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabled }) => {
     const theme = useTheme();
@@ -29,6 +35,7 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
     const onAllocateRiders = async (): Promise<void> => {
         const variables = { id: competitionId };
         await allocateRiders({ variables });
+        setOpen(false);
     };
 
     const [open, setOpen] = useState(false);
@@ -42,8 +49,14 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
                         <Typography>Allocatte Riders</Typography>
                     </Grid>
                 </Grid>
-                {/* <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} /> */}
-                Are you sure
+                <ValidationMessages
+                    validationMessages={[
+                        {
+                            type: ValidationMessageType.WARN,
+                            message: 'This action will clear any existing competition results and reset the competitoin. Are you sure?',
+                        },
+                    ]}
+                />
                 <Grid container direction='row' justify='center'>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
                     <ProgressButton onClick={onAllocateRiders}>Allocate Riders</ProgressButton>
