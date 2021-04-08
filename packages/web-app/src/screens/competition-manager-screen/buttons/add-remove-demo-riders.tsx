@@ -4,15 +4,16 @@
 import React from 'react';
 import _ from 'lodash';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
-import { useAddDemoRidersMutation } from 'src/generated-types';
+import { useAddRemoveDemoRidersMutation } from 'src/generated-types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 
 interface IEditSeedsProps {
     competitionId: string;
+    hasDemoRiders: boolean;
 }
 
-const AddDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId }) => {
-    const [allocateRiders] = useAddDemoRidersMutation({
+const AddRemoveDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId, hasDemoRiders }) => {
+    const [allocateRiders] = useAddRemoveDemoRidersMutation({
         refetchQueries: [
             {
                 query: GET_COMPETITION,
@@ -29,9 +30,9 @@ const AddDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId }) => {
 
     return (
         <>
-            <ProgressButton onClick={onAllocateRiders}>Add Demo Riders</ProgressButton>
+            <ProgressButton onClick={onAllocateRiders}>{hasDemoRiders ? 'Remove' : 'Add'} Demo Riders</ProgressButton>
         </>
     );
 };
 
-export default AddDemoRiders;
+export default AddRemoveDemoRiders;

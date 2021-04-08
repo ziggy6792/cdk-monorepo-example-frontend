@@ -36,6 +36,7 @@ export type Competition = DataEntity &
         judgeUser?: Maybe<User>;
         event: Event;
         rounds: RoundList;
+        hasDemoRiders: Scalars['Boolean'];
         riderAllocations: RiderAllocationList;
     };
 
@@ -228,7 +229,7 @@ export type Mutation = {
     allocateRiders?: Maybe<Competition>;
     scoreRun: Heat;
     endHeat: Competition;
-    addDemoRiders?: Maybe<Competition>;
+    addRemoveDemoRiders?: Maybe<Competition>;
 };
 
 export type MutationCreateUserArgs = {
@@ -309,7 +310,7 @@ export type MutationEndHeatArgs = {
     id?: Maybe<Scalars['ID']>;
 };
 
-export type MutationAddDemoRidersArgs = {
+export type MutationAddRemoveDemoRidersArgs = {
     id: Scalars['ID'];
 };
 
@@ -601,7 +602,7 @@ export enum ValidationItemType {
 
 export type CoreCompetitionFieldsFragment = { __typename?: 'Competition' } & Pick<
     Competition,
-    'id' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
+    'id' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
 > & {
         event: { __typename?: 'Event' } & Pick<Event, 'id'>;
         judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
@@ -683,11 +684,13 @@ export type AllocateRidersMutation = { __typename?: 'Mutation' } & {
     >;
 };
 
-export type AddDemoRidersMutationVariables = {
+export type AddRemoveDemoRidersMutationVariables = {
     id: Scalars['ID'];
 };
 
-export type AddDemoRidersMutation = { __typename?: 'Mutation' } & { addDemoRiders: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>> };
+export type AddRemoveDemoRidersMutation = { __typename?: 'Mutation' } & {
+    addRemoveDemoRiders: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>>;
+};
 
 export type EndHeatMutationVariables = {
     id: Scalars['ID'];
@@ -846,6 +849,7 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
         event {
             id
         }
+        hasDemoRiders
         name
         description
         level
@@ -1112,38 +1116,40 @@ export function useAllocateRidersMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AllocateRidersMutationHookResult = ReturnType<typeof useAllocateRidersMutation>;
 export type AllocateRidersMutationResult = ApolloReactCommon.MutationResult<AllocateRidersMutation>;
 export type AllocateRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AllocateRidersMutation, AllocateRidersMutationVariables>;
-export const AddDemoRidersDocument = gql`
-    mutation addDemoRiders($id: ID!) {
-        addDemoRiders(id: $id) {
+export const AddRemoveDemoRidersDocument = gql`
+    mutation addRemoveDemoRiders($id: ID!) {
+        addRemoveDemoRiders(id: $id) {
             id
         }
     }
 `;
-export type AddDemoRidersMutationFn = ApolloReactCommon.MutationFunction<AddDemoRidersMutation, AddDemoRidersMutationVariables>;
+export type AddRemoveDemoRidersMutationFn = ApolloReactCommon.MutationFunction<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>;
 
 /**
- * __useAddDemoRidersMutation__
+ * __useAddRemoveDemoRidersMutation__
  *
- * To run a mutation, you first call `useAddDemoRidersMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddDemoRidersMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAddRemoveDemoRidersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddRemoveDemoRidersMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addDemoRidersMutation, { data, loading, error }] = useAddDemoRidersMutation({
+ * const [addRemoveDemoRidersMutation, { data, loading, error }] = useAddRemoveDemoRidersMutation({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useAddDemoRidersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddDemoRidersMutation, AddDemoRidersMutationVariables>) {
-    return ApolloReactHooks.useMutation<AddDemoRidersMutation, AddDemoRidersMutationVariables>(AddDemoRidersDocument, baseOptions);
+export function useAddRemoveDemoRidersMutation(
+    baseOptions?: ApolloReactHooks.MutationHookOptions<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>
+) {
+    return ApolloReactHooks.useMutation<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>(AddRemoveDemoRidersDocument, baseOptions);
 }
-export type AddDemoRidersMutationHookResult = ReturnType<typeof useAddDemoRidersMutation>;
-export type AddDemoRidersMutationResult = ApolloReactCommon.MutationResult<AddDemoRidersMutation>;
-export type AddDemoRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AddDemoRidersMutation, AddDemoRidersMutationVariables>;
+export type AddRemoveDemoRidersMutationHookResult = ReturnType<typeof useAddRemoveDemoRidersMutation>;
+export type AddRemoveDemoRidersMutationResult = ApolloReactCommon.MutationResult<AddRemoveDemoRidersMutation>;
+export type AddRemoveDemoRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>;
 export const EndHeatDocument = gql`
     mutation endHeat($id: ID!) {
         endHeat(id: $id) {

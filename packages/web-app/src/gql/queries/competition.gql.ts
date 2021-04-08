@@ -8,6 +8,7 @@ const CORE_COMPETITION_FIELDS = gql`
         event {
             id
         }
+        hasDemoRiders
         name
         description
         level
@@ -119,8 +120,8 @@ export const ALLOCATE_RIDERS = gql`
 `;
 
 export const ADD_DEMO_RIDERS = gql`
-    mutation addDemoRiders($id: ID!) {
-        addDemoRiders(id: $id) {
+    mutation addRemoveDemoRiders($id: ID!) {
+        addRemoveDemoRiders(id: $id) {
             id
         }
     }
