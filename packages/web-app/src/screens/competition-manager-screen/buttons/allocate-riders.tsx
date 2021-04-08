@@ -7,7 +7,7 @@ import { useAllocateRidersMutation } from 'src/generated-types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
-import ValidationMessages, { ValidationMessageType } from 'src/modules/validation/validation-messages';
+import NotifyMessages, { NotifyMessageType } from 'src/modules/notify-messages/notify-messages';
 
 interface IEditCompetitionProps {
     competitionId: string;
@@ -15,7 +15,7 @@ interface IEditCompetitionProps {
 }
 
 const areYouSureMessage = {
-    type: ValidationMessageType.WARN,
+    type: NotifyMessageType.WARN,
     message: 'Are you sure',
 };
 
@@ -42,25 +42,25 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
 
     return (
         <>
-            <Dialog open={open} setOpen={setOpen}>
-                {/* <EventForm onSubmit={onCreateEvent} title='Create New Event' onCancel={() => setOpen(false)} /> */}
-                <Grid container direction='row' justify='center'>
-                    <Grid item>
-                        <Typography>Allocatte Riders</Typography>
-                    </Grid>
-                </Grid>
-                <ValidationMessages
-                    validationMessages={[
+            <Dialog
+                open={open}
+                setOpen={setOpen}
+                title='Allocatte Riders'
+                buttons={
+                    <>
+                        <Button onClick={() => setOpen(false)}>Cancel</Button>
+                        <ProgressButton onClick={onAllocateRiders}>Allocate Riders</ProgressButton>
+                    </>
+                }
+            >
+                <NotifyMessages
+                    notifyMessages={[
                         {
-                            type: ValidationMessageType.WARN,
+                            type: NotifyMessageType.WARN,
                             message: 'This action will clear any existing competition results and reset the competitoin. Are you sure?',
                         },
                     ]}
                 />
-                <Grid container direction='row' justify='center'>
-                    <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    <ProgressButton onClick={onAllocateRiders}>Allocate Riders</ProgressButton>
-                </Grid>
             </Dialog>
             <Button onClick={() => setOpen(true)} disabled={disabled}>
                 Allocate Riders

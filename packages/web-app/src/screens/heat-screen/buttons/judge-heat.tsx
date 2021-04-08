@@ -15,7 +15,7 @@ import { useHistory } from 'react-router';
 import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
-import ValidationItems, { ValidationItemContent } from 'src/modules/validation/validation-items';
+import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
 import { Button, Grid, Link, Typography } from '@material-ui/core';
 
 interface IJudgeHeat {

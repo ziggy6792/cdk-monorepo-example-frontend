@@ -7,22 +7,23 @@
 import { Grid } from '@material-ui/core';
 import React, { Fragment } from 'react';
 
-export enum ValidationMessageType {
+export enum NotifyMessageType {
     ERROR = 'ERROR',
     WARN = 'WARN',
+    INFO = 'INFO',
 }
 
-export interface IValidationMessage {
-    type: ValidationMessageType;
+export interface INotifyMessage {
+    type: NotifyMessageType;
     message: React.ReactNode;
     action?: React.ReactNode;
 }
 
-export interface IValidationMessageProps {
-    validationMessage: IValidationMessage;
+export interface INotifyMessageProps {
+    notifyMessage: INotifyMessage;
 }
 
-const ValidationMessage: React.FC<IValidationMessageProps> = ({ validationMessage: { type, message, action } }) => (
+const NotifyMessage: React.FC<INotifyMessageProps> = ({ notifyMessage: { type, message, action } }) => (
     <>
         <Grid container direction='row' spacing={2}>
             <Grid item sm={2}>
@@ -38,19 +39,19 @@ const ValidationMessage: React.FC<IValidationMessageProps> = ({ validationMessag
     </>
 );
 
-export interface IValidationMessagesProps {
-    validationMessages: IValidationMessage[];
+export interface INotifyMessagesProps {
+    notifyMessages: INotifyMessage[];
 }
 
-const ValidationMessages: React.FC<IValidationMessagesProps> = ({ validationMessages }) => (
+const NotifyMessages: React.FC<INotifyMessagesProps> = ({ notifyMessages }) => (
     <>
         <Grid container style={{ padding: 16 }}>
             <>
-                {[ValidationMessageType.ERROR, ValidationMessageType.WARN].map((groupType) => (
+                {[NotifyMessageType.ERROR, NotifyMessageType.WARN].map((groupType) => (
                     <Fragment key={groupType}>
-                        {validationMessages.map((validationMessage, i) => (
+                        {notifyMessages.map((notifyMessage, i) => (
                             <Grid item key={`message-${i}`}>
-                                {validationMessage.type === groupType && <ValidationMessage validationMessage={validationMessage} />}
+                                {notifyMessage.type === groupType && <NotifyMessage notifyMessage={notifyMessage} />}
                             </Grid>
                         ))}
                     </Fragment>
@@ -60,4 +61,4 @@ const ValidationMessages: React.FC<IValidationMessagesProps> = ({ validationMess
     </>
 );
 
-export default ValidationMessages;
+export default NotifyMessages;

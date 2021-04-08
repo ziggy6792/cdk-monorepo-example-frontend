@@ -1,6 +1,6 @@
 import React from 'react';
 import { ValidationItem as IValidationItem, ValidationItemBase, ValidationItemType } from 'src/generated-types';
-import ValidationMessages, { IValidationMessage, ValidationMessageType } from './validation-messages';
+import NotifyMessages, { INotifyMessage, NotifyMessageType } from 'src/modules/notify-messages';
 
 export type ValidationItemContent = (ValidationItemBase: ValidationItemBase) => { action?: React.ReactNode; message: React.ReactNode };
 
@@ -10,12 +10,12 @@ interface ValidationItemsProps {
 }
 
 const mapValidationType = {
-    [ValidationItemType.Error]: ValidationMessageType.ERROR,
-    [ValidationItemType.Warn]: ValidationMessageType.WARN,
+    [ValidationItemType.Error]: NotifyMessageType.ERROR,
+    [ValidationItemType.Warn]: NotifyMessageType.WARN,
 };
 
 const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, validationItemContent }) => {
-    const validationMessages: IValidationMessage[] = validationItems.map((validationItem) => {
+    const validationMessages: INotifyMessage[] = validationItems.map((validationItem) => {
         const { message, action } = validationItemContent(validationItem);
         return {
             message,
@@ -24,7 +24,7 @@ const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, vali
         };
     });
 
-    return <ValidationMessages validationMessages={validationMessages} />;
+    return <NotifyMessages notifyMessages={validationMessages} />;
 };
 
 export default ValidationItems;
