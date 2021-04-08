@@ -15,9 +15,8 @@ import { useHistory } from 'react-router';
 import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
-import ValidationItems from 'src/modules/validation-items/validation-items';
+import ValidationItems, { ValidationItemContent } from 'src/modules/validation/validation-items';
 import { Button, Grid, Link, Typography } from '@material-ui/core';
-import { ValidationItemContent } from 'src/modules/validation-items/validation-item';
 
 interface IJudgeHeat {
     heatId: string;
@@ -83,7 +82,7 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
                     <ProgressButton
                         onClick={() => onSelectHeat(ValidationItemType.Error)}
-                        disabled={!!validationItems.find(item => item.type === ValidationItemType.Error)}
+                        disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}
                     >
                         Judge Heat
                     </ProgressButton>

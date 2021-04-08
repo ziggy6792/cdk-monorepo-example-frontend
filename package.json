@@ -24,7 +24,8 @@
         "build": "yarn build:helpers && lerna run build --ignore '{@alpaca-frontend/gq-schema-helper,@alpaca-frontend/aws-config-helper}' --stream",
         "build:helpers": "lerna run build --scope '{@alpaca-frontend/gq-schema-helper,@alpaca-frontend/aws-config-helper}' --stream && yarn --force",
         "prepare:deployment": "lerna run builds:create --scope @alpaca-frontend/web-app",
-        "build:and:prepare:deployment": "yarn build && yarn prepare:deployment"
+        "build:and:prepare:deployment": "yarn build && yarn prepare:deployment",
+        "pre:commit": "lint-staged && lerna run precommit --parallel --since HEAD"
     },
     "devDependencies": {
         "@testing-library/jest-dom": "^5.11.9",
@@ -70,7 +71,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged && lerna run precommit --parallel --since HEAD"
+            "pre-commit": "yarn pre:commit"
         }
     },
     "dependencies": {
