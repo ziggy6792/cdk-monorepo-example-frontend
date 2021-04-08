@@ -48,8 +48,8 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
                 title='Allocatte Riders'
                 buttons={
                     <>
-                        <Button onClick={() => setOpen(false)}>Cancel</Button>
                         <ProgressButton onClick={onAllocateRiders}>Allocate Riders</ProgressButton>
+                        <Button onClick={() => setOpen(false)}>Cancel</Button>
                     </>
                 }
             >

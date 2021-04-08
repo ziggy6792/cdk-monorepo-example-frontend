@@ -21,7 +21,6 @@ interface IScoreRunFormProps {
     onSubmit: (formValues: IScoreRunFormValues) => Promise<void>;
     onCancel: () => void;
     initialValues?: IScoreRunFormValues;
-    title: string;
     currentPosition?: IScoreFormPosition;
     getUpdatedPosition: (formValues: IScoreRunFormValues) => IScoreFormPosition;
 }
@@ -29,14 +28,14 @@ interface IScoreRunFormProps {
 const getPositionDisplayText = ({ position, isJoint }: IScoreFormPosition): string =>
     position !== null ? (isJoint ? 'Tied ' : '') + ordinalSuffixOf(position) : 'Unranked';
 
-const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, title, initialValues, currentPosition, getUpdatedPosition }) => {
+const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initialValues, currentPosition, getUpdatedPosition }) => {
     const theme = useTheme();
     const [globalError, setGlobalError] = useState<string>(null);
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={Yup.object({})}
-            validate={formValues => {
+            validate={(formValues) => {
                 const { isJoint } = getUpdatedPosition(formValues);
                 if (isJoint) {
                     const error = 'Tied positions are not allowed';
@@ -46,23 +45,15 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, title,
                 setGlobalError(null);
                 return null;
             }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await onSubmit(values);
             }}
         >
-            {props => {
+            {(props) => {
                 const { isSubmitting, isValid, dirty, values } = props;
                 return (
                     <Form>
                         <Grid container direction='column'>
-                            <Grid container direction='column' alignItems='center' spacing={0}>
-                                <Grid item>
-                                    <Typography variant='h3' gutterBottom>
-                                        {title}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-
                             <Grid container direction='column' alignItems='center' spacing={2}>
                                 <FieldArray
                                     name='scores'
@@ -74,7 +65,7 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, title,
                                                         name={`runScores.${i}`}
                                                         component={NumericField}
                                                         label={`Run ${i + 1}`}
-                                                        autoFocus={i === values?.runScores.findIndex(score => score === '') || i === 0}
+                                                        autoFocus={i === values?.runScores.findIndex((score) => score === '') || i === 0}
                                                     />
                                                 </Grid>
                                             ))}

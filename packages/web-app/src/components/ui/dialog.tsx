@@ -38,7 +38,9 @@ const Dialog: React.FC<IDialog> = ({ open, setOpen, title, children, buttons, on
                 {title && (
                     <Grid container direction='row' justify='center'>
                         <Grid item>
-                            <Typography>{title}</Typography>
+                            <Typography variant='h3' gutterBottom>
+                                {title}
+                            </Typography>
                         </Grid>
                     </Grid>
                 )}

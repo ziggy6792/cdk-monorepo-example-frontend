@@ -59,8 +59,8 @@ const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
                         </Button>
                     </Grid>
                 </Grid>
-                <Dialog open={open} setOpen={setOpen}>
-                    <ComepetitionForm onSubmit={onCreateCompetition} title='Add New Competition' onCancel={() => setOpen(false)} />
+                <Dialog open={open} setOpen={setOpen} title='Add New Competition'>
+                    <ComepetitionForm onSubmit={onCreateCompetition} onCancel={() => setOpen(false)} />
                 </Dialog>
             </Grid>
         </>

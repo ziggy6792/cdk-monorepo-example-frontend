@@ -22,7 +22,6 @@ interface IBuildCompetitionFormProps {
     onCancel: () => void;
     initialValues?: IBuildCompetitionFormValues;
     allowSubmitPristine?: boolean;
-    title: string;
 }
 
 const validate = (values: IBuildCompetitionFormValues) => {
@@ -40,27 +39,20 @@ const validate = (values: IBuildCompetitionFormValues) => {
     return {};
 };
 
-const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues, allowSubmitPristine }) => (
+const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, initialValues, allowSubmitPristine }) => (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}
             validate={validate}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await onSubmit(values);
             }}
         >
-            {props => {
+            {(props) => {
                 const { isSubmitting, isValid, dirty } = props;
                 return (
                     <Form>
                         <Grid container direction='column'>
-                            <Grid container direction='column' alignItems='center' spacing={0}>
-                                <Grid item>
-                                    <Typography variant='h3' gutterBottom>
-                                        {title}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
                                     <Field name='params' component={AceEditor} autoFocus placeholder='Enter competition build params' />

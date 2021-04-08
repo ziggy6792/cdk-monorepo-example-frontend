@@ -129,9 +129,17 @@ export const ADD_DEMO_RIDERS = gql`
 
 export const END_HEAT = gql`
     ${CORE_COMPETITION_FIELDS}
-    mutation endHeat($id: ID!) {
-        endHeat(id: $id) {
-            ...CoreCompetitionFields
+    mutation endHeat($id: ID!, $validationLevel: ValidationItemType) {
+        endHeat(id: $id, validationLevel: $validationLevel) {
+            ... on Competition {
+                ...CoreCompetitionFields
+            }
+            ... on ValidationItemList {
+                items {
+                    message
+                    type
+                }
+            }
         }
     }
 `;

@@ -33,7 +33,6 @@ interface ICompetitionFormProps {
     onSubmit: (formValues: ICompetitionFormValues) => Promise<void>;
     onCancel: () => void;
     initialValues?: ICompetitionFormValues;
-    title: string;
 }
 
 const defaultFormValue = {
@@ -48,7 +47,7 @@ const defaultFormValue = {
 
 const getOptionLabel = (option: ICatalogItem) => option.description;
 
-const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
+const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, initialValues }) => {
     const { data, loading } = useListUsersQuery();
 
     const judgeOptions = !loading ? data.listUsers : [];
@@ -58,29 +57,18 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
             <Formik
                 initialValues={initialValues || defaultFormValue}
                 validationSchema={Yup.object({
-                    name: Yup.string()
-                        .max(30, 'Must be 30 characters or less')
-                        .required('Required'),
-                    judgeUser: Yup.object()
-                        .nullable()
-                        .required('Required'),
+                    name: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
+                    judgeUser: Yup.object().nullable().required('Required'),
                 })}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await onSubmit(values as ICompetitionFormValues);
                 }}
             >
-                {props => {
+                {(props) => {
                     const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
                         <Form>
                             <Grid container direction='column'>
-                                <Grid container direction='column' alignItems='center' spacing={0}>
-                                    <Grid item>
-                                        <Typography variant='h3' gutterBottom>
-                                            {title}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
                                 <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                     <Grid item>
                                         <Field name='name' component={TextField} label='Name' autoFocus />

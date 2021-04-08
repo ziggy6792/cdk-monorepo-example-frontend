@@ -55,8 +55,8 @@ const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
                         </Button>
                     </Grid>
                 </Grid>
-                <Dialog open={open} setOpen={setOpen}>
-                    <EventForm onSubmit={onUpdateEvent} title='Edit Event' onCancel={() => setOpen(false)} initialValues={eventToEdit} />
+                <Dialog open={open} setOpen={setOpen} title='Edit Event'>
+                    <EventForm onSubmit={onUpdateEvent} onCancel={() => setOpen(false)} initialValues={eventToEdit} />
                 </Dialog>
             </Grid>
         </>

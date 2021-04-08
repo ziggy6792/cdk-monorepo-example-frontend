@@ -71,10 +71,9 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
     return (
         <>
             {selectedRiderAllocation && (
-                <Dialog open={open} setOpen={setOpen}>
+                <Dialog open={open} setOpen={setOpen} title={selectedRiderAllocation.user.fullName}>
                     <ScoreRunForm
                         onSubmit={onScoreRun}
-                        title={selectedRiderAllocation.user.fullName}
                         onCancel={() => setOpen(false)}
                         initialValues={{ runScores: selectedRiderAllocation?.runs?.map(({ score }) => score || '') }}
                         currentPosition={{ position: selectedRiderAllocation.position }}

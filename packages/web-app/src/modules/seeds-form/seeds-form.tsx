@@ -26,31 +26,23 @@ interface ISeedsFormProps {
     onCancel: () => void;
     initialValues?: ISeedsFormValues;
     riderOptions: IRiderOption[];
-    title: string;
 }
 
 const getRiderOptionLabel = (option: IRiderOption, index: number): string => `${index + 1} ${option.user.fullName}`;
 
-const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initialValues, riderOptions }) => (
+const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValues, riderOptions }) => (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await onSubmit(values);
             }}
         >
-            {props => {
+            {(props) => {
                 const { isSubmitting, isValid, dirty, setFieldValue, values } = props;
                 return (
                     <Form>
                         <Grid container direction='column'>
-                            <Grid container direction='column' alignItems='center' spacing={0}>
-                                <Grid item>
-                                    <Typography variant='h3' gutterBottom>
-                                        {title}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
                                     <Button

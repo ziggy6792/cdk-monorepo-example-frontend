@@ -15,10 +15,9 @@ interface IEventFormProps {
     onSubmit: (event: CreateEventInput | Omit<UpdateEventInput, 'id'>) => Promise<void>;
     onCancel: () => void;
     initialValues?: Omit<UpdateEventInput, 'id'>;
-    title: string;
 }
 
-const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initialValues }) => {
+const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, initialValues }) => {
     const minTime = startOfHour(addHours(new Date(), 1));
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -37,13 +36,6 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, title, initi
                     return (
                         <Form>
                             <Grid container direction='column'>
-                                <Grid container direction='column' alignItems='center' spacing={0}>
-                                    <Grid item>
-                                        <Typography variant='h3' gutterBottom>
-                                            {title}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
                                 <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                     <Grid item>
                                         <Field name='name' component={TextField} label='Name' autoFocus />

@@ -2,13 +2,10 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { Button, Grid, useTheme } from '@material-ui/core';
-import { useUpdateRiderAllocationsMutation, CompetitionParams, useBuildCompetitionMutation } from 'src/generated-types';
+import { Button, useTheme } from '@material-ui/core';
+import { CompetitionParams, useBuildCompetitionMutation } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
-import SeedsForm from 'src/modules/seeds-form';
-import { IRiderOption } from 'src/gql/common/types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
-import { ISeedsFormValues } from 'src/modules/seeds-form/seeds-form';
 import _ from 'lodash';
 import BuildCompetitionForm from 'src/modules/build-competition-form';
 import YAML from 'yaml';
@@ -65,11 +62,10 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
             >
                 Build
             </Button>
-            <Dialog open={open} setOpen={setOpen}>
+            <Dialog open={open} setOpen={setOpen} title='Build Competition'>
                 <BuildCompetitionForm
                     onSubmit={onSubmit}
                     allowSubmitPristine={allowSubmitPristine}
-                    title='Build Competition'
                     onCancel={() => setOpen(false)}
                     initialValues={{ params: ymlDocument.toString() }}
                 />

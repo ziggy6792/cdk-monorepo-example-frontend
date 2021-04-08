@@ -21,11 +21,10 @@ interface ITimetableFormProps {
     onCancel: () => void;
     initialValues?: ITimetableFormValues;
     showNotice?: boolean;
-    title: string;
     allowSubmitPristine?: boolean;
 }
 
-const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, title, initialValues, showNotice, allowSubmitPristine }) => {
+const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, initialValues, showNotice, allowSubmitPristine }) => {
     const minTime = startOfHour(addHours(new Date(), 1));
 
     const defaultValues = showNotice ? { notice: '', startTime: minTime } : { startTime: minTime };
@@ -40,22 +39,15 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, titl
                 validationSchema={Yup.object({
                     startTime: Yup.date().min(minTime, 'Please pick a later date'),
                 })}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await onSubmit(values);
                 }}
             >
-                {props => {
+                {(props) => {
                     const { isSubmitting, isValid, dirty } = props;
                     return (
                         <Form>
                             <Grid container direction='column'>
-                                <Grid container direction='column' alignItems='center' spacing={0}>
-                                    <Grid item>
-                                        <Typography variant='h3' gutterBottom>
-                                            {title}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
                                 <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                     <Grid item>
                                         <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />

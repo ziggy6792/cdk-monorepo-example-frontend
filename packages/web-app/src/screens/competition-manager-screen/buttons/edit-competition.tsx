@@ -2,9 +2,8 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { Button, Grid, useTheme } from '@material-ui/core';
+import { Button, useTheme } from '@material-ui/core';
 import { UpdateCompetitionInput, useUpdateCompetitionMutation, User } from 'src/generated-types';
-import { LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import ComepetitionForm from 'src/modules/competition-form';
@@ -37,7 +36,7 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
         const { judgeUser, maxRiders, ...rest } = competition;
 
         const variables = { input: { ...rest, id: competitionToEdit.id, maxRiders: +maxRiders, judgeUserId: judgeUser.id } };
-        const result = await updateCompetition({ variables });
+        await updateCompetition({ variables });
         setOpen(false);
         return null;
     };
@@ -51,13 +50,8 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
             >
                 Edit
             </Button>
-            <Dialog open={open} setOpen={setOpen}>
-                <ComepetitionForm
-                    onSubmit={onUpdateCompetition}
-                    title='Edit Competition'
-                    onCancel={() => setOpen(false)}
-                    initialValues={{ ...competitionToEdit, judgeUser }}
-                />
+            <Dialog open={open} setOpen={setOpen} title='Edit Competition'>
+                <ComepetitionForm onSubmit={onUpdateCompetition} onCancel={() => setOpen(false)} initialValues={{ ...competitionToEdit, judgeUser }} />
             </Dialog>
         </>
     );

@@ -59,10 +59,9 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
             >
                 Seed Order
             </Button>
-            <Dialog open={open} setOpen={setOpen}>
+            <Dialog open={open} setOpen={setOpen} title='Seeds Order'>
                 <SeedsForm
                     onSubmit={onUpdateSeeds}
-                    title='Seeds Order'
                     onCancel={() => setOpen(false)}
                     initialValues={{ riders: riderAllocations.map(({ userId }) => userId) }}
                     riderOptions={riderAllocations}
