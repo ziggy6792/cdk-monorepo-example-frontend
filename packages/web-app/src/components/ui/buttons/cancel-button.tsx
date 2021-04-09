@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 
 interface ICancelButtonProps {
-    isSubmitting: boolean;
+    isSubmitting?: boolean;
     onClick: () => void;
 }
 
-const FormCancelButton: React.FC<ICancelButtonProps> = props => {
+const CancelButton: React.FC<ICancelButtonProps> = (props) => {
     const { isSubmitting, onClick } = props;
     return (
         <Button type='button' variant='contained' color='secondary' onClick={onClick} disabled={isSubmitting}>
@@ -15,4 +15,4 @@ const FormCancelButton: React.FC<ICancelButtonProps> = props => {
     );
 };
 
-export default FormCancelButton;
+export default CancelButton;

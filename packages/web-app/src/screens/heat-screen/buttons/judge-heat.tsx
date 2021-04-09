@@ -17,6 +17,7 @@ import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
 import { Button, Link } from '@material-ui/core';
+import CancelButton from 'src/components/ui/buttons/cancel-button';
 
 interface IJudgeHeatProps {
     heat: {
@@ -28,7 +29,7 @@ interface IJudgeHeatProps {
 const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
     const history = useHistory();
 
-    const [selectHeat] = useSelectHeatMutation();
+    const [selectHeat, { loading }] = useSelectHeatMutation();
 
     // const { refetch: checkCanOpen } = useCheckCanOpenHeatQuery({ fetchPolicy: 'cache-and-network', skip: true });
 
@@ -83,7 +84,7 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
                         >
                             Judge Heat
                         </ProgressButton>
-                        <Button onClick={() => setOpen(false)}>Cancel</Button>
+                        <CancelButton onClick={() => setOpen(false)} isSubmitting={loading} />
                     </>
                 }
             >
