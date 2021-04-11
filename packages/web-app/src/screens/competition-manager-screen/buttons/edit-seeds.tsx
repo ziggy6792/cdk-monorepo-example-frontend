@@ -38,7 +38,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
         riders.forEach((userId, i) => {
             riderSortMap[userId] = i;
         });
-        const orderedRiderAllocations = _.orderBy(riderAllocations, (ra) => riderSortMap[ra.userId]);
+        const orderedRiderAllocations = _.orderBy(riderAllocations, ra => riderSortMap[ra.userId]);
         const updateRiderAllocationInputs: UpdateRiderAllocationInput[] = orderedRiderAllocations.map((riderOption, i) => ({
             allocatableId: competitionId,
             userId: riderOption.userId,
@@ -59,8 +59,9 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
             >
                 Seed Order
             </Button>
-            <Dialog open={open} setOpen={setOpen} title='Seeds Order'>
+            <Dialog open={open} setOpen={setOpen}>
                 <SeedsForm
+                    title='Seeds Order'
                     onSubmit={onUpdateSeeds}
                     onCancel={() => setOpen(false)}
                     initialValues={{ riders: riderAllocations.map(({ userId }) => userId) }}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, Formik, Form } from 'formik';
+import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
@@ -10,6 +10,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import _ from 'lodash';
+import Form from 'src/modules/form';
 
 export interface ITimetableFormValues {
     notice?: string;
@@ -22,9 +23,10 @@ interface ITimetableFormProps {
     initialValues?: ITimetableFormValues;
     showNotice?: boolean;
     allowSubmitPristine?: boolean;
+    title: string;
 }
 
-const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, initialValues, showNotice, allowSubmitPristine }) => {
+const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, initialValues, showNotice, allowSubmitPristine, title }) => {
     const minTime = startOfHour(addHours(new Date(), 1));
 
     const defaultValues = showNotice ? { notice: '', startTime: minTime } : { startTime: minTime };
@@ -39,14 +41,25 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, init
                 validationSchema={Yup.object({
                     startTime: Yup.date().min(minTime, 'Please pick a later date'),
                 })}
-                onSubmit={async (values) => {
+                onSubmit={async values => {
                     await onSubmit(values);
                 }}
             >
-                {(props) => {
+                {props => {
                     const { isSubmitting, isValid, dirty } = props;
                     return (
-                        <Form>
+                        <Form
+                            title={title}
+                            buttons={
+                                <FormButtons
+                                    isSubmitting={isSubmitting}
+                                    dirty={dirty}
+                                    isValid={isValid}
+                                    onCancel={onCancel}
+                                    allowSubmitPristine={allowSubmitPristine}
+                                />
+                            }
+                        >
                             <Grid container direction='column'>
                                 <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                     <Grid item>
@@ -59,13 +72,6 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, init
                                     )}
                                 </Grid>
                             </Grid>
-                            <FormButtons
-                                isSubmitting={isSubmitting}
-                                dirty={dirty}
-                                isValid={isValid}
-                                onCancel={onCancel}
-                                allowSubmitPristine={allowSubmitPristine}
-                            />
                         </Form>
                     );
                 }}

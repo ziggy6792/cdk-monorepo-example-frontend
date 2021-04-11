@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Field, Formik, Form } from 'formik';
+import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
-import { Grid, Typography, TextField as MUITextField } from '@material-ui/core';
+import { Grid, TextField as MUITextField } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import { TextArea, Select, NumericField } from 'src/components/forms/formik-material-ui/formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -13,6 +13,7 @@ import FormButtons from 'src/components/ui/buttons/form-buttons';
 import { CATALOG_GENDER, CATALOG_LEVEL, CATALOG_SPORT, ICatalogItem } from 'src/config/catalogs';
 import { AutocompleteRenderInputParams } from '@material-ui/lab';
 import { Autocomplete } from 'formik-material-ui-lab';
+import Form from 'src/modules/form';
 
 export interface IUserOption {
     id: string;
@@ -33,6 +34,7 @@ interface ICompetitionFormProps {
     onSubmit: (formValues: ICompetitionFormValues) => Promise<void>;
     onCancel: () => void;
     initialValues?: ICompetitionFormValues;
+    title: string;
 }
 
 const defaultFormValue = {
@@ -47,7 +49,7 @@ const defaultFormValue = {
 
 const getOptionLabel = (option: ICatalogItem) => option.description;
 
-const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, initialValues }) => {
+const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, initialValues, title }) => {
     const { data, loading } = useListUsersQuery();
 
     const judgeOptions = !loading ? data.listUsers : [];
@@ -57,17 +59,21 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
             <Formik
                 initialValues={initialValues || defaultFormValue}
                 validationSchema={Yup.object({
-                    name: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
-                    judgeUser: Yup.object().nullable().required('Required'),
+                    name: Yup.string()
+                        .max(30, 'Must be 30 characters or less')
+                        .required('Required'),
+                    judgeUser: Yup.object()
+                        .nullable()
+                        .required('Required'),
                 })}
-                onSubmit={async (values) => {
+                onSubmit={async values => {
                     await onSubmit(values as ICompetitionFormValues);
                 }}
             >
-                {(props) => {
+                {props => {
                     const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
-                        <Form>
+                        <Form title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
                             <Grid container direction='column'>
                                 <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                     <Grid item>
@@ -114,7 +120,6 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
                         </Form>
                     );
                 }}

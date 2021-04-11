@@ -1,12 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
-import { Field, Formik, Form, FieldArray, ErrorMessage } from 'formik';
+import { Field, Formik, FieldArray, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography, useTheme } from '@material-ui/core';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import { NumericField } from 'src/components/forms/formik-material-ui/formik-material-ui';
 import { ordinalSuffixOf } from 'src/utils/utility';
 import GlobalFormError from 'src/components/forms/global-form-error/global-form-error';
+import Form from 'src/modules/form';
 
 export interface IScoreRunFormValues {
     runScores: (number | '')[];
@@ -23,19 +24,20 @@ interface IScoreRunFormProps {
     initialValues?: IScoreRunFormValues;
     currentPosition?: IScoreFormPosition;
     getUpdatedPosition: (formValues: IScoreRunFormValues) => IScoreFormPosition;
+    title: string;
 }
 
 const getPositionDisplayText = ({ position, isJoint }: IScoreFormPosition): string =>
     position !== null ? (isJoint ? 'Tied ' : '') + ordinalSuffixOf(position) : 'Unranked';
 
-const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initialValues, currentPosition, getUpdatedPosition }) => {
+const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initialValues, currentPosition, getUpdatedPosition, title }) => {
     const theme = useTheme();
     const [globalError, setGlobalError] = useState<string>(null);
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={Yup.object({})}
-            validate={(formValues) => {
+            validate={formValues => {
                 const { isJoint } = getUpdatedPosition(formValues);
                 if (isJoint) {
                     const error = 'Tied positions are not allowed';
@@ -45,14 +47,14 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
                 setGlobalError(null);
                 return null;
             }}
-            onSubmit={async (values) => {
+            onSubmit={async values => {
                 await onSubmit(values);
             }}
         >
-            {(props) => {
+            {props => {
                 const { isSubmitting, isValid, dirty, values } = props;
                 return (
-                    <Form>
+                    <Form title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
                         <Grid container direction='column'>
                             <Grid container direction='column' alignItems='center' spacing={2}>
                                 <FieldArray
@@ -65,7 +67,7 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
                                                         name={`runScores.${i}`}
                                                         component={NumericField}
                                                         label={`Run ${i + 1}`}
-                                                        autoFocus={i === values?.runScores.findIndex((score) => score === '') || i === 0}
+                                                        autoFocus={i === values?.runScores.findIndex(score => score === '') || i === 0}
                                                     />
                                                 </Grid>
                                             ))}
@@ -91,7 +93,6 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
                                 )}
                             </Grid>
                         </Grid>
-                        <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
                     </Form>
                 );
             }}

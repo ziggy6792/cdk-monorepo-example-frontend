@@ -50,8 +50,13 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
             >
                 Edit
             </Button>
-            <Dialog open={open} setOpen={setOpen} title='Edit Competition'>
-                <ComepetitionForm onSubmit={onUpdateCompetition} onCancel={() => setOpen(false)} initialValues={{ ...competitionToEdit, judgeUser }} />
+            <Dialog open={open} setOpen={setOpen}>
+                <ComepetitionForm
+                    title='Edit Competition'
+                    onSubmit={onUpdateCompetition}
+                    onCancel={() => setOpen(false)}
+                    initialValues={{ ...competitionToEdit, judgeUser }}
+                />
             </Dialog>
         </>
     );

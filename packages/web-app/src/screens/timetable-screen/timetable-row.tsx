@@ -39,8 +39,9 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId }) =
 
     return (
         <>
-            <Dialog open={open} setOpen={setOpen} title='Edit Timetable'>
+            <Dialog open={open} setOpen={setOpen}>
                 <TimetableForm
+                    title='Edit Timetable'
                     onSubmit={onUpdateScheduleItem}
                     initialValues={{ startTime: scheduleItem.startTime, notice: scheduleItem.notice }}
                     onCancel={() => setOpen(false)}

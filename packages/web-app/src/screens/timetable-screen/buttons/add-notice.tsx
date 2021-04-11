@@ -45,8 +45,8 @@ const AddNotice: React.FC<IAddNoticeProps> = ({ eventId }) => {
                 Add Notice
             </Button>
 
-            <Dialog open={open} setOpen={setOpen} title='Add Notice'>
-                <TimetableForm onSubmit={onCreateScheduleItem} onCancel={() => setOpen(false)} showNotice />
+            <Dialog open={open} setOpen={setOpen}>
+                <TimetableForm title='Add Notice' onSubmit={onCreateScheduleItem} onCancel={() => setOpen(false)} showNotice />
             </Dialog>
         </>
     );

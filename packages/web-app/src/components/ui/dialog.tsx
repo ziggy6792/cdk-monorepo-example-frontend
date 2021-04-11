@@ -3,14 +3,14 @@ import React from 'react';
 import { useMediaQuery, useTheme, Dialog as MUIDialog, DialogContent, Grid, Typography } from '@material-ui/core';
 
 interface IDialog {
-    title?: string;
-    buttons?: React.ReactNode;
+    // title?: string;
+    // buttons?: React.ReactNode;
     open: boolean;
     setOpen?: (boolean) => void;
     onClose?: () => void;
 }
 
-const Dialog: React.FC<IDialog> = ({ open, setOpen, title, children, buttons, onClose }) => {
+const Dialog: React.FC<IDialog> = ({ open, setOpen, children, onClose }) => {
     const theme = useTheme();
 
     const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
@@ -35,7 +35,7 @@ const Dialog: React.FC<IDialog> = ({ open, setOpen, title, children, buttons, on
             }}
         >
             <DialogContent>
-                {title && (
+                {/* {title && (
                     <Grid container direction='row' justify='center'>
                         <Grid item>
                             <Typography variant='h3' gutterBottom>
@@ -43,13 +43,13 @@ const Dialog: React.FC<IDialog> = ({ open, setOpen, title, children, buttons, on
                             </Typography>
                         </Grid>
                     </Grid>
-                )}
+                )} */}
                 {children}
-                {buttons && (
+                {/* {buttons && (
                     <Grid container direction='row' justify='center'>
                         {buttons}
                     </Grid>
-                )}
+                )} */}
             </DialogContent>
         </MUIDialog>
     );

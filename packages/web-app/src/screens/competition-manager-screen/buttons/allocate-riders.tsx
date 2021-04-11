@@ -8,6 +8,7 @@ import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import NotifyMessages, { NotifyMessageType } from 'src/modules/notify-messages/notify-messages';
+import ConfirmBox from 'src/modules/confirm-box';
 
 interface IEditCompetitionProps {
     competitionId: string;
@@ -42,25 +43,24 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
 
     return (
         <>
-            <Dialog
-                open={open}
-                setOpen={setOpen}
-                title='Allocatte Riders'
-                buttons={
-                    <>
-                        <ProgressButton onClick={onAllocateRiders}>Allocate Riders</ProgressButton>
-                        <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    </>
-                }
-            >
-                <NotifyMessages
-                    notifyMessages={[
-                        {
-                            type: NotifyMessageType.WARN,
-                            message: 'This action will clear any existing competition results and reset the competitoin. Are you sure?',
-                        },
-                    ]}
-                />
+            <Dialog open={open} setOpen={setOpen}>
+                <ConfirmBox
+                    title='Allocatte Riders'
+                    confirmButton={{
+                        onClick: onAllocateRiders,
+                        text: 'Allocatte Riders',
+                    }}
+                    cancelButton={{ onClick: () => setOpen(false) }}
+                >
+                    <NotifyMessages
+                        notifyMessages={[
+                            {
+                                type: NotifyMessageType.WARN,
+                                message: 'This action will clear any existing competition results and reset the competitoin. Are you sure?',
+                            },
+                        ]}
+                    />
+                </ConfirmBox>
             </Dialog>
             <Button onClick={() => setOpen(true)} disabled={disabled}>
                 Allocate Riders

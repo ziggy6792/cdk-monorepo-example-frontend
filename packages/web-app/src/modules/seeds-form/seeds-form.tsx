@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Field, Formik, Form } from 'formik';
+import { Field, Formik } from 'formik';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -11,6 +11,7 @@ import { ICatalogItem } from 'src/config/catalogs';
 import DragAndDropList from 'src/components/forms/dnd/drag-and-drop-list';
 import { IRiderOption } from 'src/gql/common/types';
 import _ from 'lodash';
+import Form from 'src/modules/form';
 
 export interface IUserOption {
     id: string;
@@ -26,22 +27,23 @@ interface ISeedsFormProps {
     onCancel: () => void;
     initialValues?: ISeedsFormValues;
     riderOptions: IRiderOption[];
+    title: string;
 }
 
 const getRiderOptionLabel = (option: IRiderOption, index: number): string => `${index + 1} ${option.user.fullName}`;
 
-const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValues, riderOptions }) => (
+const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValues, riderOptions, title }) => (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}
-            onSubmit={async (values) => {
+            onSubmit={async values => {
                 await onSubmit(values);
             }}
         >
-            {(props) => {
+            {props => {
                 const { isSubmitting, isValid, dirty, setFieldValue, values } = props;
                 return (
-                    <Form>
+                    <Form title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
                         <Grid container direction='column'>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
@@ -67,7 +69,6 @@ const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValue
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
                     </Form>
                 );
             }}

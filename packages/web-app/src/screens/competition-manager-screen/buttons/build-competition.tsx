@@ -62,9 +62,10 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
             >
                 Build
             </Button>
-            <Dialog open={open} setOpen={setOpen} title='Build Competition'>
+            <Dialog open={open} setOpen={setOpen}>
                 <BuildCompetitionForm
                     onSubmit={onSubmit}
+                    title='Build Competition'
                     allowSubmitPristine={allowSubmitPristine}
                     onCancel={() => setOpen(false)}
                     initialValues={{ params: ymlDocument.toString() }}
