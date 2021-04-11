@@ -1,12 +1,16 @@
 import React from 'react';
 
-import { useMediaQuery, useTheme, Dialog as MUIDialog, DialogContent } from '@material-ui/core';
+import { useMediaQuery, useTheme, Dialog as MUIDialog, DialogContent, Grid, Typography } from '@material-ui/core';
 
-const Dialog = props => {
-    const { open, setOpen } = props;
+interface IDialog {
+    // title?: string;
+    // buttons?: React.ReactNode;
+    open: boolean;
+    setOpen?: (boolean) => void;
+    onClose?: () => void;
+}
 
-    const onClose = setOpen ? () => setOpen(false) : () => props.onClose();
-
+const Dialog: React.FC<IDialog> = ({ open, setOpen, children, onClose }) => {
     const theme = useTheme();
 
     const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
@@ -16,9 +20,11 @@ const Dialog = props => {
     return (
         <MUIDialog
             open={open}
-            onClose={onClose}
+            onClose={setOpen ? () => setOpen(false) : () => onClose()}
             // style={{ zIndex: 1302 }}
             fullScreen={matchesXS}
+            disableBackdropClick
+            disableEscapeKeyDown
             PaperProps={{
                 style: {
                     paddingTop: matchesXS ? '1em' : '5em',
@@ -28,7 +34,23 @@ const Dialog = props => {
                 },
             }}
         >
-            <DialogContent>{props.children}</DialogContent>
+            <DialogContent>
+                {/* {title && (
+                    <Grid container direction='row' justify='center'>
+                        <Grid item>
+                            <Typography variant='h3' gutterBottom>
+                                {title}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                )} */}
+                {children}
+                {/* {buttons && (
+                    <Grid container direction='row' justify='center'>
+                        {buttons}
+                    </Grid>
+                )} */}
+            </DialogContent>
         </MUIDialog>
     );
 };

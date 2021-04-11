@@ -9,7 +9,7 @@ import { Button, Grid, useTheme } from '@material-ui/core';
 import { UpdateEventInput, useUpdateEventMutation } from 'src/generated-types';
 import { GET_EVENT, LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
-import EventForm from 'src/modules/event-form';
+import EventForm from 'src/modules/forms/event-form';
 
 interface IEditEventProps {
     eventToEdit: UpdateEventInput;
@@ -56,7 +56,7 @@ const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <EventForm onSubmit={onUpdateEvent} title='Edit Event' onCancel={() => setOpen(false)} initialValues={eventToEdit} />
+                    <EventForm title='Edit Event' onSubmit={onUpdateEvent} onCancel={() => setOpen(false)} initialValues={eventToEdit} />
                 </Dialog>
             </Grid>
         </>

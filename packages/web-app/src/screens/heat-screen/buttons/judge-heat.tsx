@@ -15,16 +15,19 @@ import { useHistory } from 'react-router';
 import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
-import ValidationItems from 'src/modules/validation-items/validation-items';
-import { Button, Grid, Link, Typography } from '@material-ui/core';
-import { ValidationItemContent } from 'src/modules/validation-items/validation-item';
+import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
+import { Button, Link } from '@material-ui/core';
+import CancelButton from 'src/components/ui/buttons/cancel-button';
+import ConfirmBox from 'src/modules/confirm-box/confirm-box';
 
-interface IJudgeHeat {
-    heatId: string;
-    heatName: string;
+interface IJudgeHeatProps {
+    heat: {
+        id: string;
+        name: string;
+    };
 }
 
-const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
+const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
     const history = useHistory();
 
     const [selectHeat] = useSelectHeatMutation();
@@ -35,7 +38,7 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
     const [validationItems, setValidationItems] = useState<ValidationItemBase[]>([]);
 
     const onSelectHeat = async (validationLevel: ValidationItemType = ValidationItemType.Warn): Promise<void> => {
-        const response = await selectHeat({ variables: { id: heatId, validationLevel } });
+        const response = await selectHeat({ variables: { id: heat.id, validationLevel } });
         if (response.data.selectHeat.__typename === 'ValidationItemList') {
             setValidationItems(response.data.selectHeat.items);
             setOpen(true);
@@ -71,23 +74,17 @@ const JudgeHeat: React.FC<IJudgeHeat> = ({ heatId, heatName }) => {
     return (
         <>
             <Dialog open={open} setOpen={setOpen}>
-                {/* <EventForm onSubmit={onCreateEvent} title='Create New Event' onCancel={() => setOpen(false)} /> */}
-                <Grid container direction='row' justify='center'>
-                    <Grid item>
-                        <Typography>Judge {heatName}</Typography>
-                    </Grid>
-                </Grid>
-                <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
-
-                <Grid container direction='row' justify='center'>
-                    <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    <ProgressButton
-                        onClick={() => onSelectHeat(ValidationItemType.Error)}
-                        disabled={!!validationItems.find(item => item.type === ValidationItemType.Error)}
-                    >
-                        Judge Heat
-                    </ProgressButton>
-                </Grid>
+                <ConfirmBox
+                    title={`Judge ${heat.name}`}
+                    confirmButton={{
+                        onClick: () => onSelectHeat(ValidationItemType.Error),
+                        text: 'Judge Heat',
+                        disabled: !!validationItems.find(item => item.type === ValidationItemType.Error),
+                    }}
+                    cancelButton={{ onClick: () => setOpen(false) }}
+                >
+                    <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
+                </ConfirmBox>
             </Dialog>
             <ProgressButton onClick={onSelectHeat}>Judge Heat</ProgressButton>
         </>

@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Field, Formik, Form, ErrorMessage } from 'formik';
+import { Field, Formik, ErrorMessage } from 'formik';
 import { Grid, Typography } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import AceEditor from 'src/components/forms/ace-editor/ace-editor';
 import jsYaml from 'js-yaml';
+import FormLayout from 'src/modules/form-layout';
 
 export interface IUserOption {
     id: string;
@@ -40,7 +41,7 @@ const validate = (values: IBuildCompetitionFormValues) => {
     return {};
 };
 
-const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, title, initialValues, allowSubmitPristine }) => (
+const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, initialValues, allowSubmitPristine, title }) => (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}
@@ -52,15 +53,19 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
             {props => {
                 const { isSubmitting, isValid, dirty } = props;
                 return (
-                    <Form>
+                    <FormLayout
+                        title={title}
+                        buttons={
+                            <FormButtons
+                                isSubmitting={isSubmitting}
+                                dirty={dirty}
+                                isValid={isValid}
+                                onCancel={onCancel}
+                                allowSubmitPristine={allowSubmitPristine}
+                            />
+                        }
+                    >
                         <Grid container direction='column'>
-                            <Grid container direction='column' alignItems='center' spacing={0}>
-                                <Grid item>
-                                    <Typography variant='h3' gutterBottom>
-                                        {title}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
                                     <Field name='params' component={AceEditor} autoFocus placeholder='Enter competition build params' />
@@ -70,14 +75,7 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <FormButtons
-                            isSubmitting={isSubmitting}
-                            dirty={dirty}
-                            isValid={isValid}
-                            onCancel={onCancel}
-                            allowSubmitPristine={allowSubmitPristine}
-                        />
-                    </Form>
+                    </FormLayout>
                 );
             }}
         </Formik>

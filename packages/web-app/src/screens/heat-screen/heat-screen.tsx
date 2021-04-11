@@ -29,9 +29,9 @@ const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
     return (
         <>
             <Grid container direction='column' justify='center' alignItems='center'>
-                <HeatSummary summary={data.getHeat} />
+                <HeatSummary heat={data.getHeat} />
                 <Grid item>
-                    <JudgeHeat heatId={heatId} heatName={data.getHeat.name} />
+                    <JudgeHeat heat={data.getHeat} />
                 </Grid>
                 <Grid item style={{ width: '100%' }}>
                     <ResultsTable

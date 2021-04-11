@@ -35,9 +35,9 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     return (
         <>
             <Grid container direction='column' justify='center' alignItems='center'>
-                <HeatSummary summary={data.selectedHeat} />
+                <HeatSummary heat={data.selectedHeat} />
                 <Grid item>
-                    <EndHeat heatId={data.selectedHeat.id} />
+                    <EndHeat heat={data.selectedHeat} />
                 </Grid>
                 <Grid item style={{ width: '100%' }}>
                     <ScoresTables

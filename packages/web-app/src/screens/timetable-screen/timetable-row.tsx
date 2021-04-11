@@ -8,7 +8,7 @@ import { Button, Grid, Link } from '@material-ui/core';
 import DateFormatter from 'src/utils/format/date-formatter';
 import { TimetableScheduleItem } from 'src/gql/common/types';
 import Dialog from 'src/components/ui/dialog';
-import TimetableForm, { ITimetableFormValues } from 'src/modules/timetable-form/timetable-form';
+import TimetableForm, { ITimetableFormValues } from 'src/modules/forms/timetable-form/timetable-form';
 import { useUpdateScheduleItemMutation } from 'src/generated-types';
 import { GET_EVENT_SCHEDULE } from 'src/gql/queries/event.gql';
 import TimetableEntry from './timetable-entry';
@@ -41,9 +41,9 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId }) =
         <>
             <Dialog open={open} setOpen={setOpen}>
                 <TimetableForm
+                    title='Edit Timetable'
                     onSubmit={onUpdateScheduleItem}
                     initialValues={{ startTime: scheduleItem.startTime, notice: scheduleItem.notice }}
-                    title='Edit Timetable'
                     onCancel={() => setOpen(false)}
                     showNotice={!scheduleItem.scheduledItem}
                     allowSubmitPristine={!scheduleItem.startTime}

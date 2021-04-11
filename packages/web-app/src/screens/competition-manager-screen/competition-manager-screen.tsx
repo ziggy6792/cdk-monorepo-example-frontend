@@ -12,7 +12,7 @@ import EditCompetition from './buttons/edit-competition';
 import EditSeeds from './buttons/edit-seeds';
 import BuildCompetition from './buttons/build-competition';
 import AllocateRiders from './buttons/allocate-riders';
-import AddDemoRiders from './buttons/add-demo-riders';
+import AddRemoveDemoRiders from './buttons/add-remove-demo-riders';
 
 interface IEventsScreenProps {
     competitionId: string;
@@ -21,7 +21,7 @@ interface IEventsScreenProps {
 const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
     const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
+    const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
     const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
     const disabledRiderAllocationButtons = data?.getCompetition.riderAllocations.items.length < 1;
@@ -68,6 +68,13 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
                             <BuildCompetition competitionId={competitionId} />
                         </Grid>
                         <Grid item>
+                            <AddRemoveDemoRiders
+                                competitionId={competitionId}
+                                hasDemoRiders={data.getCompetition.hasDemoRiders}
+                                disabled={!data.getCompetition.rounds?.items?.length}
+                            />
+                        </Grid>
+                        <Grid item>
                             <EditSeeds
                                 riderAllocations={data.getCompetition.riderAllocations.items}
                                 competitionId={competitionId}
@@ -76,10 +83,6 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
                         </Grid>
                         <Grid item>
                             <AllocateRiders competitionId={competitionId} disabled={disabledRiderAllocationButtons} />
-                        </Grid>
-
-                        <Grid item>
-                            <AddDemoRiders competitionId={competitionId} />
                         </Grid>
                     </Grid>
 

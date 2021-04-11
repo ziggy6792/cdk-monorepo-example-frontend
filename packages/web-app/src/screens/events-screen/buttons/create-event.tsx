@@ -9,9 +9,9 @@ import { Button, Grid, useTheme } from '@material-ui/core';
 import { CreateEventInput, useCreateEventMutation } from 'src/generated-types';
 import { LIST_EVENTS } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
-import EventForm from 'src/modules/event-form';
+import EventForm from 'src/modules/forms/event-form';
 import { useHistory } from 'react-router';
-import { ROUTE_EVENT, ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
+import { ROUTE_EVENT } from 'src/config/routes';
 
 const CreateEvent: React.FC = () => {
     const theme = useTheme();
@@ -51,7 +51,7 @@ const CreateEvent: React.FC = () => {
                     </Grid>
                 </Grid>
                 <Dialog open={open} setOpen={setOpen}>
-                    <EventForm onSubmit={onCreateEvent} title='Create New Event' onCancel={() => setOpen(false)} />
+                    <EventForm title='Create New Event' onSubmit={onCreateEvent} onCancel={() => setOpen(false)} />
                 </Dialog>
             </Grid>
         </>

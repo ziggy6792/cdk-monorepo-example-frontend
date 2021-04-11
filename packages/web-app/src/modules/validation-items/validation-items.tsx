@@ -1,35 +1,30 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable camelcase */
+import React from 'react';
+import { ValidationItem as IValidationItem, ValidationItemBase, ValidationItemType } from 'src/generated-types';
+import NotifyMessages, { INotifyMessage, NotifyMessageType } from 'src/modules/notify-messages';
 
-import { Grid } from '@material-ui/core';
-import React, { Fragment } from 'react';
-import { ValidationItem, ValidationItemType } from 'src/generated-types';
-import ValidationEntry, { ValidationItemContent } from './validation-item';
+export type ValidationItemContent = (ValidationItemBase: ValidationItemBase) => { action?: React.ReactNode; message: React.ReactNode };
 
 interface ValidationItemsProps {
-    validationItems: ValidationItem[];
+    validationItems: IValidationItem[];
     validationItemContent?: ValidationItemContent;
 }
 
-const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, validationItemContent }) => (
-    <>
-        <Grid container style={{ padding: 16 }}>
-            <>
-                {[ValidationItemType.Error, ValidationItemType.Warn].map(type => (
-                    <Fragment key={type}>
-                        {validationItems.map(validationItem => (
-                            <Grid item key={validationItem.message}>
-                                {validationItem.type === type && (
-                                    <ValidationEntry validationItem={validationItem} validationItemContent={validationItemContent} />
-                                )}
-                            </Grid>
-                        ))}
-                    </Fragment>
-                ))}
-            </>
-        </Grid>
-    </>
-);
+const mapValidationType = {
+    [ValidationItemType.Error]: NotifyMessageType.ERROR,
+    [ValidationItemType.Warn]: NotifyMessageType.WARN,
+};
+
+const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, validationItemContent }) => {
+    const validationMessages: INotifyMessage[] = validationItems.map((validationItem) => {
+        const { message, action } = validationItemContent(validationItem);
+        return {
+            message,
+            action,
+            type: mapValidationType[validationItem.type],
+        };
+    });
+
+    return <NotifyMessages notifyMessages={validationMessages} />;
+};
 
 export default ValidationItems;

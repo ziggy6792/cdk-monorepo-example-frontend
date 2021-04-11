@@ -5,10 +5,9 @@ import React, { useState } from 'react';
 import { Button, Grid, useTheme } from '@material-ui/core';
 import { UpdateRiderAllocationInput, useUpdateRiderAllocationsMutation } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
-import SeedsForm from 'src/modules/seeds-form';
+import SeedsForm, { ISeedsFormValues } from 'src/modules/forms/seeds-form';
 import { IRiderOption } from 'src/gql/common/types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
-import { ISeedsFormValues } from 'src/modules/seeds-form/seeds-form';
 import _ from 'lodash';
 
 interface IEditSeedsProps {
@@ -38,7 +37,7 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
         riders.forEach((userId, i) => {
             riderSortMap[userId] = i;
         });
-        const orderedRiderAllocations = _.orderBy(riderAllocations, (ra) => riderSortMap[ra.userId]);
+        const orderedRiderAllocations = _.orderBy(riderAllocations, ra => riderSortMap[ra.userId]);
         const updateRiderAllocationInputs: UpdateRiderAllocationInput[] = orderedRiderAllocations.map((riderOption, i) => ({
             allocatableId: competitionId,
             userId: riderOption.userId,
@@ -61,8 +60,8 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
             </Button>
             <Dialog open={open} setOpen={setOpen}>
                 <SeedsForm
-                    onSubmit={onUpdateSeeds}
                     title='Seeds Order'
+                    onSubmit={onUpdateSeeds}
                     onCancel={() => setOpen(false)}
                     initialValues={{ riders: riderAllocations.map(({ userId }) => userId) }}
                     riderOptions={riderAllocations}

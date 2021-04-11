@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Field, Formik, Form } from 'formik';
+import { Field, Formik } from 'formik';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -11,6 +11,7 @@ import { ICatalogItem } from 'src/config/catalogs';
 import DragAndDropList from 'src/components/forms/dnd/drag-and-drop-list';
 import { IRiderOption } from 'src/gql/common/types';
 import _ from 'lodash';
+import FormLayout from 'src/modules/form-layout';
 
 export interface IUserOption {
     id: string;
@@ -31,7 +32,7 @@ interface ISeedsFormProps {
 
 const getRiderOptionLabel = (option: IRiderOption, index: number): string => `${index + 1} ${option.user.fullName}`;
 
-const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initialValues, riderOptions }) => (
+const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValues, riderOptions, title }) => (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
             initialValues={initialValues}
@@ -42,15 +43,8 @@ const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initi
             {props => {
                 const { isSubmitting, isValid, dirty, setFieldValue, values } = props;
                 return (
-                    <Form>
+                    <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
                         <Grid container direction='column'>
-                            <Grid container direction='column' alignItems='center' spacing={0}>
-                                <Grid item>
-                                    <Typography variant='h3' gutterBottom>
-                                        {title}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
                                     <Button
@@ -75,8 +69,7 @@ const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, title, initi
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />
-                    </Form>
+                    </FormLayout>
                 );
             }}
         </Formik>

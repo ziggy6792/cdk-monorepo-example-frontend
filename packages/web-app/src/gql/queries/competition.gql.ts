@@ -8,6 +8,7 @@ const CORE_COMPETITION_FIELDS = gql`
         event {
             id
         }
+        hasDemoRiders
         name
         description
         level
@@ -119,8 +120,8 @@ export const ALLOCATE_RIDERS = gql`
 `;
 
 export const ADD_DEMO_RIDERS = gql`
-    mutation addDemoRiders($id: ID!) {
-        addDemoRiders(id: $id) {
+    mutation addRemoveDemoRiders($id: ID!) {
+        addRemoveDemoRiders(id: $id) {
             id
         }
     }
@@ -128,9 +129,17 @@ export const ADD_DEMO_RIDERS = gql`
 
 export const END_HEAT = gql`
     ${CORE_COMPETITION_FIELDS}
-    mutation endHeat($id: ID!) {
-        endHeat(id: $id) {
-            ...CoreCompetitionFields
+    mutation endHeat($id: ID!, $validationLevel: ValidationItemType) {
+        endHeat(id: $id, validationLevel: $validationLevel) {
+            ... on Competition {
+                ...CoreCompetitionFields
+            }
+            ... on ValidationItemList {
+                items {
+                    message
+                    type
+                }
+            }
         }
     }
 `;

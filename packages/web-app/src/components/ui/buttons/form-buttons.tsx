@@ -1,13 +1,13 @@
 import React from 'react';
 import { Grid, useTheme } from '@material-ui/core';
-import FormCancelButton from './form-cancel-button';
+import CancelButton from './cancel-button';
 import FormSubmitButton, { ISubmitButtonProps } from './form-submit-button';
 
 interface IFormButtonsProps extends ISubmitButtonProps {
     onCancel: () => void;
 }
 
-const FormButtons: React.FC<IFormButtonsProps> = props => {
+const FormButtons: React.FC<IFormButtonsProps> = (props) => {
     const theme = useTheme();
 
     const { isSubmitting, dirty, allowSubmitPristine, isValid, onCancel } = props;
@@ -16,11 +16,11 @@ const FormButtons: React.FC<IFormButtonsProps> = props => {
             <Grid item>
                 <FormSubmitButton isSubmitting={isSubmitting} dirty={dirty} allowSubmitPristine={allowSubmitPristine} isValid={isValid} />
             </Grid>
-            {props.children}
             <Grid item>
                 {/* <Button type="button" variant="contained" className={classes.dangerButton}  onClick={onClose}> */}
-                <FormCancelButton onClick={onCancel} isSubmitting={isSubmitting} />
+                <CancelButton onClick={onCancel} isSubmitting={isSubmitting} />
             </Grid>
+            {props.children}
         </Grid>
     );
 };
