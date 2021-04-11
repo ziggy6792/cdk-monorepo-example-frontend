@@ -2,10 +2,9 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { Button, Grid, Typography, useTheme } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { useAllocateRidersMutation } from 'src/generated-types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
-import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import NotifyMessages, { NotifyMessageType } from 'src/modules/notify-messages/notify-messages';
 import ConfirmBox from 'src/modules/confirm-box';
@@ -15,14 +14,7 @@ interface IEditCompetitionProps {
     disabled?: boolean;
 }
 
-const areYouSureMessage = {
-    type: NotifyMessageType.WARN,
-    message: 'Are you sure',
-};
-
 const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabled }) => {
-    const theme = useTheme();
-
     const [allocateRiders] = useAllocateRidersMutation({
         refetchQueries: [
             {
