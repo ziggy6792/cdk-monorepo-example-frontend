@@ -7,10 +7,9 @@ import { CompetitionParams, useBuildCompetitionMutation } from 'src/generated-ty
 import Dialog from 'src/components/ui/dialog';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import _ from 'lodash';
-import BuildCompetitionForm from 'src/modules/build-competition-form';
+import BuildCompetitionForm, { IBuildCompetitionFormValues } from 'src/modules/forms/build-competition-form';
 import YAML from 'yaml';
 import defaultCompetition from 'src/gql/default-competition.json';
-import { IBuildCompetitionFormValues } from 'src/modules/build-competition-form/build-competition-form';
 import jsYaml from 'js-yaml';
 
 interface IBuildCompetitionProps {

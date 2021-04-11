@@ -6,13 +6,12 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import { Button, Grid, useTheme } from '@material-ui/core';
 
-import { CreateCompetitionInput, useCreateCompetitionMutation, User } from 'src/generated-types';
-import { GET_EVENT, LIST_EVENTS } from 'src/gql/queries/event.gql';
+import { useCreateCompetitionMutation } from 'src/generated-types';
+import { GET_EVENT } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import { useHistory } from 'react-router';
 import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
-import ComepetitionForm from 'src/modules/competition-form';
-import { ICompetitionFormValues, IUserOption } from 'src/modules/competition-form/competition-form';
+import ComepetitionForm, { ICompetitionFormValues } from 'src/modules/forms/competition-form';
 
 interface IAddCompetitionProps {
     eventId: string;

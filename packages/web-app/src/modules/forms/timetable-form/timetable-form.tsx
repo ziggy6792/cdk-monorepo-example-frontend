@@ -10,7 +10,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import _ from 'lodash';
-import Form from 'src/modules/form';
+import FormLayout from 'src/modules/form-layout';
 
 export interface ITimetableFormValues {
     notice?: string;
@@ -48,7 +48,7 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, init
                 {props => {
                     const { isSubmitting, isValid, dirty } = props;
                     return (
-                        <Form
+                        <FormLayout
                             title={title}
                             buttons={
                                 <FormButtons
@@ -72,7 +72,7 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, init
                                     )}
                                 </Grid>
                             </Grid>
-                        </Form>
+                        </FormLayout>
                     );
                 }}
             </Formik>

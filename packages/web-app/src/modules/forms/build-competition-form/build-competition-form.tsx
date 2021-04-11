@@ -7,7 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
 import AceEditor from 'src/components/forms/ace-editor/ace-editor';
 import jsYaml from 'js-yaml';
-import Form from 'src/modules/form';
+import FormLayout from 'src/modules/form-layout';
 
 export interface IUserOption {
     id: string;
@@ -53,7 +53,7 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
             {props => {
                 const { isSubmitting, isValid, dirty } = props;
                 return (
-                    <Form
+                    <FormLayout
                         title={title}
                         buttons={
                             <FormButtons
@@ -75,7 +75,7 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Form>
+                    </FormLayout>
                 );
             }}
         </Formik>

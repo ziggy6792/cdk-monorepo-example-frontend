@@ -10,7 +10,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { CreateEventInput, UpdateEventInput } from 'src/generated-types';
 import { addHours, startOfHour } from 'date-fns';
 import FormButtons from 'src/components/ui/buttons/form-buttons';
-import Form from 'src/modules/form';
+import FormLayout from 'src/modules/form-layout';
 
 interface IEventFormProps {
     onSubmit: (event: CreateEventInput | Omit<UpdateEventInput, 'id'>) => Promise<void>;
@@ -38,7 +38,7 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, initialValue
                 {props => {
                     const { isSubmitting, isValid, dirty } = props;
                     return (
-                        <Form buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />} title={title}>
+                        <FormLayout buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />} title={title}>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
                                     <Field name='name' component={TextField} label='Name' autoFocus />
@@ -50,7 +50,7 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, initialValue
                                     <Field name='description' component={TextArea} placeholder='Description' />
                                 </Grid>
                             </Grid>
-                        </Form>
+                        </FormLayout>
                     );
                 }}
             </Formik>

@@ -4,8 +4,8 @@ import { Button, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutActionCreator } from 'src/domain/auth';
 import Spinner from 'src/components/spinner';
-import Buttons from 'src/modules/login-form/buttons';
-import LoginForm from 'src/modules/login-form';
+import Buttons from 'src/modules/forms/login-form/buttons';
+import LoginForm from 'src/modules/forms/login-form';
 
 import authSelectors from 'src/domain/auth/selectors';
 import { useHistory } from 'react-router-dom';

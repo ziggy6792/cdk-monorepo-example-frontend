@@ -9,8 +9,8 @@ import { Button } from '@material-ui/core';
 import { useCreateScheduleItemMutation } from 'src/generated-types';
 import { GET_EVENT_SCHEDULE } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
-import TimetableForm from 'src/modules/timetable-form';
-import { ITimetableFormValues } from 'src/modules/timetable-form/timetable-form';
+import TimetableForm from 'src/modules/forms/timetable-form';
+import { ITimetableFormValues } from 'src/modules/forms/timetable-form/timetable-form';
 
 interface IAddNoticeProps {
     eventId: string;

@@ -13,7 +13,7 @@ import FormButtons from 'src/components/ui/buttons/form-buttons';
 import { CATALOG_GENDER, CATALOG_LEVEL, CATALOG_SPORT, ICatalogItem } from 'src/config/catalogs';
 import { AutocompleteRenderInputParams } from '@material-ui/lab';
 import { Autocomplete } from 'formik-material-ui-lab';
-import Form from 'src/modules/form';
+import FormLayout from 'src/modules/form-layout';
 
 export interface IUserOption {
     id: string;
@@ -73,7 +73,7 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
                 {props => {
                     const { isSubmitting, isValid, dirty, errors, touched } = props;
                     return (
-                        <Form title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
+                        <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
                             <Grid container direction='column'>
                                 <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                     <Grid item>
@@ -120,7 +120,7 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </Form>
+                        </FormLayout>
                     );
                 }}
             </Formik>

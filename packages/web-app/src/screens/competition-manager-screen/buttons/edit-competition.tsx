@@ -6,8 +6,7 @@ import { Button, useTheme } from '@material-ui/core';
 import { UpdateCompetitionInput, useUpdateCompetitionMutation, User } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
-import ComepetitionForm from 'src/modules/competition-form';
-import { ICompetitionFormValues } from 'src/modules/competition-form/competition-form';
+import ComepetitionForm, { ICompetitionFormValues } from 'src/modules/forms/competition-form';
 
 interface IEditCompetitionProps {
     competitionToEdit: UpdateCompetitionInput;

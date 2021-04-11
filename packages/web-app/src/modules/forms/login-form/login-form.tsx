@@ -40,18 +40,30 @@ const initialFormValues = loadDefaultData
       };
 
 const signInSchema = {
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Too Short!').required('Required'),
+    email: Yup.string()
+        .email('Invalid email')
+        .required('Required'),
+    password: Yup.string()
+        .min(6, 'Too Short!')
+        .required('Required'),
 };
 
 const signUpSchema = {
     ...signInSchema,
-    firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+    firstName: Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('Required'),
+    lastName: Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('Required'),
 };
 
 const confirmSchema = {
-    confirmationCode: Yup.string().length(6, 'Must Be 6 Characters!').required('Required'),
+    confirmationCode: Yup.string()
+        .length(6, 'Must Be 6 Characters!')
+        .required('Required'),
 };
 
 // eslint-disable-next-line camelcase
@@ -259,7 +271,7 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
                 setSubmitting(false);
             }}
         >
-            {(props) => {
+            {props => {
                 const { submitForm, isSubmitting, isValid, resetForm, dirty } = props;
 
                 const isSubmitDisabled = isSubmitting || !isValid || (!dirty && !loadDefaultData);

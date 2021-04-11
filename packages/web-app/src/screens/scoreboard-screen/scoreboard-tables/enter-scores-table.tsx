@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import Dialog from 'src/components/ui/dialog';
-import ScoreRunForm, { IScoreRunFormValues, IScoreFormPosition } from 'src/modules/score-run-form';
+import ScoreRunForm, { IScoreRunFormValues, IScoreFormPosition } from 'src/modules/forms/score-run-form';
 import { IRiderAllocationItem } from 'src/gql/common/types';
 import { useScoreRunMutation, ScorRunInput, Run } from 'src/generated-types';
 import { GET_SELECTED_HEAT } from 'src/gql/queries/event.gql';

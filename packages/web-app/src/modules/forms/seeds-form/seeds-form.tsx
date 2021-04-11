@@ -11,7 +11,7 @@ import { ICatalogItem } from 'src/config/catalogs';
 import DragAndDropList from 'src/components/forms/dnd/drag-and-drop-list';
 import { IRiderOption } from 'src/gql/common/types';
 import _ from 'lodash';
-import Form from 'src/modules/form';
+import FormLayout from 'src/modules/form-layout';
 
 export interface IUserOption {
     id: string;
@@ -43,7 +43,7 @@ const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValue
             {props => {
                 const { isSubmitting, isValid, dirty, setFieldValue, values } = props;
                 return (
-                    <Form title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
+                    <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
                         <Grid container direction='column'>
                             <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                                 <Grid item>
@@ -69,7 +69,7 @@ const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValue
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Form>
+                    </FormLayout>
                 );
             }}
         </Formik>

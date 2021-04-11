@@ -7,7 +7,7 @@ import FormButtons from 'src/components/ui/buttons/form-buttons';
 import { NumericField } from 'src/components/forms/formik-material-ui/formik-material-ui';
 import { ordinalSuffixOf } from 'src/utils/utility';
 import GlobalFormError from 'src/components/forms/global-form-error/global-form-error';
-import Form from 'src/modules/form';
+import FormLayout from 'src/modules/form-layout';
 
 export interface IScoreRunFormValues {
     runScores: (number | '')[];
@@ -54,7 +54,7 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
             {props => {
                 const { isSubmitting, isValid, dirty, values } = props;
                 return (
-                    <Form title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
+                    <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
                         <Grid container direction='column'>
                             <Grid container direction='column' alignItems='center' spacing={2}>
                                 <FieldArray
@@ -93,7 +93,7 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
                                 )}
                             </Grid>
                         </Grid>
-                    </Form>
+                    </FormLayout>
                 );
             }}
         </Formik>
