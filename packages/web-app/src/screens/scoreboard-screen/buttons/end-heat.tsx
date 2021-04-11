@@ -17,6 +17,7 @@ import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
 import { Button, Link } from '@material-ui/core';
+import ConfirmBox from 'src/modules/confirm-box';
 
 interface IEndHeatProps {
     heat: {
@@ -67,23 +68,18 @@ const EndHeat: React.FC<IEndHeatProps> = ({ heat }) => {
 
     return (
         <>
-            <Dialog
-                open={open}
-                setOpen={setOpen}
-                title={`End ${heat.name}`}
-                buttons={
-                    <>
-                        <Button onClick={() => setOpen(false)}>Cancel</Button>
-                        <ProgressButton
-                            onClick={() => onEndHeat(ValidationItemType.Error)}
-                            disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}
-                        >
-                            End Heat
-                        </ProgressButton>
-                    </>
-                }
-            >
-                <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
+            <Dialog open={open} setOpen={setOpen}>
+                <ConfirmBox
+                    title={`End ${heat.name}`}
+                    confirmButton={{
+                        onClick: () => onEndHeat(ValidationItemType.Error),
+                        text: 'End Heat',
+                        disabled: !!validationItems.find(item => item.type === ValidationItemType.Error),
+                    }}
+                    cancelButton={{ onClick: () => setOpen(false) }}
+                >
+                    <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
+                </ConfirmBox>
             </Dialog>
             <ProgressButton onClick={onEndHeat}>End Heat</ProgressButton>
         </>

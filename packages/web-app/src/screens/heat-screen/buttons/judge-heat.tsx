@@ -18,6 +18,7 @@ import Dialog from 'src/components/ui/dialog';
 import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
 import { Button, Link } from '@material-ui/core';
 import CancelButton from 'src/components/ui/buttons/cancel-button';
+import ConfirmBox from 'src/modules/confirm-box/confirm-box';
 
 interface IJudgeHeatProps {
     heat: {
@@ -29,7 +30,7 @@ interface IJudgeHeatProps {
 const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
     const history = useHistory();
 
-    const [selectHeat, { loading }] = useSelectHeatMutation();
+    const [selectHeat] = useSelectHeatMutation();
 
     // const { refetch: checkCanOpen } = useCheckCanOpenHeatQuery({ fetchPolicy: 'cache-and-network', skip: true });
 
@@ -72,23 +73,18 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
 
     return (
         <>
-            <Dialog
-                open={open}
-                setOpen={setOpen}
-                title={`Judge ${heat.name}`}
-                buttons={
-                    <>
-                        <ProgressButton
-                            onClick={() => onSelectHeat(ValidationItemType.Error)}
-                            disabled={!!validationItems.find((item) => item.type === ValidationItemType.Error)}
-                        >
-                            Judge Heat
-                        </ProgressButton>
-                        <CancelButton onClick={() => setOpen(false)} isSubmitting={loading} />
-                    </>
-                }
-            >
-                <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
+            <Dialog open={open} setOpen={setOpen}>
+                <ConfirmBox
+                    title={`Judge ${heat.name}`}
+                    confirmButton={{
+                        onClick: () => onSelectHeat(ValidationItemType.Error),
+                        text: 'Judge Heat',
+                        disabled: !!validationItems.find(item => item.type === ValidationItemType.Error),
+                    }}
+                    cancelButton={{ onClick: () => setOpen(false) }}
+                >
+                    <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
+                </ConfirmBox>
             </Dialog>
             <ProgressButton onClick={onSelectHeat}>Judge Heat</ProgressButton>
         </>
