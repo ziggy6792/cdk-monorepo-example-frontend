@@ -34,22 +34,27 @@ const ConfirmBox: React.FC<IConfirmBox> = props => {
                 </Grid>
             )}
             {children}
-            <Grid container direction='row' justify='center'>
-                <ProgressButton
-                    onClick={
-                        confirmButton.onClick
-                            ? async () => {
-                                  setInternalIsSubmitting(true);
-                                  await confirmButton.onClick();
-                                  setInternalIsSubmitting(false);
-                              }
-                            : undefined
-                    }
-                    disabled={confirmButton.disabled || internalIsSubmitting}
-                >
-                    {confirmButton.text || 'OK'}
-                </ProgressButton>
-                <CancelButton onClick={cancelButton.onClick} text={cancelButton.text} isSubmitting={cancelButton.disabled || internalIsSubmitting} />
+            <Grid container direction='row' justify='center' spacing={2}>
+                <Grid item>
+                    <ProgressButton
+                        variant='contained'
+                        onClick={
+                            confirmButton.onClick
+                                ? async () => {
+                                      setInternalIsSubmitting(true);
+                                      await confirmButton.onClick();
+                                      setInternalIsSubmitting(false);
+                                  }
+                                : undefined
+                        }
+                        disabled={confirmButton.disabled || internalIsSubmitting}
+                    >
+                        {confirmButton.text || 'OK'}
+                    </ProgressButton>
+                </Grid>
+                <Grid item>
+                    <CancelButton onClick={cancelButton.onClick} text={cancelButton.text} isSubmitting={cancelButton.disabled || internalIsSubmitting} />
+                </Grid>
             </Grid>
         </Grid>
     );

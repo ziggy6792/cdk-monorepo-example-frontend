@@ -68,7 +68,11 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
                             <BuildCompetition competitionId={competitionId} />
                         </Grid>
                         <Grid item>
-                            <AddRemoveDemoRiders competitionId={competitionId} hasDemoRiders={data.getCompetition.hasDemoRiders} />
+                            <AddRemoveDemoRiders
+                                competitionId={competitionId}
+                                hasDemoRiders={data.getCompetition.hasDemoRiders}
+                                disabled={!data.getCompetition.rounds?.items?.length}
+                            />
                         </Grid>
                         <Grid item>
                             <EditSeeds

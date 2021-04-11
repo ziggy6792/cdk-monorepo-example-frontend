@@ -10,9 +10,10 @@ import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 interface IEditSeedsProps {
     competitionId: string;
     hasDemoRiders: boolean;
+    disabled?: boolean;
 }
 
-const AddRemoveDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId, hasDemoRiders }) => {
+const AddRemoveDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId, hasDemoRiders, disabled }) => {
     const [allocateRiders] = useAddRemoveDemoRidersMutation({
         refetchQueries: [
             {
@@ -30,7 +31,9 @@ const AddRemoveDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId, hasDemo
 
     return (
         <>
-            <ProgressButton onClick={onAllocateRiders}>{hasDemoRiders ? 'Remove' : 'Add'} Demo Riders</ProgressButton>
+            <ProgressButton onClick={onAllocateRiders} disabled={disabled}>
+                {hasDemoRiders ? 'Remove' : 'Add'} Demo Riders
+            </ProgressButton>
         </>
     );
 };

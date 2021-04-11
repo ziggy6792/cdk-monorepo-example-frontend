@@ -5,13 +5,15 @@ export interface ISubmitButtonProps {
     disabled?: boolean;
     onClick?: () => Promise<any>;
     isSubmitting?: boolean;
+    variant?: 'text' | 'outlined' | 'contained';
 }
 
-const ProgressButton: React.FC<ISubmitButtonProps> = ({ disabled, onClick, children, isSubmitting }) => {
+const ProgressButton: React.FC<ISubmitButtonProps> = ({ disabled, onClick, children, isSubmitting, variant }) => {
     const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
     return (
         <Button
             disabled={disabled || internalIsSubmitting}
+            variant={variant}
             onClick={
                 onClick
                     ? async () => {
