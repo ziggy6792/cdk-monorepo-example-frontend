@@ -9,6 +9,8 @@ import { ordinalSuffixOf } from 'src/utils/utility';
 import GlobalFormError from 'src/components/forms/global-form-error/global-form-error';
 import FormLayout from 'src/modules/form-layout';
 
+const ALLOW_TIED_POSITIONS = true;
+
 export interface IScoreRunFormValues {
     runScores: (number | '')[];
 }
@@ -38,6 +40,8 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
             initialValues={initialValues}
             validationSchema={Yup.object({})}
             validate={formValues => {
+                if (ALLOW_TIED_POSITIONS) return null;
+
                 const { isJoint } = getUpdatedPosition(formValues);
                 if (isJoint) {
                     const error = 'Tied positions are not allowed';
