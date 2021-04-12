@@ -35,10 +35,10 @@
             { "kind": "SCALAR", "name": "DateTime", "possibleTypes": null },
             { "kind": "SCALAR", "name": "ID", "possibleTypes": null },
             { "kind": "SCALAR", "name": "String", "possibleTypes": null },
-            { "kind": "ENUM", "name": "HeatStatus", "possibleTypes": null },
             { "kind": "SCALAR", "name": "Int", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "SeedSlot", "possibleTypes": null },
             { "kind": "SCALAR", "name": "Boolean", "possibleTypes": null },
+            { "kind": "ENUM", "name": "HeatStatus", "possibleTypes": null },
+            { "kind": "OBJECT", "name": "SeedSlot", "possibleTypes": null },
             { "kind": "OBJECT", "name": "RiderAllocationList", "possibleTypes": null },
             { "kind": "OBJECT", "name": "RiderAllocation", "possibleTypes": null },
             { "kind": "OBJECT", "name": "Run", "possibleTypes": null },
@@ -65,6 +65,15 @@
             { "kind": "OBJECT", "name": "Event", "possibleTypes": null },
             { "kind": "ENUM", "name": "EventStatus", "possibleTypes": null },
             { "kind": "OBJECT", "name": "CompetitionList", "possibleTypes": null },
+            { "kind": "OBJECT", "name": "ValidationItem", "possibleTypes": null },
+            {
+                "kind": "INTERFACE",
+                "name": "ValidationItemBase",
+                "possibleTypes": [{ "name": "ValidationItem" }, { "name": "ValidationItemHeatAlreadyOpen" }]
+            },
+            { "kind": "ENUM", "name": "ValidationItemType", "possibleTypes": null },
+            { "kind": "ENUM", "name": "ValidationItemMessage", "possibleTypes": null },
+            { "kind": "OBJECT", "name": "ValidationItemHeatAlreadyOpen", "possibleTypes": null },
             { "kind": "OBJECT", "name": "Query", "possibleTypes": null },
             { "kind": "OBJECT", "name": "Mutation", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "CreateUserInput", "possibleTypes": null },
@@ -81,8 +90,19 @@
             { "kind": "INPUT_OBJECT", "name": "RoundParamsInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "HeatParamsInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "SeedSlotParamsInput", "possibleTypes": null },
+            {
+                "kind": "UNION",
+                "name": "SelectHeatResult",
+                "possibleTypes": [{ "name": "Event" }, { "name": "ValidationItemList" }]
+            },
+            { "kind": "OBJECT", "name": "ValidationItemList", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "ScorRunInput", "possibleTypes": null },
             { "kind": "INPUT_OBJECT", "name": "RunInput", "possibleTypes": null },
+            {
+                "kind": "UNION",
+                "name": "EndHeatResult",
+                "possibleTypes": [{ "name": "Competition" }, { "name": "ValidationItemList" }]
+            },
             { "kind": "OBJECT", "name": "__Schema", "possibleTypes": null },
             { "kind": "OBJECT", "name": "__Type", "possibleTypes": null },
             { "kind": "ENUM", "name": "__TypeKind", "possibleTypes": null },
