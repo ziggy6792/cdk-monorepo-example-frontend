@@ -1,7 +1,10 @@
 import gql from 'graphql-tag';
+import { BREADCRUMB_FIELDS } from './breadcrumbs.gql';
 
 export const CORE_HEAT_FIELDS = gql`
+    ${BREADCRUMB_FIELDS}
     fragment CoreHeatFields on Heat {
+        ...BreadcrumbFields
         id
         status
         name

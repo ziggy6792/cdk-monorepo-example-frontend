@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core';
 import React from 'react';
 import Spinner from 'src/components/spinner';
 import { HeatStatus, useGetHeatQuery } from 'src/generated-types';
+import Breadcrumbs from 'src/modules/breadcrumbs/breadcrumbs';
 import HeatSummary from 'src/modules/summary/heat-summary';
 import JudgeHeat from './buttons/judge-heat';
 import ResultsTable from './results-table';
@@ -28,6 +29,7 @@ const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
 
     return (
         <>
+            <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
             <Grid container direction='column' justify='center' alignItems='center'>
                 <HeatSummary heat={data.getHeat} />
                 <Grid item>

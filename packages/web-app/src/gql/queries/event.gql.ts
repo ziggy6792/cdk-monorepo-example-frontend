@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { BREADCRUMB_FIELDS } from './breadcrumbs.gql';
 import { CORE_HEAT_FIELDS } from './heat.gql';
 
 export const LIST_EVENTS = gql`
@@ -31,8 +32,10 @@ export const UPDATE_EVENT = gql`
 `;
 
 export const GET_EVENT = gql`
+    ${BREADCRUMB_FIELDS}
     query getEvent($id: ID!) {
         getEvent(id: $id) {
+            ...BreadcrumbFields
             id
             name
             adminUser {
