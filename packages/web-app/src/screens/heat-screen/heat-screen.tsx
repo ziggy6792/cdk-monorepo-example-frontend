@@ -25,6 +25,7 @@ const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
     if (loading) {
         return <Spinner />;
     }
+    console.log('breadcrumbs', data.getHeat.breadcrumbs);
 
     return (
         <>

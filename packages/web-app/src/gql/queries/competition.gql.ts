@@ -1,9 +1,12 @@
 import gql from 'graphql-tag';
+import { BREADCRUMB_FIELDS } from './breadcrumbs.gql';
 
 /* eslint-disable import/prefer-default-export */
 
 const CORE_COMPETITION_FIELDS = gql`
+    ${BREADCRUMB_FIELDS}
     fragment CoreCompetitionFields on Competition {
+        ...BreadcrumbFields
         id
         event {
             id
