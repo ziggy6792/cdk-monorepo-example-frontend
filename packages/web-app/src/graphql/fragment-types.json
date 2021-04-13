@@ -1,119 +1,119 @@
 {
-    "__schema": {
-        "types": [
-            { "kind": "OBJECT", "name": "Heat", "possibleTypes": null },
-            {
-                "kind": "INTERFACE",
-                "name": "DataEntity",
-                "possibleTypes": [{ "name": "Heat" }, { "name": "Round" }, { "name": "Competition" }, { "name": "Event" }]
-            },
-            {
-                "kind": "INTERFACE",
-                "name": "Identifiable",
-                "possibleTypes": [
-                    { "name": "Heat" },
-                    { "name": "User" },
-                    { "name": "Round" },
-                    { "name": "ScheduleItem" },
-                    { "name": "Competition" },
-                    { "name": "Event" }
-                ]
-            },
-            {
-                "kind": "INTERFACE",
-                "name": "Creatable",
-                "possibleTypes": [
-                    { "name": "Heat" },
-                    { "name": "RiderAllocation" },
-                    { "name": "User" },
-                    { "name": "Round" },
-                    { "name": "ScheduleItem" },
-                    { "name": "Competition" },
-                    { "name": "Event" }
-                ]
-            },
-            { "kind": "SCALAR", "name": "DateTime", "possibleTypes": null },
-            { "kind": "SCALAR", "name": "ID", "possibleTypes": null },
-            { "kind": "SCALAR", "name": "String", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "LinkList", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Link", "possibleTypes": null },
-            { "kind": "ENUM", "name": "LinkType", "possibleTypes": null },
-            { "kind": "SCALAR", "name": "Int", "possibleTypes": null },
-            { "kind": "SCALAR", "name": "Boolean", "possibleTypes": null },
-            { "kind": "ENUM", "name": "HeatStatus", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "SeedSlot", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "RiderAllocationList", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "RiderAllocation", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Run", "possibleTypes": null },
-            { "kind": "SCALAR", "name": "Float", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "User", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Round", "possibleTypes": null },
-            { "kind": "INTERFACE", "name": "Schedulable", "possibleTypes": [{ "name": "Round" }] },
-            { "kind": "OBJECT", "name": "ScheduleItem", "possibleTypes": null },
-            {
-                "kind": "INTERFACE",
-                "name": "Schedule",
-                "possibleTypes": [{ "name": "Competition" }, { "name": "Event" }]
-            },
-            { "kind": "OBJECT", "name": "ScheduleItemList", "possibleTypes": null },
-            { "kind": "ENUM", "name": "RoundType", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "HeatList", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Competition", "possibleTypes": null },
-            { "kind": "ENUM", "name": "CompetitionStatus", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "CompetitionParams", "possibleTypes": null },
-            { "kind": "ENUM", "name": "Gender", "possibleTypes": null },
-            { "kind": "ENUM", "name": "Sport", "possibleTypes": null },
-            { "kind": "ENUM", "name": "Level", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "RoundList", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Event", "possibleTypes": null },
-            { "kind": "ENUM", "name": "EventStatus", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "CompetitionList", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "ValidationItem", "possibleTypes": null },
-            {
-                "kind": "INTERFACE",
-                "name": "ValidationItemBase",
-                "possibleTypes": [{ "name": "ValidationItem" }, { "name": "ValidationItemHeatAlreadyOpen" }]
-            },
-            { "kind": "ENUM", "name": "ValidationItemType", "possibleTypes": null },
-            { "kind": "ENUM", "name": "ValidationItemMessage", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "ValidationItemHeatAlreadyOpen", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Query", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "Mutation", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "CreateUserInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "UpdateUserInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "CreateEventInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "UpdateEventInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "CreateCompetitionInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "UpdateCompetitionInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "CreateScheduleItemInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "UpdateScheduleItemInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "CreateRiderAllocationInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "UpdateRiderAllocationInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "CompetitionParamsInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "RoundParamsInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "HeatParamsInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "SeedSlotParamsInput", "possibleTypes": null },
-            {
-                "kind": "UNION",
-                "name": "SelectHeatResult",
-                "possibleTypes": [{ "name": "Event" }, { "name": "ValidationItemList" }]
-            },
-            { "kind": "OBJECT", "name": "ValidationItemList", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "ScorRunInput", "possibleTypes": null },
-            { "kind": "INPUT_OBJECT", "name": "RunInput", "possibleTypes": null },
-            {
-                "kind": "UNION",
-                "name": "EndHeatResult",
-                "possibleTypes": [{ "name": "Competition" }, { "name": "ValidationItemList" }]
-            },
-            { "kind": "OBJECT", "name": "__Schema", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "__Type", "possibleTypes": null },
-            { "kind": "ENUM", "name": "__TypeKind", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "__Field", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "__InputValue", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "__EnumValue", "possibleTypes": null },
-            { "kind": "OBJECT", "name": "__Directive", "possibleTypes": null },
-            { "kind": "ENUM", "name": "__DirectiveLocation", "possibleTypes": null }
+  "__schema": {
+    "types": [
+      { "kind": "OBJECT", "name": "Heat", "possibleTypes": null },
+      {
+        "kind": "INTERFACE",
+        "name": "DataEntity",
+        "possibleTypes": [{ "name": "Heat" }, { "name": "Round" }, { "name": "Competition" }, { "name": "Event" }]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Identifiable",
+        "possibleTypes": [
+          { "name": "Heat" },
+          { "name": "User" },
+          { "name": "Round" },
+          { "name": "ScheduleItem" },
+          { "name": "Competition" },
+          { "name": "Event" }
         ]
-    }
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Creatable",
+        "possibleTypes": [
+          { "name": "Heat" },
+          { "name": "RiderAllocation" },
+          { "name": "User" },
+          { "name": "Round" },
+          { "name": "ScheduleItem" },
+          { "name": "Competition" },
+          { "name": "Event" }
+        ]
+      },
+      { "kind": "SCALAR", "name": "DateTime", "possibleTypes": null },
+      { "kind": "SCALAR", "name": "ID", "possibleTypes": null },
+      { "kind": "SCALAR", "name": "String", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "LinkList", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "Link", "possibleTypes": null },
+      { "kind": "ENUM", "name": "LinkType", "possibleTypes": null },
+      { "kind": "SCALAR", "name": "Int", "possibleTypes": null },
+      { "kind": "SCALAR", "name": "Boolean", "possibleTypes": null },
+      { "kind": "ENUM", "name": "HeatStatus", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "SeedSlot", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "RiderAllocationList", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "RiderAllocation", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "Run", "possibleTypes": null },
+      { "kind": "SCALAR", "name": "Float", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "User", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "Round", "possibleTypes": null },
+      { "kind": "INTERFACE", "name": "Schedulable", "possibleTypes": [{ "name": "Round" }] },
+      { "kind": "OBJECT", "name": "ScheduleItem", "possibleTypes": null },
+      {
+        "kind": "INTERFACE",
+        "name": "Schedule",
+        "possibleTypes": [{ "name": "Competition" }, { "name": "Event" }]
+      },
+      { "kind": "OBJECT", "name": "ScheduleItemList", "possibleTypes": null },
+      { "kind": "ENUM", "name": "RoundType", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "HeatList", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "Competition", "possibleTypes": null },
+      { "kind": "ENUM", "name": "CompetitionStatus", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "CompetitionParams", "possibleTypes": null },
+      { "kind": "ENUM", "name": "Gender", "possibleTypes": null },
+      { "kind": "ENUM", "name": "Sport", "possibleTypes": null },
+      { "kind": "ENUM", "name": "Level", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "RoundList", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "Event", "possibleTypes": null },
+      { "kind": "ENUM", "name": "EventStatus", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "CompetitionList", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "ValidationItem", "possibleTypes": null },
+      {
+        "kind": "INTERFACE",
+        "name": "ValidationItemBase",
+        "possibleTypes": [{ "name": "ValidationItem" }, { "name": "ValidationItemHeatAlreadyOpen" }]
+      },
+      { "kind": "ENUM", "name": "ValidationItemType", "possibleTypes": null },
+      { "kind": "ENUM", "name": "ValidationItemMessage", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "ValidationItemHeatAlreadyOpen", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "Query", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "Mutation", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "CreateUserInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "UpdateUserInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "CreateEventInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "UpdateEventInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "CreateCompetitionInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "UpdateCompetitionInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "CreateScheduleItemInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "UpdateScheduleItemInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "CreateRiderAllocationInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "UpdateRiderAllocationInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "CompetitionParamsInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "RoundParamsInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "HeatParamsInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "SeedSlotParamsInput", "possibleTypes": null },
+      {
+        "kind": "UNION",
+        "name": "SelectHeatResult",
+        "possibleTypes": [{ "name": "Event" }, { "name": "ValidationItemList" }]
+      },
+      { "kind": "OBJECT", "name": "ValidationItemList", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "ScorRunInput", "possibleTypes": null },
+      { "kind": "INPUT_OBJECT", "name": "RunInput", "possibleTypes": null },
+      {
+        "kind": "UNION",
+        "name": "EndHeatResult",
+        "possibleTypes": [{ "name": "Competition" }, { "name": "ValidationItemList" }]
+      },
+      { "kind": "OBJECT", "name": "__Schema", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "__Type", "possibleTypes": null },
+      { "kind": "ENUM", "name": "__TypeKind", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "__Field", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "__InputValue", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "__EnumValue", "possibleTypes": null },
+      { "kind": "OBJECT", "name": "__Directive", "possibleTypes": null },
+      { "kind": "ENUM", "name": "__DirectiveLocation", "possibleTypes": null }
+    ]
+  }
 }

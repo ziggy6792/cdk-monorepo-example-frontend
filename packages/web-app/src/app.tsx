@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useState } from 'react';
 import Auth from '@aws-amplify/auth';
 // import ApolloClient from 'apollo-client';
 import { Provider } from 'react-redux';
@@ -13,6 +13,8 @@ import { parseISO } from 'date-fns';
 import Theme from 'src/ui/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createTransformerLink } from 'apollo-client-transform';
+import { ErrorResponse, onError } from '@apollo/client/link/error';
+import { Button } from '@material-ui/core';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import initStore from './config/store';
@@ -57,27 +59,54 @@ const transformers = {
 const transformerLink = createTransformerLink(transformers as any);
 const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
 
-const client = new ApolloClient({
-  link: enhancedHttpLink as any,
-  cache: new InMemoryCache({
-    possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
-  }),
-});
-
 const App: React.FC = () => (
   <div className='App' style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
     <Routes />
   </div>
 );
 
-const WithProvider: React.FC = () => (
-  // <ThemeProvider theme={Theme}>
-  <Provider store={store}>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </Provider>
-  // </ThemeProvider>
-);
+const renderError = (apolloError: ErrorResponse): React.ReactNode => {
+  const { graphQLErrors, networkError } = apolloError;
+  const displayErrors = [];
+
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message, locations, path }) => displayErrors.push(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`));
+  }
+
+  if (networkError) {
+    displayErrors.push(`[Network error]: ${networkError}`);
+  }
+  return displayErrors.map(error => <div>{error}</div>);
+};
+
+const WithProvider: React.FC = () => {
+  const [error, setError] = useState<ErrorResponse>(null);
+
+  const errorLink = onError(apolloError => {
+    setError(apolloError);
+  });
+
+  const client = new ApolloClient({
+    link: errorLink.concat(enhancedHttpLink as any),
+    cache: new InMemoryCache({
+      possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
+    }),
+  });
+  return (
+    // <ThemeProvider theme={Theme}>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        {error && (
+          <>
+            {renderError(error)}
+            <Button onClick={() => setError(null)}>Clear Error</Button>
+          </>
+        )}
+        {!error && <App />}
+      </ApolloProvider>
+    </Provider>
+    // </ThemeProvider>
+  );
+};
 
 export default WithProvider;
