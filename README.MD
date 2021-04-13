@@ -1,16 +1,33 @@
-# Lerna Monorepo CDK example
+# Alpaca Frontend
 
 ## FIRST THINGS FIRST
 
 1. install lerna globally
-2. install cdk globally
+2. install cdk globally (if you intend to modify to CI/CD pipeline)
 
 ## PROJECT STRUCTURE
 
--   packages/cdk-app contains normal cdk package which depends on our lambda packages
--   packages/lambda-a is a normal typescript lambda
--   packages/lambda-b is a normal typescript lambda
--   packages/common-lambda-lib is a common nodejs package used in both lambdas
+-   packages/cdk-app configures the CI/CD pipeline
+-   packages/web-app frontend react app
+
+## RUNTIME CONFIGURATION
+
+-   Frontend configuration (endpoint urls, environment name...) is configured at runtime using `packages/web-app/public/config/env.json`
+-   Create `packages/web-app/public/config/env.json` and paste in the following config to get going. This config will connect frontend to staging apis
+
+```
+{
+    "ENV": "dev",
+    "AWS_REGION": "ap-southeast-1",
+    "AWS_COGNITO_IDENDITY_POOL_ID": "ap-southeast-1:6dce3e15-6817-4377-bd82-bb969b254a8f",
+    "AWS_USER_POOLS_ID": "ap-southeast-1_RNMlC2yGY",
+    "AWS_USER_POOLS_WEB_CLIENT_ID": "1om2i227s52mkpl4t256637ba5",
+    "AWS_GRAPHQLENDPOINT_AUTHUSER": "https://l6fheds7c7.execute-api.ap-southeast-1.amazonaws.com/staging/auth-user/graphql",
+    "AWS_GRAPHQLENDPOINT_AUTHROLE": "https://l6fheds7c7.execute-api.ap-southeast-1.amazonaws.com/staging/auth-role/graphql",
+    "AWS_GRAPHQLENDPOINT_AUTHNONE": "https://l6fheds7c7.execute-api.ap-southeast-1.amazonaws.com/staging/auth-none/graphql",
+    "AWS_OATH_DOMAIN": "alpaca-backend-staging.auth.ap-southeast-1.amazoncognito.com"
+}
+```
 
 ## TYPESCRIPT CONFIGURATION
 
@@ -25,14 +42,6 @@ there are 3 tsconfig files in the root of the project.
 -   we use webpack to build of our lambdas (not common libraries used in the lambdas, these are built using typescript compiler only)
 -   we have a root webpack.config.build.json which all common lambdas extend so we dont have to repeat ourselves.
 -   in the root webpack.config, when we build our lambda code, we have to rename the package name of the compiled lambdas in the cdk.out directory and dist folder. This is to avoid naming conflicts when we use lambda as no 2 packages can have the same name.
-
-## Lambda CONFIGURATION
-
--   lambdas use webpack to be built
-
-## COMMON LIBRARY CONFIGURATION
-
--   common library uses typescript compiler to be built
 
 ## MONOREPO CONFIGURATION
 
@@ -56,9 +65,9 @@ there are 3 tsconfig files in the root of the project.
 
 1. clone repo
 2. run `yarn install` in project root to install all node dependencies for both root and nested project
-3. run `lerna run build` to build all typescript code
-4. run `cd packages/cdk-app`
-5. run `cdk deploy` to deploy or cdk bootstrap or whatever cdk command you like.
+3. run `yarn build` to build all typescript code
+4. Add runtime configuration (see above)
+5. run `yarn start`
 
 ## Development cycle
 
