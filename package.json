@@ -17,6 +17,7 @@
     "test:watch": "jest --watch --debug --runInBand --colors",
     "test": "jest --coverage --debug --runInBand --colors",
     "lint": "eslint './packages/**/src/**/*.{ts,tsx}'",
+    "pretty": "yarn prettier --write './packages/**/src/**/*.{ts,tsx}'",
     "cdk:synth": "lerna run synth --scope @alpaca-frontend/cdk-app && rm -rf cdk.out && cp -r packages/cdk-app/cdk.out cdk.out",
     "cdk:deploy": "cd packages/cdk-app && yarn deploy",
     "start": "lerna run start --stream --parallel",
@@ -25,8 +26,7 @@
     "build:helpers": "lerna run build --scope '{@alpaca-frontend/gq-schema-helper,@alpaca-frontend/aws-config-helper}' --stream && yarn --force",
     "prepare:deployment": "lerna run builds:create --scope @alpaca-frontend/web-app",
     "build:and:prepare:deployment": "yarn build && yarn prepare:deployment",
-    "pre:commit": "lint-staged && lerna run precommit --parallel --since HEAD",
-    "pretty": "yarn prettier --write './packages/**/src/**/*.{ts,tsx}'"
+    "pre:commit": "lint-staged && lerna run precommit --parallel --since HEAD"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
@@ -63,6 +63,7 @@
   },
   "lint-staged": {
     "{packages,utils}/*/src/**/*.{ts,tsx}": [
+      "prettier --write",
       "eslint --fix",
       "jest --bail --findRelatedTests"
     ],
