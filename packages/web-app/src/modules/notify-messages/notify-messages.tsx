@@ -8,57 +8,57 @@ import { Grid } from '@material-ui/core';
 import React, { Fragment } from 'react';
 
 export enum NotifyMessageType {
-    ERROR = 'ERROR',
-    WARN = 'WARN',
-    INFO = 'INFO',
+  ERROR = 'ERROR',
+  WARN = 'WARN',
+  INFO = 'INFO',
 }
 
 export interface INotifyMessage {
-    type: NotifyMessageType;
-    message: React.ReactNode;
-    action?: React.ReactNode;
+  type: NotifyMessageType;
+  message: React.ReactNode;
+  action?: React.ReactNode;
 }
 
 export interface INotifyMessageProps {
-    notifyMessage: INotifyMessage;
+  notifyMessage: INotifyMessage;
 }
 
 const NotifyMessage: React.FC<INotifyMessageProps> = ({ notifyMessage: { type, message, action } }) => (
-    <>
-        <Grid container direction='row' spacing={2}>
-            <Grid item sm={2}>
-                {type}
-            </Grid>
-            <Grid item sm={8}>
-                {message}
-            </Grid>
-            <Grid item sm={2}>
-                {action}
-            </Grid>
-        </Grid>
-    </>
+  <>
+    <Grid container direction='row' spacing={2}>
+      <Grid item sm={2}>
+        {type}
+      </Grid>
+      <Grid item sm={8}>
+        {message}
+      </Grid>
+      <Grid item sm={2}>
+        {action}
+      </Grid>
+    </Grid>
+  </>
 );
 
 export interface INotifyMessagesProps {
-    notifyMessages: INotifyMessage[];
+  notifyMessages: INotifyMessage[];
 }
 
 const NotifyMessages: React.FC<INotifyMessagesProps> = ({ notifyMessages }) => (
-    <>
-        <Grid container style={{ padding: 16 }}>
-            <>
-                {[NotifyMessageType.ERROR, NotifyMessageType.WARN].map((groupType) => (
-                    <Fragment key={groupType}>
-                        {notifyMessages.map((notifyMessage, i) => (
-                            <Grid item key={`message-${i}`}>
-                                {notifyMessage.type === groupType && <NotifyMessage notifyMessage={notifyMessage} />}
-                            </Grid>
-                        ))}
-                    </Fragment>
-                ))}
-            </>
-        </Grid>
-    </>
+  <>
+    <Grid container style={{ padding: 16 }}>
+      <>
+        {[NotifyMessageType.ERROR, NotifyMessageType.WARN].map(groupType => (
+          <Fragment key={groupType}>
+            {notifyMessages.map((notifyMessage, i) => (
+              <Grid item key={`message-${i}`}>
+                {notifyMessage.type === groupType && <NotifyMessage notifyMessage={notifyMessage} />}
+              </Grid>
+            ))}
+          </Fragment>
+        ))}
+      </>
+    </Grid>
+  </>
 );
 
 export default NotifyMessages;

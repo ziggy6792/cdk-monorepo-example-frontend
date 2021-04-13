@@ -25,59 +25,59 @@ const store = initStore();
 
 // Solution from https://dev.to/admitkard/mobile-issue-with-100vh-height-100-100vh-3-solutions-3nae
 const calcVh = () => {
-    (document.querySelector(':root') as any).style.setProperty('--vh', `${window.innerHeight / 100}px`);
+  (document.querySelector(':root') as any).style.setProperty('--vh', `${window.innerHeight / 100}px`);
 };
 
 calcVh();
 window.addEventListener('resize', () => {
-    calcVh();
+  calcVh();
 });
 
 document.title = envConfig.title;
 
 const DateTransformer = {
-    parseValue(date: string) {
-        return date ? parseISO(date) : null;
-    },
+  parseValue(date: string) {
+    return date ? parseISO(date) : null;
+  },
 };
 
 const CreatableTransformers = { createdAt: DateTransformer, modifiedAt: DateTransformer };
 const SchedulableTransformers = { ...CreatableTransformers, startTime: DateTransformer };
 
 const transformers = {
-    User: { ...CreatableTransformers },
-    Round: { ...SchedulableTransformers },
-    RiderAllocation: { ...CreatableTransformers },
-    Heat: { ...CreatableTransformers },
-    Event: { ...CreatableTransformers, startTime: DateTransformer },
-    Competition: { ...CreatableTransformers },
-    ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
+  User: { ...CreatableTransformers },
+  Round: { ...SchedulableTransformers },
+  RiderAllocation: { ...CreatableTransformers },
+  Heat: { ...CreatableTransformers },
+  Event: { ...CreatableTransformers, startTime: DateTransformer },
+  Competition: { ...CreatableTransformers },
+  ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
 };
 
 const transformerLink = createTransformerLink(transformers as any);
 const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
 
 const client = new ApolloClient({
-    link: enhancedHttpLink as any,
-    cache: new InMemoryCache({
-        possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
-    }),
+  link: enhancedHttpLink as any,
+  cache: new InMemoryCache({
+    possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
+  }),
 });
 
 const App: React.FC = () => (
-    <div className='App' style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
-        <Routes />
-    </div>
+  <div className='App' style={{ height: 'calc(100 * var(--vh))', width: '100%' }}>
+    <Routes />
+  </div>
 );
 
 const WithProvider: React.FC = () => (
-    // <ThemeProvider theme={Theme}>
-    <Provider store={store}>
-        <ApolloProvider client={client}>
-            <App />
-        </ApolloProvider>
-    </Provider>
-    // </ThemeProvider>
+  // <ThemeProvider theme={Theme}>
+  <Provider store={store}>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </Provider>
+  // </ThemeProvider>
 );
 
 export default WithProvider;

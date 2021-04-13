@@ -9,42 +9,42 @@ import ResultsTable from './results-table';
 import { ScoresTableType } from './results-table/results-table';
 
 interface IScoreboardScreenProps {
-    heatId: string;
+  heatId: string;
 }
 
 const heatStatusToTableType = (status: HeatStatus) => {
-    switch (status) {
-        case HeatStatus.Finished:
-            return ScoresTableType.RESULTS;
-        default:
-            return ScoresTableType.START_LIST;
-    }
+  switch (status) {
+    case HeatStatus.Finished:
+      return ScoresTableType.RESULTS;
+    default:
+      return ScoresTableType.START_LIST;
+  }
 };
 
 const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
-    const { loading, data } = useGetHeatQuery({ variables: { id: heatId } });
-    if (loading) {
-        return <Spinner />;
-    }
+  const { loading, data } = useGetHeatQuery({ variables: { id: heatId } });
+  if (loading) {
+    return <Spinner />;
+  }
 
-    return (
-        <>
-            <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
-            <Grid container direction='column' justify='center' alignItems='center'>
-                <HeatSummary heat={data.getHeat} />
-                <Grid item>
-                    <JudgeHeat heat={data.getHeat} />
-                </Grid>
-                <Grid item style={{ width: '100%' }}>
-                    <ResultsTable
-                        tableType={heatStatusToTableType(data.getHeat.status)}
-                        riderAllocations={data.getHeat.riderAllocations.items}
-                        noProgressing={data.getHeat.noProgressing}
-                    />
-                </Grid>
-            </Grid>
-        </>
-    );
+  return (
+    <>
+      <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
+      <Grid container direction='column' justify='center' alignItems='center'>
+        <HeatSummary heat={data.getHeat} />
+        <Grid item>
+          <JudgeHeat heat={data.getHeat} />
+        </Grid>
+        <Grid item style={{ width: '100%' }}>
+          <ResultsTable
+            tableType={heatStatusToTableType(data.getHeat.status)}
+            riderAllocations={data.getHeat.riderAllocations.items}
+            noProgressing={data.getHeat.noProgressing}
+          />
+        </Grid>
+      </Grid>
+    </>
+  );
 };
 
 export default HeatScreen;
