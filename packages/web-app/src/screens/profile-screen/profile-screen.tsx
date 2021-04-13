@@ -12,44 +12,44 @@ import { useHistory } from 'react-router-dom';
 import * as routeConfig from 'src/config/routes';
 
 const ProfileScreen: React.FC = () => {
-    const [formState, setFormSate] = useState('base');
+  const [formState, setFormSate] = useState('base');
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const user = useSelector(authSelectors.selectUser);
-    const isLoading = useSelector(authSelectors.selectIsLoading);
-    const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
+  const user = useSelector(authSelectors.selectUser);
+  const isLoading = useSelector(authSelectors.selectIsLoading);
+  const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
 
-    const history = useHistory();
+  const history = useHistory();
 
-    if (isLoading) {
-        return <Spinner />;
-    }
+  if (isLoading) {
+    return <Spinner />;
+  }
 
-    return (
-        <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%' }}>
-            <Grid item>
-                {!isAuthenticated && (
-                    <>
-                        {formState === 'email' && <LoginForm />}
-                        {formState === 'base' && <Buttons updateFormState={setFormSate} />}
-                    </>
-                )}
+  return (
+    <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%' }}>
+      <Grid item>
+        {!isAuthenticated && (
+          <>
+            {formState === 'email' && <LoginForm />}
+            {formState === 'base' && <Buttons updateFormState={setFormSate} />}
+          </>
+        )}
 
-                {isAuthenticated && (
-                    <>
-                        <>
-                            <h4>Welcome {user.displayName}</h4>
-                            <Button onClick={() => dispatch(logoutActionCreator())}>sign out</Button>
-                        </>
-                    </>
-                )}
-            </Grid>
-            <Grid item>
-                <Button onClick={() => history.push(routeConfig.ROUTE_HOME)}>Book a slot</Button>
-            </Grid>
-        </Grid>
-    );
+        {isAuthenticated && (
+          <>
+            <>
+              <h4>Welcome {user.displayName}</h4>
+              <Button onClick={() => dispatch(logoutActionCreator())}>sign out</Button>
+            </>
+          </>
+        )}
+      </Grid>
+      <Grid item>
+        <Button onClick={() => history.push(routeConfig.ROUTE_HOME)}>Book a slot</Button>
+      </Grid>
+    </Grid>
+  );
 };
 
 export default ProfileScreen;

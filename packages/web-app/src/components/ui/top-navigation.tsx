@@ -9,17 +9,17 @@ import Typography from '@material-ui/core/Typography';
 // import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        title: {
-            flexGrow: 1,
-        },
-    })
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+  })
 );
 
 /*
@@ -28,23 +28,23 @@ TODO
 */
 
 const TopNavigation: React.FC = () => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            <AppBar position='static'>
-                <Toolbar>
-                    {/* <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
+  return (
+    <div className={classes.root}>
+      <AppBar position='static'>
+        <Toolbar>
+          {/* <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
                         <MenuIcon />
                     </IconButton> */}
-                    <Typography variant='h6' className={classes.title}>
-                        Alpaca Tournament
-                    </Typography>
-                    <Avatar alt='Remy Sharp' src='/static/images/avatar/1.jpg' />
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
+          <Typography variant='h6' className={classes.title}>
+            Alpaca Tournament
+          </Typography>
+          <Avatar alt='Remy Sharp' src='/static/images/avatar/1.jpg' />
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 };
 
 export default TopNavigation;

@@ -13,71 +13,65 @@ import _ from 'lodash';
 import FormLayout from 'src/modules/form-layout';
 
 export interface ITimetableFormValues {
-    notice?: string;
-    startTime: Date;
+  notice?: string;
+  startTime: Date;
 }
 
 interface ITimetableFormProps {
-    onSubmit: (event: ITimetableFormValues) => Promise<void>;
-    onCancel: () => void;
-    initialValues?: ITimetableFormValues;
-    showNotice?: boolean;
-    allowSubmitPristine?: boolean;
-    title: string;
+  onSubmit: (event: ITimetableFormValues) => Promise<void>;
+  onCancel: () => void;
+  initialValues?: ITimetableFormValues;
+  showNotice?: boolean;
+  allowSubmitPristine?: boolean;
+  title: string;
 }
 
 const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, initialValues, showNotice, allowSubmitPristine, title }) => {
-    const minTime = startOfHour(addHours(new Date(), 1));
+  const minTime = startOfHour(addHours(new Date(), 1));
 
-    const defaultValues = showNotice ? { notice: '', startTime: minTime } : { startTime: minTime };
+  const defaultValues = showNotice ? { notice: '', startTime: minTime } : { startTime: minTime };
 
-    // Overwrite defaults with all non null passed in values
-    const formikIinitalValues = { ...defaultValues, ..._.pickBy(initialValues, _.identity) };
+  // Overwrite defaults with all non null passed in values
+  const formikIinitalValues = { ...defaultValues, ..._.pickBy(initialValues, _.identity) };
 
-    return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Formik
-                initialValues={formikIinitalValues}
-                validationSchema={Yup.object({
-                    startTime: Yup.date().min(minTime, 'Please pick a later date'),
-                })}
-                onSubmit={async values => {
-                    await onSubmit(values);
-                }}
+  return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Formik
+        initialValues={formikIinitalValues}
+        validationSchema={Yup.object({
+          startTime: Yup.date().min(minTime, 'Please pick a later date'),
+        })}
+        onSubmit={async values => {
+          await onSubmit(values);
+        }}
+      >
+        {props => {
+          const { isSubmitting, isValid, dirty } = props;
+          return (
+            <FormLayout
+              title={title}
+              buttons={
+                <FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} allowSubmitPristine={allowSubmitPristine} />
+              }
             >
-                {props => {
-                    const { isSubmitting, isValid, dirty } = props;
-                    return (
-                        <FormLayout
-                            title={title}
-                            buttons={
-                                <FormButtons
-                                    isSubmitting={isSubmitting}
-                                    dirty={dirty}
-                                    isValid={isValid}
-                                    onCancel={onCancel}
-                                    allowSubmitPristine={allowSubmitPristine}
-                                />
-                            }
-                        >
-                            <Grid container direction='column'>
-                                <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
-                                    <Grid item>
-                                        <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />
-                                    </Grid>
-                                    {showNotice && (
-                                        <Grid item>
-                                            <Field name='notice' component={TextArea} placeholder='Notice' />
-                                        </Grid>
-                                    )}
-                                </Grid>
-                            </Grid>
-                        </FormLayout>
-                    );
-                }}
-            </Formik>
-        </MuiPickersUtilsProvider>
-    );
+              <Grid container direction='column'>
+                <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
+                  <Grid item>
+                    <Field name='startTime' component={DateTimePicker} label='Start Time' minutesStep={15} minDate={minTime} />
+                  </Grid>
+                  {showNotice && (
+                    <Grid item>
+                      <Field name='notice' component={TextArea} placeholder='Notice' />
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
+            </FormLayout>
+          );
+        }}
+      </Formik>
+    </MuiPickersUtilsProvider>
+  );
 };
 
 export default TimetableForm;

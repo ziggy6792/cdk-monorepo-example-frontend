@@ -9,26 +9,26 @@ import CreateEvent from './buttons/create-event';
 import EventsTable from './events-table';
 
 const EventsScreen: React.FC = () => {
-    const { loading, data } = useListEventsQuery();
-    const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
+  const { loading, data } = useListEventsQuery();
+  const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
 
-    return (
-        <>
-            {loading && <Spinner />}
-            {!loading && (
-                <Grid container direction='column'>
-                    <Grid item>
-                        <EventsTable events={data.listEvents} />
-                    </Grid>
-                    {isAuthenticated && (
-                        <Grid item>
-                            <CreateEvent />
-                        </Grid>
-                    )}
-                </Grid>
-            )}
-        </>
-    );
+  return (
+    <>
+      {loading && <Spinner />}
+      {!loading && (
+        <Grid container direction='column'>
+          <Grid item>
+            <EventsTable events={data.listEvents} />
+          </Grid>
+          {isAuthenticated && (
+            <Grid item>
+              <CreateEvent />
+            </Grid>
+          )}
+        </Grid>
+      )}
+    </>
+  );
 };
 
 export default EventsScreen;

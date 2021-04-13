@@ -18,11 +18,11 @@ const app = new cdk.App();
 // Pipeline
 
 new PipelineStack(app, utils.getConstructId('pipeline'), {
-    description: utils.getConstructId('pipeline'),
-    env: {
-        account: config.AWS_ACCOUNT_ID,
-        region: config.AWS_REGION,
-    },
+  description: utils.getConstructId('pipeline'),
+  env: {
+    account: config.AWS_ACCOUNT_ID,
+    region: config.AWS_REGION,
+  },
 });
 
 app.synth();
