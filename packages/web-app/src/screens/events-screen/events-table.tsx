@@ -14,47 +14,47 @@ import DataTable, { IDataTableRow } from 'src/components/data-table';
 import { ROUTE_EVENT } from 'src/config/routes';
 
 interface EventsTableProps {
-    events: ListEventsQuery['listEvents'];
+  events: ListEventsQuery['listEvents'];
 }
 
 interface IEventRow extends IDataTableRow {
-    eventId: string;
+  eventId: string;
 }
 
 const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
-    const history = useHistory();
+  const history = useHistory();
 
-    const tableData: IEventRow[] = events.map(event => ({
-        eventId: event.id,
-        rowData: {
-            name: event.name,
-            startTime: { displayText: DateFormatter.toLongDate(event.startTime), sortIndex: event.startTime.getTime() },
-        },
-    }));
+  const tableData: IEventRow[] = events.map(event => ({
+    eventId: event.id,
+    rowData: {
+      name: event.name,
+      startTime: { displayText: DateFormatter.toLongDate(event.startTime), sortIndex: event.startTime.getTime() },
+    },
+  }));
 
-    const columns = [
-        {
-            name: 'name',
-            label: 'Event',
-        },
-        {
-            name: 'startTime',
-            label: 'Date',
-        },
-    ];
+  const columns = [
+    {
+      name: 'name',
+      label: 'Event',
+    },
+    {
+      name: 'startTime',
+      label: 'Date',
+    },
+  ];
 
-    return (
-        <DataTable
-            title='Events'
-            tableData={tableData}
-            columns={columns}
-            options={{
-                onRowClick: (row: IEventRow) => {
-                    history.push(`${ROUTE_EVENT}/${row.eventId}`);
-                },
-            }}
-        />
-    );
+  return (
+    <DataTable
+      title='Events'
+      tableData={tableData}
+      columns={columns}
+      options={{
+        onRowClick: (row: IEventRow) => {
+          history.push(`${ROUTE_EVENT}/${row.eventId}`);
+        },
+      }}
+    />
+  );
 };
 
 export default EventsTable;

@@ -12,55 +12,55 @@ import Dialog from 'src/components/ui/dialog';
 import EventForm from 'src/modules/forms/event-form';
 
 interface IEditEventProps {
-    eventToEdit: UpdateEventInput;
+  eventToEdit: UpdateEventInput;
 }
 
 const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
-    const { id } = eventToEdit;
+  const { id } = eventToEdit;
 
-    const theme = useTheme();
+  const theme = useTheme();
 
-    const [updateEvent] = useUpdateEventMutation({
-        refetchQueries: [
-            {
-                query: GET_EVENT,
-                variables: { id },
-            },
-            {
-                query: LIST_EVENTS,
-            },
-        ],
-        awaitRefetchQueries: true,
-    });
+  const [updateEvent] = useUpdateEventMutation({
+    refetchQueries: [
+      {
+        query: GET_EVENT,
+        variables: { id },
+      },
+      {
+        query: LIST_EVENTS,
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
 
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    const onUpdateEvent = async (event: Omit<UpdateEventInput, 'id'>): Promise<void> => {
-        await updateEvent({ variables: { input: { ...event, id } } });
-        setOpen(false);
-        return null;
-    };
+  const onUpdateEvent = async (event: Omit<UpdateEventInput, 'id'>): Promise<void> => {
+    await updateEvent({ variables: { input: { ...event, id } } });
+    setOpen(false);
+    return null;
+  };
 
-    return (
-        <>
-            <Grid container direction='column'>
-                <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-                    <Grid item>
-                        <Button
-                            onClick={() => {
-                                setOpen(true);
-                            }}
-                        >
-                            Edit Event
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Dialog open={open} setOpen={setOpen}>
-                    <EventForm title='Edit Event' onSubmit={onUpdateEvent} onCancel={() => setOpen(false)} initialValues={eventToEdit} />
-                </Dialog>
-            </Grid>
-        </>
-    );
+  return (
+    <>
+      <Grid container direction='column'>
+        <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
+          <Grid item>
+            <Button
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              Edit Event
+            </Button>
+          </Grid>
+        </Grid>
+        <Dialog open={open} setOpen={setOpen}>
+          <EventForm title='Edit Event' onSubmit={onUpdateEvent} onCancel={() => setOpen(false)} initialValues={eventToEdit} />
+        </Dialog>
+      </Grid>
+    </>
+  );
 };
 
 export default EditEvent;

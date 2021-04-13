@@ -7,50 +7,50 @@ import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        fab: {
-            position: 'fixed',
-            bottom: theme.spacing(2),
-            right: theme.spacing(2),
-        },
-    })
+  createStyles({
+    fab: {
+      position: 'fixed',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+  })
 );
 
 interface IProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 const FabDropdownMenu = ({ children }: IProps) => {
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    return (
-        <>
-            <Fab className={classes.fab} color='primary' aria-label='edit' aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick}>
-                <EditIcon />
-            </Fab>
-            <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                {React.Children.map(children, (child: any) =>
-                    React.cloneElement(child, {
-                        handleClose,
-                    })
-                )}
-            </Menu>
-        </>
-    );
+  return (
+    <>
+      <Fab className={classes.fab} color='primary' aria-label='edit' aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick}>
+        <EditIcon />
+      </Fab>
+      <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+        {React.Children.map(children, (child: any) =>
+          React.cloneElement(child, {
+            handleClose,
+          })
+        )}
+      </Menu>
+    </>
+  );
 };
 
 interface IPropsItem {
-    handleClose?: () => void;
-    onClick?: () => void;
+  handleClose?: () => void;
+  onClick?: () => void;
 }
 
 // const DropdownItem: React.FC<IPropsItem> = ({ handleClose, onClick, children }) => {
@@ -67,18 +67,18 @@ interface IPropsItem {
 // };
 
 const DropdownItem: React.FC<IPropsItem> = React.forwardRef(({ handleClose, onClick, children }, ref) => {
-    const handleOnClick = () => {
-        handleClose();
-        if (typeof onClick === 'function') {
-            onClick();
-        }
-    };
-    return (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        <MenuItem innerRef={ref} onClick={handleOnClick}>
-            {children}
-        </MenuItem>
-    );
+  const handleOnClick = () => {
+    handleClose();
+    if (typeof onClick === 'function') {
+      onClick();
+    }
+  };
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <MenuItem innerRef={ref} onClick={handleOnClick}>
+      {children}
+    </MenuItem>
+  );
 });
 
 FabDropdownMenu.Item = DropdownItem;

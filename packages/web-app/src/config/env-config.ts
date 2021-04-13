@@ -5,11 +5,11 @@ const isDev = window.env.ENV === 'dev';
 const title = `Alpaca ${!isProd ? `(${window.env.ENV})` : ''}`;
 
 const envConfig = {
-    env,
-    isProd,
-    isStaging,
-    isDev,
-    title,
+  env,
+  isProd,
+  isStaging,
+  isDev,
+  title,
 };
 
 export default envConfig;

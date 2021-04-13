@@ -7,65 +7,65 @@ import { TextField, TextFieldProps, Select as SelectFormikUi, SelectProps } from
 import { Catalog } from 'src/config/catalogs';
 
 export const useStyles = makeStyles(theme => ({
-    formControl: {
-        // margin: theme.spacing(1),
-        width: '100%',
-        minWidth: '200px',
-    },
-    message: {
-        border: `2px solid ${theme.palette.primary}`,
-        borderRadius: 5,
-    },
+  formControl: {
+    // margin: theme.spacing(1),
+    width: '100%',
+    minWidth: '200px',
+  },
+  message: {
+    border: `2px solid ${theme.palette.primary}`,
+    borderRadius: 5,
+  },
 }));
 
 export const TextArea: React.FC<TextFieldProps> = props => {
-    const classes = useStyles();
-    return <TextField {...props} multiline rows={10} className={classes.message} />;
+  const classes = useStyles();
+  return <TextField {...props} multiline rows={10} className={classes.message} />;
 };
 
 export const NumericField: React.FC<TextFieldProps> = props => {
-    const { label } = props;
-    return (
-        <TextField
-            {...props}
-            label={label}
-            type='number'
-            InputLabelProps={{
-                shrink: true,
-            }}
-            inputProps={{ inputMode: 'decimal', step: 'any', min: '0' }}
-        />
-    );
+  const { label } = props;
+  return (
+    <TextField
+      {...props}
+      label={label}
+      type='number'
+      InputLabelProps={{
+        shrink: true,
+      }}
+      inputProps={{ inputMode: 'decimal', step: 'any', min: '0' }}
+    />
+  );
 };
 
 interface IMySelectProps extends SelectProps {
-    options: Catalog;
-    idField: string;
-    getOptionLabel: (option) => string;
+  options: Catalog;
+  idField: string;
+  getOptionLabel: (option) => string;
 }
 
 export const Select: React.FC<IMySelectProps> = props => {
-    const { options, idField, getOptionLabel, ...rest } = props;
+  const { options, idField, getOptionLabel, ...rest } = props;
 
-    const labelName = `${props.field.name}-label`;
+  const labelName = `${props.field.name}-label`;
 
-    const classes = useStyles();
-    return (
-        <FormControl className={classes.formControl}>
-            <InputLabel htmlFor={labelName}>{props.label}</InputLabel>
-            <Field
-                component={SelectFormikUi}
-                {...rest}
-                inputProps={{
-                    id: labelName,
-                }}
-            >
-                {options.map(option => (
-                    <MenuItem value={option[idField || 'id']} key={option[idField || 'id']}>
-                        {getOptionLabel(option)}
-                    </MenuItem>
-                ))}
-            </Field>
-        </FormControl>
-    );
+  const classes = useStyles();
+  return (
+    <FormControl className={classes.formControl}>
+      <InputLabel htmlFor={labelName}>{props.label}</InputLabel>
+      <Field
+        component={SelectFormikUi}
+        {...rest}
+        inputProps={{
+          id: labelName,
+        }}
+      >
+        {options.map(option => (
+          <MenuItem value={option[idField || 'id']} key={option[idField || 'id']}>
+            {getOptionLabel(option)}
+          </MenuItem>
+        ))}
+      </Field>
+    </FormControl>
+  );
 };

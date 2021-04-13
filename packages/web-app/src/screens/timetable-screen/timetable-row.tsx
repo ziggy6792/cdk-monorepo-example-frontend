@@ -14,57 +14,57 @@ import { GET_EVENT_SCHEDULE } from 'src/gql/queries/event.gql';
 import TimetableEntry from './timetable-entry';
 
 interface ITimetableRowProps {
-    scheduleItem: TimetableScheduleItem;
-    eventId: string;
+  scheduleItem: TimetableScheduleItem;
+  eventId: string;
 }
 
 const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId }) => {
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    const [updateScheduleItem] = useUpdateScheduleItemMutation({
-        refetchQueries: [
-            {
-                query: GET_EVENT_SCHEDULE,
-                variables: { id: eventId },
-            },
-        ],
-        awaitRefetchQueries: true,
-    });
+  const [updateScheduleItem] = useUpdateScheduleItemMutation({
+    refetchQueries: [
+      {
+        query: GET_EVENT_SCHEDULE,
+        variables: { id: eventId },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
 
-    const onUpdateScheduleItem = async (formValues: ITimetableFormValues): Promise<void> => {
-        const result = await updateScheduleItem({ variables: { input: { id: scheduleItem.id, ...formValues } } });
-        setOpen(false);
-        return null;
-    };
+  const onUpdateScheduleItem = async (formValues: ITimetableFormValues): Promise<void> => {
+    const result = await updateScheduleItem({ variables: { input: { id: scheduleItem.id, ...formValues } } });
+    setOpen(false);
+    return null;
+  };
 
-    return (
-        <>
-            <Dialog open={open} setOpen={setOpen}>
-                <TimetableForm
-                    title='Edit Timetable'
-                    onSubmit={onUpdateScheduleItem}
-                    initialValues={{ startTime: scheduleItem.startTime, notice: scheduleItem.notice }}
-                    onCancel={() => setOpen(false)}
-                    showNotice={!scheduleItem.scheduledItem}
-                    allowSubmitPristine={!scheduleItem.startTime}
-                />
-            </Dialog>
-            <Grid container spacing={1}>
-                <Grid item xs={4}>
-                    <Link
-                        onClick={() => {
-                            setOpen(true);
-                        }}
-                    >
-                        {scheduleItem.startTime ? DateFormatter.toTime(scheduleItem.startTime) : 'Select time...'}
-                    </Link>
-                </Grid>
-                <Grid item xs={8}>
-                    <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} />
-                </Grid>
-            </Grid>
-        </>
-    );
+  return (
+    <>
+      <Dialog open={open} setOpen={setOpen}>
+        <TimetableForm
+          title='Edit Timetable'
+          onSubmit={onUpdateScheduleItem}
+          initialValues={{ startTime: scheduleItem.startTime, notice: scheduleItem.notice }}
+          onCancel={() => setOpen(false)}
+          showNotice={!scheduleItem.scheduledItem}
+          allowSubmitPristine={!scheduleItem.startTime}
+        />
+      </Dialog>
+      <Grid container spacing={1}>
+        <Grid item xs={4}>
+          <Link
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            {scheduleItem.startTime ? DateFormatter.toTime(scheduleItem.startTime) : 'Select time...'}
+          </Link>
+        </Grid>
+        <Grid item xs={8}>
+          <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} />
+        </Grid>
+      </Grid>
+    </>
+  );
 };
 
 export default TimetableRow;

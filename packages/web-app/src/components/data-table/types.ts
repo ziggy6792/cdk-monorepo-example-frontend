@@ -1,9 +1,9 @@
 export interface ICallMeta {
-    sortIndex?: any;
-    displayText: string;
+  sortIndex?: any;
+  displayText: string;
 }
 
 export interface IDataTableRow {
-    // rowMetaData: IRowMeta;
-    rowData: { [key in string]: ICallMeta | string | number };
+  // rowMetaData: IRowMeta;
+  rowData: { [key in string]: ICallMeta | string | number };
 }

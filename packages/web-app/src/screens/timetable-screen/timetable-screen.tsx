@@ -5,20 +5,20 @@ import { useGetEventScheduleQuery } from 'src/generated-types';
 import Timetable from './timetable';
 
 interface IScoreboardScreenProps {
-    eventId: string;
+  eventId: string;
 }
 
 const TimetableScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
-    const { loading, data } = useGetEventScheduleQuery({ variables: { id: eventId } });
+  const { loading, data } = useGetEventScheduleQuery({ variables: { id: eventId } });
 
-    if (loading) {
-        return <Spinner />;
-    }
+  if (loading) {
+    return <Spinner />;
+  }
 
-    return (
-        <Grid container direction='column' justify='center' alignItems='center'>
-            <Timetable scheduleItems={data.getEvent.scheduleItems.items} eventId={eventId} />
-        </Grid>
-    );
+  return (
+    <Grid container direction='column' justify='center' alignItems='center'>
+      <Timetable scheduleItems={data.getEvent.scheduleItems.items} eventId={eventId} />
+    </Grid>
+  );
 };
 export default TimetableScreen;

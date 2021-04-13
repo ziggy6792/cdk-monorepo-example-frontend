@@ -10,45 +10,45 @@ import Breadcrumbs from 'src/modules/breadcrumbs/breadcrumbs';
 import HeatsStructure from './heats-structure/heats-structure';
 
 interface IEventsScreenProps {
-    competitionId: string;
+  competitionId: string;
 }
 
 const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
-    const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
+  const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-    const history = useHistory();
+  const history = useHistory();
 
-    return (
+  return (
+    <>
+      {loading && <Spinner />}
+      {!loading && (
         <>
-            {loading && <Spinner />}
-            {!loading && (
-                <>
-                    <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
-                    <Grid container direction='column' justify='center' alignItems='center'>
-                        <Grid container direction='row' justify='flex-end' alignItems='center'>
-                            <Grid item>
-                                <Button
-                                    onClick={() => {
-                                        history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
-                                    }}
-                                >
-                                    Open Competition Manager
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        {/* ToDo: Fix this */}
-                        <Grid item style={{ width: '100%' }}>
-                            <CompetitionSummary summary={data.getCompetition} />
-                        </Grid>
-                        <Grid item style={{ width: '95%' }}>
-                            <HeatsStructure rounds={data.getCompetition.rounds.items} eventId={data.getCompetition.event.id} />
-                        </Grid>
-                    </Grid>
-                    )
-                </>
-            )}
+          <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
+          <Grid container direction='column' justify='center' alignItems='center'>
+            <Grid container direction='row' justify='flex-end' alignItems='center'>
+              <Grid item>
+                <Button
+                  onClick={() => {
+                    history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
+                  }}
+                >
+                  Open Competition Manager
+                </Button>
+              </Grid>
+            </Grid>
+            {/* ToDo: Fix this */}
+            <Grid item style={{ width: '100%' }}>
+              <CompetitionSummary summary={data.getCompetition} />
+            </Grid>
+            <Grid item style={{ width: '95%' }}>
+              <HeatsStructure rounds={data.getCompetition.rounds.items} eventId={data.getCompetition.event.id} />
+            </Grid>
+          </Grid>
+          )
         </>
-    );
+      )}
+    </>
+  );
 };
 
 export default CompetitionScreen;

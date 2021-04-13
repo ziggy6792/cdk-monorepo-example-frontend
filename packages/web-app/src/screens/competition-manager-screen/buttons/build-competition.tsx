@@ -13,65 +13,65 @@ import defaultCompetition from 'src/gql/default-competition.json';
 import jsYaml from 'js-yaml';
 
 interface IBuildCompetitionProps {
-    competitionId: string;
-    params?: CompetitionParams;
+  competitionId: string;
+  params?: CompetitionParams;
 }
 
 const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, params }) => {
-    const ymlDocument = new YAML.Document();
-    let allowSubmitPristine = false;
-    if (params) {
-        ymlDocument.contents = params;
-    } else {
-        allowSubmitPristine = true;
-        ymlDocument.contents = defaultCompetition;
-    }
+  const ymlDocument = new YAML.Document();
+  let allowSubmitPristine = false;
+  if (params) {
+    ymlDocument.contents = params;
+  } else {
+    allowSubmitPristine = true;
+    ymlDocument.contents = defaultCompetition;
+  }
 
-    const theme = useTheme();
+  const theme = useTheme();
 
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    const [buildCompetition] = useBuildCompetitionMutation({
-        refetchQueries: [
-            {
-                query: GET_COMPETITION,
-                variables: { id: competitionId },
-            },
-        ],
-        awaitRefetchQueries: true,
+  const [buildCompetition] = useBuildCompetitionMutation({
+    refetchQueries: [
+      {
+        query: GET_COMPETITION,
+        variables: { id: competitionId },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
+
+  const onSubmit = async (formData: IBuildCompetitionFormValues) => {
+    const parsedParams = { rounds: jsYaml.load(formData.params) };
+    await buildCompetition({
+      variables: {
+        id: competitionId,
+        params: parsedParams,
+      },
     });
+    setOpen(false);
+  };
 
-    const onSubmit = async (formData: IBuildCompetitionFormValues) => {
-        const parsedParams = { rounds: jsYaml.load(formData.params) };
-        await buildCompetition({
-            variables: {
-                id: competitionId,
-                params: parsedParams,
-            },
-        });
-        setOpen(false);
-    };
-
-    return (
-        <>
-            <Button
-                onClick={() => {
-                    setOpen(true);
-                }}
-            >
-                Build
-            </Button>
-            <Dialog open={open} setOpen={setOpen}>
-                <BuildCompetitionForm
-                    onSubmit={onSubmit}
-                    title='Build Competition'
-                    allowSubmitPristine={allowSubmitPristine}
-                    onCancel={() => setOpen(false)}
-                    initialValues={{ params: ymlDocument.toString() }}
-                />
-            </Dialog>
-        </>
-    );
+  return (
+    <>
+      <Button
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        Build
+      </Button>
+      <Dialog open={open} setOpen={setOpen}>
+        <BuildCompetitionForm
+          onSubmit={onSubmit}
+          title='Build Competition'
+          allowSubmitPristine={allowSubmitPristine}
+          onCancel={() => setOpen(false)}
+          initialValues={{ params: ymlDocument.toString() }}
+        />
+      </Dialog>
+    </>
+  );
 };
 
 export default BuildCompetition;

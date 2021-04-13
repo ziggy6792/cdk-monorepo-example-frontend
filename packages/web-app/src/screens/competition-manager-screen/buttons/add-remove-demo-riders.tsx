@@ -8,34 +8,34 @@ import { useAddRemoveDemoRidersMutation } from 'src/generated-types';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 
 interface IEditSeedsProps {
-    competitionId: string;
-    hasDemoRiders: boolean;
-    disabled?: boolean;
+  competitionId: string;
+  hasDemoRiders: boolean;
+  disabled?: boolean;
 }
 
 const AddRemoveDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId, hasDemoRiders, disabled }) => {
-    const [allocateRiders] = useAddRemoveDemoRidersMutation({
-        refetchQueries: [
-            {
-                query: GET_COMPETITION,
-                variables: { id: competitionId },
-            },
-        ],
-        awaitRefetchQueries: true,
-    });
+  const [allocateRiders] = useAddRemoveDemoRidersMutation({
+    refetchQueries: [
+      {
+        query: GET_COMPETITION,
+        variables: { id: competitionId },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
 
-    const onAllocateRiders = async (): Promise<void> => {
-        const variables = { id: competitionId };
-        await allocateRiders({ variables });
-    };
+  const onAllocateRiders = async (): Promise<void> => {
+    const variables = { id: competitionId };
+    await allocateRiders({ variables });
+  };
 
-    return (
-        <>
-            <ProgressButton onClick={onAllocateRiders} disabled={disabled}>
-                {hasDemoRiders ? 'Remove' : 'Add'} Demo Riders
-            </ProgressButton>
-        </>
-    );
+  return (
+    <>
+      <ProgressButton onClick={onAllocateRiders} disabled={disabled}>
+        {hasDemoRiders ? 'Remove' : 'Add'} Demo Riders
+      </ProgressButton>
+    </>
+  );
 };
 
 export default AddRemoveDemoRiders;

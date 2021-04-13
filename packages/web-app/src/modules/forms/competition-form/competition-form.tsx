@@ -16,116 +16,116 @@ import { Autocomplete } from 'formik-material-ui-lab';
 import FormLayout from 'src/modules/form-layout';
 
 export interface IUserOption {
-    id: string;
-    fullName: string;
+  id: string;
+  fullName: string;
 }
 
 export interface ICompetitionFormValues {
-    name: string;
-    description?: string;
-    judgeUser?: IUserOption;
-    maxRiders?: number | '';
-    gender?: Gender;
-    sport?: Sport;
-    level?: Level;
+  name: string;
+  description?: string;
+  judgeUser?: IUserOption;
+  maxRiders?: number | '';
+  gender?: Gender;
+  sport?: Sport;
+  level?: Level;
 }
 
 interface ICompetitionFormProps {
-    onSubmit: (formValues: ICompetitionFormValues) => Promise<void>;
-    onCancel: () => void;
-    initialValues?: ICompetitionFormValues;
-    title: string;
+  onSubmit: (formValues: ICompetitionFormValues) => Promise<void>;
+  onCancel: () => void;
+  initialValues?: ICompetitionFormValues;
+  title: string;
 }
 
 const defaultFormValue = {
-    name: '',
-    description: '',
-    gender: Gender.Any,
-    sport: Sport.Wakeboard,
-    level: Level.Any,
-    maxRiders: '',
-    judgeUser: null,
+  name: '',
+  description: '',
+  gender: Gender.Any,
+  sport: Sport.Wakeboard,
+  level: Level.Any,
+  maxRiders: '',
+  judgeUser: null,
 };
 
 const getOptionLabel = (option: ICatalogItem) => option.description;
 
 const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, initialValues, title }) => {
-    const { data, loading } = useListUsersQuery();
+  const { data, loading } = useListUsersQuery();
 
-    const judgeOptions = !loading ? data.listUsers : [];
+  const judgeOptions = !loading ? data.listUsers : [];
 
-    return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Formik
-                initialValues={initialValues || defaultFormValue}
-                validationSchema={Yup.object({
-                    name: Yup.string()
-                        .max(30, 'Must be 30 characters or less')
-                        .required('Required'),
-                    judgeUser: Yup.object()
-                        .nullable()
-                        .required('Required'),
-                })}
-                onSubmit={async values => {
-                    await onSubmit(values as ICompetitionFormValues);
-                }}
-            >
-                {props => {
-                    const { isSubmitting, isValid, dirty, errors, touched } = props;
-                    return (
-                        <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
-                            <Grid container direction='column'>
-                                <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
-                                    <Grid item>
-                                        <Field name='name' component={TextField} label='Name' autoFocus />
-                                    </Grid>
-                                    <Grid item>
-                                        <Field name='description' component={TextArea} placeholder='Description' />
-                                    </Grid>
+  return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Formik
+        initialValues={initialValues || defaultFormValue}
+        validationSchema={Yup.object({
+          name: Yup.string()
+            .max(30, 'Must be 30 characters or less')
+            .required('Required'),
+          judgeUser: Yup.object()
+            .nullable()
+            .required('Required'),
+        })}
+        onSubmit={async values => {
+          await onSubmit(values as ICompetitionFormValues);
+        }}
+      >
+        {props => {
+          const { isSubmitting, isValid, dirty, errors, touched } = props;
+          return (
+            <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
+              <Grid container direction='column'>
+                <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
+                  <Grid item>
+                    <Field name='name' component={TextField} label='Name' autoFocus />
+                  </Grid>
+                  <Grid item>
+                    <Field name='description' component={TextArea} placeholder='Description' />
+                  </Grid>
 
-                                    <Grid item>
-                                        <Field name='sport' component={Select} label='Sport' options={CATALOG_SPORT} getOptionLabel={getOptionLabel} />
-                                    </Grid>
+                  <Grid item>
+                    <Field name='sport' component={Select} label='Sport' options={CATALOG_SPORT} getOptionLabel={getOptionLabel} />
+                  </Grid>
 
-                                    <Grid item>
-                                        <Field name='gender' component={Select} label='Gender' options={CATALOG_GENDER} getOptionLabel={getOptionLabel} />
-                                    </Grid>
+                  <Grid item>
+                    <Field name='gender' component={Select} label='Gender' options={CATALOG_GENDER} getOptionLabel={getOptionLabel} />
+                  </Grid>
 
-                                    <Grid item>
-                                        <Field name='level' component={Select} label='Skill Level' options={CATALOG_LEVEL} getOptionLabel={getOptionLabel} />
-                                    </Grid>
+                  <Grid item>
+                    <Field name='level' component={Select} label='Skill Level' options={CATALOG_LEVEL} getOptionLabel={getOptionLabel} />
+                  </Grid>
 
-                                    <Grid item>
-                                        <Field name='maxRiders' component={NumericField} label='Max Riders' />
-                                    </Grid>
+                  <Grid item>
+                    <Field name='maxRiders' component={NumericField} label='Max Riders' />
+                  </Grid>
 
-                                    <Grid item>
-                                        <Field
-                                            name='judgeUser'
-                                            component={Autocomplete}
-                                            autoComplete
-                                            options={judgeOptions}
-                                            getOptionLabel={(option: IUserOption) => option.fullName}
-                                            style={{ width: 300 }}
-                                            renderInput={(params: AutocompleteRenderInputParams) => (
-                                                <MUITextField
-                                                    {...params}
-                                                    error={touched.judgeUser && !!errors.judgeUser}
-                                                    helperText={errors.judgeUser}
-                                                    label='Judge'
-                                                    variant='outlined'
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </FormLayout>
-                    );
-                }}
-            </Formik>
-        </MuiPickersUtilsProvider>
-    );
+                  <Grid item>
+                    <Field
+                      name='judgeUser'
+                      component={Autocomplete}
+                      autoComplete
+                      options={judgeOptions}
+                      getOptionLabel={(option: IUserOption) => option.fullName}
+                      style={{ width: 300 }}
+                      renderInput={(params: AutocompleteRenderInputParams) => (
+                        <MUITextField
+                          {...params}
+                          error={touched.judgeUser && !!errors.judgeUser}
+                          helperText={errors.judgeUser}
+                          label='Judge'
+                          variant='outlined'
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </FormLayout>
+          );
+        }}
+      </Formik>
+    </MuiPickersUtilsProvider>
+  );
 };
 
 export default ComepetitionForm;

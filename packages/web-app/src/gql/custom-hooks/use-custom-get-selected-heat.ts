@@ -5,12 +5,12 @@ import { useGetSelectedHeatQuery, GetSelectedHeatQuery, GetSelectedHeatQueryVari
 import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export interface IGetSelectedHeatResult extends QueryResult {
-    data: { selectedHeat: GetSelectedHeatQuery['getEvent']['selectedHeat'] };
+  data: { selectedHeat: GetSelectedHeatQuery['getEvent']['selectedHeat'] };
 }
 
 export const useCustomGetSelectedHeatQuery = (
-    baseOptions: ApolloReactHooks.QueryHookOptions<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>
+  baseOptions: ApolloReactHooks.QueryHookOptions<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>
 ): IGetSelectedHeatResult => {
-    const { data, ...rest } = useGetSelectedHeatQuery(baseOptions);
-    return { ...rest, data: { selectedHeat: data?.getEvent?.selectedHeat } };
+  const { data, ...rest } = useGetSelectedHeatQuery(baseOptions);
+  return { ...rest, data: { selectedHeat: data?.getEvent?.selectedHeat } };
 };
