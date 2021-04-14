@@ -1,41 +1,41 @@
 {
-    "name": "@alpaca-frontend/cdk-app",
-    "version": "0.1.0",
-    "bin": {
-        "packages": "src/index.ts"
-    },
-    "scripts": {
-        "build": "tsc -p tsconfig.build.json",
-        "watch": "tsc -w -p tsconfig.build.json",
-        "synth": "npx cdk synth",
-        "deploy": "npx cdk deploy",
-        "test": "jest",
-        "cdk": "cdk",
-        "clean:light": "rm -rf ./dist && rm -rf tsconfig.build.tsbuildinfo",
-        "clean:full": "yarn run clean:light && rm -rf ./node_modules && rm -rf ./cdk.out",
-        "typecheck": "tsc --noEmit",
-        "precommit": "yarn run typecheck"
-    },
-    "dependencies": {
-        "@aws-cdk/aws-cloudfront": "1.87.0",
-        "@aws-cdk/aws-iam": "1.87.0",
-        "@aws-cdk/aws-route53": "1.87.0",
-        "@aws-cdk/aws-certificatemanager": "1.87.0",
-        "@aws-cdk/aws-route53-patterns": "1.87.0",
-        "@aws-cdk/aws-route53-targets": "1.87.0",
-        "@aws-cdk/aws-codepipeline": "1.87.0",
-        "@aws-cdk/aws-codebuild": "1.87.0",
-        "@aws-cdk/aws-codepipeline-actions": "1.87.0",
-        "@aws-cdk/aws-s3": "1.87.0",
-        "@aws-cdk/aws-s3-deployment": "1.87.0",
-        "@aws-cdk/aws-ssm": "1.87.0",
-        "@aws-cdk/core": "1.87.0",
-        "@aws-cdk/pipelines": "1.87.0",
-        "@aws-solutions-constructs/core": "1.87.0",
-        "@alpaca-frontend/web-app": "^0.1.0",
-        "aws-cdk": "1.87.0"
-    },
-    "devDependencies": {
-        "tsconfig-paths": "^3.9.0"
-    }
+  "name": "@alpaca-frontend/cdk-app",
+  "version": "0.1.0",
+  "bin": {
+    "packages": "src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "watch": "tsc -w -p tsconfig.build.json",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "test": "jest",
+    "cdk": "cdk",
+    "clean:light": "rm -rf ./dist && rm -rf tsconfig.build.tsbuildinfo",
+    "clean:full": "yarn run clean:light && rm -rf ./node_modules && rm -rf ./cdk.out",
+    "typecheck": "tsc --noEmit",
+    "precommit": "yarn run typecheck"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-cloudfront": "1.87.0",
+    "@aws-cdk/aws-iam": "1.87.0",
+    "@aws-cdk/aws-route53": "1.87.0",
+    "@aws-cdk/aws-certificatemanager": "1.87.0",
+    "@aws-cdk/aws-route53-patterns": "1.87.0",
+    "@aws-cdk/aws-route53-targets": "1.87.0",
+    "@aws-cdk/aws-codepipeline": "1.87.0",
+    "@aws-cdk/aws-codebuild": "1.87.0",
+    "@aws-cdk/aws-codepipeline-actions": "1.87.0",
+    "@aws-cdk/aws-s3": "1.87.0",
+    "@aws-cdk/aws-s3-deployment": "1.87.0",
+    "@aws-cdk/aws-ssm": "1.87.0",
+    "@aws-cdk/core": "1.87.0",
+    "@aws-cdk/pipelines": "1.87.0",
+    "@aws-solutions-constructs/core": "1.87.0",
+    "@alpaca-frontend/web-app": "^0.1.0",
+    "aws-cdk": "1.87.0"
+  },
+  "devDependencies": {
+    "tsconfig-paths": "^3.9.0"
+  }
 }

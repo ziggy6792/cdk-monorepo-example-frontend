@@ -1,239 +1,239 @@
 [
-    {
-        "roundNo": 1,
-        "type": "UPPER",
-        "heats": [
-            {
-                "name": "Heat 1",
-                "seedSlots": [
-                    {
-                        "seed": 1
-                    },
-                    {
-                        "seed": 5
-                    },
-                    {
-                        "seed": 9
-                    },
-                    {
-                        "seed": 13
-                    },
-                    {
-                        "seed": 17
-                    },
-                    {
-                        "seed": 21
-                    }
-                ]
-            },
-            {
-                "name": "Heat 2",
-                "seedSlots": [
-                    {
-                        "seed": 3
-                    },
-                    {
-                        "seed": 7
-                    },
-                    {
-                        "seed": 11
-                    },
-                    {
-                        "seed": 15
-                    },
-                    {
-                        "seed": 19
-                    },
-                    {
-                        "seed": 23
-                    }
-                ]
-            },
-            {
-                "name": "Heat 3",
-                "seedSlots": [
-                    {
-                        "seed": 2
-                    },
-                    {
-                        "seed": 6
-                    },
-                    {
-                        "seed": 10
-                    },
-                    {
-                        "seed": 14
-                    },
-                    {
-                        "seed": 18
-                    },
-                    {
-                        "seed": 22
-                    }
-                ]
-            },
-            {
-                "name": "Heat 4",
-                "seedSlots": [
-                    {
-                        "seed": 4
-                    },
-                    {
-                        "seed": 8
-                    },
-                    {
-                        "seed": 12
-                    },
-                    {
-                        "seed": 16
-                    },
-                    {
-                        "seed": 20
-                    },
-                    {
-                        "seed": 24
-                    }
-                ]
-            }
+  {
+    "roundNo": 1,
+    "type": "UPPER",
+    "heats": [
+      {
+        "name": "Heat 1",
+        "seedSlots": [
+          {
+            "seed": 1
+          },
+          {
+            "seed": 5
+          },
+          {
+            "seed": 9
+          },
+          {
+            "seed": 13
+          },
+          {
+            "seed": 17
+          },
+          {
+            "seed": 21
+          }
         ]
-    },
-    {
-        "roundNo": 2,
-        "type": "LOWER",
-        "heats": [
-            {
-                "name": "LCQ 1",
-                "seedSlots": [
-                    {
-                        "seed": 9
-                    },
-                    {
-                        "seed": 13
-                    },
-                    {
-                        "seed": 17
-                    },
-                    {
-                        "seed": 21
-                    },
-                    {
-                        "seed": 11
-                    },
-                    {
-                        "seed": 15
-                    },
-                    {
-                        "seed": 19
-                    },
-                    {
-                        "seed": 23
-                    }
-                ]
-            },
-            {
-                "name": "LCQ 2",
-                "seedSlots": [
-                    {
-                        "seed": 10
-                    },
-                    {
-                        "seed": 14
-                    },
-                    {
-                        "seed": 18
-                    },
-                    {
-                        "seed": 22
-                    },
-                    {
-                        "seed": 12
-                    },
-                    {
-                        "seed": 16
-                    },
-                    {
-                        "seed": 20
-                    },
-                    {
-                        "seed": 24
-                    }
-                ]
-            }
+      },
+      {
+        "name": "Heat 2",
+        "seedSlots": [
+          {
+            "seed": 3
+          },
+          {
+            "seed": 7
+          },
+          {
+            "seed": 11
+          },
+          {
+            "seed": 15
+          },
+          {
+            "seed": 19
+          },
+          {
+            "seed": 23
+          }
         ]
-    },
-    {
-        "roundNo": 2,
-        "type": "UPPER",
-        "heats": [
-            {
-                "name": "SF 1",
-                "seedSlots": [
-                    {
-                        "seed": 1
-                    },
-                    {
-                        "seed": 3
-                    },
-                    {
-                        "seed": 5
-                    },
-                    {
-                        "seed": 7
-                    },
-                    {
-                        "seed": 9
-                    }
-                ]
-            },
-            {
-                "name": "SF 2",
-                "seedSlots": [
-                    {
-                        "seed": 2
-                    },
-                    {
-                        "seed": 4
-                    },
-                    {
-                        "seed": 6
-                    },
-                    {
-                        "seed": 8
-                    },
-                    {
-                        "seed": 10
-                    }
-                ]
-            }
+      },
+      {
+        "name": "Heat 3",
+        "seedSlots": [
+          {
+            "seed": 2
+          },
+          {
+            "seed": 6
+          },
+          {
+            "seed": 10
+          },
+          {
+            "seed": 14
+          },
+          {
+            "seed": 18
+          },
+          {
+            "seed": 22
+          }
         ]
-    },
-    {
-        "roundNo": 3,
-        "type": "UPPER",
-        "heats": [
-            {
-                "name": "Final",
-                "seedSlots": [
-                    {
-                        "seed": 1
-                    },
-                    {
-                        "seed": 2
-                    },
-                    {
-                        "seed": 3
-                    },
-                    {
-                        "seed": 4
-                    },
-                    {
-                        "seed": 5
-                    },
-                    {
-                        "seed": 6
-                    }
-                ]
-            }
+      },
+      {
+        "name": "Heat 4",
+        "seedSlots": [
+          {
+            "seed": 4
+          },
+          {
+            "seed": 8
+          },
+          {
+            "seed": 12
+          },
+          {
+            "seed": 16
+          },
+          {
+            "seed": 20
+          },
+          {
+            "seed": 24
+          }
         ]
-    }
+      }
+    ]
+  },
+  {
+    "roundNo": 2,
+    "type": "LOWER",
+    "heats": [
+      {
+        "name": "LCQ 1",
+        "seedSlots": [
+          {
+            "seed": 9
+          },
+          {
+            "seed": 13
+          },
+          {
+            "seed": 17
+          },
+          {
+            "seed": 21
+          },
+          {
+            "seed": 11
+          },
+          {
+            "seed": 15
+          },
+          {
+            "seed": 19
+          },
+          {
+            "seed": 23
+          }
+        ]
+      },
+      {
+        "name": "LCQ 2",
+        "seedSlots": [
+          {
+            "seed": 10
+          },
+          {
+            "seed": 14
+          },
+          {
+            "seed": 18
+          },
+          {
+            "seed": 22
+          },
+          {
+            "seed": 12
+          },
+          {
+            "seed": 16
+          },
+          {
+            "seed": 20
+          },
+          {
+            "seed": 24
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roundNo": 2,
+    "type": "UPPER",
+    "heats": [
+      {
+        "name": "SF 1",
+        "seedSlots": [
+          {
+            "seed": 1
+          },
+          {
+            "seed": 3
+          },
+          {
+            "seed": 5
+          },
+          {
+            "seed": 7
+          },
+          {
+            "seed": 9
+          }
+        ]
+      },
+      {
+        "name": "SF 2",
+        "seedSlots": [
+          {
+            "seed": 2
+          },
+          {
+            "seed": 4
+          },
+          {
+            "seed": 6
+          },
+          {
+            "seed": 8
+          },
+          {
+            "seed": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roundNo": 3,
+    "type": "UPPER",
+    "heats": [
+      {
+        "name": "Final",
+        "seedSlots": [
+          {
+            "seed": 1
+          },
+          {
+            "seed": 2
+          },
+          {
+            "seed": 3
+          },
+          {
+            "seed": 4
+          },
+          {
+            "seed": 5
+          },
+          {
+            "seed": 6
+          }
+        ]
+      }
+    ]
+  }
 ]

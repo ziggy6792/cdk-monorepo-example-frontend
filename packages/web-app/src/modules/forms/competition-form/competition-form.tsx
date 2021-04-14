@@ -49,7 +49,7 @@ const defaultFormValue = {
 
 const getOptionLabel = (option: ICatalogItem) => option.description;
 
-const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, initialValues, title }) => {
+const CompetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel, initialValues, title }) => {
   const { data, loading } = useListUsersQuery();
 
   const judgeOptions = !loading ? data.listUsers : [];
@@ -59,12 +59,8 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
       <Formik
         initialValues={initialValues || defaultFormValue}
         validationSchema={Yup.object({
-          name: Yup.string()
-            .max(30, 'Must be 30 characters or less')
-            .required('Required'),
-          judgeUser: Yup.object()
-            .nullable()
-            .required('Required'),
+          name: Yup.string().max(30, 'Must be 30 characters or less').required('Required'),
+          judgeUser: Yup.object().nullable().required('Required'),
         })}
         onSubmit={async (values) => {
           await onSubmit(values as ICompetitionFormValues);
@@ -82,23 +78,18 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
                   <Grid item>
                     <Field name='description' component={TextArea} placeholder='Description' />
                   </Grid>
-
                   <Grid item>
                     <Field name='sport' component={Select} label='Sport' options={CATALOG_SPORT} getOptionLabel={getOptionLabel} />
                   </Grid>
-
                   <Grid item>
                     <Field name='gender' component={Select} label='Gender' options={CATALOG_GENDER} getOptionLabel={getOptionLabel} />
                   </Grid>
-
                   <Grid item>
                     <Field name='level' component={Select} label='Skill Level' options={CATALOG_LEVEL} getOptionLabel={getOptionLabel} />
                   </Grid>
-
                   <Grid item>
                     <Field name='maxRiders' component={NumericField} label='Max Riders' />
                   </Grid>
-
                   <Grid item>
                     <Field
                       name='judgeUser'
@@ -128,4 +119,4 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
   );
 };
 
-export default ComepetitionForm;
+export default CompetitionForm;

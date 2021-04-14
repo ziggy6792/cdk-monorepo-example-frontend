@@ -1,2 +1,2 @@
-export { default } from './form-loyout';
-export * from './form-loyout';
+export { default } from './form-layout';
+export * from './form-layout';

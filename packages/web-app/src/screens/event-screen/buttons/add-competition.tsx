@@ -11,7 +11,7 @@ import { GET_EVENT } from 'src/gql/queries/event.gql';
 import Dialog from 'src/components/ui/dialog';
 import { useHistory } from 'react-router';
 import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
-import ComepetitionForm, { ICompetitionFormValues } from 'src/modules/forms/competition-form';
+import CompetitionForm, { ICompetitionFormValues } from 'src/modules/forms/competition-form';
 
 interface IAddCompetitionProps {
   eventId: string;
@@ -59,7 +59,7 @@ const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
           </Grid>
         </Grid>
         <Dialog open={open} setOpen={setOpen}>
-          <ComepetitionForm title='Add New Competition' onSubmit={onCreateCompetition} onCancel={() => setOpen(false)} />
+          <CompetitionForm title='Add New Competition' onSubmit={onCreateCompetition} onCancel={() => setOpen(false)} />
         </Dialog>
       </Grid>
     </>
