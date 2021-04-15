@@ -7,7 +7,7 @@ import DragHandleIcon from '@material-ui/icons/DragHandle';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { FieldProps } from 'formik';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: '100%',
   },
@@ -26,7 +26,7 @@ interface IDragAndDropListProps extends FieldProps {
   label: string;
 }
 
-const DragAndDropList: React.FC<IDragAndDropListProps> = props => {
+const DragAndDropList: React.FC<IDragAndDropListProps> = (props) => {
   const { field, label, idField = 'id', options, getOptionLabel } = props;
   const classes = useStyles();
 
@@ -36,14 +36,14 @@ const DragAndDropList: React.FC<IDragAndDropListProps> = props => {
 
   useEffect(() => {
     const optnsMap = {};
-    options.forEach(option => {
+    options.forEach((option) => {
       optnsMap[option[idField]] = option;
     });
     setOptionsMap(optnsMap);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
-  const orderedOptions: any[] = (optionsMap && field?.value.map(id => optionsMap[id])) || [];
+  const orderedOptions: any[] = (optionsMap && field?.value.map((id) => optionsMap[id])) || [];
 
   const colors = {
     background: 'white',
@@ -77,13 +77,13 @@ const DragAndDropList: React.FC<IDragAndDropListProps> = props => {
     ...draggableStyle,
   });
 
-  const getListStyle = isDraggingOver => ({
+  const getListStyle = (isDraggingOver) => ({
     background: isDraggingOver ? colors.backgroundWhileDragging : colors.background,
     padding: grid,
     width: 250,
   });
 
-  const onDragEnd = result => {
+  const onDragEnd = (result) => {
     // dropped outside the list
     if (!result.destination) {
       return;

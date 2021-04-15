@@ -6,9 +6,9 @@ import { PossibleTypesMap } from '@apollo/client';
 const introspectionToPossibleTypes = (recievedMap: any): PossibleTypesMap => {
   const possibleTypes = {};
 
-  recievedMap.__schema.types.forEach(supertype => {
+  recievedMap.__schema.types.forEach((supertype) => {
     if (supertype.possibleTypes) {
-      possibleTypes[supertype.name] = supertype.possibleTypes.map(subtype => subtype.name);
+      possibleTypes[supertype.name] = supertype.possibleTypes.map((subtype) => subtype.name);
     }
   });
 

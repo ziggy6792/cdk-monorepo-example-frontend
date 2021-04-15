@@ -15,7 +15,7 @@ const mapValidationType = {
 };
 
 const ValidationItems: React.FC<ValidationItemsProps> = ({ validationItems, validationItemContent }) => {
-  const validationMessages: INotifyMessage[] = validationItems.map(validationItem => {
+  const validationMessages: INotifyMessage[] = validationItems.map((validationItem) => {
     const { message, action } = validationItemContent(validationItem);
     return {
       message,

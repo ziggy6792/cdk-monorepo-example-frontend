@@ -271,7 +271,7 @@ export const MainForm: React.FC<FormProps> = ({ onSignIn, onSignUp, onConfirm })
         setSubmitting(false);
       }}
     >
-      {props => {
+      {(props) => {
         const { submitForm, isSubmitting, isValid, resetForm, dirty } = props;
 
         const isSubmitDisabled = isSubmitting || !isValid || (!dirty && !loadDefaultData);

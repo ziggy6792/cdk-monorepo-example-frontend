@@ -49,7 +49,7 @@ const ApolloError: React.FC<IApolloErrorProps> = ({ error }) => {
   }
   return (
     <Grid container spacing={1} style={{ marginBottom: theme.spacing(1) }}>
-      {displayErrors.map(errorItem => (
+      {displayErrors.map((errorItem) => (
         <Grid item key={errorItem}>
           <Typography color='error'>{errorItem}</Typography>
         </Grid>
@@ -89,7 +89,7 @@ const ApiProvider: React.FC = ({ children }) => {
   const transformerLink = createTransformerLink(transformers as any);
   const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
 
-  const errorLink = onError(apolloError => {
+  const errorLink = onError((apolloError) => {
     setError(apolloError);
   });
 

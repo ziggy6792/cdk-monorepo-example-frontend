@@ -15,7 +15,7 @@ interface CompetitionSummaryProps {
   summary: CompSummary;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },

@@ -22,7 +22,7 @@ interface ICompetitionRow extends IDataTableRow {
 const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
   const history = useHistory();
 
-  const tableData: ICompetitionRow[] = competitions.map(competition => ({
+  const tableData: ICompetitionRow[] = competitions.map((competition) => ({
     competitionId: competition.id,
     rowData: {
       name: competition.name,

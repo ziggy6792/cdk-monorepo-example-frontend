@@ -17,7 +17,7 @@ interface IConfirmBox {
   };
 }
 
-const ConfirmBox: React.FC<IConfirmBox> = props => {
+const ConfirmBox: React.FC<IConfirmBox> = (props) => {
   const { title, children, confirmButton, cancelButton } = props;
 
   const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);

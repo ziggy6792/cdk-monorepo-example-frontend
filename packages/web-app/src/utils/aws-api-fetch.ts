@@ -37,7 +37,7 @@ const buildIamFetch = (credentials: ICredentials) => {
   const axiosInstance = Axios.create();
 
   // Remove unsafe headers which are set by the browser instead
-  axiosInstance.interceptors.request.use(config => {
+  axiosInstance.interceptors.request.use((config) => {
     delete config.headers.Host;
     delete config.headers['Content-Length'];
     return config;

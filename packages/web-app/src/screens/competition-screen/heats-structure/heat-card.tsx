@@ -15,7 +15,7 @@ export enum HeatCardStatus {
   READY_OR_FINISHED = 'READY_OR_FINISHED',
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: { margin: 8 },
   heatCard: (props: StyleProps) => ({
     width: props.cardWidth,

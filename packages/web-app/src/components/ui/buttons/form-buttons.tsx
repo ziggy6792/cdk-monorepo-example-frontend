@@ -7,7 +7,7 @@ interface IFormButtonsProps extends ISubmitButtonProps {
   onCancel: () => void;
 }
 
-const FormButtons: React.FC<IFormButtonsProps> = props => {
+const FormButtons: React.FC<IFormButtonsProps> = (props) => {
   const theme = useTheme();
 
   const { isSubmitting, dirty, allowSubmitPristine, isValid, onCancel } = props;

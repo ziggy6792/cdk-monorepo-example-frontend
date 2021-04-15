@@ -46,7 +46,7 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
     <>
       <Grid item>{round.longName}</Grid>
       <Grid container direction='row' spacing={2} style={{ marginLeft: theme.spacing(1) }}>
-        {round.heats.items.map(heat => (
+        {round.heats.items.map((heat) => (
           <Grid item key={heat.name}>
             {/* {heat.name} */}
             {/* ToDo: make all links have pointer cursor */}

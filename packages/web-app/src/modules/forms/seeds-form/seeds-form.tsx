@@ -36,11 +36,11 @@ const SeedsForm: React.FC<ISeedsFormProps> = ({ onSubmit, onCancel, initialValue
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Formik
       initialValues={initialValues}
-      onSubmit={async values => {
+      onSubmit={async (values) => {
         await onSubmit(values);
       }}
     >
-      {props => {
+      {(props) => {
         const { isSubmitting, isValid, dirty, setFieldValue, values } = props;
         return (
           <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>

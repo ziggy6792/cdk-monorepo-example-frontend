@@ -21,7 +21,7 @@ interface IEventsScreenProps {
 const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
   const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-  const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map(round => round.heats.items)) : [];
+  const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
   const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
 
   const disabledRiderAllocationButtons = data?.getCompetition.riderAllocations.items.length < 1;

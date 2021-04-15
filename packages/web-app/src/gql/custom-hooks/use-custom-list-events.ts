@@ -13,5 +13,5 @@ interface IListEventsResult extends QueryResult {
 
 export const useCustomListEventsQuery = (): IListEventsResult => {
   const { data, ...rest } = useListEventsQuery();
-  return { ...rest, data: { listEvents: data?.listEvents.map(event => ({ ...event, startTime: 'massaged startTime' })) || [] } };
+  return { ...rest, data: { listEvents: data?.listEvents.map((event) => ({ ...event, startTime: 'massaged startTime' })) || [] } };
 };

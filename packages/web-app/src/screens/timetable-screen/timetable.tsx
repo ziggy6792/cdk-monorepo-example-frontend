@@ -33,11 +33,11 @@ const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
 );
 
 const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
-  const groupedItems = _.groupBy(scheduleItems, scheduleItem =>
+  const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>
     scheduleItem.startTime ? startOfDay(scheduleItem.startTime).toISOString() : new Date(0).toISOString()
   );
 
-  const scheduleDays = Object.keys(groupedItems).map(key => ({
+  const scheduleDays = Object.keys(groupedItems).map((key) => ({
     day: key === new Date(0).toISOString() ? null : parseISO(key),
     scheduleItems: _.orderBy(groupedItems[key], [({ startTime }) => startTime, ({ createdAt }) => createdAt], ['asc', 'asc']) as TimetableScheduleItem[],
   }));
@@ -55,7 +55,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
         {scheduleDays.map(({ day, scheduleItems }) => (
           <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px', marginBottom: theme.spacing(2) }}>
             {day && <DayPartition day={day} />}
-            {scheduleItems.map(scheduleItem => (
+            {scheduleItems.map((scheduleItem) => (
               <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} />
             ))}
           </Grid>

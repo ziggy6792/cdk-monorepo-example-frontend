@@ -15,7 +15,7 @@ export interface IScoresTableProps {
 }
 
 const ScoresTables: React.FC<IScoresTableProps> = ({ riderAllocations, noProgressing, tableType = ScoresTableType.RESULTS }) => {
-  const scoresTableData: IRiderAllocationRow[] = riderAllocations.map(riderAllocation => ({
+  const scoresTableData: IRiderAllocationRow[] = riderAllocations.map((riderAllocation) => ({
     riderAllocation,
     rowData: {
       order: riderAllocation.startOrder,
@@ -46,7 +46,7 @@ export interface IResultsTableProps {
 const ResultsTable: React.FC<IResultsTableProps> = ({ tableData, noOfRuns, noProgressing }) => {
   const scoresTableColumns = [
     { name: 'rankedRider', label: 'Rider' },
-    ..._.range(noOfRuns).map(v => ({
+    ..._.range(noOfRuns).map((v) => ({
       name: `run${v + 1}`,
       label: `Run\u00A0${v + 1}`,
     })),
@@ -70,7 +70,7 @@ const StartListTable: React.FC<IStartListTableProps> = ({ tableData, noProgressi
   return (
     <ResultsDataTable
       title='Start List'
-      tableData={_.orderBy(tableData, row => row.riderAllocation.startOrder)}
+      tableData={_.orderBy(tableData, (row) => row.riderAllocation.startOrder)}
       columns={startlistTableColumns}
       highlightedPositions={noProgressing}
     />

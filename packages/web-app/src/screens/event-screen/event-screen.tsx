@@ -18,7 +18,7 @@ interface IEventsScreenProps {
   eventId: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   tableCtaButtons: {
     marginTop: 20,
     marginBottom: 20,

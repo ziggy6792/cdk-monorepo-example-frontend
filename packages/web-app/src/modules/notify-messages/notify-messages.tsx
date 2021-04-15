@@ -47,7 +47,7 @@ const NotifyMessages: React.FC<INotifyMessagesProps> = ({ notifyMessages }) => (
   <>
     <Grid container style={{ padding: 16 }}>
       <>
-        {[NotifyMessageType.ERROR, NotifyMessageType.WARN].map(groupType => (
+        {[NotifyMessageType.ERROR, NotifyMessageType.WARN].map((groupType) => (
           <Fragment key={groupType}>
             {notifyMessages.map((notifyMessage, i) => (
               <Grid item key={`message-${i}`}>

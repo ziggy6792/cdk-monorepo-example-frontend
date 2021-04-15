@@ -18,7 +18,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
   const scoresTableColumns = [
     { name: 'order', label: 'Order' },
     { name: 'rider', label: 'Rider' },
-    ..._.range(noOfRuns).map(v => ({
+    ..._.range(noOfRuns).map((v) => ({
       name: `run${v + 1}`,
       label: `Run\u00A0${v + 1}`,
     })),
@@ -61,7 +61,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
     const copyRiderAllocations = _.cloneDeep(tableData.map(({ riderAllocation }) => riderAllocation));
     const scoredRun = copyRiderAllocations.find(({ userId }) => selectedRiderAllocation.userId === userId);
     scoredRun.runs = scoredRun.runs.map((run, i) => ({ score: +formValues.runScores[i] }));
-    const riderBestScores = copyRiderAllocations.map(ra => ({ ...ra, bestScore: getBestScore(ra.runs.map(({ score }) => score)) }));
+    const riderBestScores = copyRiderAllocations.map((ra) => ({ ...ra, bestScore: getBestScore(ra.runs.map(({ score }) => score)) }));
     const sortedRiderAllocations = _.orderBy(riderBestScores, ({ bestScore }) => bestScore, 'desc');
     const findFirstIndex = sortedRiderAllocations.findIndex(({ userId }) => selectedRiderAllocation.userId === userId);
     const matchingRuns = _.filter(sortedRiderAllocations, ({ bestScore }) => bestScore === sortedRiderAllocations[findFirstIndex].bestScore);
@@ -83,7 +83,7 @@ const EnterScoresTable: React.FC<IEnterScoresTableProps> = ({ tableData, noOfRun
         </Dialog>
       )}
       <ScoreboardDataTable
-        tableData={_.orderBy(tableData, row => row.riderAllocation.startOrder)}
+        tableData={_.orderBy(tableData, (row) => row.riderAllocation.startOrder)}
         columns={scoresTableColumns}
         highlightedPositions={noProgressing}
         options={{
