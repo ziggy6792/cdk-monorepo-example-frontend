@@ -57,7 +57,7 @@ const EndHeat: React.FC<IEndHeatProps> = ({ heat }) => {
     const message = validationMessageLookup[validationItem.message];
     if (validationItem.__typename === 'ValidationItemHeatAlreadyOpen') {
       return {
-        action: <Link href={`${ROUTE_SCOREBOARD}/${validationItem.eventId}`}>Open Scoreboard</Link>,
+        action: <Link onClick={() => history.push(`${ROUTE_SCOREBOARD}/${validationItem.eventId}`)}>Open Scoreboard</Link>,
         message,
       };
     }
