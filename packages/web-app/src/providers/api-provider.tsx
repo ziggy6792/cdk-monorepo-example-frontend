@@ -6,7 +6,7 @@ import Routes from 'src/routes';
 import { parseISO } from 'date-fns';
 import { createTransformerLink } from 'apollo-client-transform';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid, Typography, useTheme } from '@material-ui/core';
 import * as ApiFetch from 'src/utils/aws-api-fetch';
 import introspectionToPossibleTypes from 'src/utils/intro-to-possible-types';
 import Dialog from 'src/components/ui/dialog';
@@ -31,9 +31,14 @@ const transformers = {
   ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
 };
 
-const renderError = (apolloError: ErrorResponse): React.ReactNode => {
-  const { graphQLErrors, networkError } = apolloError;
+interface IApolloErrorProps {
+  error: ErrorResponse;
+}
+
+const ApolloError: React.FC<IApolloErrorProps> = ({ error }) => {
+  const { graphQLErrors, networkError } = error;
   const displayErrors = [];
+  const theme = useTheme();
 
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => displayErrors.push(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`));
@@ -42,7 +47,15 @@ const renderError = (apolloError: ErrorResponse): React.ReactNode => {
   if (networkError) {
     displayErrors.push(`[Network error]: ${networkError}`);
   }
-  return displayErrors.map(error => <Typography color='error'>{error}</Typography>);
+  return (
+    <Grid container spacing={1} style={{ marginBottom: theme.spacing(1) }}>
+      {displayErrors.map(errorItem => (
+        <Grid item key={errorItem}>
+          <Typography color='error'>{errorItem}</Typography>
+        </Grid>
+      ))}
+    </Grid>
+  );
 };
 
 interface IErrorMessageProps {
@@ -86,8 +99,8 @@ const ApiProvider: React.FC = ({ children }) => {
       possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
     }),
   });
-
   const history = useHistory();
+
   return (
     <ApolloProvider client={client}>
       {error && (
@@ -115,7 +128,7 @@ const ApiProvider: React.FC = ({ children }) => {
               </>
             }
           >
-            {renderError(error)}
+            <ApolloError error={error} />
           </ErrorMessage>
         </Dialog>
       )}
