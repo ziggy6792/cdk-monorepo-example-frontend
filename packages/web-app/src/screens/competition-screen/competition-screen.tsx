@@ -16,6 +16,8 @@ interface IEventsScreenProps {
 const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
   const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
+  console.log('competitionId', competitionId);
+
   const history = useHistory();
 
   return (

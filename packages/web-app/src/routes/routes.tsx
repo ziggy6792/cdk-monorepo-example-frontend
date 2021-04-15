@@ -45,6 +45,8 @@ const Routes: React.FC = () => {
         <Route exact path={`${routeConfig.ROUTE_SCOREBOARD}/:eventId`} render={({ match: { params } }) => <ScoreboardScreen eventId={params.eventId} />} />
         <Route exact path={`${routeConfig.ROUTE_TIMETABLE}/:eventId`} render={({ match: { params } }) => <TimetableScreen eventId={params.eventId} />} />
         <Route exact path={`${routeConfig.ROUTE_HEAT}/:heatId`} render={({ match: { params } }) => <HeatScreen heatId={params.heatId} />} />
+        {/* ToDo: Page not found */}
+        <div>Page not found</div>
       </Switch>
     </>
   );
