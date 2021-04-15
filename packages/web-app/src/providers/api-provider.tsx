@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import introspectionQueryResultData from 'src/graphql/fragment-types.json';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import Routes from 'src/routes';
 import { parseISO } from 'date-fns';
 import { createTransformerLink } from 'apollo-client-transform';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
@@ -11,6 +10,8 @@ import * as ApiFetch from 'src/utils/aws-api-fetch';
 import introspectionToPossibleTypes from 'src/utils/intro-to-possible-types';
 import Dialog from 'src/components/ui/dialog';
 import { useHistory } from 'react-router';
+import ApiErrorMessage from 'src/modules/errors/error-message/api-error-message';
+import ErrorBox from 'src/modules/errors/error-box';
 
 const DateTransformer = {
   parseValue(date: string) {
@@ -31,58 +32,6 @@ const transformers = {
   ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
 };
 
-interface IApolloErrorProps {
-  error: ErrorResponse;
-}
-
-const ApolloError: React.FC<IApolloErrorProps> = ({ error }) => {
-  const { graphQLErrors, networkError } = error;
-  const displayErrors = [];
-  const theme = useTheme();
-
-  if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, locations, path }) => displayErrors.push(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`));
-  }
-
-  if (networkError) {
-    displayErrors.push(`[Network error]: ${networkError}`);
-  }
-  return (
-    <Grid container spacing={1} style={{ marginBottom: theme.spacing(1) }}>
-      {displayErrors.map((errorItem) => (
-        <Grid item key={errorItem}>
-          <Typography color='error'>{errorItem}</Typography>
-        </Grid>
-      ))}
-    </Grid>
-  );
-};
-
-interface IErrorMessageProps {
-  title?: React.ReactNode;
-  buttons?: React.ReactNode;
-}
-
-const ErrorMessage: React.FC<IErrorMessageProps> = ({ title, children, buttons }) => (
-  <Grid container>
-    {title && (
-      <Grid container direction='row' justify='center'>
-        <Grid item>
-          <Typography variant='h3' gutterBottom color='error'>
-            {title}
-          </Typography>
-        </Grid>
-      </Grid>
-    )}
-    {children}
-    {buttons && (
-      <Grid container direction='row' justify='center' spacing={2}>
-        {buttons}
-      </Grid>
-    )}
-  </Grid>
-);
-
 const ApiProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<ErrorResponse>(null);
 
@@ -94,42 +43,35 @@ const ApiProvider: React.FC = ({ children }) => {
   });
 
   const client = new ApolloClient({
+    defaultOptions: {
+      mutate: {
+        // Errors are handled at global level
+        errorPolicy: 'ignore',
+      },
+    },
     link: errorLink.concat(enhancedHttpLink as any),
     cache: new InMemoryCache({
       possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
     }),
   });
-  const history = useHistory();
 
   return (
     <ApolloProvider client={client}>
       {error && (
         <Dialog open>
-          <ErrorMessage
-            title='Oh No!'
+          <ErrorBox
             buttons={
               <>
                 <Grid item>
                   <Button variant='contained' onClick={() => setError(null)}>
-                    Retry
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button
-                    variant='contained'
-                    onClick={() => {
-                      setError(null);
-                      history.goBack();
-                    }}
-                  >
-                    Go Back
+                    OK
                   </Button>
                 </Grid>
               </>
             }
           >
-            <ApolloError error={error} />
-          </ErrorMessage>
+            <ApiErrorMessage error={error} />
+          </ErrorBox>
         </Dialog>
       )}
       {!error && children}

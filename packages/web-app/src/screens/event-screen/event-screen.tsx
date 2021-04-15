@@ -111,21 +111,23 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
           </Container>
         </Grid>
         {/* FAB Menu will be rendered based on UAC role */}
-        <FabMenu>
-          <FabMenu.Item>
-            <AddCompetition eventId={eventId} />
-          </FabMenu.Item>
-          <FabMenu.Item>
-            <EditEvent
-              eventToEdit={{
-                id: eventId,
-                description,
-                name,
-                startTime,
-              }}
-            />
-          </FabMenu.Item>
-        </FabMenu>
+        {data.getEvent.isAdmin && (
+          <FabMenu>
+            <FabMenu.Item>
+              <AddCompetition eventId={eventId} />
+            </FabMenu.Item>
+            <FabMenu.Item>
+              <EditEvent
+                eventToEdit={{
+                  id: eventId,
+                  description,
+                  name,
+                  startTime,
+                }}
+              />
+            </FabMenu.Item>
+          </FabMenu>
+        )}
       </Container>
     </>
   );

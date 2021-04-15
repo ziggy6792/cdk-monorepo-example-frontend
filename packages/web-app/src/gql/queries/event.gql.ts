@@ -36,6 +36,7 @@ export const GET_EVENT = gql`
   query getEvent($id: ID!) {
     getEvent(id: $id) {
       ...BreadcrumbFields
+      isAdmin
       id
       name
       adminUser {

@@ -16,8 +16,7 @@ import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
-import { Button, Link } from '@material-ui/core';
-import CancelButton from 'src/components/ui/buttons/cancel-button';
+import { Link } from '@material-ui/core';
 import ConfirmBox from 'src/modules/confirm-box/confirm-box';
 
 interface IJudgeHeatProps {
@@ -32,20 +31,22 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
 
   const [selectHeat] = useSelectHeatMutation();
 
-  // const { refetch: checkCanOpen } = useCheckCanOpenHeatQuery({ fetchPolicy: 'cache-and-network', skip: true });
-
   const [open, setOpen] = useState(false);
   const [validationItems, setValidationItems] = useState<ValidationItemBase[]>([]);
 
   const onSelectHeat = async (validationLevel: ValidationItemType = ValidationItemType.Warn): Promise<void> => {
     const response = await selectHeat({ variables: { id: heat.id, validationLevel } });
+
+    if (!response.data) {
+      // Handle error globally
+      return null;
+    }
     if (response.data.selectHeat.__typename === 'ValidationItemList') {
       setValidationItems(response.data.selectHeat.items);
       setOpen(true);
     } else if (response.data.selectHeat.__typename === 'Event') {
       history.push(`${ROUTE_SCOREBOARD}/${response.data.selectHeat.id}`);
     }
-
     return null;
   };
 

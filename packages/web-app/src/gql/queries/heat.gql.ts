@@ -6,6 +6,8 @@ export const CORE_HEAT_FIELDS = gql`
   fragment CoreHeatFields on Heat {
     ...BreadcrumbFields
     id
+    isAdmin
+    isJudge
     status
     name
     longName

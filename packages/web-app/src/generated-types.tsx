@@ -663,7 +663,7 @@ export type BreadcrumbFieldsFragment =
 
 export type CoreCompetitionFieldsFragment = { __typename?: 'Competition' } & Pick<
   Competition,
-  'id' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
+  'id' | 'isAdmin' | 'isJudge' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
 > & {
     event: { __typename?: 'Event' } & Pick<Event, 'id'>;
     judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
@@ -790,7 +790,7 @@ export type GetEventQueryVariables = {
 };
 
 export type GetEventQuery = { __typename?: 'Query' } & {
-  getEvent: { __typename?: 'Event' } & Pick<Event, 'id' | 'name' | 'startTime' | 'description'> & {
+  getEvent: { __typename?: 'Event' } & Pick<Event, 'isAdmin' | 'id' | 'name' | 'startTime' | 'description'> & {
       adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
       competitions: { __typename?: 'CompetitionList' } & {
         items: Array<
@@ -846,7 +846,7 @@ export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
 
 export type CoreHeatFieldsFragment = { __typename?: 'Heat' } & Pick<
   Heat,
-  'id' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'
+  'id' | 'isAdmin' | 'isJudge' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'
 > & {
     round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
     riderAllocations: { __typename?: 'RiderAllocationList' } & {
@@ -927,6 +927,8 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
   fragment CoreCompetitionFields on Competition {
     ...BreadcrumbFields
     id
+    isAdmin
+    isJudge
     event {
       id
     }
@@ -988,6 +990,8 @@ export const CoreHeatFieldsFragmentDoc = gql`
   fragment CoreHeatFields on Heat {
     ...BreadcrumbFields
     id
+    isAdmin
+    isJudge
     status
     name
     longName
@@ -1381,6 +1385,7 @@ export const GetEventDocument = gql`
   query getEvent($id: ID!) {
     getEvent(id: $id) {
       ...BreadcrumbFields
+      isAdmin
       id
       name
       adminUser {

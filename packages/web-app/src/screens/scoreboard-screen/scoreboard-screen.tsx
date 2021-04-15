@@ -36,9 +36,11 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     <>
       <Grid container direction='column' justify='center' alignItems='center'>
         <HeatSummary heat={data.selectedHeat} />
-        <Grid item>
-          <EndHeat heat={data.selectedHeat} />
-        </Grid>
+        {data.selectedHeat.isJudge && (
+          <Grid item>
+            <EndHeat heat={data.selectedHeat} />
+          </Grid>
+        )}
         <Grid item style={{ width: '100%' }}>
           <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
         </Grid>
