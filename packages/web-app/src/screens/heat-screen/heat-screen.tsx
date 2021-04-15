@@ -32,9 +32,11 @@ const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
       <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
       <Grid container direction='column' justify='center' alignItems='center'>
         <HeatSummary heat={data.getHeat} />
-        <Grid item>
-          <JudgeHeat heat={data.getHeat} />
-        </Grid>
+        {data.getHeat.isJudge && (
+          <Grid item>
+            <JudgeHeat heat={data.getHeat} />
+          </Grid>
+        )}
         <Grid item style={{ width: '100%' }}>
           <ResultsTable
             tableType={heatStatusToTableType(data.getHeat.status)}

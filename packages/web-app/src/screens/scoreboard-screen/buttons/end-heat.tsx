@@ -16,7 +16,7 @@ import { ROUTE_COMPETITION, ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
-import { Button, Link } from '@material-ui/core';
+import { Link } from '@material-ui/core';
 import ConfirmBox from 'src/modules/confirm-box';
 
 interface IEndHeatProps {
@@ -36,6 +36,10 @@ const EndHeat: React.FC<IEndHeatProps> = ({ heat }) => {
 
   const onEndHeat = async (validationLevel: ValidationItemType = ValidationItemType.Warn): Promise<void> => {
     const response = await endHeat({ variables: { id: heat.id, validationLevel } });
+    if (!response.data) {
+      // Handle error globally
+      return null;
+    }
     if (response.data.endHeat.__typename === 'ValidationItemList') {
       setValidationItems(response.data.endHeat.items);
       setOpen(true);

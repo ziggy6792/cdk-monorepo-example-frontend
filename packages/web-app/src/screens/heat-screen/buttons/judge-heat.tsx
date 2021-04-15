@@ -39,13 +39,17 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
 
   const onSelectHeat = async (validationLevel: ValidationItemType = ValidationItemType.Warn): Promise<void> => {
     const response = await selectHeat({ variables: { id: heat.id, validationLevel } });
+
+    if (!response.data) {
+      // Handle error globally
+      return null;
+    }
     if (response.data.selectHeat.__typename === 'ValidationItemList') {
       setValidationItems(response.data.selectHeat.items);
       setOpen(true);
     } else if (response.data.selectHeat.__typename === 'Event') {
       history.push(`${ROUTE_SCOREBOARD}/${response.data.selectHeat.id}`);
     }
-
     return null;
   };
 

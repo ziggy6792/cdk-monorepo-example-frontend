@@ -663,7 +663,7 @@ export type BreadcrumbFieldsFragment =
 
 export type CoreCompetitionFieldsFragment = { __typename?: 'Competition' } & Pick<
   Competition,
-  'id' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
+  'id' | 'isAdmin' | 'isJudge' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
 > & {
     event: { __typename?: 'Event' } & Pick<Event, 'id'>;
     judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
@@ -846,7 +846,7 @@ export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
 
 export type CoreHeatFieldsFragment = { __typename?: 'Heat' } & Pick<
   Heat,
-  'id' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'
+  'id' | 'isAdmin' | 'isJudge' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'
 > & {
     round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
     riderAllocations: { __typename?: 'RiderAllocationList' } & {
@@ -927,6 +927,8 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
   fragment CoreCompetitionFields on Competition {
     ...BreadcrumbFields
     id
+    isAdmin
+    isJudge
     event {
       id
     }
@@ -988,6 +990,8 @@ export const CoreHeatFieldsFragmentDoc = gql`
   fragment CoreHeatFields on Heat {
     ...BreadcrumbFields
     id
+    isAdmin
+    isJudge
     status
     name
     longName

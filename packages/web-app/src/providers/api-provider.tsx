@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import introspectionQueryResultData from 'src/graphql/fragment-types.json';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import Routes from 'src/routes';
 import { parseISO } from 'date-fns';
 import { createTransformerLink } from 'apollo-client-transform';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
@@ -41,19 +40,35 @@ const ApolloError: React.FC<IApolloErrorProps> = ({ error }) => {
   const theme = useTheme();
 
   if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, locations, path }) => displayErrors.push(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`));
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      displayErrors.push(`[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(locations)}, Path: ${path}`)
+    );
   }
 
   if (networkError) {
     displayErrors.push(`[Network error]: ${networkError}`);
   }
+
+  const [isToggle, setToggle] = useState(false);
+
   return (
-    <Grid container spacing={1} style={{ marginBottom: theme.spacing(1) }}>
-      {displayErrors.map((errorItem) => (
-        <Grid item key={errorItem}>
-          <Typography color='error'>{errorItem}</Typography>
+    <Grid container spacing={1} style={{ marginBottom: theme.spacing(1) }} justify='center'>
+      {!isToggle && (
+        <Grid item>
+          <Typography color='error' onClick={() => setToggle(true)}>
+            Something went wrong. Blame Vincent!
+          </Typography>
         </Grid>
-      ))}
+      )}
+
+      {isToggle &&
+        displayErrors.map((errorItem) => (
+          <Grid item key={errorItem}>
+            <Typography color='error' onClick={() => setToggle(false)}>
+              {errorItem}
+            </Typography>
+          </Grid>
+        ))}
     </Grid>
   );
 };
@@ -94,6 +109,12 @@ const ApiProvider: React.FC = ({ children }) => {
   });
 
   const client = new ApolloClient({
+    defaultOptions: {
+      mutate: {
+        // Errors are handled at global level
+        errorPolicy: 'ignore',
+      },
+    },
     link: errorLink.concat(enhancedHttpLink as any),
     cache: new InMemoryCache({
       possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
@@ -111,11 +132,12 @@ const ApiProvider: React.FC = ({ children }) => {
               <>
                 <Grid item>
                   <Button variant='contained' onClick={() => setError(null)}>
-                    Retry
+                    OK
                   </Button>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                   <Button
+                    // ToDo: fix this
                     variant='contained'
                     onClick={() => {
                       setError(null);
@@ -124,7 +146,7 @@ const ApiProvider: React.FC = ({ children }) => {
                   >
                     Go Back
                   </Button>
-                </Grid>
+                </Grid> */}
               </>
             }
           >

@@ -4,8 +4,8 @@ import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
 import Spinner from 'src/components/spinner';
 import CompetitionSummary from 'src/modules/summary/competition-summary';
-import { useHistory } from 'react-router';
-import { ROUTE_COMPETITION } from 'src/config/routes';
+import { Redirect, useHistory } from 'react-router';
+import { ROUTE_COMPETITION, ROUTE_PROFILE } from 'src/config/routes';
 import HeatsTable from './heats-table';
 import RiderAllocationsTable from './rider-allocations-table';
 import EditCompetition from './buttons/edit-competition';
@@ -31,6 +31,7 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
   return (
     <>
       {loading && <Spinner />}
+      {!loading && !data.getCompetition.isAdmin && <Redirect to={ROUTE_PROFILE} />}
       {!loading && (
         <Grid container direction='column' justify='center' alignItems='center'>
           <Grid container direction='row' justify='flex-end' alignItems='center'>
