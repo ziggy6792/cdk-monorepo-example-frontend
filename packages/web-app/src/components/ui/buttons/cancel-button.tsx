@@ -7,7 +7,7 @@ interface ICancelButtonProps {
   text?: string;
 }
 
-const CancelButton: React.FC<ICancelButtonProps> = props => {
+const CancelButton: React.FC<ICancelButtonProps> = (props) => {
   const { isSubmitting, onClick, text } = props;
   return (
     <Button type='button' variant='contained' color='secondary' onClick={onClick} disabled={isSubmitting}>

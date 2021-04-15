@@ -41,11 +41,11 @@ const TimetableForm: React.FC<ITimetableFormProps> = ({ onSubmit, onCancel, init
         validationSchema={Yup.object({
           startTime: Yup.date().min(minTime, 'Please pick a later date'),
         })}
-        onSubmit={async values => {
+        onSubmit={async (values) => {
           await onSubmit(values);
         }}
       >
-        {props => {
+        {(props) => {
           const { isSubmitting, isValid, dirty } = props;
           return (
             <FormLayout

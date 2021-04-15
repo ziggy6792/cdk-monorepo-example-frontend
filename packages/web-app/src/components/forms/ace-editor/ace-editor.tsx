@@ -22,9 +22,9 @@ const AceEditor: React.FC<IAceEditorProps> = ({ field, autoFocus, placeholder, f
         mode='sass'
         theme='github'
         name={editorId}
-        onChange={text => form.setFieldValue(field.name, text)}
+        onChange={(text) => form.setFieldValue(field.name, text)}
         focus={autoFocus}
-        onBlur={e => field.onBlur(e)}
+        onBlur={(e) => field.onBlur(e)}
         fontSize={14}
         showPrintMargin
         onLoad={() => document.querySelectorAll(`#${editorId} textarea`)[0].setAttribute('id', field.name)}

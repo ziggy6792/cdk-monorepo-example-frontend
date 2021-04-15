@@ -46,7 +46,7 @@ const getSortRet = (value, order) => {
   return null;
 };
 
-const DataTable: React.FC<IDataTableProps> = props => {
+const DataTable: React.FC<IDataTableProps> = (props) => {
   const { tableData: tableRows, ...rest } = props;
 
   const tableDisplayData = [];
@@ -54,7 +54,7 @@ const DataTable: React.FC<IDataTableProps> = props => {
   tableRows.forEach(({ rowData: cellData }) => {
     const cellDisplayData = {};
 
-    Object.keys(cellData).forEach(key => {
+    Object.keys(cellData).forEach((key) => {
       const value = cellData[key];
 
       if (typeof value === 'string') {
@@ -77,7 +77,7 @@ const DataTable: React.FC<IDataTableProps> = props => {
 
     const retData = _.orderBy(
       dataToSort,
-      item => {
+      (item) => {
         const columKey = (props.columns[colIndex] as MUIDataTableColumn).name;
         const origCellData = tableRows[item.index].rowData[columKey];
 

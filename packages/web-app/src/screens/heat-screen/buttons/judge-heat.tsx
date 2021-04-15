@@ -79,7 +79,7 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
           confirmButton={{
             onClick: () => onSelectHeat(ValidationItemType.Error),
             text: 'Judge Heat',
-            disabled: !!validationItems.find(item => item.type === ValidationItemType.Error),
+            disabled: !!validationItems.find((item) => item.type === ValidationItemType.Error),
           }}
           cancelButton={{ onClick: () => setOpen(false) }}
         >

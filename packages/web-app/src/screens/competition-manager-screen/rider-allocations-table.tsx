@@ -15,7 +15,7 @@ interface RiderAllocationsTableProps {
 }
 
 const RiderAllocationsTable: React.FC<RiderAllocationsTableProps> = ({ rierAllocations }) => {
-  const tableData: IDataTableRow[] = rierAllocations.map(riderAllocation => ({
+  const tableData: IDataTableRow[] = rierAllocations.map((riderAllocation) => ({
     rowData: {
       rider: riderAllocation.user?.fullName,
       seed: riderAllocation.startSeed,

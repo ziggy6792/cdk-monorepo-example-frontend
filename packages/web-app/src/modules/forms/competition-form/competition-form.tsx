@@ -66,11 +66,11 @@ const ComepetitionForm: React.FC<ICompetitionFormProps> = ({ onSubmit, onCancel,
             .nullable()
             .required('Required'),
         })}
-        onSubmit={async values => {
+        onSubmit={async (values) => {
           await onSubmit(values as ICompetitionFormValues);
         }}
       >
-        {props => {
+        {(props) => {
           const { isSubmitting, isValid, dirty, errors, touched } = props;
           return (
             <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>

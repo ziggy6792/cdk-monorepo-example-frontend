@@ -74,7 +74,7 @@ const EndHeat: React.FC<IEndHeatProps> = ({ heat }) => {
           confirmButton={{
             onClick: () => onEndHeat(ValidationItemType.Error),
             text: 'End Heat',
-            disabled: !!validationItems.find(item => item.type === ValidationItemType.Error),
+            disabled: !!validationItems.find((item) => item.type === ValidationItemType.Error),
           }}
           cancelButton={{ onClick: () => setOpen(false) }}
         >

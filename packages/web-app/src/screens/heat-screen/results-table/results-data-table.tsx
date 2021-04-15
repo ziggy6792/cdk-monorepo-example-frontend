@@ -14,7 +14,7 @@ export interface IRiderAllocationRow extends IDataTableRow {
   riderAllocation: IRiderAllocationItem;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   highlight: {
     '& td': {
       borderBottomWidth: '2px',
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ResultsDataTable: React.FC<ScoresDataTableProps> = props => {
+const ResultsDataTable: React.FC<ScoresDataTableProps> = (props) => {
   const classes = useStyles();
   const { highlightedPositions, tableData, title } = props;
 

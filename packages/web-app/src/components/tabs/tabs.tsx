@@ -14,7 +14,7 @@ interface ITabsProps {
   tabs: ITab[];
 }
 
-const Tabs: React.FC<ITabsProps> = props => {
+const Tabs: React.FC<ITabsProps> = (props) => {
   const { selectedTab, setSelectedTab, tabs } = props;
 
   // const [value, setValue] = React.useState(0);

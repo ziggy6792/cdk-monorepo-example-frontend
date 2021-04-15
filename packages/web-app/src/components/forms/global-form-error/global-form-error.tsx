@@ -6,7 +6,7 @@ interface GlobalFormErrorProps {
   fontSize?: string;
 }
 
-const GlobalFormError: React.FC<GlobalFormErrorProps> = props => {
+const GlobalFormError: React.FC<GlobalFormErrorProps> = (props) => {
   const { errorMessage: error, fontSize } = props;
   return (
     <>

@@ -6,7 +6,7 @@ import { Field } from 'formik';
 import { TextField, TextFieldProps, Select as SelectFormikUi, SelectProps } from 'formik-material-ui';
 import { Catalog } from 'src/config/catalogs';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   formControl: {
     // margin: theme.spacing(1),
     width: '100%',
@@ -18,12 +18,12 @@ export const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const TextArea: React.FC<TextFieldProps> = props => {
+export const TextArea: React.FC<TextFieldProps> = (props) => {
   const classes = useStyles();
   return <TextField {...props} multiline rows={10} className={classes.message} />;
 };
 
-export const NumericField: React.FC<TextFieldProps> = props => {
+export const NumericField: React.FC<TextFieldProps> = (props) => {
   const { label } = props;
   return (
     <TextField
@@ -44,7 +44,7 @@ interface IMySelectProps extends SelectProps {
   getOptionLabel: (option) => string;
 }
 
-export const Select: React.FC<IMySelectProps> = props => {
+export const Select: React.FC<IMySelectProps> = (props) => {
   const { options, idField, getOptionLabel, ...rest } = props;
 
   const labelName = `${props.field.name}-label`;
@@ -60,7 +60,7 @@ export const Select: React.FC<IMySelectProps> = props => {
           id: labelName,
         }}
       >
-        {options.map(option => (
+        {options.map((option) => (
           <MenuItem value={option[idField || 'id']} key={option[idField || 'id']}>
             {getOptionLabel(option)}
           </MenuItem>

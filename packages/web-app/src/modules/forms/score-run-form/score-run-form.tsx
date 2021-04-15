@@ -39,7 +39,7 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
     <Formik
       initialValues={initialValues}
       validationSchema={Yup.object({})}
-      validate={formValues => {
+      validate={(formValues) => {
         if (ALLOW_TIED_POSITIONS) return null;
 
         const { isJoint } = getUpdatedPosition(formValues);
@@ -51,11 +51,11 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
         setGlobalError(null);
         return null;
       }}
-      onSubmit={async values => {
+      onSubmit={async (values) => {
         await onSubmit(values);
       }}
     >
-      {props => {
+      {(props) => {
         const { isSubmitting, isValid, dirty, values } = props;
         return (
           <FormLayout title={title} buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />}>
@@ -71,7 +71,7 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
                             name={`runScores.${i}`}
                             component={NumericField}
                             label={`Run ${i + 1}`}
-                            autoFocus={i === values?.runScores.findIndex(score => score === '') || i === 0}
+                            autoFocus={i === values?.runScores.findIndex((score) => score === '') || i === 0}
                           />
                         </Grid>
                       ))}

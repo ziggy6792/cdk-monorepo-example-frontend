@@ -36,7 +36,7 @@ const login = createAsyncThunk<
   // First argument to the payload creator
   ILoginParams
   // Types for ThunkAPI
->('auth/login', async payload => {
+>('auth/login', async (payload) => {
   let cognitoUser: CognitoUser;
 
   let userPayload: IUser | USER_TYPE.FACEBOOK;
@@ -97,9 +97,9 @@ const authSlice = createSlice({
   } as AuthState,
   reducers: {},
 
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     // Login
-    builder.addCase(login.pending, state => {
+    builder.addCase(login.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(login.rejected, (state, action: any) => {
@@ -118,7 +118,7 @@ const authSlice = createSlice({
       }
     });
     // Logout
-    builder.addCase(logout.pending, state => {
+    builder.addCase(logout.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(logout.rejected, (state, action: any) => {
@@ -130,7 +130,7 @@ const authSlice = createSlice({
       state.user = payload;
     });
     // IsAuthenticated
-    builder.addCase(isAuthenticated.pending, state => {
+    builder.addCase(isAuthenticated.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(isAuthenticated.rejected, (state, action: any) => {

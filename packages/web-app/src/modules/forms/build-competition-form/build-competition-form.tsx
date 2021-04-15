@@ -46,11 +46,11 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
     <Formik
       initialValues={initialValues}
       validate={validate}
-      onSubmit={async values => {
+      onSubmit={async (values) => {
         await onSubmit(values);
       }}
     >
-      {props => {
+      {(props) => {
         const { isSubmitting, isValid, dirty } = props;
         return (
           <FormLayout

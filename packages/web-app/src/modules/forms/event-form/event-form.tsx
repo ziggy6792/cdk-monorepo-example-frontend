@@ -31,11 +31,11 @@ const EventForm: React.FC<IEventFormProps> = ({ onSubmit, onCancel, initialValue
             .required('Required'),
           startTime: Yup.date().min(minTime, 'Please pick a later date'),
         })}
-        onSubmit={async values => {
+        onSubmit={async (values) => {
           await onSubmit(values);
         }}
       >
-        {props => {
+        {(props) => {
           const { isSubmitting, isValid, dirty } = props;
           return (
             <FormLayout buttons={<FormButtons isSubmitting={isSubmitting} dirty={dirty} isValid={isValid} onCancel={onCancel} />} title={title}>
