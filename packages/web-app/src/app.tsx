@@ -44,36 +44,32 @@ interface IErrorFallbackProps {
   error: Error;
 }
 
-const ErrorFallback: React.FC<IErrorFallbackProps> = ({ error }) => {
-  console.log('error', error);
-  console.log('error message', JSON.stringify(error.message));
-  return (
-    <Dialog open>
-      <ErrorBox
-        title='Oh No!'
-        buttons={
+const ErrorFallback: React.FC<IErrorFallbackProps> = ({ error }) => (
+  <Dialog open>
+    <ErrorBox
+      title='Oh No!'
+      buttons={
+        <>
+          <Grid item>
+            <Button variant='contained' onClick={() => window.location.reload()}>
+              OK
+            </Button>
+          </Grid>
+        </>
+      }
+    >
+      <GenericErrorMessage
+        error={
           <>
-            <Grid item>
-              <Button variant='contained' onClick={() => window.location.reload()}>
-                OK
-              </Button>
-            </Grid>
+            <div>${error?.message}</div>
+            <br />
+            <div>${JSON.stringify(error.stack)}</div>
           </>
         }
-      >
-        <GenericErrorMessage
-          error={
-            <>
-              <div>${error?.message}</div>
-              <br />
-              <div>${JSON.stringify(error.stack)}</div>
-            </>
-          }
-        />
-      </ErrorBox>
-    </Dialog>
-  );
-};
+      />
+    </ErrorBox>
+  </Dialog>
+);
 
 const WithProvider: React.FC = () => (
   <ThemeProvider theme={Theme}>

@@ -790,7 +790,7 @@ export type GetEventQueryVariables = {
 };
 
 export type GetEventQuery = { __typename?: 'Query' } & {
-  getEvent: { __typename?: 'Event' } & Pick<Event, 'id' | 'name' | 'startTime' | 'description'> & {
+  getEvent: { __typename?: 'Event' } & Pick<Event, 'isAdmin' | 'id' | 'name' | 'startTime' | 'description'> & {
       adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
       competitions: { __typename?: 'CompetitionList' } & {
         items: Array<
@@ -1385,6 +1385,7 @@ export const GetEventDocument = gql`
   query getEvent($id: ID!) {
     getEvent(id: $id) {
       ...BreadcrumbFields
+      isAdmin
       id
       name
       adminUser {

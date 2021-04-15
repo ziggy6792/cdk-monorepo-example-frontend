@@ -16,8 +16,7 @@ import { ROUTE_SCOREBOARD } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
-import { Button, Link } from '@material-ui/core';
-import CancelButton from 'src/components/ui/buttons/cancel-button';
+import { Link } from '@material-ui/core';
 import ConfirmBox from 'src/modules/confirm-box/confirm-box';
 
 interface IJudgeHeatProps {
@@ -32,15 +31,10 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
 
   const [selectHeat] = useSelectHeatMutation();
 
-  const [boom, setBoom] = useState(false);
-
-  // const { refetch: checkCanOpen } = useCheckCanOpenHeatQuery({ fetchPolicy: 'cache-and-network', skip: true });
-
   const [open, setOpen] = useState(false);
   const [validationItems, setValidationItems] = useState<ValidationItemBase[]>([]);
 
   const onSelectHeat = async (validationLevel: ValidationItemType = ValidationItemType.Warn): Promise<void> => {
-    setBoom(true);
     const response = await selectHeat({ variables: { id: heat.id, validationLevel } });
 
     if (!response.data) {
@@ -94,7 +88,6 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
         </ConfirmBox>
       </Dialog>
       <ProgressButton onClick={onSelectHeat}>Judge Heat</ProgressButton>
-      {/* {boom && validationItems.find(() => false).message} */}
     </>
   );
 };
