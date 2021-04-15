@@ -6,11 +6,17 @@ import Routes from 'src/routes';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter } from 'react-router-dom';
 import Theme from 'src/ui/theme';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Button, Grid } from '@material-ui/core';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import initStore from './config/store';
 import * as ApiFetch from './utils/aws-api-fetch';
 import ApiProvider from './providers/api-provider';
+import Dialog from './components/ui/dialog';
+import ErrorBox from './modules/errors/error-box';
+import ApiErrorMessage from './modules/errors/error-message/api-error-message';
+import GenericErrorMessage from './modules/errors/error-message/generic-error-message';
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
@@ -34,12 +40,49 @@ const App: React.FC = () => (
   </div>
 );
 
+interface IErrorFallbackProps {
+  error: Error;
+}
+
+const ErrorFallback: React.FC<IErrorFallbackProps> = ({ error }) => {
+  console.log('error', error);
+  console.log('error message', JSON.stringify(error.message));
+  return (
+    <Dialog open>
+      <ErrorBox
+        title='Oh No!'
+        buttons={
+          <>
+            <Grid item>
+              <Button variant='contained' onClick={() => window.location.reload()}>
+                OK
+              </Button>
+            </Grid>
+          </>
+        }
+      >
+        <GenericErrorMessage
+          error={
+            <>
+              <div>${error?.message}</div>
+              <br />
+              <div>${JSON.stringify(error.stack)}</div>
+            </>
+          }
+        />
+      </ErrorBox>
+    </Dialog>
+  );
+};
+
 const WithProvider: React.FC = () => (
   <ThemeProvider theme={Theme}>
     <BrowserRouter>
       <Provider store={store}>
         <ApiProvider>
-          <App />
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <App />
+          </ErrorBoundary>
         </ApiProvider>
       </Provider>
     </BrowserRouter>
