@@ -49,7 +49,7 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
         {round.heats.items.map(heat => (
           <Grid item key={heat.name}>
             {/* {heat.name} */}
-
+            {/* ToDo: make all links have pointer cursor */}
             <Link
               variant='h5'
               onClick={() => {
