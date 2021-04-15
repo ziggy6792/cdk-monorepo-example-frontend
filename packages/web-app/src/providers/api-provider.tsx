@@ -6,9 +6,11 @@ import Routes from 'src/routes';
 import { parseISO } from 'date-fns';
 import { createTransformerLink } from 'apollo-client-transform';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
-import { Button } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import * as ApiFetch from 'src/utils/aws-api-fetch';
 import introspectionToPossibleTypes from 'src/utils/intro-to-possible-types';
+import Dialog from 'src/components/ui/dialog';
+import { useHistory } from 'react-router';
 
 const DateTransformer = {
   parseValue(date: string) {
@@ -40,8 +42,33 @@ const renderError = (apolloError: ErrorResponse): React.ReactNode => {
   if (networkError) {
     displayErrors.push(`[Network error]: ${networkError}`);
   }
-  return displayErrors.map(error => <div>{error}</div>);
+  return displayErrors.map(error => <Typography color='error'>{error}</Typography>);
 };
+
+interface IErrorMessageProps {
+  title?: React.ReactNode;
+  buttons?: React.ReactNode;
+}
+
+const ErrorMessage: React.FC<IErrorMessageProps> = ({ title, children, buttons }) => (
+  <Grid container>
+    {title && (
+      <Grid container direction='row' justify='center'>
+        <Grid item>
+          <Typography variant='h3' gutterBottom color='error'>
+            {title}
+          </Typography>
+        </Grid>
+      </Grid>
+    )}
+    {children}
+    {buttons && (
+      <Grid container direction='row' justify='center' spacing={2}>
+        {buttons}
+      </Grid>
+    )}
+  </Grid>
+);
 
 const ApiProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<ErrorResponse>(null);
@@ -59,13 +86,38 @@ const ApiProvider: React.FC = ({ children }) => {
       possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
     }),
   });
+
+  const history = useHistory();
   return (
     <ApolloProvider client={client}>
       {error && (
-        <>
-          {renderError(error)}
-          <Button onClick={() => setError(null)}>Clear Error</Button>
-        </>
+        <Dialog open>
+          <ErrorMessage
+            title='Oh No!'
+            buttons={
+              <>
+                <Grid item>
+                  <Button variant='contained' onClick={() => setError(null)}>
+                    Retry
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    onClick={() => {
+                      setError(null);
+                      history.goBack();
+                    }}
+                  >
+                    Go Back
+                  </Button>
+                </Grid>
+              </>
+            }
+          >
+            {renderError(error)}
+          </ErrorMessage>
+        </Dialog>
       )}
       {!error && children}
     </ApolloProvider>

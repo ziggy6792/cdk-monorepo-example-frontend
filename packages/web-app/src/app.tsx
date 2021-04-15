@@ -3,6 +3,9 @@ import React from 'react';
 import Auth from '@aws-amplify/auth';
 import { Provider } from 'react-redux';
 import Routes from 'src/routes';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { BrowserRouter } from 'react-router-dom';
+import Theme from 'src/ui/theme';
 import envConfig from './config/env-config';
 import awsConfig from './config/aws-config';
 import initStore from './config/store';
@@ -32,13 +35,15 @@ const App: React.FC = () => (
 );
 
 const WithProvider: React.FC = () => (
-  // <ThemeProvider theme={Theme}>
-  <Provider store={store}>
-    <ApiProvider>
-      <App />
-    </ApiProvider>
-  </Provider>
-  // </ThemeProvider>
+  <ThemeProvider theme={Theme}>
+    <BrowserRouter>
+      <Provider store={store}>
+        <ApiProvider>
+          <App />
+        </ApiProvider>
+      </Provider>
+    </BrowserRouter>
+  </ThemeProvider>
 );
 
 export default WithProvider;
