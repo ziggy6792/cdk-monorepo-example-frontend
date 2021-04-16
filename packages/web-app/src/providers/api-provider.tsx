@@ -1,19 +1,17 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React from 'react';
 import introspectionQueryResultData from 'src/graphql/fragment-types.json';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { parseISO } from 'date-fns';
 import { createTransformerLink } from 'apollo-client-transform';
-import { ErrorResponse, onError } from '@apollo/client/link/error';
-import { Button, Grid, Typography, useTheme } from '@material-ui/core';
+import { onError } from '@apollo/client/link/error';
+import { Button, Grid } from '@material-ui/core';
 import * as ApiFetch from 'src/utils/aws-api-fetch';
 import introspectionToPossibleTypes from 'src/utils/intro-to-possible-types';
 import Dialog from 'src/components/ui/dialog';
-import { useHistory } from 'react-router';
 import ApiErrorMessage from 'src/modules/errors/error-message/api-error-message';
 import ErrorBox from 'src/modules/errors/error-box';
 import { store } from 'src/config/store';
-import { setTabActionCreator } from 'src/domain/tabs';
 import { errorActionCreator } from 'src/domain/error';
 import errorSelector from 'src/domain/error/selectors';
 import { useDispatch, useSelector } from 'react-redux';
