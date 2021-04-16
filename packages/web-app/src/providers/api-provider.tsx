@@ -41,7 +41,7 @@ const transformerLink = createTransformerLink(transformers as any);
 const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
 
 const errorLink = onError((apolloError) => {
-  store.dispatch(setTabActionCreator({ tabKey: 'test', tabValue: 'test' }));
+  store.dispatch(errorActionCreator({ error: apolloError }));
   // setError(apolloError);
   // Do nothing
 });
@@ -59,9 +59,11 @@ const ApiProvider: React.FC = ({ children }) => {
 
   const history = useHistory();
 
+  const isError = useSelector(errorSelector.selectError);
+
   return (
     <ApolloProvider client={client}>
-      {error && (
+      {isError && (
         <Dialog open>
           <ErrorBox
             buttons={
@@ -74,11 +76,12 @@ const ApiProvider: React.FC = ({ children }) => {
               </>
             }
           >
-            <ApiErrorMessage error={error} />
+            {/* <ApiErrorMessage error={error} /> */}
+            Some Error Message
           </ErrorBox>
         </Dialog>
       )}
-      {!error && children}
+      {!isError && children}
     </ApolloProvider>
   );
 };
