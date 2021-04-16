@@ -35,11 +35,13 @@ const transformers = {
 const ApiProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<ErrorResponse>(null);
 
-  const transformerLink = createTransformerLink(transformers as any);
-  const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
+  const history = useHistory();
+  console.log('link', client.link);
 
-  const errorLink = onError((apolloError) => {
+  client.link.setOnError((apolloError) => {
     setError(apolloError);
+    console.log('apolloError', apolloError);
+    // Do nothing
   });
 
   const client = new ApolloClient({
