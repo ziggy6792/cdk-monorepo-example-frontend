@@ -785,6 +785,10 @@ export type UpdateEventMutationVariables = {
 
 export type UpdateEventMutation = { __typename?: 'Mutation' } & { updateEvent: { __typename?: 'Event' } & Pick<Event, 'id'> };
 
+export type GetEventQueryVariables = {
+  id: Scalars['ID'];
+};
+
 export type GetEventQuery = { __typename?: 'Query' } & {
   getEvent: { __typename?: 'Event' } & Pick<Event, 'isAdmin' | 'id' | 'name' | 'startTime' | 'description'> & {
       adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
@@ -923,12 +927,31 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
   fragment CoreCompetitionFields on Competition {
     ...BreadcrumbFields
     id
+    isAdmin
+    isJudge
     event {
       id
-      isAdmin
-      isJudge
-      event {
-        id
+    }
+    hasDemoRiders
+    name
+    description
+    level
+    gender
+    sport
+    maxRiders
+    judgeUserId
+    judgeUser {
+      id
+      fullName
+    }
+    riderAllocations {
+      items {
+        userId
+        user {
+          id
+          fullName
+        }
+        startSeed
       }
     }
     rounds {
@@ -996,8 +1019,8 @@ export const CoreHeatFieldsFragmentDoc = gql`
       }
     }
   }
-}
-    ${BreadcrumbFieldsFragmentDoc}`;
+  ${BreadcrumbFieldsFragmentDoc}
+`;
 export const GetCompetitionDocument = gql`
   query getCompetition($id: ID!) {
     getCompetition(id: $id) {
@@ -1381,8 +1404,8 @@ export const GetEventDocument = gql`
       }
     }
   }
-}
-    ${BreadcrumbFieldsFragmentDoc}`;
+  ${BreadcrumbFieldsFragmentDoc}
+`;
 
 /**
  * __useGetEventQuery__

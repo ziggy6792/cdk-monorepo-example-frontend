@@ -37,30 +37,27 @@ const transformers = {
   ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
 };
 
+const transformerLink = createTransformerLink(transformers as any);
+const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
+
+const errorLink = onError((apolloError) => {
+  store.dispatch(setTabActionCreator({ tabKey: 'test', tabValue: 'test' }));
+  // setError(apolloError);
+  // Do nothing
+});
+
+const client = new ApolloClient({
+  link: errorLink.concat(enhancedHttpLink as any),
+  // uri: 'http://localhost:3100/lambda-gq-resolver/auth-none/graphql',
+  cache: new InMemoryCache({
+    possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
+  }),
+});
+
 const ApiProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<ErrorResponse>(null);
 
   const history = useHistory();
-  console.log('link', client.link);
-
-  // client.link.setOnError((apolloError) => {
-  //   setError(apolloError);
-  //   console.log('apolloError', apolloError);
-  //   // Do nothing
-  // });
-
-  const client = new ApolloClient({
-    defaultOptions: {
-      mutate: {
-        // Errors are handled at global level
-        errorPolicy: 'ignore',
-      },
-    },
-    link: errorLink.concat(enhancedHttpLink as any),
-    cache: new InMemoryCache({
-      possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
-    }),
-  });
 
   return (
     <ApolloProvider client={client}>
