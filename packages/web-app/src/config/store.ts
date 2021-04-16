@@ -1,4 +1,5 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+/* eslint-disable import/no-mutable-exports */
+import { configureStore, combineReducers, EnhancedStore } from '@reduxjs/toolkit';
 import authReducer, { AuthState } from 'src/domain/auth';
 import tabsReducer, { TabState } from 'src/domain/tabs/tabs';
 
@@ -12,11 +13,15 @@ const reducer = combineReducers<IRootState>({
   tabs: tabsReducer,
 });
 
+export let store: EnhancedStore<any>;
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const initStore = (initialState?: IRootState) =>
-  configureStore({
+const initStore = (initialState?: IRootState) => {
+  store = configureStore({
     preloadedState: initialState,
     reducer,
   });
+  return store;
+};
 
 export default initStore;

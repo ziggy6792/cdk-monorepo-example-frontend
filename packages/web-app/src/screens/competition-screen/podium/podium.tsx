@@ -22,7 +22,7 @@ const Podium: React.FC<IPodiumProps> = () => (
             </div>
           </Grid>
           <Grid item>
-            <Typography style={{ fontSize: '0.8rem' }}>Simon Verhoven</Typography>
+            <Typography style={{ fontSize: '0.8rem' }}>Bob Blogs</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -38,7 +38,7 @@ const Podium: React.FC<IPodiumProps> = () => (
             </div>
           </Grid>
           <Grid item>
-            <Typography style={{ fontSize: '0.8rem' }}>Chi Le</Typography>
+            <Typography style={{ fontSize: '0.8rem' }}>Bruce Wayne</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -54,7 +54,7 @@ const Podium: React.FC<IPodiumProps> = () => (
             </div>
           </Grid>
           <Grid item>
-            <Typography style={{ fontSize: '0.8rem' }}>Vincent De Smet</Typography>
+            <Typography style={{ fontSize: '0.8rem' }}>Matt Smith</Typography>
           </Grid>
         </Grid>
       </Grid>

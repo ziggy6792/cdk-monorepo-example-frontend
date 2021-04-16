@@ -28,7 +28,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ events }) => {
     eventId: event.id,
     rowData: {
       name: event.name,
-      startTime: { displayText: DateFormatter.toLongDate(event.startTime), sortIndex: event.startTime.getTime() },
+      //   startTime: { displayText: DateFormatter.toLongDate(event.startTime), sortIndex: event.startTime.getTime() },
     },
   }));
 

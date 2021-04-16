@@ -38,11 +38,11 @@ const ApiProvider: React.FC = ({ children }) => {
   const history = useHistory();
   console.log('link', client.link);
 
-  client.link.setOnError((apolloError) => {
-    setError(apolloError);
-    console.log('apolloError', apolloError);
-    // Do nothing
-  });
+  // client.link.setOnError((apolloError) => {
+  //   setError(apolloError);
+  //   console.log('apolloError', apolloError);
+  //   // Do nothing
+  // });
 
   const client = new ApolloClient({
     defaultOptions: {
