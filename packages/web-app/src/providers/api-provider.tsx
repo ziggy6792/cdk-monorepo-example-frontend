@@ -1,17 +1,20 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React from 'react';
 import introspectionQueryResultData from 'src/graphql/fragment-types.json';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { parseISO } from 'date-fns';
 import { createTransformerLink } from 'apollo-client-transform';
-import { ErrorResponse, onError } from '@apollo/client/link/error';
-import { Button, Grid, Typography, useTheme } from '@material-ui/core';
+import { onError } from '@apollo/client/link/error';
+import { Button, Grid } from '@material-ui/core';
 import * as ApiFetch from 'src/utils/aws-api-fetch';
 import introspectionToPossibleTypes from 'src/utils/intro-to-possible-types';
 import Dialog from 'src/components/ui/dialog';
-import { useHistory } from 'react-router';
 import ApiErrorMessage from 'src/modules/errors/error-message/api-error-message';
 import ErrorBox from 'src/modules/errors/error-box';
+import { store } from 'src/config/store';
+import { errorActionCreator } from 'src/domain/error';
+import errorSelector from 'src/domain/error/selectors';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DateTransformer = {
   parseValue(date: string) {
@@ -32,49 +35,46 @@ const transformers = {
   ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
 };
 
+const transformerLink = createTransformerLink(transformers as any);
+const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
+
+const errorLink = onError((apolloError) => {
+  // ToDo: Accessing store outside of component. Maybe this is hacky
+  store.dispatch(errorActionCreator({ apiError: apolloError }));
+});
+
+const client = new ApolloClient({
+  link: errorLink.concat(enhancedHttpLink as any),
+  cache: new InMemoryCache({
+    possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
+  }),
+});
+
 const ApiProvider: React.FC = ({ children }) => {
-  const [error, setError] = useState<ErrorResponse>(null);
+  const apiError = useSelector(errorSelector.selectApiError);
 
-  const transformerLink = createTransformerLink(transformers as any);
-  const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
-
-  const errorLink = onError((apolloError) => {
-    setError(apolloError);
-  });
-
-  const client = new ApolloClient({
-    defaultOptions: {
-      mutate: {
-        // Errors are handled at global level
-        errorPolicy: 'ignore',
-      },
-    },
-    link: errorLink.concat(enhancedHttpLink as any),
-    cache: new InMemoryCache({
-      possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
-    }),
-  });
+  const dispatch = useDispatch();
 
   return (
     <ApolloProvider client={client}>
-      {error && (
+      {apiError && (
         <Dialog open>
           <ErrorBox
             buttons={
               <>
                 <Grid item>
-                  <Button variant='contained' onClick={() => setError(null)}>
+                  <Button variant='contained' onClick={() => dispatch(errorActionCreator({ apiError: null }))}>
                     OK
                   </Button>
                 </Grid>
               </>
             }
           >
-            <ApiErrorMessage error={error} />
+            <ApiErrorMessage error={apiError} />
           </ErrorBox>
         </Dialog>
       )}
-      {!error && children}
+      {!apiError && children}
     </ApolloProvider>
   );
 };

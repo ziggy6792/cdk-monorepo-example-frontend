@@ -8,6 +8,7 @@ import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
 import { useHistory } from 'react-router';
 import Breadcrumbs from 'src/modules/breadcrumbs/breadcrumbs';
 import HeatsStructure from './heats-structure/heats-structure';
+import Podium from './podium';
 
 interface IEventsScreenProps {
   competitionId: string;
@@ -38,9 +39,14 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
                 </Button>
               </Grid>
             </Grid>
+
             {/* ToDo: Fix this */}
+
             <Grid item style={{ width: '100%' }}>
               <CompetitionSummary summary={data.getCompetition} />
+            </Grid>
+            <Grid item style={{ width: '80%', maxWidth: '500px' }}>
+              <Podium />
             </Grid>
             <Grid item style={{ width: '95%' }}>
               <HeatsStructure rounds={data.getCompetition.rounds.items} eventId={data.getCompetition.event.id} />
