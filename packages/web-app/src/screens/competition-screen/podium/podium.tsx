@@ -1,8 +1,6 @@
 import React from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import _ from 'lodash';
-// eslint-disable-next-line no-restricted-imports
-import PodiumImage from '../../../assets/podium.svg';
 import styles from './podium.module.css';
 
 interface IPodiumProps {
@@ -11,11 +9,6 @@ interface IPodiumProps {
 
 const Podium: React.FC<IPodiumProps> = () => (
   <>
-    {/* <Grid container direction='row' justify='center'>
-      <Grid item style={{ width: '87%' }}>
-        <div className={styles.first} />
-      </Grid>
-    </Grid> */}
     <Grid container direction='row' justify='space-around'>
       <Grid item>
         <div className={styles.second}>
