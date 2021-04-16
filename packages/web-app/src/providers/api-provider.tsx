@@ -64,7 +64,7 @@ const ApiProvider: React.FC = ({ children }) => {
 
   return (
     <ApolloProvider client={client}>
-      {isError && (
+      {error && (
         <Dialog open>
           <ErrorBox
             buttons={
@@ -81,7 +81,7 @@ const ApiProvider: React.FC = ({ children }) => {
           </ErrorBox>
         </Dialog>
       )}
-      {!isError && children}
+      {!error && children}
     </ApolloProvider>
   );
 };
