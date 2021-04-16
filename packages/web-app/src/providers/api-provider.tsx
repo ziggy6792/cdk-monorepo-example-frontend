@@ -12,6 +12,11 @@ import Dialog from 'src/components/ui/dialog';
 import { useHistory } from 'react-router';
 import ApiErrorMessage from 'src/modules/errors/error-message/api-error-message';
 import ErrorBox from 'src/modules/errors/error-box';
+import { store } from 'src/config/store';
+import { setTabActionCreator } from 'src/domain/tabs';
+import { errorActionCreator } from 'src/domain/error';
+import errorSelector from 'src/domain/error/selectors';
+import { useSelector } from 'react-redux';
 
 const DateTransformer = {
   parseValue(date: string) {
@@ -59,7 +64,7 @@ const ApiProvider: React.FC = ({ children }) => {
 
   return (
     <ApolloProvider client={client}>
-      {error && (
+      {isError && (
         <Dialog open>
           <ErrorBox
             buttons={
@@ -76,7 +81,7 @@ const ApiProvider: React.FC = ({ children }) => {
           </ErrorBox>
         </Dialog>
       )}
-      {!error && children}
+      {!isError && children}
     </ApolloProvider>
   );
 };
