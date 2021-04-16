@@ -1,20 +1,20 @@
+import { ErrorResponse } from '@apollo/client/link/error';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type ErrorState = { isError: boolean };
+export type ErrorState = { apiError: ErrorResponse };
 
 interface IErrorAction {
-  error: any;
+  apiError: ErrorResponse;
 }
 
 export const errorSlice = createSlice({
   name: 'error',
   initialState: {
-    isError: false,
+    apiError: null,
   },
   reducers: {
     setError: (state, action: PayloadAction<IErrorAction>) => {
-      console.log('errorSlice setError');
-      state.isError = true;
+      state.apiError = action.payload.apiError;
     },
   },
 });

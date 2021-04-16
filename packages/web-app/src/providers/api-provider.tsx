@@ -16,7 +16,7 @@ import { store } from 'src/config/store';
 import { setTabActionCreator } from 'src/domain/tabs';
 import { errorActionCreator } from 'src/domain/error';
 import errorSelector from 'src/domain/error/selectors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DateTransformer = {
   parseValue(date: string) {
@@ -41,47 +41,42 @@ const transformerLink = createTransformerLink(transformers as any);
 const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
 
 const errorLink = onError((apolloError) => {
-  store.dispatch(errorActionCreator({ error: apolloError }));
-  // setError(apolloError);
-  // Do nothing
+  // ToDo: Accessing store outside of component. Maybe this is hacky
+  store.dispatch(errorActionCreator({ apiError: apolloError }));
 });
 
 const client = new ApolloClient({
   link: errorLink.concat(enhancedHttpLink as any),
-  // uri: 'http://localhost:3100/lambda-gq-resolver/auth-none/graphql',
   cache: new InMemoryCache({
     possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
   }),
 });
 
 const ApiProvider: React.FC = ({ children }) => {
-  const [error, setError] = useState<ErrorResponse>(null);
+  const apiError = useSelector(errorSelector.selectApiError);
 
-  const history = useHistory();
-
-  const isError = useSelector(errorSelector.selectError);
+  const dispatch = useDispatch();
 
   return (
     <ApolloProvider client={client}>
-      {isError && (
+      {apiError && (
         <Dialog open>
           <ErrorBox
             buttons={
               <>
                 <Grid item>
-                  <Button variant='contained' onClick={() => setError(null)}>
+                  <Button variant='contained' onClick={() => dispatch(errorActionCreator({ apiError: null }))}>
                     OK
                   </Button>
                 </Grid>
               </>
             }
           >
-            {/* <ApiErrorMessage error={error} /> */}
-            Some Error Message
+            <ApiErrorMessage error={apiError} />
           </ErrorBox>
         </Dialog>
       )}
-      {!isError && children}
+      {!apiError && children}
     </ApolloProvider>
   );
 };

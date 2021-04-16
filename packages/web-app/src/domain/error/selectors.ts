@@ -1,7 +1,8 @@
+import { ErrorResponse } from '@apollo/client/link/error';
 import { IRootState } from 'src/config/store';
 
 const errorSelector = {
-  selectError: (state: IRootState): boolean => state.error.isError,
+  selectApiError: (state: IRootState): ErrorResponse => state.error.apiError,
 };
 
 export default errorSelector;
