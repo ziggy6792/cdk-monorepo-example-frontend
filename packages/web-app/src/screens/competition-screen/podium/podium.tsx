@@ -11,42 +11,52 @@ const Podium: React.FC<IPodiumProps> = () => (
   <>
     <Grid container direction='row' justify='space-around'>
       <Grid item>
-        <div className={styles.second}>
-          <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
-            <Grid item>
-              <Typography style={{ color: 'white' }}>2nd</Typography>
-            </Grid>
+        <Grid container direction='column' justify='center' alignItems='center'>
+          <Grid item>
+            <div className={styles.second}>
+              <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
+                <Grid item>
+                  <Typography style={{ color: 'white' }}>2nd</Typography>
+                </Grid>
+              </Grid>
+            </div>
           </Grid>
-        </div>
-      </Grid>
-      <Grid item>
-        <div className={styles.first}>
-          <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
-            <Grid item>
-              <Typography style={{ color: 'white' }}>1st</Typography>
-            </Grid>
+          <Grid item>
+            <Typography style={{ fontSize: '0.8rem' }}>Simon Verhoven</Typography>
           </Grid>
-        </div>
+        </Grid>
       </Grid>
       <Grid item>
-        <div className={styles.thrid}>
-          <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
-            <Grid item>
-              <Typography style={{ color: 'white' }}>3rd</Typography>
-            </Grid>
+        <Grid container direction='column' justify='center' alignItems='center'>
+          <Grid item>
+            <div className={styles.first}>
+              <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
+                <Grid item>
+                  <Typography style={{ color: 'white' }}>1st</Typography>
+                </Grid>
+              </Grid>
+            </div>
           </Grid>
-        </div>
-      </Grid>
-    </Grid>
-    <Grid container direction='row' justify='space-around'>
-      <Grid item>
-        <Typography>Simon Verhoven</Typography>
+          <Grid item>
+            <Typography style={{ fontSize: '0.8rem' }}>Chi Le</Typography>
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item>
-        <Typography>Chi Le</Typography>
-      </Grid>
-      <Grid item>
-        <Typography>Vincent De Smet</Typography>
+        <Grid container direction='column' justify='center' alignItems='center'>
+          <Grid item>
+            <div className={styles.thrid}>
+              <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
+                <Grid item>
+                  <Typography style={{ color: 'white' }}>3rd</Typography>
+                </Grid>
+              </Grid>
+            </div>
+          </Grid>
+          <Grid item>
+            <Typography style={{ fontSize: '0.8rem' }}>Vincent De Smet</Typography>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   </>
