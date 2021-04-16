@@ -1,5 +1,5 @@
 .first {
-  height: 00px;
+  height: 300px;
   width: 100px;
 
   background-repeat: no-repeat;
@@ -9,7 +9,7 @@
 }
 
 .second {
-  height: 00px;
+  height: 300px;
   width: 100px;
   background-repeat: no-repeat;
   background-position: bottom;
@@ -18,7 +18,7 @@
 }
 
 .thrid {
-  height: 00px;
+  height: 300px;
   width: 100px;
 
   background-repeat: no-repeat;
