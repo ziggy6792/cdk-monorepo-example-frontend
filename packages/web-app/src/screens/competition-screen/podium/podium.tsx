@@ -11,20 +11,38 @@ interface IPodiumProps {
 
 const Podium: React.FC<IPodiumProps> = () => (
   <>
-    <Grid container direction='row' justify='center'>
+    {/* <Grid container direction='row' justify='center'>
       <Grid item style={{ width: '87%' }}>
-        <div className={styles.podium2} />
+        <div className={styles.first} />
       </Grid>
-    </Grid>
-    <Grid container direction='row' justify='space-around' style={{ marginTop: '-70px', height: '50px' }}>
+    </Grid> */}
+    <Grid container direction='row' justify='space-around'>
       <Grid item>
-        <Typography style={{ color: 'white' }}>2nd</Typography>
+        <div className={styles.second}>
+          <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
+            <Grid item>
+              <Typography style={{ color: 'white' }}>2nd</Typography>
+            </Grid>
+          </Grid>
+        </div>
       </Grid>
       <Grid item>
-        <Typography style={{ color: 'white' }}>1st</Typography>
+        <div className={styles.first}>
+          <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
+            <Grid item>
+              <Typography style={{ color: 'white' }}>1st</Typography>
+            </Grid>
+          </Grid>
+        </div>
       </Grid>
       <Grid item>
-        <Typography style={{ color: 'white' }}>3rd</Typography>
+        <div className={styles.thrid}>
+          <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
+            <Grid item>
+              <Typography style={{ color: 'white' }}>3rd</Typography>
+            </Grid>
+          </Grid>
+        </div>
       </Grid>
     </Grid>
     <Grid container direction='row' justify='space-around'>
