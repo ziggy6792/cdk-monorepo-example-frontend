@@ -49,8 +49,6 @@ const Podium: React.FC<IPodiumProps> = () => (
         <Typography>Vincent De Smet</Typography>
       </Grid>
     </Grid>
-    {/* <div style={{ backgroundImage: `url(data:image/svg+xml;base64,${btoa(PodiumImage)})`, width: '200px', height: '200px' }} /> */}
-    {/* <PodiumImage /> */}
   </>
 );
 
