@@ -8,6 +8,10 @@ export type IRiderAllocationItem = Pick<RiderAllocation, 'allocatableId' | 'user
   user: Pick<User, 'fullName'>;
 };
 
+export type IWinnerItem = Pick<RiderAllocation, 'position'> & {
+  user: Pick<User, 'fullName'>;
+};
+
 export type TimetableRound = { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'longName'> & {
     heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
   };

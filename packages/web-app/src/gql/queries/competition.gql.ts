@@ -8,6 +8,14 @@ const CORE_COMPETITION_FIELDS = gql`
   fragment CoreCompetitionFields on Competition {
     ...BreadcrumbFields
     id
+    winners {
+      items {
+        position
+        user {
+          fullName
+        }
+      }
+    }
     isAdmin
     isJudge
     event {
