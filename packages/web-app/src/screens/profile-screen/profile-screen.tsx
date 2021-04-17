@@ -46,7 +46,7 @@ const ProfileScreen: React.FC = () => {
         )}
       </Grid>
       <Grid item>
-        <Button onClick={() => history.push(routeConfig.ROUTE_HOME)}>Book a slot</Button>
+        <Button onClick={() => history.push(routeConfig.ROUTE_EVENTS)}>Go To Events</Button>
       </Grid>
     </Grid>
   );

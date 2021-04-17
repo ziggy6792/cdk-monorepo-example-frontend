@@ -15,6 +15,7 @@ import AddNotice from './buttons/add-notice';
 export interface TimetableProps {
   scheduleItems: TimetableScheduleItem[];
   eventId: string;
+  isAdmin: boolean;
 }
 
 interface DayPartitionProps {
@@ -32,7 +33,7 @@ const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
   </Grid>
 );
 
-const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
+const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }) => {
   const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>
     scheduleItem.startTime ? startOfDay(scheduleItem.startTime).toISOString() : new Date(0).toISOString()
   );
@@ -46,7 +47,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
 
   return (
     <>
-      <TopNavigation eventTitle="Back 2 Basics 2021" eventId={eventId} currentPath="Timetable" />
+      <TopNavigation eventTitle='Back 2 Basics 2021' eventId={eventId} currentPath='Timetable' />
       <Grid container direction='column' justify='center' alignItems='center'>
         <Grid item style={{ marginBottom: theme.spacing(2) }}>
           <Typography>Timetable</Typography>
@@ -57,15 +58,17 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
           <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px', marginBottom: theme.spacing(2) }}>
             {day && <DayPartition day={day} />}
             {scheduleItems.map((scheduleItem) => (
-              <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} />
+              <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} isAdmin={isAdmin} />
             ))}
           </Grid>
         ))}
-        <Grid container direction='column' justify='center' alignItems='center'>
-          <Grid item>
-            <AddNotice eventId={eventId} />
+        {isAdmin && (
+          <Grid container direction='column' justify='center' alignItems='center'>
+            <Grid item>
+              <AddNotice eventId={eventId} />
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
     </>
   );

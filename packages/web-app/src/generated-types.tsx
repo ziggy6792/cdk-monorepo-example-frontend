@@ -41,7 +41,7 @@ export type Competition = DataEntity &
     rounds: RoundList;
     startTime?: Maybe<Scalars['DateTime']>;
     hasDemoRiders: Scalars['Boolean'];
-    winners?: Maybe<RiderAllocationList>;
+    winners: RiderAllocationList;
     riderAllocations: RiderAllocationList;
   };
 
@@ -667,13 +667,9 @@ export type CoreCompetitionFieldsFragment = { __typename?: 'Competition' } & Pic
   Competition,
   'id' | 'isAdmin' | 'isJudge' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
 > & {
-    winners: Maybe<
-      { __typename?: 'RiderAllocationList' } & {
-        items: Array<
-          { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'position'> & { user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>> }
-        >;
-      }
-    >;
+    winners: { __typename?: 'RiderAllocationList' } & {
+      items: Array<{ __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'position'> & { user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>> }>;
+    };
     event: { __typename?: 'Event' } & Pick<Event, 'id'>;
     judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
     riderAllocations: { __typename?: 'RiderAllocationList' } & {
@@ -816,7 +812,7 @@ export type GetEventScheduleQueryVariables = {
 };
 
 export type GetEventScheduleQuery = { __typename?: 'Query' } & {
-  getEvent: { __typename?: 'Event' } & Pick<Event, 'name'> & {
+  getEvent: { __typename?: 'Event' } & Pick<Event, 'name' | 'isAdmin'> & {
       scheduleItems: { __typename?: 'ScheduleItemList' } & {
         items: Array<
           { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'> & {
@@ -1456,6 +1452,7 @@ export const GetEventScheduleDocument = gql`
   query getEventSchedule($id: ID!) {
     getEvent(id: $id) {
       name
+      isAdmin
       scheduleItems {
         items {
           scheduleId

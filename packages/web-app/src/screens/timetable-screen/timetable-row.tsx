@@ -16,9 +16,10 @@ import TimetableEntry from './timetable-entry';
 interface ITimetableRowProps {
   scheduleItem: TimetableScheduleItem;
   eventId: string;
+  isAdmin: boolean;
 }
 
-const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId }) => {
+const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isAdmin }) => {
   const [open, setOpen] = useState(false);
 
   const [updateScheduleItem] = useUpdateScheduleItemMutation({
@@ -52,11 +53,15 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId }) =
       <Grid container spacing={1}>
         <Grid item xs={4}>
           <Link
-            onClick={() => {
-              setOpen(true);
-            }}
+            onClick={
+              isAdmin
+                ? () => {
+                    setOpen(true);
+                  }
+                : null
+            }
           >
-            {DateFormatter.toTime(scheduleItem.startTime, 'Select time...')}
+            {DateFormatter.toTime(scheduleItem.startTime, isAdmin ? 'Select time...' : 'TBD')}
           </Link>
         </Grid>
         <Grid item xs={8}>
