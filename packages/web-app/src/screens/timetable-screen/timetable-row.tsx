@@ -56,7 +56,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId }) =
               setOpen(true);
             }}
           >
-            {scheduleItem.startTime ? DateFormatter.toTime(scheduleItem.startTime) : 'Select time...'}
+            {DateFormatter.toTime(scheduleItem.startTime, 'Select time...')}
           </Link>
         </Grid>
         <Grid item xs={8}>

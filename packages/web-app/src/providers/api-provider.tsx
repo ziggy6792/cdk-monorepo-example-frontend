@@ -31,7 +31,7 @@ const transformers = {
   RiderAllocation: { ...CreatableTransformers },
   Heat: { ...CreatableTransformers },
   Event: { ...CreatableTransformers, startTime: DateTransformer },
-  Competition: { ...CreatableTransformers },
+  Competition: { ...CreatableTransformers, startTime: DateTransformer },
   ScheduleItem: { ...CreatableTransformers, startTime: DateTransformer },
 };
 

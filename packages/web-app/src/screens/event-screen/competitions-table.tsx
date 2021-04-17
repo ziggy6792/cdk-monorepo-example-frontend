@@ -9,8 +9,9 @@ import { useHistory } from 'react-router';
 import { Competition, User } from 'src/generated-types';
 import DataTable, { IDataTableRow } from 'src/components/data-table';
 import { ROUTE_COMPETITION } from 'src/config/routes';
+import DateFormatter from 'src/utils/format/date-formatter';
 
-type CompetitionItem = Pick<Competition, 'id' | 'name'> & { judgeUser?: Pick<User, 'fullName'> };
+type CompetitionItem = Pick<Competition, 'id' | 'name' | 'startTime'> & { judgeUser?: Pick<User, 'fullName'> };
 
 interface IEventsTableProps {
   competitions: CompetitionItem[];
@@ -42,15 +43,13 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
     },
   ];
 
-  console.log(tableData);
-
   return (
     <Card>
       <CardContent>
         {competitions.map((competition) => (
           <div>
             <Typography variant='subtitle1' display='inline' style={{ paddingRight: 16 }}>
-              16:00
+              {DateFormatter.toDayAndTime(competition.startTime)}
             </Typography>
             <Typography variant='subtitle1' display='inline' color='textPrimary'>
               <b>{competition.name}</b>
