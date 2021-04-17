@@ -140,6 +140,14 @@ export const ADD_DEMO_RIDERS = gql`
   }
 `;
 
+export const SIGN_UP_RIDERS = gql`
+  mutation signUpCompetition($id: ID!, $riders: [SignUpRiderInput!]!) {
+    signUpCompetition(id: $id, riders: $riders) {
+      id
+    }
+  }
+`;
+
 export const END_HEAT = gql`
   ${CORE_COMPETITION_FIELDS}
   mutation endHeat($id: ID!, $validationLevel: ValidationItemType) {

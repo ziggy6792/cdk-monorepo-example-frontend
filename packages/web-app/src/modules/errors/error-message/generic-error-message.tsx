@@ -37,9 +37,7 @@ const GenericErrorMessage: React.FC<IIGenericErrorPropsProps | IIGenericErrorsPr
       {isToggle &&
         errors.map((errorItem, i) => (
           <Grid item key={`errorItem${i}`}>
-            <Typography color='error' onClick={() => setToggle(false)}>
-              {errorItem}
-            </Typography>
+            <Typography color='error'>{errorItem}</Typography>
           </Grid>
         ))}
     </Grid>

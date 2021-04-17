@@ -262,6 +262,7 @@ export type Mutation = {
   scoreRun: Heat;
   endHeat: EndHeatResult;
   addRemoveDemoRiders?: Maybe<Competition>;
+  signUpCompetition?: Maybe<Competition>;
 };
 
 export type MutationCreateUserArgs = {
@@ -344,6 +345,11 @@ export type MutationEndHeatArgs = {
 };
 
 export type MutationAddRemoveDemoRidersArgs = {
+  id: Scalars['ID'];
+};
+
+export type MutationSignUpCompetitionArgs = {
+  riders: Array<SignUpRiderInput>;
   id: Scalars['ID'];
 };
 
@@ -538,6 +544,11 @@ export type SeedSlotParamsInput = {
 };
 
 export type SelectHeatResult = Event | ValidationItemList;
+
+export type SignUpRiderInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+};
 
 /** Sport */
 export enum Sport {
@@ -755,6 +766,13 @@ export type AddRemoveDemoRidersMutationVariables = {
 export type AddRemoveDemoRidersMutation = { __typename?: 'Mutation' } & {
   addRemoveDemoRiders: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>>;
 };
+
+export type SignUpCompetitionMutationVariables = {
+  id: Scalars['ID'];
+  riders: Array<SignUpRiderInput>;
+};
+
+export type SignUpCompetitionMutation = { __typename?: 'Mutation' } & { signUpCompetition: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>> };
 
 export type EndHeatMutationVariables = {
   id: Scalars['ID'];
@@ -1253,6 +1271,41 @@ export function useAddRemoveDemoRidersMutation(
 export type AddRemoveDemoRidersMutationHookResult = ReturnType<typeof useAddRemoveDemoRidersMutation>;
 export type AddRemoveDemoRidersMutationResult = ApolloReactCommon.MutationResult<AddRemoveDemoRidersMutation>;
 export type AddRemoveDemoRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>;
+export const SignUpCompetitionDocument = gql`
+  mutation signUpCompetition($id: ID!, $riders: [SignUpRiderInput!]!) {
+    signUpCompetition(id: $id, riders: $riders) {
+      id
+    }
+  }
+`;
+export type SignUpCompetitionMutationFn = ApolloReactCommon.MutationFunction<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>;
+
+/**
+ * __useSignUpCompetitionMutation__
+ *
+ * To run a mutation, you first call `useSignUpCompetitionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignUpCompetitionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signUpCompetitionMutation, { data, loading, error }] = useSignUpCompetitionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      riders: // value for 'riders'
+ *   },
+ * });
+ */
+export function useSignUpCompetitionMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>
+) {
+  return ApolloReactHooks.useMutation<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>(SignUpCompetitionDocument, baseOptions);
+}
+export type SignUpCompetitionMutationHookResult = ReturnType<typeof useSignUpCompetitionMutation>;
+export type SignUpCompetitionMutationResult = ApolloReactCommon.MutationResult<SignUpCompetitionMutation>;
+export type SignUpCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>;
 export const EndHeatDocument = gql`
   mutation endHeat($id: ID!, $validationLevel: ValidationItemType) {
     endHeat(id: $id, validationLevel: $validationLevel) {

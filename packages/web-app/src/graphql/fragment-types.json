@@ -5,12 +5,7 @@
       {
         "kind": "INTERFACE",
         "name": "DataEntity",
-        "possibleTypes": [
-          { "name": "Heat" },
-          { "name": "Round" },
-          { "name": "Competition" },
-          { "name": "Event" }
-        ]
+        "possibleTypes": [{ "name": "Heat" }, { "name": "Round" }, { "name": "Competition" }, { "name": "Event" }]
       },
       {
         "kind": "INTERFACE",
@@ -53,12 +48,12 @@
       { "kind": "SCALAR", "name": "Float", "possibleTypes": null },
       { "kind": "OBJECT", "name": "User", "possibleTypes": null },
       { "kind": "OBJECT", "name": "Round", "possibleTypes": null },
-      { "kind": "INTERFACE", "name": "Schedulable", "possibleTypes": [ { "name": "Round" } ] },
+      { "kind": "INTERFACE", "name": "Schedulable", "possibleTypes": [{ "name": "Round" }] },
       { "kind": "OBJECT", "name": "ScheduleItem", "possibleTypes": null },
       {
         "kind": "INTERFACE",
         "name": "Schedule",
-        "possibleTypes": [ { "name": "Competition" }, { "name": "Event" } ]
+        "possibleTypes": [{ "name": "Competition" }, { "name": "Event" }]
       },
       { "kind": "OBJECT", "name": "ScheduleItemList", "possibleTypes": null },
       { "kind": "ENUM", "name": "RoundType", "possibleTypes": null },
@@ -77,7 +72,7 @@
       {
         "kind": "INTERFACE",
         "name": "ValidationItemBase",
-        "possibleTypes": [ { "name": "ValidationItem" }, { "name": "ValidationItemHeatAlreadyOpen" } ]
+        "possibleTypes": [{ "name": "ValidationItem" }, { "name": "ValidationItemHeatAlreadyOpen" }]
       },
       { "kind": "ENUM", "name": "ValidationItemType", "possibleTypes": null },
       { "kind": "ENUM", "name": "ValidationItemMessage", "possibleTypes": null },
@@ -101,7 +96,7 @@
       {
         "kind": "UNION",
         "name": "SelectHeatResult",
-        "possibleTypes": [ { "name": "Event" }, { "name": "ValidationItemList" } ]
+        "possibleTypes": [{ "name": "Event" }, { "name": "ValidationItemList" }]
       },
       { "kind": "OBJECT", "name": "ValidationItemList", "possibleTypes": null },
       { "kind": "INPUT_OBJECT", "name": "ScorRunInput", "possibleTypes": null },
@@ -109,8 +104,9 @@
       {
         "kind": "UNION",
         "name": "EndHeatResult",
-        "possibleTypes": [ { "name": "Competition" }, { "name": "ValidationItemList" } ]
+        "possibleTypes": [{ "name": "Competition" }, { "name": "ValidationItemList" }]
       },
+      { "kind": "INPUT_OBJECT", "name": "SignUpRiderInput", "possibleTypes": null },
       { "kind": "OBJECT", "name": "__Schema", "possibleTypes": null },
       { "kind": "OBJECT", "name": "__Type", "possibleTypes": null },
       { "kind": "ENUM", "name": "__TypeKind", "possibleTypes": null },

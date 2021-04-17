@@ -7,7 +7,7 @@ import { CompetitionParams, useBuildCompetitionMutation } from 'src/generated-ty
 import Dialog from 'src/components/ui/dialog';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import _ from 'lodash';
-import BuildCompetitionForm, { IBuildCompetitionFormValues } from 'src/modules/forms/build-competition-form';
+import YmlForm, { IYmlFormValues } from 'src/modules/forms/yml-form';
 import YAML from 'yaml';
 import defaultCompetition from 'src/gql/default-competition.json';
 import jsYaml from 'js-yaml';
@@ -41,8 +41,8 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
     awaitRefetchQueries: true,
   });
 
-  const onSubmit = async (formData: IBuildCompetitionFormValues) => {
-    const parsedParams = { rounds: jsYaml.load(formData.params) };
+  const onSubmit = async (formData: IYmlFormValues) => {
+    const parsedParams = { rounds: jsYaml.load(formData.ymlString) };
     await buildCompetition({
       variables: {
         id: competitionId,
@@ -62,12 +62,13 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
         Build
       </Button>
       <Dialog open={open} setOpen={setOpen}>
-        <BuildCompetitionForm
+        <YmlForm
           onSubmit={onSubmit}
           title='Build Competition'
           allowSubmitPristine={allowSubmitPristine}
           onCancel={() => setOpen(false)}
-          initialValues={{ params: ymlDocument.toString() }}
+          initialValues={{ ymlString: ymlDocument.toString() }}
+          placeholder='Enter competition build params'
         />
       </Dialog>
     </>

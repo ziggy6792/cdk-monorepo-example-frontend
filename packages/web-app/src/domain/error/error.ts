@@ -1,26 +1,39 @@
-import { ErrorResponse } from '@apollo/client/link/error';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import _ from 'lodash';
 
-export type ErrorState = { apiError: ErrorResponse };
+export type ErrorState = { errors: IError[] };
 
 interface IErrorAction {
-  apiError: ErrorResponse;
+  errors: IError[];
+}
+
+export enum ErrorType {
+  NETWORK_ERROR = 'NETWORK_ERROR',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+}
+
+export interface IError {
+  type: ErrorType;
+  displayText: string;
 }
 
 export const errorSlice = createSlice({
   name: 'error',
   initialState: {
-    apiError: null,
-  },
+    errors: [],
+  } as ErrorState,
   reducers: {
-    setError: (state, action: PayloadAction<IErrorAction>) => {
-      state.apiError = action.payload.apiError;
+    setErrors: (state, action: PayloadAction<IErrorAction>) => {
+      state.errors = _.concat(state.errors, action.payload.errors);
+    },
+    clearErrors: (state) => {
+      state.errors = [];
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setError: errorActionCreator } = errorSlice.actions;
+export const { setErrors: setErrorsActionCreator, clearErrors: clearErrorsActionCreator } = errorSlice.actions;
 
 const errorReducer = errorSlice.reducer;
 

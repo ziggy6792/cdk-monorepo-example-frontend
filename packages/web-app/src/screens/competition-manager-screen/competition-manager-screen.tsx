@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import React from 'react';
 import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
@@ -13,6 +13,7 @@ import EditSeeds from './buttons/edit-seeds';
 import BuildCompetition from './buttons/build-competition';
 import AllocateRiders from './buttons/allocate-riders';
 import AddRemoveDemoRiders from './buttons/add-remove-demo-riders';
+import SignUpRiders from './buttons/sign-up-riders';
 
 interface IEventsScreenProps {
   competitionId: string;
@@ -27,6 +28,10 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
   const disabledRiderAllocationButtons = data?.getCompetition.riderAllocations.items.length < 1;
 
   const history = useHistory();
+
+  const firstRoundHeats = data?.getCompetition.rounds.items[0]?.heats;
+
+  const noOfRiders = firstRoundHeats ? _.sum(firstRoundHeats.items.map((heat) => heat.size)) : 0;
 
   return (
     <>
@@ -74,6 +79,9 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
                 hasDemoRiders={data.getCompetition.hasDemoRiders}
                 disabled={!data.getCompetition.rounds?.items?.length}
               />
+            </Grid>
+            <Grid item>
+              <SignUpRiders competitionId={competitionId} noOfRiders={noOfRiders} />
             </Grid>
             <Grid item>
               <EditSeeds

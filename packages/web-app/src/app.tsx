@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import Auth from '@aws-amplify/auth';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import Routes from 'src/routes';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter } from 'react-router-dom';
@@ -15,8 +15,9 @@ import * as ApiFetch from './utils/aws-api-fetch';
 import ApiProvider from './providers/api-provider';
 import Dialog from './components/ui/dialog';
 import ErrorBox from './modules/errors/error-box';
-import ApiErrorMessage from './modules/errors/error-message/api-error-message';
 import GenericErrorMessage from './modules/errors/error-message/generic-error-message';
+import errorSelector from './domain/error/selectors';
+import { clearErrorsActionCreator } from './domain/error';
 
 Auth.configure(awsConfig);
 ApiFetch.configure(awsConfig);
@@ -44,6 +45,7 @@ interface IErrorFallbackProps {
   error: Error;
 }
 
+// Catches errors in rendering
 const ErrorFallback: React.FC<IErrorFallbackProps> = ({ error }) => (
   <Dialog open>
     <ErrorBox
@@ -71,13 +73,43 @@ const ErrorFallback: React.FC<IErrorFallbackProps> = ({ error }) => (
   </Dialog>
 );
 
+// Handles errors caused by user events
+const GlobalErrorWrapper: React.FC = ({ children }) => {
+  const errors = useSelector(errorSelector.selectErrors);
+  const dispatch = useDispatch();
+  return (
+    <>
+      {errors && (
+        <Dialog open>
+          <ErrorBox
+            buttons={
+              <>
+                <Grid item>
+                  <Button variant='contained' onClick={() => dispatch(clearErrorsActionCreator())}>
+                    OK
+                  </Button>
+                </Grid>
+              </>
+            }
+          >
+            <GenericErrorMessage errors={errors.map((error) => `[${error.type}] : ${error.displayText}`)} />
+          </ErrorBox>
+        </Dialog>
+      )}
+      {!errors && children}
+    </>
+  );
+};
+
 const WithProvider: React.FC = () => (
   <ThemeProvider theme={Theme}>
     <BrowserRouter>
       <Provider store={store}>
         <ApiProvider>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <App />
+            <GlobalErrorWrapper>
+              <App />
+            </GlobalErrorWrapper>
           </ErrorBoundary>
         </ApiProvider>
       </Provider>
