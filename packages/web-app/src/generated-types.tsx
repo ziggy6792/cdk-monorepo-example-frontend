@@ -667,6 +667,13 @@ export type CoreCompetitionFieldsFragment = { __typename?: 'Competition' } & Pic
   Competition,
   'id' | 'isAdmin' | 'isJudge' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
 > & {
+    winners: Maybe<
+      { __typename?: 'RiderAllocationList' } & {
+        items: Array<
+          { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'position'> & { user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>> }
+        >;
+      }
+    >;
     event: { __typename?: 'Event' } & Pick<Event, 'id'>;
     judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
     riderAllocations: { __typename?: 'RiderAllocationList' } & {
@@ -931,6 +938,14 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
   fragment CoreCompetitionFields on Competition {
     ...BreadcrumbFields
     id
+    winners {
+      items {
+        position
+        user {
+          fullName
+        }
+      }
+    }
     isAdmin
     isJudge
     event {
