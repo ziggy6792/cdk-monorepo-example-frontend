@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import React from 'react';
 import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
