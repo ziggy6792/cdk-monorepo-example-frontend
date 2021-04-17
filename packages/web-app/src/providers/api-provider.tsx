@@ -5,16 +5,10 @@ import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@ap
 import { parseISO } from 'date-fns';
 import { createTransformerLink } from 'apollo-client-transform';
 import { onError } from '@apollo/client/link/error';
-import { Button, Grid } from '@material-ui/core';
 import * as ApiFetch from 'src/utils/aws-api-fetch';
 import introspectionToPossibleTypes from 'src/utils/intro-to-possible-types';
-import Dialog from 'src/components/ui/dialog';
-import ApiErrorMessage from 'src/modules/errors/error-message/api-error-message';
-import ErrorBox from 'src/modules/errors/error-box';
 import { store } from 'src/config/store';
-import { errorActionCreator } from 'src/domain/error';
-import errorSelector from 'src/domain/error/selectors';
-import { useDispatch, useSelector } from 'react-redux';
+import { setErrorsActionCreator, ErrorType } from 'src/domain/error';
 
 const DateTransformer = {
   parseValue(date: string) {
@@ -40,7 +34,20 @@ const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch
 
 const errorLink = onError((apolloError) => {
   // ToDo: Accessing store outside of component. Maybe this is hacky
-  store.dispatch(errorActionCreator({ apiError: apolloError }));
+
+  const { graphQLErrors, networkError } = apolloError;
+  const errors = [];
+
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      errors.push({ type: ErrorType.GRAPHQL_ERROR, displayText: `Message: ${message}, Location: ${JSON.stringify(locations)}, Path: ${path}` })
+    );
+  }
+
+  if (networkError) {
+    errors.push({ type: ErrorType.NETWORK_ERROR, displayText: `${networkError}` });
+  }
+  store.dispatch(setErrorsActionCreator({ errors }));
 });
 
 const client = new ApolloClient({
@@ -50,33 +57,6 @@ const client = new ApolloClient({
   }),
 });
 
-const ApiProvider: React.FC = ({ children }) => {
-  const apiError = useSelector(errorSelector.selectApiError);
-
-  const dispatch = useDispatch();
-
-  return (
-    <ApolloProvider client={client}>
-      {apiError && (
-        <Dialog open>
-          <ErrorBox
-            buttons={
-              <>
-                <Grid item>
-                  <Button variant='contained' onClick={() => dispatch(errorActionCreator({ apiError: null }))}>
-                    OK
-                  </Button>
-                </Grid>
-              </>
-            }
-          >
-            <ApiErrorMessage error={apiError} />
-          </ErrorBox>
-        </Dialog>
-      )}
-      {!apiError && children}
-    </ApolloProvider>
-  );
-};
+const ApiProvider: React.FC = ({ children }) => <ApolloProvider client={client}>{children}</ApolloProvider>;
 
 export default ApiProvider;

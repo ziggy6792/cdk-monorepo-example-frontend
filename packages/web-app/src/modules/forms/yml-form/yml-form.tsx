@@ -14,38 +14,40 @@ export interface IUserOption {
   fullName: string;
 }
 
-export interface IBuildCompetitionFormValues {
-  params: string;
+export interface IYmlFormValues {
+  ymlString: string;
 }
 
-interface IBuildCompetitionFormProps {
-  onSubmit: (formValues: IBuildCompetitionFormValues) => Promise<void>;
+interface IYmlFormProps {
+  onSubmit: (formValues: IYmlFormValues) => Promise<void>;
   onCancel: () => void;
-  initialValues?: IBuildCompetitionFormValues;
+  initialValues?: IYmlFormValues;
   allowSubmitPristine?: boolean;
+  allowSubmitEmpty?: boolean;
   title: string;
+  placeholder?: string;
 }
 
-const validate = (values: IBuildCompetitionFormValues) => {
-  if (!values.params) {
-    return { params: 'Required' };
+const validate = (values: IYmlFormValues) => {
+  if (!values.ymlString) {
+    return { ymlString: 'Required' };
   }
 
   try {
-    const parsedParams = { rounds: jsYaml.load(values.params) };
+    const parsedParams = { rounds: jsYaml.load(values.ymlString) };
   } catch (err) {
     // eslint-disable-next-line no-underscore-dangle
-    return { params: err.message };
+    return { ymlString: err.message };
   }
 
   return {};
 };
 
-const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, onCancel, initialValues, allowSubmitPristine, title }) => (
+const YmlForm: React.FC<IYmlFormProps> = ({ onSubmit, onCancel, initialValues, allowSubmitPristine, allowSubmitEmpty, title, placeholder }) => (
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Formik
       initialValues={initialValues}
-      validate={validate}
+      validate={!allowSubmitEmpty ? validate : undefined}
       onSubmit={async (values) => {
         await onSubmit(values);
       }}
@@ -60,10 +62,10 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
             <Grid container direction='column'>
               <Grid container direction='column' alignItems='center' justify='center' spacing={2}>
                 <Grid item>
-                  <Field name='params' component={AceEditor} autoFocus placeholder='Enter competition build params' />
+                  <Field name='ymlString' component={AceEditor} autoFocus placeholder={placeholder} />
                 </Grid>
                 <Grid item>
-                  <ErrorMessage name='params' />
+                  <ErrorMessage name='ymlString' />
                 </Grid>
               </Grid>
             </Grid>
@@ -73,4 +75,4 @@ const BuildCompetitionForm: React.FC<IBuildCompetitionFormProps> = ({ onSubmit, 
     </Formik>
   </MuiPickersUtilsProvider>
 );
-export default BuildCompetitionForm;
+export default YmlForm;
