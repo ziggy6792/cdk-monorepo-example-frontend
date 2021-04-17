@@ -45,7 +45,7 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
             <Grid item style={{ width: '100%' }}>
               <CompetitionSummary summary={data.getCompetition} />
             </Grid>
-            {data.getCompetition.winners && (
+            {data.getCompetition.winners.items.length === 3 && (
               <Grid item style={{ width: '80%', maxWidth: '500px' }}>
                 <Podium winners={data.getCompetition.winners.items} />
               </Grid>
