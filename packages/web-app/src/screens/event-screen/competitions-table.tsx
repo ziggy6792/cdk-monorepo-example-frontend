@@ -4,7 +4,7 @@
 
 import React from 'react';
 import _ from 'lodash';
-import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Typography, Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { Competition, User } from 'src/generated-types';
 import DataTable, { IDataTableRow } from 'src/components/data-table';
@@ -42,24 +42,25 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
     },
   ];
 
-  console.log(tableData)
+  console.log(tableData);
 
   return (
     <Card>
       <CardContent>
-        {competitions.map(competition => (
+        {competitions.map((competition) => (
           <div>
-            <Typography variant='subtitle1' display="inline" style={{ paddingRight: 16 }}>
+            <Typography variant='subtitle1' display='inline' style={{ paddingRight: 16 }}>
               16:00
             </Typography>
-            <Typography variant='subtitle1' display="inline" color='textPrimary'>
+            <Typography variant='subtitle1' display='inline' color='textPrimary'>
               <b>{competition.name}</b>
             </Typography>
+            <Button onClick={() => history.push(`${ROUTE_COMPETITION}/${competition.id}`)}>Open</Button>
           </div>
         ))}
       </CardContent>
     </Card>
-  )
+  );
 
   // return (
   //   <DataTable

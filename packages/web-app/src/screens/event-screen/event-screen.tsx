@@ -16,6 +16,9 @@ interface IEventsScreenProps {
 }
 
 const useStyles = makeStyles((theme) => ({
+  description: {
+    fontSize: '1rem',
+  },
   tableCtaButtons: {
     marginTop: 20,
     marginBottom: 20,
@@ -122,25 +125,28 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
             </Typography>
           </CardContent>
         </Grid>
-        {/* FAB Menu will be rendered based on UAC role */}
-        {data.getEvent.isAdmin && (
-          <FabMenu>
-            <FabMenu.Item>
-              <AddCompetition eventId={eventId} />
-            </FabMenu.Item>
-            <FabMenu.Item>
-              <EditEvent
-                eventToEdit={{
-                  id: eventId,
-                  description,
-                  name,
-                  startTime,
-                }}
-              />
-            </FabMenu.Item>
-          </FabMenu>
-        )}
+        <Container maxWidth='lg' style={{ padding: 0 }}>
+          <CompetitionsTable competitions={data.getEvent.competitions.items} />
+        </Container>
       </Grid>
+      {/* FAB Menu will be rendered based on UAC role */}
+      {data.getEvent.isAdmin && (
+        <FabMenu>
+          <FabMenu.Item>
+            <AddCompetition eventId={eventId} />
+          </FabMenu.Item>
+          <FabMenu.Item>
+            <EditEvent
+              eventToEdit={{
+                id: eventId,
+                description,
+                name,
+                startTime,
+              }}
+            />
+          </FabMenu.Item>
+        </FabMenu>
+      )}
     </>
   );
 };
