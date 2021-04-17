@@ -62,6 +62,7 @@ export const GET_EVENT_SCHEDULE = gql`
   query getEventSchedule($id: ID!) {
     getEvent(id: $id) {
       name
+      isAdmin
       scheduleItems {
         items {
           scheduleId

@@ -17,7 +17,7 @@ const TimetableScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
 
   return (
     <Grid container direction='column' justify='center' alignItems='center'>
-      <Timetable scheduleItems={data.getEvent.scheduleItems.items} eventId={eventId} />
+      <Timetable scheduleItems={data.getEvent.scheduleItems.items} eventId={eventId} isAdmin={data.getEvent.isAdmin} />
     </Grid>
   );
 };
