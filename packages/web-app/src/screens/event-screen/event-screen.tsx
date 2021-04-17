@@ -1,12 +1,10 @@
 import React from 'react';
-import { LocalCafe, Schedule } from '@material-ui/icons';
-import { Button, Grid, Typography, Container, CardContent, makeStyles } from '@material-ui/core';
+import { Grid, Typography, Container, CardContent, makeStyles } from '@material-ui/core';
 import { useGetEventQuery } from 'src/generated-types';
-import TopNavigation from 'src/components/ui/top-navigation';
+import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import Spinner from 'src/components/spinner';
 import { useHistory } from 'react-router';
-import { ROUTE_SCOREBOARD, ROUTE_TIMETABLE } from 'src/config/routes';
 import CompetitionsTable from './competitions-table';
 import EditEvent from './buttons/edit-event';
 import AddCompetition from './buttons/add-competition';
@@ -30,23 +28,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DESCRIPTION = `Welcome to #back2basics2021 at Singapore Wakepark. 
-Please take note of the timings for each respective category. 
-Do note that there has been a change in timing for the Men’s Intermediate Wakeboard and 
-Women’s Wakeboard Open categories. 
-Due to social distancing measures, only riders are allowed in the ski area only during 
-their respective time slots and must leave after their event has completed. Prize-giving 
-for each category will also be done immediately after each respective category’s Final round. 
-No spectators are allowed within the ski zone at all times and we encourage everyone to 
-view the event through live-streaming which will be available on our Facebook page 
-at https://www.facebook.com/singaporewba/.`;
+// const DESCRIPTION = `Welcome to #back2basics2021 at Singapore Wakepark. 
+// Please take note of the timings for each respective category. 
+// Do note that there has been a change in timing for the Men’s Intermediate Wakeboard and 
+// Women’s Wakeboard Open categories. 
+// Due to social distancing measures, only riders are allowed in the ski area only during 
+// their respective time slots and must leave after their event has completed. Prize-giving 
+// for each category will also be done immediately after each respective category’s Final round. 
+// No spectators are allowed within the ski zone at all times and we encourage everyone to 
+// view the event through live-streaming which will be available on our Facebook page 
+// at https://www.facebook.com/singaporewba/.`;
 
 const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
   const classes = useStyles();
-  // const ref = React.useRef(null);
   const { loading, data } = useGetEventQuery({ variables: { id: eventId } });
-
-  const history = useHistory();
 
   /* 
     TODO
@@ -66,19 +61,8 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
   } = data.getEvent;
 
   return (
-    <>
-      <TopNavigation eventTitle={name} eventId={eventId} />
-      {/* <Grid container>
-        {[1,2,3,4,5,6,7].map(x => (
-          <div style={{ height: 100, width: '100%', background: 'pink', padding: 16}}>
-            testing
-          </div>
-        ))}
-      </Grid> */}
+    <ScreenWrapper eventTitle={name} eventId={eventId} currentPath="overall" >
       <Grid container direction='column'>
-        {/* <Grid item style={{ marginTop: 20, marginBottom: 15 }}>
-          <Typography variant='h5'>PLACEHOLDER - BREADCRUMS</Typography>
-        </Grid> */}
         <Grid item>
           <CardContent>
             <Typography variant='h3' color='primary'>
@@ -90,34 +74,6 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
             </Typography>
           </CardContent>
         </Grid>
-        {/* <Grid container className={classes.tableCtaButtons} spacing={2}>
-          <Grid item>
-            <Button
-              color='primary'
-              variant='contained'
-              startIcon={<LocalCafe />}
-              onClick={() => {
-                history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
-              }}
-            >
-              Scoreboard
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant='contained'
-              color='primary'
-              startIcon={<Schedule />}
-              onClick={() => {
-                history.push(`${ROUTE_TIMETABLE}/${eventId}`);
-              }}
-            >
-              Timetable
-            </Button>
-          </Grid>
-        </Grid>
-
-        <SectionHeader title="Competitions" /> */}
         <Grid item>
           <CardContent>
             <Typography variant='h3' color='primary'>
@@ -147,7 +103,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
           </FabMenu.Item>
         </FabMenu>
       )}
-    </>
+    </ScreenWrapper>
   );
 };
 

@@ -181,5 +181,28 @@ export default createMuiTheme({
         backgroundImage: gradientBlue,
       },
     },
+    MuiBottomNavigationAction: {
+      label: {
+        fontFamily: 'Helvetica',
+        fontWeight: 800,
+        fontStyle: 'italic',
+        letterSpacing: '-0.05rem',
+        textTransform: 'capitalize',
+        fontSize: '0.7rem',
+        lineHeight: 0.8,
+        '&$selected': {
+          fontSize: '0.7rem',
+          letterSpacing: 0,
+          fontWeight: 800,
+        }
+      },
+      root: {
+        '&$selected': {
+          fontSize: '0.7rem',
+          color: 'white',
+          backgroundImage: gradientBlue
+        }
+      }
+    }
   },
 });
