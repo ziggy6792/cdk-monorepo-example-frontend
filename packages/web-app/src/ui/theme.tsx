@@ -107,6 +107,9 @@ export default createMuiTheme({
         fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
         padding: '2px 10px',
       },
+      containedPrimary: {
+        backgroundImage: gradientBlue
+      }
     },
     MuiInputLabel: {
       root: {
@@ -203,6 +206,6 @@ export default createMuiTheme({
           backgroundImage: gradientBlue
         }
       }
-    }
+    },
   },
 });

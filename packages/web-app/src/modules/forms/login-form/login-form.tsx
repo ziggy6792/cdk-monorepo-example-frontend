@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 import Logger from 'js-logger';
 import { Formik, Field, FieldAttributes } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { USER_TYPE } from 'src/domain/auth/user';
@@ -142,6 +142,11 @@ interface SubFormProps {
 
 const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitDisabled, resetForm }) => (
   <>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <Grid item>
       <LoginFormField component={TextField} name='email' type='email' inputProps={{ min: 0, style: { textAlign: 'center' } }} placeholder='Email' />
     </Grid>
@@ -154,19 +159,22 @@ const SignInForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
           Sign In
         </Button>
       </Grid>
-      <Grid item>
-        Need a Pofile?{' '}
+      <br/>
+      <br/>
+      <br/>
+      <Grid item style={{ background: '#ddd', padding: '8px 16px', margin: 8, borderRadius: 4 }}>
+        <Typography display='inline' style={{ fontSize: '0.9rem' }}>Need a Profile?</Typography>
         <Button
           color='primary'
           onClick={() => {
             resetForm();
-
             setFormType(FormType.SIGN_UP);
           }}
         >
           Sign Up
         </Button>
       </Grid>
+      <br />
     </>
   </>
 );
@@ -186,26 +194,23 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
     <Grid item>
       <LoginFormField component={TextField} name='lastName' placeholder='Last Name' />
     </Grid>
-    <>
-      <Grid item>
-        <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
-          Sign Up
-        </Button>
-      </Grid>
-      <Grid item>
-        Have a Pofile?{' '}
-        <Button
-          color='primary'
-          onClick={() => {
-            resetForm();
-
-            setFormType(FormType.SIGN_IN);
-          }}
-        >
-          Sign In
-        </Button>
-      </Grid>
-    </>
+    <Grid item>
+      <Button variant='contained' color='primary' disabled={isSubmitDisabled} onClick={submitForm}>
+        Sign Up
+      </Button>
+    </Grid>
+    <Grid item>
+      <Typography>Have a Profile?</Typography>
+      <Button
+        color='primary'
+        onClick={() => {
+          resetForm();
+          setFormType(FormType.SIGN_IN);
+        }}
+      >
+        Sign In
+      </Button>
+    </Grid>
   </>
 );
 

@@ -50,7 +50,11 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
     */
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <ScreenWrapper eventTitle='' eventId={eventId} currentPath="overall">
+        <Spinner />
+      </ScreenWrapper>
+    );
   }
 
   const {
