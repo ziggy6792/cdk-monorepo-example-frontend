@@ -140,7 +140,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
             </FabMenu.Item>
           </FabMenu>
         )}
-      </Container>
+      </Grid>
     </>
   );
 };
