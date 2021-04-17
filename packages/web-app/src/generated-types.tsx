@@ -39,7 +39,9 @@ export type Competition = DataEntity &
     isAdmin: Scalars['Boolean'];
     isJudge: Scalars['Boolean'];
     rounds: RoundList;
+    startTime?: Maybe<Scalars['DateTime']>;
     hasDemoRiders: Scalars['Boolean'];
+    winners?: Maybe<RiderAllocationList>;
     riderAllocations: RiderAllocationList;
   };
 
@@ -794,7 +796,9 @@ export type GetEventQuery = { __typename?: 'Query' } & {
       adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
       competitions: { __typename?: 'CompetitionList' } & {
         items: Array<
-          { __typename?: 'Competition' } & Pick<Competition, 'id' | 'name'> & { judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>> }
+          { __typename?: 'Competition' } & Pick<Competition, 'id' | 'name' | 'startTime'> & {
+              judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>>;
+            }
         >;
       };
     } & BreadcrumbFields_Event_Fragment;
@@ -1397,6 +1401,7 @@ export const GetEventDocument = gql`
         items {
           id
           name
+          startTime
           judgeUser {
             fullName
           }

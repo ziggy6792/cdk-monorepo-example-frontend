@@ -78,7 +78,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
     <Container className={classes.container}>
       {roundsByDay.map(({ day, dayRounds }) => (
         <Grid item key={day ? day.toISOString() : 'TBD'}>
-          <DateHeader header={day ? DateFormatter.toLongDay(day) : 'Date TBD'} />
+          <DateHeader header={DateFormatter.toLongDay(day, 'Date TBD')} />
           {dayRounds.map((round) => (
             <Fragment key={round.id}>
               <Grid container justify='flex-start' style={{ marginTop: theme.spacing(1), marginBottom: theme.spacing(1), marginLeft: theme.spacing(2) }}>

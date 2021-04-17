@@ -3,6 +3,7 @@ import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-u
 const arcBlue = '#2a6db0';
 const arcGrey = '#868686';
 const swtRed = '#b02a2a';
+const gradientBlue = `linear-gradient(45deg, #17a3c3, ${arcBlue})`;
 
 const defaultTheme = createMuiTheme();
 export default createMuiTheme({
@@ -19,26 +20,26 @@ export default createMuiTheme({
   },
   typography: {
     h2: {
-      fontFamily: 'Raleway',
+      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
       fontWeight: 700,
       fontSize: '2.5rem',
       color: arcBlue,
     },
     h3: {
       fontSize: '1.75rem',
-      fontFamily: 'Raleway',
+      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
       color: arcBlue,
       fontWeight: 700,
     },
     h4: {
       fontSize: '1rem',
-      fontFamily: 'Raleway',
+      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
       color: arcBlue,
       fontWeight: 700,
     },
     h5: {
       fontSize: '0.8rem',
-      fontFamily: 'Raleway',
+      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
       color: arcBlue,
       fontWeight: 700,
     },
@@ -72,6 +73,41 @@ export default createMuiTheme({
     },
   },
   overrides: {
+    MuiTypography: {
+      h3: {
+        fontFamily: 'Helvetica',
+        fontWeight: 800,
+        fontStyle: 'italic',
+        letterSpacing: '-0.15rem',
+        textTransform: 'capitalize',
+        fontSize: '2rem',
+        lineHeight: 0.8,
+      },
+      h4: {
+        fontFamily: 'Helvetica',
+        fontWeight: 800,
+        fontStyle: 'italic',
+        letterSpacing: '-0.10rem',
+        textTransform: 'capitalize',
+        fontSize: '1.3rem',
+        lineHeight: 0.8,
+      },
+      h6: {
+        fontFamily: 'Helvetica',
+        fontWeight: 800,
+        fontStyle: 'italic',
+        letterSpacing: '-0.05rem',
+        textTransform: 'capitalize',
+        fontSize: '1rem',
+        lineHeight: 0.8,
+      },
+    },
+    MuiButton: {
+      root: {
+        fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
+        padding: '2px 10px',
+      },
+    },
     MuiInputLabel: {
       root: {
         color: arcBlue,
@@ -133,6 +169,16 @@ export default createMuiTheme({
         '&:nth-child(1)': {
           backgroundColor: '#FF0000',
         },
+      },
+    },
+    MuiAppBar: {
+      root: {
+        backgroundImage: gradientBlue,
+      },
+    },
+    MuiFab: {
+      root: {
+        backgroundImage: gradientBlue,
       },
     },
   },

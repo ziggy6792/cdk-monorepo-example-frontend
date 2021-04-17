@@ -10,16 +10,16 @@
 // }
 
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "lib": ["es6", "es2015", "dom"],
-        "declaration": true,
-        "rootDir": "./src",
-        "outDir": "./dist",
-        "types": ["node"],
-        "esModuleInterop": true,
-        "resolveJsonModule": true
-    },
-    "include": ["src/**/*"]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es6", "es2015", "dom"],
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "types": ["node"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*"]
 }

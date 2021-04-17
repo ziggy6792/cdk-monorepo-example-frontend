@@ -1,11 +1,15 @@
 import { format } from 'date-fns';
 
+const formatDate = (date: Date, formatFunc: (date: Date) => string, defaultString = 'TBD') => (date ? formatFunc(date) : defaultString);
+
 const DateFormatter = {
-  toLongDate: (date: Date): string => format(date, 'EEE dd/MM/yyyy HH:mm'),
-  toShortDate: (date: Date): string => format(date, 'dd MMM yy'),
-  toShortDay: (date: Date): string => format(date, 'EEEE'),
-  toLongDay: (date: Date): string => format(date, 'EEEE, MMMM d'),
-  toTime: (date: Date): string => format(date, 'HH:mm'),
+  toVerbose: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEEE, do MMMM, ha'), defaultString),
+  toLongDate: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEE dd/MM/yyyy HH:mm'), defaultString),
+  toShortDate: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'dd MMM yy'), defaultString),
+  toShortDay: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEEE'), defaultString),
+  toLongDay: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEEE, MMMM d'), defaultString),
+  toTime: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'HH:mm'), defaultString),
+  toDayAndTime: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEE HH:mm'), defaultString),
 };
 
 export default DateFormatter;

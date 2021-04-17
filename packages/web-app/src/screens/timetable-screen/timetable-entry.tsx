@@ -4,7 +4,7 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import { Grid, Link, useTheme } from '@material-ui/core';
+import { Grid, Link, useTheme, Typography, Button } from '@material-ui/core';
 import { TimetableRound, TimetableScheduleItem } from 'src/gql/common/types';
 import { useHistory } from 'react-router';
 import { ROUTE_HEAT } from 'src/config/routes';
@@ -44,20 +44,20 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
 
   return (
     <>
-      <Grid item>{round.longName}</Grid>
-      <Grid container direction='row' spacing={2} style={{ marginLeft: theme.spacing(1) }}>
+      <Grid item>
+        <Typography variant='h4'>{round.longName}</Typography>
+      </Grid>
+      <Grid container direction='row' spacing={1} style={{ padding: theme.spacing(1, 1, 3, 0.5) }}>
         {round.heats.items.map((heat) => (
           <Grid item key={heat.name}>
-            {/* {heat.name} */}
-            {/* ToDo: make all links have pointer cursor */}
-            <Link
-              variant='h5'
+            <Button
+              variant='contained'
               onClick={() => {
                 history.push(`${ROUTE_HEAT}/${heat.id}`);
               }}
             >
               {heat.name}
-            </Link>
+            </Button>
           </Grid>
         ))}
       </Grid>

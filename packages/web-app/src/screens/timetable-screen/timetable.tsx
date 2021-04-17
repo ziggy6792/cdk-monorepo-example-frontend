@@ -8,7 +8,7 @@ import { Grid, Typography, useTheme } from '@material-ui/core';
 import { startOfDay, parseISO } from 'date-fns';
 import DateFormatter from 'src/utils/format/date-formatter';
 import { TimetableScheduleItem } from 'src/gql/common/types';
-import TimetableEntry from './timetable-entry';
+import TopNavigation from 'src/components/ui/top-navigation';
 import TimetableRow from './timetable-row';
 import AddNotice from './buttons/add-notice';
 
@@ -46,6 +46,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId }) => {
 
   return (
     <>
+      <TopNavigation eventTitle="Back 2 Basics 2021" eventId={eventId} currentPath="Timetable" />
       <Grid container direction='column' justify='center' alignItems='center'>
         <Grid item style={{ marginBottom: theme.spacing(2) }}>
           <Typography>Timetable</Typography>

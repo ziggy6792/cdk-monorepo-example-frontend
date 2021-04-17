@@ -48,6 +48,7 @@ export const GET_EVENT = gql`
         items {
           id
           name
+          startTime
           judgeUser {
             fullName
           }

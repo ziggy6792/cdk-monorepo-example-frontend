@@ -4,12 +4,14 @@
 
 import React from 'react';
 import _ from 'lodash';
+import { Card, CardHeader, CardContent, Typography, Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { Competition, User } from 'src/generated-types';
 import DataTable, { IDataTableRow } from 'src/components/data-table';
 import { ROUTE_COMPETITION } from 'src/config/routes';
+import DateFormatter from 'src/utils/format/date-formatter';
 
-type CompetitionItem = Pick<Competition, 'id' | 'name'> & { judgeUser?: Pick<User, 'fullName'> };
+type CompetitionItem = Pick<Competition, 'id' | 'name' | 'startTime'> & { judgeUser?: Pick<User, 'fullName'> };
 
 interface IEventsTableProps {
   competitions: CompetitionItem[];
@@ -42,17 +44,35 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
   ];
 
   return (
-    <DataTable
-      title='Competitions'
-      tableData={tableData}
-      columns={columns}
-      options={{
-        onRowClick: (row: ICompetitionRow) => {
-          history.push(`${ROUTE_COMPETITION}/${row.competitionId}`);
-        },
-      }}
-    />
+    <Card>
+      <CardContent>
+        {competitions.map((competition) => (
+          <div>
+            <Typography variant='subtitle1' display='inline' style={{ paddingRight: 16 }}>
+              {DateFormatter.toDayAndTime(competition.startTime)}
+            </Typography>
+            <Typography variant='subtitle1' display='inline' color='textPrimary'>
+              <b>{competition.name}</b>
+            </Typography>
+            <Button onClick={() => history.push(`${ROUTE_COMPETITION}/${competition.id}`)}>Open</Button>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
   );
+
+  // return (
+  //   <DataTable
+  //     title='Competitions'
+  //     tableData={tableData}
+  //     columns={columns}
+  //     options={{
+  //       onRowClick: (row: ICompetitionRow) => {
+  //         history.push(`${ROUTE_COMPETITION}/${row.competitionId}`);
+  //       },
+  //     }}
+  //   />
+  // );
 };
 
 export default CompetitionsTable;

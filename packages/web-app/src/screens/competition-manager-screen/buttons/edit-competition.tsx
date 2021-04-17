@@ -6,7 +6,7 @@ import { Button, useTheme } from '@material-ui/core';
 import { UpdateCompetitionInput, useUpdateCompetitionMutation, User } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
 import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
-import ComepetitionForm, { ICompetitionFormValues } from 'src/modules/forms/competition-form';
+import CompetitionForm, { ICompetitionFormValues } from 'src/modules/forms/competition-form';
 
 interface IEditCompetitionProps {
   competitionToEdit: UpdateCompetitionInput;
@@ -50,7 +50,7 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
         Edit
       </Button>
       <Dialog open={open} setOpen={setOpen}>
-        <ComepetitionForm
+        <CompetitionForm
           title='Edit Competition'
           onSubmit={onUpdateCompetition}
           onCancel={() => setOpen(false)}
