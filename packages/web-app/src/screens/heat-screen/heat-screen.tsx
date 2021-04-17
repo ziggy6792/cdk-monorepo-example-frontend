@@ -3,6 +3,7 @@ import React from 'react';
 import Spinner from 'src/components/spinner';
 import { HeatStatus, useGetHeatQuery } from 'src/generated-types';
 import Breadcrumbs from 'src/modules/breadcrumbs/breadcrumbs';
+import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import HeatSummary from 'src/modules/summary/heat-summary';
 import JudgeHeat from './buttons/judge-heat';
 import ResultsTable from './results-table';
@@ -28,24 +29,24 @@ const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
   }
 
   return (
-    <>
+    <ScreenWrapper eventTitle='' eventId='' currentPath="live">
       <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
-      <Grid container direction='column' justify='center' alignItems='center'>
-        <HeatSummary heat={data.getHeat} />
-        {data.getHeat.isJudge && (
-          <Grid item>
-            <JudgeHeat heat={data.getHeat} />
+        <Grid container direction='column' justify='center' alignItems='center'>
+          <HeatSummary heat={data.getHeat} />
+          {data.getHeat.isJudge && (
+            <Grid item>
+              <JudgeHeat heat={data.getHeat} />
+            </Grid>
+          )}
+          <Grid item style={{ width: '100%' }}>
+            <ResultsTable
+              tableType={heatStatusToTableType(data.getHeat.status)}
+              riderAllocations={data.getHeat.riderAllocations.items}
+              noProgressing={data.getHeat.noProgressing}
+            />
           </Grid>
-        )}
-        <Grid item style={{ width: '100%' }}>
-          <ResultsTable
-            tableType={heatStatusToTableType(data.getHeat.status)}
-            riderAllocations={data.getHeat.riderAllocations.items}
-            noProgressing={data.getHeat.noProgressing}
-          />
         </Grid>
-      </Grid>
-    </>
+    </ScreenWrapper>
   );
 };
 

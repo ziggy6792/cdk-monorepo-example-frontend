@@ -34,7 +34,7 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({ eventTitle, dateString, e
 
   return (
     <>
-      <TopNavigation eventTitle={eventTitle} dateString={dateString} />
+      <TopNavigation eventTitle={eventTitle} dateString={dateString} dense={dense} />
       <div className={clsx({[classes.normalContent]: !dense, [classes.denseContent]: dense})}>
         {children}
       </div>
