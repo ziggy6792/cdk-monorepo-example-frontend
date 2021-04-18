@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 export const UPDATE_RIDER_ALLOCATIONS = gql`
   mutation updateRiderAllocations($input: [UpdateRiderAllocationInput!]!) {
     updateRiderAllocations(input: $input) {
+      userId
       allocatableId
     }
   }

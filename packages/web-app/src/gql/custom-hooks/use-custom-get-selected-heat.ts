@@ -12,5 +12,5 @@ export const useCustomGetSelectedHeatQuery = (
   baseOptions: ApolloReactHooks.QueryHookOptions<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>
 ): IGetSelectedHeatResult => {
   const { data, ...rest } = useGetSelectedHeatQuery(baseOptions);
-  return { ...rest, data: { selectedHeat: data?.getEvent?.selectedHeat } };
+  return { ...rest, data: data ? { selectedHeat: data?.getEvent?.selectedHeat } : null };
 };

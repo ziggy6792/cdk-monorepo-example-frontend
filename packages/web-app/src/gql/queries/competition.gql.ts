@@ -10,6 +10,7 @@ const CORE_COMPETITION_FIELDS = gql`
     id
     winners {
       items {
+        allocatableId
         position
         userId
         user {
@@ -38,6 +39,7 @@ const CORE_COMPETITION_FIELDS = gql`
     riderAllocations {
       items {
         userId
+        allocatableId
         user {
           id
           fullName
@@ -56,6 +58,7 @@ const CORE_COMPETITION_FIELDS = gql`
             isFinal
             name
             round {
+              id
               roundNo
             }
             size
@@ -65,6 +68,7 @@ const CORE_COMPETITION_FIELDS = gql`
             riderAllocations {
               items {
                 userId
+                allocatableId
                 user {
                   id
                   fullName
@@ -125,6 +129,7 @@ export const ALLOCATE_RIDERS = gql`
               riderAllocations {
                 items {
                   userId
+                  allocatableId
                   startSeed
                 }
               }
