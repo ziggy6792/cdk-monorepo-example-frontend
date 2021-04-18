@@ -28,9 +28,11 @@ interface TimetableNoticeEntryProps {
 }
 
 const TimetableNoticeEntry: React.FC<TimetableNoticeEntryProps> = ({ notice }) => (
-  <>
-    <Grid item>{notice}</Grid>
-  </>
+  <Grid item xs={12}>
+    <Typography variant='h4' color='textPrimary' style={{ padding: '0 0 16px', textTransform: 'none' }}>
+      {notice}
+    </Typography>
+  </Grid>
 );
 
 interface TimetableRoundEntryProps {
