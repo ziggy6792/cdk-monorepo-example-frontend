@@ -22,6 +22,7 @@ export const CORE_HEAT_FIELDS = gql`
     riderAllocations {
       items {
         userId
+        allocatableId
         user {
           id
           fullName
@@ -29,7 +30,6 @@ export const CORE_HEAT_FIELDS = gql`
         startSeed
         startOrder
         rankOrder
-        allocatableId
         position
         runs {
           score

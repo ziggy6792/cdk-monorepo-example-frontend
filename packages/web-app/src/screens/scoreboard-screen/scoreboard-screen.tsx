@@ -13,7 +13,7 @@ interface IScoreboardScreenProps {
 }
 
 const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
-  const { loading, data, stopPolling, startPolling } = useCustomGetSelectedHeatQuery({ variables: { id: eventId } });
+  const { data, stopPolling, startPolling } = useCustomGetSelectedHeatQuery({ variables: { id: eventId } });
 
   useEffect(
     () => {

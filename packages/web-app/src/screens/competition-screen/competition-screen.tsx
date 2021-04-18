@@ -74,3 +74,4 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
 };
 
 export default CompetitionScreen;
+ 

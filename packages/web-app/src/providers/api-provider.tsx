@@ -54,6 +54,11 @@ const client = new ApolloClient({
   link: errorLink.concat(enhancedHttpLink as any),
   cache: new InMemoryCache({
     possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
+    typePolicies: {
+      RiderAllocation: {
+        keyFields: ['allocatableId', 'userId'],
+      },
+    },
   }),
   defaultOptions: {
     watchQuery: {
