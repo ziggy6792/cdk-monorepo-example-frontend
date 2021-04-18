@@ -26,53 +26,39 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     []
   );
 
-  if (!data) {
-    return (
-      <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense>
-        <Spinner />
-      </ScreenWrapper>
-    );
-  }
-
   // return <div>hello</div>;
 
-  if (!data.selectedHeat) {
-    return (
-      <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom>
-        <Grid container justify='center' alignItems='center' style={{ height: '100vh' }}>
-          <Grid item>
-            <Typography
-              variant='h6'
-              component='div'
-              color='primary'
-              style={{ textAlign: 'center', lineHeight: 1.2, textTransform: 'none' }}
-            >
-              There are currently no live heats.
-              <br />
-              Check back in a bit!
-            </Typography>
-          </Grid>
-        </Grid>
-      </ScreenWrapper>
-    );
-  }
-
   return (
-    <Grid container direction='column' justify='center' alignItems='center'>
-      <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom>
-        <Grid container direction='column' justify='center' alignItems='center'>
-          <HeatSummary heat={data.selectedHeat} />
-          {data.selectedHeat.isJudge && (
-            <Grid item>
-              <EndHeat heat={data.selectedHeat} />
+    <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom showSpinner={!data}>
+      {data && (
+        <>
+          {!data.selectedHeat && (
+            <Grid container justify='center' alignItems='center' style={{ height: '100vh' }}>
+              <Grid item>
+                <Typography variant='h6' component='div' color='primary' style={{ textAlign: 'center', lineHeight: 1.2, textTransform: 'none' }}>
+                  There are currently no live heats.
+                  <br />
+                  Check back in a bit!
+                </Typography>
+              </Grid>
             </Grid>
           )}
-          <Grid item style={{ width: '100%' }}>
-            <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
-          </Grid>
-        </Grid>
-      </ScreenWrapper>
-    </Grid>  
+          {data.selectedHeat && (
+            <Grid container direction='column' justify='center' alignItems='center'>
+              <HeatSummary heat={data.selectedHeat} />
+              {data.selectedHeat.isJudge && (
+                <Grid item>
+                  <EndHeat heat={data.selectedHeat} />
+                </Grid>
+              )}
+              <Grid item style={{ width: '100%' }}>
+                <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
+              </Grid>
+            </Grid>
+          )}
+        </>
+      )}
+    </ScreenWrapper>
   );
 };
 

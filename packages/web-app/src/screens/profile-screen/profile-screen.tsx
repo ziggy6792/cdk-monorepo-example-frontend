@@ -15,11 +15,10 @@ import * as routeConfig from 'src/config/routes';
 
 export const useStyles = makeStyles((theme) => ({
   button: {
-    padding: theme.spacing(1.5,2.5),
-    width: 240
+    padding: theme.spacing(1.5, 2.5),
+    width: 240,
   },
 }));
-
 
 interface ProfileScreenProps {
   eventId?: string;
@@ -37,19 +36,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ eventId }) => {
 
   const history = useHistory();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   const Content = () => (
-    <Grid
-      container
-      direction='column'
-      justify='center'
-      alignItems='center'
-      style={{ height: '100vh', width: '100%' }}
-      spacing={2}
-    >
+    <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100vh', width: '100%' }} spacing={2}>
       <Grid item>
         {!isAuthenticated && (
           <>
@@ -57,49 +45,39 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ eventId }) => {
             {formState === 'base' && <Buttons updateFormState={setFormSate} />}
           </>
         )}
-      </Grid> 
+      </Grid>
       {isAuthenticated && (
         <>
           <Grid item>
-            <Typography variant="h4" color='textSecondary' style={{ paddingBottom: 4}}>Welcome,</Typography>
-            <Typography variant="h4"> {user.displayName}</Typography>
+            <Typography variant='h4' color='textSecondary' style={{ paddingBottom: 4 }}>
+              Welcome,
+            </Typography>
+            <Typography variant='h4'> {user.displayName}</Typography>
           </Grid>
           <Grid item>
-            <Button
-              startIcon={<ExitToApp />}
-              className={classes.button}
-              variant='contained'
-              color='primary'
-              onClick={() => dispatch(logoutActionCreator())}
-            >
+            <Button startIcon={<ExitToApp />} className={classes.button} variant='contained' color='primary' onClick={() => dispatch(logoutActionCreator())}>
               sign out
             </Button>
           </Grid>
         </>
       )}
       <Grid item>
-        <Button 
-          startIcon={<ViewList />}
-          className={classes.button}
-          variant='contained'
-          color='primary'
-          onClick={() => history.push(routeConfig.ROUTE_EVENTS)}
-        >
+        <Button startIcon={<ViewList />} className={classes.button} variant='contained' color='primary' onClick={() => history.push(routeConfig.ROUTE_EVENTS)}>
           View All Events
         </Button>
       </Grid>
     </Grid>
-  )
+  );
 
-  if(eventId){
+  if (eventId) {
     return (
-      <ScreenWrapper eventId={eventId} currentPath='profile' onlyBottom>
-        <Content />
+      <ScreenWrapper eventId={eventId} currentPath='profile' onlyBottom showSpinner={isLoading}>
+        {!isLoading && <Content />}
       </ScreenWrapper>
     );
   }
 
-  return <Content />
+  return <Content />;
 };
 
 export default ProfileScreen;
