@@ -21,17 +21,17 @@ const Buttons: React.FC<IButtonsProps> = ({ updateFormState }) => {
           variant='contained' 
           style={{ width: '100%', height: 40 }} 
           color='primary' 
-          endIcon={<Facebook />} 
+          startIcon={<Facebook />} 
           onClick={() => dispatch(loginActionCreator({ type: USER_TYPE.FACEBOOK }))}
         >
-          Facebook
+          Sign in with Facebook
         </Button>
       </Grid>
       <Grid item xs={12}>
         <Button
           variant='contained'
           style={{ width: '100%', height: 40 }}
-          color='primary' endIcon={<Email />}
+          color='primary' startIcon={<Email />}
           onClick={() => updateFormState('email')}
         >
           Sign in with Email
