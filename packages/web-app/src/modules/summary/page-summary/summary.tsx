@@ -12,7 +12,7 @@ interface SummaryProps {
 
 const Summary: React.FC<SummaryProps> = ({ name, description, children }) => (
   <>
-    <Grid container style={{ padding: 16 }}>
+    <Grid container style={{ padding: '0 16px 0' }}>
       <Grid item xs={12}>
         <Typography variant='subtitle2'>Competition</Typography>
         <Typography variant='h3'>{name}</Typography>

@@ -2,18 +2,18 @@ import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import CircleIcon from '@material-ui/icons/FiberManualRecord';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   wrapper: {
     color: '#323232',
     whiteSpace: 'nowrap',
     fontSize: '0.7rem',
-    fontWeight: 600,
-    letterSpacing: '1px',
+    fontWeight: 900,
+    letterSpacing: '-1px',
     background: 'white',
     borderRadius: '35px',
     padding: '1px 5px',
-    margin: '0 6px',
-    border: '1px solid #17a2b822',
+    margin: theme.spacing(0,0.5),
+    border: '1px solid #ddd',
   },
   circleIcon: {
     color: '#e74c3c',
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 const LiveIndicator: React.FC = () => {
   const classes = useStyles();
   return (
-    <Typography component='div' className={classes.wrapper} style={{}}>
+    <Typography component='div' className={classes.wrapper}>
       <CircleIcon className={classes.circleIcon} /> LIVE
     </Typography>
   );

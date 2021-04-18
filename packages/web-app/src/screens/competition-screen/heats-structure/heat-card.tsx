@@ -18,8 +18,9 @@ export enum HeatCardStatus {
 const useStyles = makeStyles((theme) => ({
   container: { margin: 8 },
   heatCard: (props: StyleProps) => ({
+    padding: theme.spacing(2,1),
     width: props.cardWidth,
-    height: 140,
+    // height: 200,
     borderLeft: `3px solid ${props.highlightColor}`,
     background: `${props.highlightColor}1a`,
     cursor: props.cursor,
@@ -30,15 +31,14 @@ const useStyles = makeStyles((theme) => ({
     },
   }),
   heatCardTitle: {
-    fontSize: '1rem',
-    lineHeight: 1,
     whiteSpace: 'nowrap',
-    padding: 8,
-    textTransform: 'uppercase',
-    fontWeight: 900,
-    letterSpacing: '2px',
-    color: '#111',
   },
+  contestants: {
+    fontSize: '1rem',
+    whiteSpace: 'nowrap',
+    lineHeight: 1,
+    padding: '16px 8px 0',
+  }
 }));
 
 const statusColors = {
@@ -71,24 +71,21 @@ const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width
 
   return (
     <Card className={classes.heatCard} onClick={onClick}>
-      <Grid container direction='row' justify='space-between'>
+      <Grid container direction='row' justify='space-between' style={{ position: 'relative' }}>
         <Grid item>
-          <Typography component='div' className={classes.heatCardTitle}>
+          <Typography component='div' variant='h4' className={classes.heatCardTitle}>
             {title}
           </Typography>
         </Grid>
-        <Grid item style={{ marginTop: '4px' }}>
-          {status === HeatCardStatus.IN_PROGRESS && <LiveIndicator />}
-        </Grid>
+        {status === HeatCardStatus.IN_PROGRESS &&
+          <Grid item style={{ position: 'absolute', right: 0, top: 4 }}>
+            <LiveIndicator />
+          </Grid>
+        }
       </Grid>
-
       <Typography
-        style={{
-          fontSize: '0.9rem',
-          whiteSpace: 'nowrap',
-          lineHeight: 0.9,
-          paddingLeft: 4,
-        }}
+        variant='h6'
+        className={classes.contestants}
       >
         {content}
       </Typography>

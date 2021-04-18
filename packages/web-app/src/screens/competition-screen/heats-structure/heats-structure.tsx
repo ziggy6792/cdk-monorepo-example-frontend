@@ -9,18 +9,22 @@ import { useHistory } from 'react-router';
 import { ROUTE_HEAT, ROUTE_LIVE } from 'src/config/routes';
 import HeatCard, { HeatCardStatus } from './heat-card';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   container: {},
   dateHeader: {
-    background: '#17a2b8',
-    color: 'white',
-    padding: '0 12px',
-    margin: '12px 0 8px',
-    borderRadius: 20,
+    color: theme.palette.primary.main,
     width: 'fit-content',
-    fontWeight: 600,
-    fontSize: '1rem',
     letterSpacing: '2px',
+  },
+  roundHeader: {
+    backgroundImage: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.main}cc)`,
+    color: 'white',
+    padding: theme.spacing(1,2,1,5),
+    margin: theme.spacing(2,0,0,-6),
+    width: 'fit-content',
+    letterSpacing: '2px',
+    borderBottomRightRadius: 8,
+    borderTopRightRadius: 8,
   },
 }));
 
@@ -31,7 +35,7 @@ interface IDateHeaderProps {
 const DateHeader: React.FC<IDateHeaderProps> = ({ header }) => {
   const classes = useStyles();
   return (
-    <Typography component='div' className={classes.dateHeader}>
+    <Typography component='div' variant='h4' className={classes.dateHeader}>
       {header}
     </Typography>
   );
@@ -78,12 +82,24 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
     <Container className={classes.container}>
       {roundsByDay.map(({ day, dayRounds }) => (
         <Grid item key={day ? day.toISOString() : 'TBD'}>
-          <DateHeader header={DateFormatter.toLongDay(day, 'Date TBD')} />
+          {day && <DateHeader header={DateFormatter.toLongDay(day, 'TBD')} />}
           {dayRounds.map((round) => (
             <Fragment key={round.id}>
-              <Grid container justify='flex-start' style={{ marginTop: theme.spacing(1), marginBottom: theme.spacing(1), marginLeft: theme.spacing(2) }}>
+              <Grid
+                container
+                justify='flex-start'
+                style={{ 
+                  margin: theme.spacing(1,0,1,2),
+                }}
+              >
                 <Grid item>
-                  <Typography>{round.name}</Typography>
+                  <Typography
+                    component='div'
+                    variant='h4'
+                    className={classes.roundHeader}
+                  >
+                    {round.name}
+                  </Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={2} justify='center'>
@@ -107,7 +123,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                           heat.name
                         )
                       }
-                      width={heat.isFinal ? 260 : undefined}
+                      width={heat.isFinal ? 300 : 200}
                       status={statusLookup[heat.status]}
                       content={
                         <>
@@ -124,66 +140,6 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
           ))}
         </Grid>
       ))}
-
-      {/* <>
-                <DateHeader header='SATURDAY, AUGUST 8' />
-                <Grid container spacing={2} justify='center'>
-                    <Grid item>
-                        <HeatCard
-                            title='Heats #1'
-                            status={HeatCardStatus.FINISHED}
-                            content={
-                                <>
-                                    <li>Jonathan</li>
-                                    <li>Cyril</li>
-                                    <li>Lolo</li>
-                                    <li>Baron</li>
-                                    <li>Kimmy</li>
-                                </>
-                            }
-                        />
-                    </Grid>
-                    <Grid item>
-                        <HeatCard title='Heats #2' status={HeatCardStatus.FINISHED} />
-                    </Grid>
-                    <Grid item>
-                        <HeatCard title='Heats #3' status={HeatCardStatus.IN_PROGRESS} />
-                    </Grid>
-                    <Grid item>
-                        <HeatCard title='Heats #4' />
-                    </Grid>
-                </Grid>
-                <DateHeader header='SUNDAY, AUGUST 9' />
-                <Grid container spacing={2} justify='center'>
-                    <Grid item>
-                        <HeatCard title='LCQ #1' />
-                    </Grid>
-                    <Grid item>
-                        <HeatCard title='LCQ #2' />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={2} justify='center'>
-                    <Grid item>
-                        <HeatCard title='Semi #1' width={120} />
-                    </Grid>
-                    <Grid item>
-                        <HeatCard title='Semi #2' width={120} />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1} justify='center' style={{ paddingTop: 8 }}>
-                    <Grid item>
-                        <HeatCard
-                            title={
-                                <>
-                                    <TrophyIcon style={{ color: '#f1c40f' }} />
-                                    Finals
-                                </>
-                            }
-                            width={260}
-                        />
-                    </Grid>
-                </Grid>
-            </> */}
     </Container>
   );
 };

@@ -22,7 +22,7 @@ const Breadcrumbs: React.FC<IBreadcrumbs> = ({ breadcrumbs }) => {
       {breadcrumbs.items.map(({ name, type, id }, i) =>
         i < breadcrumbs.items.length - 1 ? (
           <Link color='inherit' onClick={() => history.push(`${routeLookup[type]}/${id}`)} style={{ cursor: 'pointer' }}>
-            <Typography variant='h6' style={{ background: '#ccc', padding: '8px 16px', borderRadius: 4 }}>
+            <Typography variant='h6' style={{ background: '#ccc', padding: '8px 12px', borderRadius: 4 }}>
               {name}
             </Typography>
           </Link>
