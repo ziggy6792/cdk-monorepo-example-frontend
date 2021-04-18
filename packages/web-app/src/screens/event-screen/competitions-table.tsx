@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
   accordion: {
     margin: theme.spacing(0,1,2),
-    boxShadow: theme.shadows[10]
+    boxShadow: theme.shadows[10],
+    position: 'inherit'
   },
   expandedAccordion: {
     margin: '0px 8px 16px !important',
@@ -44,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1)
   },
   date: {
-    width: 80
+    width: 80,
+    position: 'inherit'
   },
   dateDay: {
     lineHeight: 1,
@@ -59,8 +61,6 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
   },
   compName: {
-    // fontSize: theme.typography.pxToRem(15),
-    // fontWeight: theme.typography.fontWeightRegular,
   },
   chip:{
     height: 14,
@@ -111,7 +111,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
           <div className={classes.root} key={`${competition.id}-${competition.startTime || 'thing'}`}>
             <Accordion classes={{ root: classes.accordion, expanded: classes.expandedAccordion }}>
               <AccordionSummary
-                expandIcon={<ExpandMore />}
+                expandIcon={<ExpandMore style={{position: 'inherit' }} />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 className={classes.summary}

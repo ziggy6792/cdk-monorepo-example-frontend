@@ -106,6 +106,7 @@ export default createMuiTheme({
       root: {
         fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
         padding: '2px 10px',
+        position: 'inherit'
       },
       containedPrimary: {
         backgroundImage: gradientBlue

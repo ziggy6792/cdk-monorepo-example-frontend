@@ -82,7 +82,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                 width: '100%',
                 margin: '16px 0',
                 filter: 'grayscale(1)',
-                zIndex: 0
+                position: 'inherit'
               }}
             />
             <br />
