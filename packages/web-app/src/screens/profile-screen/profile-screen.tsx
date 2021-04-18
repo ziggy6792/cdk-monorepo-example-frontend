@@ -61,7 +61,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ eventId }) => {
       {isAuthenticated && (
         <>
           <Grid item>
-            <Typography variant="h4">Welcome {user.displayName}</Typography>
+            <Typography variant="h4" color='textSecondary' style={{ paddingBottom: 4}}>Welcome,</Typography>
+            <Typography variant="h4"> {user.displayName}</Typography>
           </Grid>
           <Grid item>
             <Button
