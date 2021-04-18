@@ -5,7 +5,6 @@ import { useGetEventQuery } from 'src/generated-types';
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import Spinner from 'src/components/spinner';
-import image from 'src/background.jpg'
 import CompetitionsTable from './competitions-table';
 import EditEvent from './buttons/edit-event';
 import AddCompetition from './buttons/add-competition';
@@ -75,16 +74,6 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
             <Typography variant='h3' color='primary'>
               Event Description
             </Typography>
-            <img
-              src={image}
-              alt='wakey'
-              style={{
-                width: '100%',
-                margin: '16px 0',
-                filter: 'grayscale(1)',
-                position: 'inherit'
-              }}
-            />
             <br />
             <Typography className={classes.description} variant='body2' color='textPrimary'>
               {description}
