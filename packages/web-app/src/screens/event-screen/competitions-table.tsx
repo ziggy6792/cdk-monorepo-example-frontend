@@ -107,9 +107,8 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
     <>
       {competitions.map((competition) => {
         const hasDate = DateFormatter.toDay(competition.startTime) !== 'TBD';
-
         return (
-          <div className={classes.root}>
+          <div className={classes.root} key={`${competition.id}-${competition.startTime || 'thing'}`}>
             <Accordion classes={{ root: classes.accordion, expanded: classes.expandedAccordion }}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}

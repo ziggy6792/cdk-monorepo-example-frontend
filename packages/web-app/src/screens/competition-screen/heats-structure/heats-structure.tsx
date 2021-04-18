@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     width: 'fit-content',
     letterSpacing: '2px',
+    padding: theme.spacing(2,0,0)
   },
   roundHeader: {
     backgroundImage: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.main}cc)`,

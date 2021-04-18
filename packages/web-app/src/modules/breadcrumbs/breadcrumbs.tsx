@@ -21,7 +21,12 @@ const Breadcrumbs: React.FC<IBreadcrumbs> = ({ breadcrumbs }) => {
     <MuiBreadcrumbs separator=">" aria-label='breadcrumb' style={{ padding: 16 }}>
       {breadcrumbs.items.map(({ name, type, id }, i) =>
         i < breadcrumbs.items.length - 1 ? (
-          <Link color='inherit' onClick={() => history.push(`${routeLookup[type]}/${id}`)} style={{ cursor: 'pointer' }}>
+          <Link
+            key={`${id}-${name}`}
+            color='inherit'
+            onClick={() => history.push(`${routeLookup[type]}/${id}`)}
+            style={{ cursor: 'pointer' }}
+          >
             <Typography variant='h6' style={{ background: '#ccc', padding: '8px 12px', borderRadius: 4 }}>
               {name}
             </Typography>
