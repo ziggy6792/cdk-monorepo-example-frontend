@@ -24,49 +24,45 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
 
   const history = useHistory();
 
-  console.log('CompetitionScreen', data);
-
-  if (!data) {
-    return <Spinner />;
-  }
-
-  const eventId = data.getCompetition.breadcrumbs.items.find((item) => item.type === 'EVENT').id;
-  const eventTitle = data.getCompetition.breadcrumbs.items.find((item) => item.type === 'EVENT').name;
+  const { id: eventId, name: eventTitle } = data?.getCompetition.breadcrumbs.items.find((item) => item.type === 'EVENT') || {};
 
   return (
     <Grid container direction='column' justify='center' alignItems='center'>
-      <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='tournament' onlyBottom>
-        <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
-        <Grid container direction='column' justify='center' alignItems='center'>
-          <Grid item>
-            {data.getCompetition.isAdmin && (
-              <Button
-                startIcon={<Build />}
-                variant='contained'
-                color='primary'
-                onClick={() => {
-                  history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
-                }}
-              >
-                Competition Manager
-              </Button>
-            )}
-          </Grid>
+      <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='tournament' onlyBottom showSpinner={!data}>
+        {data && (
+          <>
+            <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
+            <Grid container direction='column' justify='center' alignItems='center'>
+              <Grid item>
+                {data.getCompetition.isAdmin && (
+                  <Button
+                    startIcon={<Build />}
+                    variant='contained'
+                    color='primary'
+                    onClick={() => {
+                      history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
+                    }}
+                  >
+                    Competition Manager
+                  </Button>
+                )}
+              </Grid>
 
-          {/* ToDo: Fix this */}
-
-          <Grid item style={{ width: '100%' }}>
-            <CompetitionSummary summary={data.getCompetition} />
-          </Grid>
-          {data.getCompetition.status === CompetitionStatus.Finished && (
-            <Grid item style={{ width: '80%', maxWidth: '500px' }}>
-              <Podium winners={data.getCompetition.rankedRiders.items} />
+              {/* ToDo: Fix this */}
+              <Grid item style={{ width: '100%' }}>
+                <CompetitionSummary summary={data.getCompetition} />
+              </Grid>
+              {data.getCompetition.status === CompetitionStatus.Finished && (
+                <Grid item style={{ width: '80%', maxWidth: '500px' }}>
+                  <Podium winners={data.getCompetition.rankedRiders.items} />
+                </Grid>
+              )}
+              <Grid item style={{ width: '95%' }}>
+                <HeatsStructure rounds={data.getCompetition.rounds.items} eventId={data.getCompetition.event.id} />
+              </Grid>
             </Grid>
-          )}
-          <Grid item style={{ width: '95%' }}>
-            <HeatsStructure rounds={data.getCompetition.rounds.items} eventId={data.getCompetition.event.id} />
-          </Grid>
-        </Grid>
+          </>
+        )}
       </ScreenWrapper>
     </Grid>
   );

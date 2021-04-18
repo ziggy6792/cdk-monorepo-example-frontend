@@ -24,31 +24,31 @@ const heatStatusToTableType = (status: HeatStatus) => {
 
 const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
   const { data } = useGetHeatQuery({ variables: { id: heatId } });
-  if (!data) {
-    return <Spinner />;
-  }
-  
-  const eventId = data.getHeat.breadcrumbs.items.find((item) => item.type === "EVENT").id;
-  const eventTitle = data.getHeat.breadcrumbs.items.find((item) => item.type === "EVENT").name;
+
+  const { id: eventId, name: eventTitle } = data?.getHeat.breadcrumbs.items.find((item) => item.type === 'EVENT') || {};
 
   return (
-    <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='live'>
-      <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
-      <Grid container direction='column' justify='center' alignItems='center'>
-        <HeatSummary heat={data.getHeat} />
-        {data.getHeat.isJudge && (
-          <Grid item>
-            <JudgeHeat heat={data.getHeat} />
+    <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='live' showSpinner={!data}>
+      {data && (
+        <>
+          <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
+          <Grid container direction='column' justify='center' alignItems='center'>
+            <HeatSummary heat={data.getHeat} />
+            {data.getHeat.isJudge && (
+              <Grid item>
+                <JudgeHeat heat={data.getHeat} />
+              </Grid>
+            )}
+            <Grid item style={{ width: '100%' }}>
+              <ResultsTable
+                tableType={heatStatusToTableType(data.getHeat.status)}
+                riderAllocations={data.getHeat.riderAllocations.items}
+                noProgressing={data.getHeat.noProgressing}
+              />
+            </Grid>
           </Grid>
-        )}
-        <Grid item style={{ width: '100%' }}>
-          <ResultsTable
-            tableType={heatStatusToTableType(data.getHeat.status)}
-            riderAllocations={data.getHeat.riderAllocations.items}
-            noProgressing={data.getHeat.noProgressing}
-          />
-        </Grid>
-      </Grid>
+        </>
+      )}
     </ScreenWrapper>
   );
 };

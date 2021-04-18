@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
   dayPartition: {
     background: '#ddd',
     padding: theme.spacing(1, 2),
-    margin: theme.spacing(2, -0.5, 1)
+    margin: theme.spacing(2, -0.5, 1),
   },
 }));
 
@@ -32,18 +32,14 @@ interface DayPartitionProps {
 
 const DayPartition: React.FC<DayPartitionProps> = ({ day }) => {
   const classes = useStyles();
-  return(
+  return (
     <Typography variant='h4' color='textSecondary' component='div'>
       <Grid container spacing={1} justify='space-between' className={classes.dayPartition}>
-        <Grid item>
-          {DateFormatter.toShortDate(day)}
-        </Grid>
-        <Grid item>
-          {DateFormatter.toShortDay(day)}
-        </Grid>
+        <Grid item>{DateFormatter.toShortDate(day)}</Grid>
+        <Grid item>{DateFormatter.toShortDay(day)}</Grid>
       </Grid>
     </Typography>
-  )
+  );
 };
 
 const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }) => {
@@ -59,10 +55,12 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }
   const theme = useTheme();
 
   return (
-    <ScreenWrapper eventId={eventId} currentPath="timetable" onlyBottom>
+    <Grid>
       <Grid container direction='column' justify='center' alignItems='flex-start'>
-        <Grid item style={{ margin: theme.spacing(3,0,0) }}>
-          <Typography variant='h3' color='textPrimary'>Timetable</Typography>
+        <Grid item style={{ margin: theme.spacing(3, 0, 0) }}>
+          <Typography variant='h3' color='textPrimary'>
+            Timetable
+          </Typography>
         </Grid>
       </Grid>
       <Grid container direction='column' justify='center' alignItems='center'>
@@ -85,7 +83,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }
           </Grid>
         )}
       </Grid>
-    </ScreenWrapper>
+    </Grid>
   );
 };
 
