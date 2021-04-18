@@ -7,7 +7,7 @@ import React from 'react';
 import { Grid, Link, useTheme, Typography, Button } from '@material-ui/core';
 import { TimetableRound, TimetableScheduleItem } from 'src/gql/common/types';
 import { useHistory } from 'react-router';
-import { ROUTE_HEAT } from 'src/config/routes';
+import { ROUTE_COMPETITION, ROUTE_HEAT } from 'src/config/routes';
 
 interface TimetableEntryProps {
   scheduleItem: TimetableScheduleItem;
@@ -47,7 +47,15 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
   return (
     <>
       <Grid item>
-        <Typography variant='h4'>{round.longName}</Typography>
+        <Typography
+          variant='h4'
+          onClick={() => {
+            history.push(`${ROUTE_COMPETITION}/${round.competition.id}`);
+          }}
+          style={{ cursor: 'pointer' }}
+        >
+          {round.longName}
+        </Typography>
       </Grid>
       <Grid container direction='row' spacing={1} style={{ padding: theme.spacing(1, 1, 2, 0.5) }}>
         {round.heats.items.map((heat) => (

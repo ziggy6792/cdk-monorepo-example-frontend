@@ -89,6 +89,9 @@ export const GET_EVENT_SCHEDULE = gql`
               id
               roundNo
               longName
+              competition {
+                id
+              }
               heats {
                 items {
                   id

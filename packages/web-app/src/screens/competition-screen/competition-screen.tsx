@@ -67,7 +67,6 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
             <HeatsStructure rounds={data.getCompetition.rounds.items} eventId={data.getCompetition.event.id} />
           </Grid>
         </Grid>
-        )
       </ScreenWrapper>
     </Grid>
   );
