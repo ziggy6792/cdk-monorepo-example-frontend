@@ -55,6 +55,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache({
     possibleTypes: introspectionToPossibleTypes(introspectionQueryResultData),
   }),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+      // errorPolicy: 'all',
+    },
+    mutate: {
+      errorPolicy: 'ignore',
+    },
+  },
 });
 
 const ApiProvider: React.FC = ({ children }) => <ApolloProvider client={client}>{children}</ApolloProvider>;

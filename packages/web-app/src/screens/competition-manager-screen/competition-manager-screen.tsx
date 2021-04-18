@@ -20,10 +20,10 @@ interface IEventsScreenProps {
 }
 
 const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
-  const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
+  const { data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
-  const heats = !loading ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
-  const riderAllocations = !loading ? data.getCompetition.riderAllocations.items : [];
+  const heats = data ? _.flatten(data.getCompetition.rounds.items.map((round) => round.heats.items)) : [];
+  const riderAllocations = data ? data.getCompetition.riderAllocations.items : [];
 
   const disabledRiderAllocationButtons = data?.getCompetition.riderAllocations.items.length < 1;
 
@@ -35,9 +35,9 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
 
   return (
     <>
-      {loading && <Spinner />}
-      {!loading && !data.getCompetition.isAdmin && <Redirect to={ROUTE_PROFILE} />}
-      {!loading && (
+      {!data && <Spinner />}
+      {data && !data.getCompetition.isAdmin && <Redirect to={ROUTE_PROFILE} />}
+      {data && (
         <Grid container direction='column' justify='center' alignItems='center'>
           <Grid container direction='row' justify='flex-end' alignItems='center'>
             <Grid item>

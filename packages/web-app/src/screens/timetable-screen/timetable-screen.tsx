@@ -9,9 +9,9 @@ interface IScoreboardScreenProps {
 }
 
 const TimetableScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
-  const { loading, data } = useGetEventScheduleQuery({ variables: { id: eventId } });
+  const { data } = useGetEventScheduleQuery({ variables: { id: eventId } });
 
-  if (loading) {
+  if (!data) {
     return <Spinner />;
   }
 
