@@ -65,7 +65,7 @@ interface TopNavProps {
 const TopNavigation: React.FC<TopNavProps> = ({ eventTitle, dateString, dense = false }) => {
   const classes = useStyles();
 
-  const navBarTitle = 'Back 2 Basics 2021' || eventTitle || 'Tournament'
+  const navBarTitle = eventTitle || 'Tournament'
   const navBarSubtitle =  dateString || '24th April 2021';
 
   return (
