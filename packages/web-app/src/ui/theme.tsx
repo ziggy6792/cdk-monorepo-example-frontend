@@ -20,26 +20,26 @@ export default createMuiTheme({
   },
   typography: {
     h2: {
-      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
+      fontFamily: "Roboto, 'Segoe UI', sans-serif",
       fontWeight: 700,
       fontSize: '2.5rem',
       color: arcBlue,
     },
     h3: {
       fontSize: '1.75rem',
-      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
+      fontFamily: "Roboto, 'Segoe UI', sans-serif",
       color: arcBlue,
       fontWeight: 700,
     },
     h4: {
       fontSize: '1rem',
-      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
+      fontFamily: "Roboto, 'Segoe UI', sans-serif",
       color: arcBlue,
       fontWeight: 700,
     },
     h5: {
       fontSize: '0.8rem',
-      fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
+      fontFamily: "Roboto, 'Segoe UI', sans-serif",
       color: arcBlue,
       fontWeight: 700,
     },
@@ -104,7 +104,7 @@ export default createMuiTheme({
     },
     MuiButton: {
       root: {
-        fontFamily: "Roboto, 'Segoe UI', 'sans-serif'",
+        fontFamily: "Roboto, 'Segoe UI', sans-serif",
         padding: '2px 10px',
         position: 'inherit'
       },
