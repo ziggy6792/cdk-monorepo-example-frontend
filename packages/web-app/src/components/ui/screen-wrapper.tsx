@@ -8,10 +8,10 @@ import BottomNavigation from './bottom-navigation'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     normalContent: {
-      padding: '90px 0 40px'
+      padding: '100px 0 140px'
     },
     denseContent: {
-      padding: '60px 0 40px'
+      padding: '70px 0 140px'
     },
   })
 );

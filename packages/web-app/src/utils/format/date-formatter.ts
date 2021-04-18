@@ -9,6 +9,7 @@ const DateFormatter = {
   toShortDay: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEEE'), defaultString),
   toLongDay: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEEE, MMMM d'), defaultString),
   toTime: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'HH:mm'), defaultString),
+  toDay: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEEE'), defaultString),
   toDayAndTime: (date: Date, defaultString = 'TBD'): string => formatDate(date, (d) => format(d, 'EEE HH:mm'), defaultString),
 };
 

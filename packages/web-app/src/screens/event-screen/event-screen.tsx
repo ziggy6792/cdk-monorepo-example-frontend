@@ -85,9 +85,9 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
             </Typography>
           </CardContent>
         </Grid>
-        <Container maxWidth='lg' style={{ padding: 0 }}>
+        <Grid item>
           <CompetitionsTable competitions={data.getEvent.competitions.items} />
-        </Container>
+        </Grid>
       </Grid>
       {/* FAB Menu will be rendered based on UAC role */}
       {data.getEvent.isAdmin && (
