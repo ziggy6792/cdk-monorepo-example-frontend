@@ -1,11 +1,11 @@
 import React from 'react';
+import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
 import { useHistory } from 'react-router';
 
 import { Button, Grid } from '@material-ui/core';
 import { Build } from '@material-ui/icons';
 
-import { useGetCompetitionQuery } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
 import CompetitionSummary from 'src/modules/summary/competition-summary';
 import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
@@ -30,17 +30,17 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
         <>
           <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
           <Grid container direction='column' justify='center' alignItems='center'>
-          <Grid item>
-            <Button
-              startIcon={<Build />}
-              variant='contained'
-              color='primary'
-              onClick={() => {
-                history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
-              }}
-            >
-              Competition Manager
-            </Button>
+            <Grid item>
+              <Button
+                startIcon={<Build />}
+                variant='contained'
+                color='primary'
+                onClick={() => {
+                  history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
+                }}
+              >
+                Competition Manager
+              </Button>
             </Grid>
 
             {/* ToDo: Fix this */}
