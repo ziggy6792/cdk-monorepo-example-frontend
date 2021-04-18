@@ -34,10 +34,12 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     );
   }
 
+  // return <div>hello</div>;
+
   if (!data.selectedHeat) {
     return (
       <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom>
-        <Grid container justify='center' alignItems='center' style={{ height: '100vh'}}>
+        <Grid container justify='center' alignItems='center' style={{ height: '100vh' }}>
           <Grid item>
             <Typography
               variant='h6'
@@ -54,7 +56,7 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
       </ScreenWrapper>
     );
   }
-  
+
   return (
     <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom>
       <Grid container direction='column' justify='center' alignItems='center'>
@@ -65,11 +67,7 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
           </Grid>
         )}
         <Grid item style={{ width: '100%' }}>
-          <ScoresTables
-            riderAllocations={data.selectedHeat.riderAllocations.items}
-            eventId={eventId}
-            noProgressing={data.selectedHeat.noProgressing} 
-          />
+          <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
         </Grid>
       </Grid>
     </ScreenWrapper>

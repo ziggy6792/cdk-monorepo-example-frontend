@@ -1,4 +1,4 @@
-import { RiderAllocation, User, Heat, ScheduleItem, Round, Maybe } from 'src/generated-types';
+import { RiderAllocation, User, Heat, ScheduleItem, Round, Maybe, Competition, RiderRank } from 'src/generated-types';
 
 export type IRiderOption = Pick<RiderAllocation, 'startSeed' | 'userId'> & {
   user: Pick<User, 'id' | 'fullName'>;
@@ -21,3 +21,11 @@ export type TimetableScheduledItem = TimetableRound;
 export type TimetableScheduleItem = { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'> & {
     scheduledItem: Maybe<TimetableScheduledItem>;
   };
+
+export type IRiderRankItem = Pick<RiderRank, 'userId' | 'rank'> & { user: Maybe<Pick<User, 'id' | 'fullName'>> };
+
+export type ICompetitionSummary = Pick<Competition, 'id' | 'name' | 'startTime' | 'status'> & { judgeUser?: Pick<User, 'fullName'> } & {
+  rankedRiders: { __typename?: 'RiderRankList' } & {
+    items: Array<IRiderRankItem>;
+  };
+};

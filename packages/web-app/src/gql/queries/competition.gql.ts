@@ -3,11 +3,29 @@ import { BREADCRUMB_FIELDS } from './breadcrumbs.gql';
 
 /* eslint-disable import/prefer-default-export */
 
+export const RANKED_RIDERS_FIELDS = gql`
+  fragment RankedRidersFields on Competition {
+    rankedRiders {
+      items {
+        userId
+        rank
+        user {
+          id
+          fullName
+        }
+      }
+    }
+  }
+`;
+
 const CORE_COMPETITION_FIELDS = gql`
   ${BREADCRUMB_FIELDS}
+  ${RANKED_RIDERS_FIELDS}
   fragment CoreCompetitionFields on Competition {
     ...BreadcrumbFields
+    ...RankedRidersFields
     id
+    status
     winners {
       items {
         allocatableId

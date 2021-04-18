@@ -6,7 +6,7 @@ import { Button, Grid } from '@material-ui/core';
 import { Build } from '@material-ui/icons';
 
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
-import { useGetCompetitionQuery } from 'src/generated-types';
+import { CompetitionStatus, useGetCompetitionQuery } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
 import CompetitionSummary from 'src/modules/summary/competition-summary';
 import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
@@ -24,33 +24,33 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
 
   const history = useHistory();
 
-  console.log(data)
+  console.log('CompetitionScreen', data);
 
-  if(!data){
-    return <Spinner />
+  if (!data) {
+    return <Spinner />;
   }
 
-  const eventId = data.getCompetition.breadcrumbs.items.find((item) => item.type === "EVENT").id;
-  const eventTitle = data.getCompetition.breadcrumbs.items.find((item) => item.type === "EVENT").name;
+  const eventId = data.getCompetition.breadcrumbs.items.find((item) => item.type === 'EVENT').id;
+  const eventTitle = data.getCompetition.breadcrumbs.items.find((item) => item.type === 'EVENT').name;
 
   return (
     <>
       <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='tournament' onlyBottom>
         <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
         <Grid container direction='column' justify='center' alignItems='center'>
-        <Grid item>
-          {data.getCompetition.isAdmin && (
-            <Button
-              startIcon={<Build />}
-              variant='contained'
-              color='primary'
-              onClick={() => {
-                history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
-              }}
-            >
-              Competition Manager
-            </Button>
-          )}
+          <Grid item>
+            {data.getCompetition.isAdmin && (
+              <Button
+                startIcon={<Build />}
+                variant='contained'
+                color='primary'
+                onClick={() => {
+                  history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
+                }}
+              >
+                Competition Manager
+              </Button>
+            )}
           </Grid>
 
           {/* ToDo: Fix this */}
@@ -58,9 +58,9 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
           <Grid item style={{ width: '100%' }}>
             <CompetitionSummary summary={data.getCompetition} />
           </Grid>
-          {data.getCompetition.winners.items.length === 3 && (
+          {data.getCompetition.status === CompetitionStatus.Finished && (
             <Grid item style={{ width: '80%', maxWidth: '500px' }}>
-              <Podium winners={data.getCompetition.winners.items} />
+              <Podium winners={data.getCompetition.rankedRiders.items} />
             </Grid>
           )}
           <Grid item style={{ width: '95%' }}>
@@ -74,4 +74,3 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
 };
 
 export default CompetitionScreen;
- 
