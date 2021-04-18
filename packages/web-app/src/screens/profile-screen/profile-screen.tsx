@@ -47,7 +47,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ eventId }) => {
       direction='column'
       justify='center'
       alignItems='center'
-      style={{ height: '70vh', width: '100%' }}
+      style={{ height: '100vh', width: '100%' }}
       spacing={2}
     >
       <Grid item>
@@ -93,7 +93,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ eventId }) => {
 
   if(eventId){
     return (
-      <ScreenWrapper eventTitle='' eventId={eventId} currentPath='profile'>
+      <ScreenWrapper eventId={eventId} currentPath='profile' onlyBottom>
         <Content />
       </ScreenWrapper>
     );

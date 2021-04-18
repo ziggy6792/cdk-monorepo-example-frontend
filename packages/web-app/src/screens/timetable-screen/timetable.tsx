@@ -59,10 +59,10 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }
   const theme = useTheme();
 
   return (
-    <ScreenWrapper eventId={eventId} currentPath="timetable">
+    <ScreenWrapper eventId={eventId} currentPath="timetable" onlyBottom>
       <Grid container direction='column' justify='center' alignItems='flex-start'>
-        <Grid item style={{ margin: theme.spacing(2,0,3) }}>
-          <Typography variant='h3' color='textSecondary'>Timetable</Typography>
+        <Grid item style={{ margin: theme.spacing(3,0,0) }}>
+          <Typography variant='h3' color='textPrimary'>Timetable</Typography>
         </Grid>
       </Grid>
       <Grid container direction='column' justify='center' alignItems='center'>

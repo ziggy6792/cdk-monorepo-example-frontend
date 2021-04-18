@@ -27,9 +27,12 @@ const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
   if (!data) {
     return <Spinner />;
   }
+  
+  const eventId = data.getHeat.breadcrumbs.items.find((item) => item.type === "EVENT").id;
+  const eventTitle = data.getHeat.breadcrumbs.items.find((item) => item.type === "EVENT").name;
 
   return (
-    <ScreenWrapper eventTitle='' eventId='' currentPath='live'>
+    <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='live'>
       <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
       <Grid container direction='column' justify='center' alignItems='center'>
         <HeatSummary heat={data.getHeat} />
