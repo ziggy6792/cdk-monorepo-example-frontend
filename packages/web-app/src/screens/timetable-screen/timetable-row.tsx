@@ -4,7 +4,8 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { Button, Grid, Link } from '@material-ui/core';
+import { Typography, Grid, Link, Button } from '@material-ui/core';
+import { Edit } from '@material-ui/icons';
 import DateFormatter from 'src/utils/format/date-formatter';
 import { TimetableScheduleItem } from 'src/gql/common/types';
 import Dialog from 'src/components/ui/dialog';
@@ -52,17 +53,16 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
       </Dialog>
       <Grid container spacing={1}>
         <Grid item xs={4}>
-          <Link
-            onClick={
-              isAdmin
-                ? () => {
-                    setOpen(true);
-                  }
-                : null
-            }
-          >
-            {DateFormatter.toTime(scheduleItem.startTime, isAdmin ? 'Select time...' : 'TBD')}
-          </Link>
+          {isAdmin && (
+            <Button color='primary' variant='contained' onClick={() => setOpen(true)} startIcon={<Edit />}>
+              {scheduleItem.startTime ? DateFormatter.toTime(scheduleItem.startTime) : 'TBD'}
+            </Button>
+          )}
+          {!isAdmin && (
+            <Typography variant='h4' color='textPrimary' style={{ padding: '0 8px' }}>
+              {DateFormatter.toTime(scheduleItem.startTime, isAdmin ? 'Select time...' : 'TBD')}
+            </Typography>
+          )}
         </Grid>
         <Grid item xs={8}>
           <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} />
