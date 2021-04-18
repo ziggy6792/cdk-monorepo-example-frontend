@@ -15,16 +15,14 @@ interface IEventsScreenProps {
 }
 
 const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
-  const { loading, data } = useGetCompetitionQuery({ variables: { id: competitionId } });
-
-  console.log('competitionId', competitionId);
+  const { data } = useGetCompetitionQuery({ variables: { id: competitionId } });
 
   const history = useHistory();
 
   return (
     <>
-      {loading && <Spinner />}
-      {!loading && (
+      {!data && <Spinner />}
+      {data && (
         <>
           <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
           <Grid container direction='column' justify='center' alignItems='center'>

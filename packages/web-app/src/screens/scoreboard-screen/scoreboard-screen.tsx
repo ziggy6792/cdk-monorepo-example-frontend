@@ -26,9 +26,9 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     []
   );
 
-  if (loading) {
+  if (!data) {
     return (
-      <ScreenWrapper eventTitle='' eventId={eventId} currentPath="live" dense>
+      <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense>
         <Spinner />
       </ScreenWrapper>
     );
@@ -36,10 +36,10 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
 
   if (!data.selectedHeat) {
     return (
-      <ScreenWrapper eventTitle='' eventId={eventId} currentPath="live" dense>
+      <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense>
         <Grid container>
           <Grid item>
-            <Typography variant='h6' component="div" color='primary' style={{ padding: 24, lineHeight: 1.2, textTransform: 'none' }}>
+            <Typography variant='h6' component='div' color='primary' style={{ padding: 24, lineHeight: 1.2, textTransform: 'none' }}>
               There are currently no live heats.
               <br />
               Check back in a bit!
@@ -51,7 +51,7 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
   }
 
   return (
-    <ScreenWrapper eventTitle='' eventId={eventId} currentPath="live" dense>
+    <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense>
       <Grid container direction='column' justify='center' alignItems='center'>
         <HeatSummary heat={data.selectedHeat} />
         {data.selectedHeat.isJudge && (

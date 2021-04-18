@@ -10,19 +10,16 @@ import EventsTable from './events-table';
 import EventCard from './event-card';
 
 const EventsScreen: React.FC = () => {
-  const { loading, data } = useListEventsQuery();
+  const { data } = useListEventsQuery();
   const isAuthenticated = useSelector(authSelectors.selectIsAuthenticated);
-
-  console.log('Events Screen')
-  console.log(data);
 
   return (
     <>
       <Typography variant='h3' style={{ textAlign: 'center', padding: '48px 16px 24px', color: '#297b92' }}>
         Welcome to Alpaca!
       </Typography>
-      {loading && <Spinner />}
-      {!loading && (
+      {!data && <Spinner />}
+      {data && (
         <CardContent>
           {isAuthenticated && (
             <Grid item>
@@ -30,21 +27,23 @@ const EventsScreen: React.FC = () => {
             </Grid>
           )}
           <Grid container spacing={3}>
-            {data.listEvents.map(event => {
-              console.log(event)
+            {data.listEvents.map((event) => {
+              console.log(event);
               return (
                 <Grid item xs={12} md={6} lg={4} key={event.id}>
-                  <EventCard event={event}/>
+                  <EventCard event={event} />
                 </Grid>
-            )})}
+              );
+            })}
             <Grid item xs={12} md={6} lg={4}>
               <CardContent>
-                <Typography variant='h4' style={{ textAlign: 'right', textTransform: 'none', color: '#297b92' }}>... more events coming soon!</Typography>
+                <Typography variant='h4' style={{ textAlign: 'right', textTransform: 'none', color: '#297b92' }}>
+                  ... more events coming soon!
+                </Typography>
               </CardContent>
             </Grid>
-          </Grid>  
+          </Grid>
         </CardContent>
-        
       )}
     </>
   );

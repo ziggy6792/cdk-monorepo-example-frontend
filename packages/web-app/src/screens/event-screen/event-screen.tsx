@@ -28,20 +28,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const DESCRIPTION = `Welcome to #back2basics2021 at Singapore Wakepark. 
-// Please take note of the timings for each respective category. 
-// Do note that there has been a change in timing for the Men’s Intermediate Wakeboard and 
-// Women’s Wakeboard Open categories. 
-// Due to social distancing measures, only riders are allowed in the ski area only during 
-// their respective time slots and must leave after their event has completed. Prize-giving 
-// for each category will also be done immediately after each respective category’s Final round. 
-// No spectators are allowed within the ski zone at all times and we encourage everyone to 
-// view the event through live-streaming which will be available on our Facebook page 
+// const DESCRIPTION = `Welcome to #back2basics2021 at Singapore Wakepark.
+// Please take note of the timings for each respective category.
+// Do note that there has been a change in timing for the Men’s Intermediate Wakeboard and
+// Women’s Wakeboard Open categories.
+// Due to social distancing measures, only riders are allowed in the ski area only during
+// their respective time slots and must leave after their event has completed. Prize-giving
+// for each category will also be done immediately after each respective category’s Final round.
+// No spectators are allowed within the ski zone at all times and we encourage everyone to
+// view the event through live-streaming which will be available on our Facebook page
 // at https://www.facebook.com/singaporewba/.`;
 
 const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
   const classes = useStyles();
-  const { loading, data } = useGetEventQuery({ variables: { id: eventId } });
+  const { data } = useGetEventQuery({ variables: { id: eventId } });
 
   /* 
     TODO
@@ -49,9 +49,9 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
     - Edit Event / Add Comp logic should not be so tightly coupled to button
     */
 
-  if (loading) {
+  if (!data) {
     return (
-      <ScreenWrapper eventTitle='' eventId={eventId} currentPath="overall">
+      <ScreenWrapper eventTitle='' eventId={eventId} currentPath='overall'>
         <Spinner />
       </ScreenWrapper>
     );
@@ -65,7 +65,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
   } = data.getEvent;
 
   return (
-    <ScreenWrapper eventTitle={name} eventId={eventId} currentPath="overall" >
+    <ScreenWrapper eventTitle={name} eventId={eventId} currentPath='overall'>
       <Grid container direction='column'>
         <Grid item>
           <CardContent>
