@@ -26,17 +26,6 @@ const CORE_COMPETITION_FIELDS = gql`
     ...RankedRidersFields
     id
     status
-    winners {
-      items {
-        allocatableId
-        position
-        userId
-        user {
-          id
-          fullName
-        }
-      }
-    }
     isAdmin
     isJudge
     event {

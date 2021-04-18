@@ -751,17 +751,7 @@ export type RankedRidersFieldsFragment = (
 export type CoreCompetitionFieldsFragment = (
   { __typename?: 'Competition' }
   & Pick<Competition, 'id' | 'status' | 'isAdmin' | 'isJudge' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'>
-  & { winners: (
-    { __typename?: 'RiderAllocationList' }
-    & { items: Array<(
-      { __typename?: 'RiderAllocation' }
-      & Pick<RiderAllocation, 'allocatableId' | 'position' | 'userId'>
-      & { user: Maybe<(
-        { __typename?: 'User' }
-        & Pick<User, 'id' | 'fullName'>
-      )> }
-    )> }
-  ), event: (
+  & { event: (
     { __typename?: 'Event' }
     & Pick<Event, 'id'>
   ), judgeUser: Maybe<(
@@ -1030,7 +1020,10 @@ export type GetEventScheduleQuery = (
         & { scheduledItem: Maybe<(
           { __typename?: 'Round' }
           & Pick<Round, 'id' | 'roundNo' | 'longName'>
-          & { heats: (
+          & { competition: (
+            { __typename?: 'Competition' }
+            & Pick<Competition, 'id'>
+          ), heats: (
             { __typename?: 'HeatList' }
             & { items: Array<(
               { __typename?: 'Heat' }
@@ -1239,17 +1232,6 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
   ...RankedRidersFields
   id
   status
-  winners {
-    items {
-      allocatableId
-      position
-      userId
-      user {
-        id
-        fullName
-      }
-    }
-  }
   isAdmin
   isJudge
   event {
@@ -1810,6 +1792,9 @@ export const GetEventScheduleDocument = gql`
             id
             roundNo
             longName
+            competition {
+              id
+            }
             heats {
               items {
                 id

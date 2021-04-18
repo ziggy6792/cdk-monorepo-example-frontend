@@ -13,6 +13,8 @@ export type IWinnerItem = Pick<RiderAllocation, 'position'> & {
 };
 
 export type TimetableRound = { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'longName'> & {
+    competition: Pick<Competition, 'id'>;
+  } & {
     heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
   };
 
