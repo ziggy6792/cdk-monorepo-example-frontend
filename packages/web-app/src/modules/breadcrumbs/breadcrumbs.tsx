@@ -18,14 +18,18 @@ const routeLookup = {
 const Breadcrumbs: React.FC<IBreadcrumbs> = ({ breadcrumbs }) => {
   const history = useHistory();
   return (
-    <MuiBreadcrumbs aria-label='breadcrumb'>
+    <MuiBreadcrumbs separator=">" aria-label='breadcrumb' style={{ padding: 16 }}>
       {breadcrumbs.items.map(({ name, type, id }, i) =>
         i < breadcrumbs.items.length - 1 ? (
           <Link color='inherit' onClick={() => history.push(`${routeLookup[type]}/${id}`)} style={{ cursor: 'pointer' }}>
-            {name}
+            <Typography variant='h6' style={{ background: '#ccc', padding: '8px 16px', borderRadius: 4 }}>
+              {name}
+            </Typography>
           </Link>
         ) : (
-          <Typography color='textPrimary'>{name}</Typography>
+          <Typography color='textPrimary' variant='h6' style={{ background: '#fff', padding: '8px 16px', borderRadius: 4 }}>
+            {name}
+          </Typography>
         )
       )}
     </MuiBreadcrumbs>
