@@ -185,7 +185,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
                       color='primary'
                       startIcon={<ArrowForward />}
                     >
-                      Open
+                      Go to Competition
                     </Button>
                   </Grid>
                 </Grid>

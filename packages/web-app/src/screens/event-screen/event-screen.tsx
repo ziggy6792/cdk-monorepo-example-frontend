@@ -1,13 +1,15 @@
 import React from 'react';
-import { Grid, Typography, Container, CardContent, makeStyles } from '@material-ui/core';
+import { useHistory } from 'react-router';
+import { Grid, Typography, CardContent, makeStyles } from '@material-ui/core';
 import { useGetEventQuery } from 'src/generated-types';
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import Spinner from 'src/components/spinner';
-import { useHistory } from 'react-router';
+import image from 'src/background.jpg'
 import CompetitionsTable from './competitions-table';
 import EditEvent from './buttons/edit-event';
 import AddCompetition from './buttons/add-competition';
+
 
 interface IEventsScreenProps {
   eventId: string;
@@ -69,9 +71,20 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
       <Grid container direction='column'>
         <Grid item>
           <CardContent>
+            
             <Typography variant='h3' color='primary'>
               Event Description
             </Typography>
+            <img
+              src={image}
+              alt='wakey'
+              style={{
+                width: '100%',
+                margin: '16px 0',
+                filter: 'grayscale(1)',
+                zIndex: 0
+              }}
+            />
             <br />
             <Typography className={classes.description} variant='body2' color='textPrimary'>
               {description}
