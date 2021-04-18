@@ -1,18 +1,18 @@
 import React, { ReactNode } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Fab from '@material-ui/core/Fab';
-
-import EditIcon from '@material-ui/icons/Edit';
+import { Menu , MenuItem, Fab, Divider } from '@material-ui/core/';
+import { Edit } from '@material-ui/icons/';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       position: 'fixed',
-      bottom: theme.spacing(2),
+      bottom: theme.spacing(9),
       right: theme.spacing(2),
     },
+    menuItem: {
+      // margin: theme.spacing(0.5,0)
+    }
   })
 );
 
@@ -34,10 +34,23 @@ const FabDropdownMenu = ({ children }: IProps) => {
 
   return (
     <>
-      <Fab className={classes.fab} color='primary' aria-label='edit' aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick}>
-        <EditIcon />
+      <Fab
+        className={classes.fab}
+        color='primary'
+        aria-label='edit'
+        aria-controls='simple-menu'
+        aria-haspopup='true'
+        onClick={handleClick}
+      >
+        <Edit />
       </Fab>
-      <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+      <Menu
+        id='simple-menu'
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
         {React.Children.map(children, (child: any) =>
           React.cloneElement(child, {
             handleClose,
@@ -67,6 +80,7 @@ interface IPropsItem {
 // };
 
 const DropdownItem: React.FC<IPropsItem> = React.forwardRef(({ handleClose, onClick, children }, ref) => {
+  const classes = useStyles();
   const handleOnClick = () => {
     handleClose();
     if (typeof onClick === 'function') {
@@ -75,9 +89,11 @@ const DropdownItem: React.FC<IPropsItem> = React.forwardRef(({ handleClose, onCl
   };
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <MenuItem innerRef={ref} onClick={handleOnClick}>
-      {children}
-    </MenuItem>
+    <>
+      <MenuItem innerRef={ref} onClick={handleOnClick} className={classes.menuItem}>
+        {children}
+      </MenuItem>
+    </>
   );
 });
 

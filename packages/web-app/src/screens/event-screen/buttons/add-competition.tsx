@@ -46,22 +46,23 @@ const AddCompetition: React.FC<IAddCompetitionProps> = ({ eventId }) => {
 
   return (
     <>
-      <Grid container direction='column'>
-        <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-          <Grid item>
-            <Button
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
-              Add Competition
-            </Button>
-          </Grid>
+      <Grid container direction='row' justify='center'>
+        <Grid item xs={12}>
+          <Button
+            color='primary'
+            variant='contained'
+            onClick={() => {
+              setOpen(true);
+            }}
+            style={{ width: '100%', padding: '8px 16px' }}
+          >
+            Add Competition
+          </Button>
         </Grid>
-        <Dialog open={open} setOpen={setOpen}>
-          <CompetitionForm title='Add New Competition' onSubmit={onCreateCompetition} onCancel={() => setOpen(false)} />
-        </Dialog>
       </Grid>
+      <Dialog open={open} setOpen={setOpen}>
+        <CompetitionForm title='Add New Competition' onSubmit={onCreateCompetition} onCancel={() => setOpen(false)} />
+      </Dialog>
     </>
   );
 };

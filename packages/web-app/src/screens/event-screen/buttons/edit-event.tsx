@@ -43,22 +43,23 @@ const EditEvent: React.FC<IEditEventProps> = ({ eventToEdit }) => {
 
   return (
     <>
-      <Grid container direction='column'>
-        <Grid container direction='row' justify='center' style={{ marginTop: theme.spacing(2) }}>
-          <Grid item>
-            <Button
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
-              Edit Event
-            </Button>
-          </Grid>
+      <Grid container direction='row' justify='center'>
+        <Grid item xs={12}>
+          <Button
+            color='primary'
+            variant='contained'
+            onClick={() => {
+              setOpen(true);
+            }}
+            style={{ width: '100%', padding: '8px 16px' }}
+          >
+            Edit Event
+          </Button>
         </Grid>
-        <Dialog open={open} setOpen={setOpen}>
-          <EventForm title='Edit Event' onSubmit={onUpdateEvent} onCancel={() => setOpen(false)} initialValues={eventToEdit} />
-        </Dialog>
       </Grid>
+      <Dialog open={open} setOpen={setOpen}>
+        <EventForm title='Edit Event' onSubmit={onUpdateEvent} onCancel={() => setOpen(false)} initialValues={eventToEdit} />
+      </Dialog>
     </>
   );
 };
