@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import _ from 'lodash';
 import { Button } from '@material-ui/core';
+import { Event } from '@material-ui/icons';
 
 import { useCreateScheduleItemMutation } from 'src/generated-types';
 import { GET_EVENT_SCHEDULE } from 'src/gql/queries/event.gql';
@@ -41,6 +42,9 @@ const AddNotice: React.FC<IAddNoticeProps> = ({ eventId }) => {
         onClick={() => {
           setOpen(true);
         }}
+        variant='contained'
+        color='primary'
+        startIcon={<Event />}
       >
         Add Notice
       </Button>

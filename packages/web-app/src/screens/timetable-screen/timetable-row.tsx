@@ -51,7 +51,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
           allowSubmitPristine={!scheduleItem.startTime}
         />
       </Dialog>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} style={{ padding: '8px 0 0'}}>
         <Grid item xs={4}>
           {isAdmin && (
             <Button color='primary' variant='contained' onClick={() => setOpen(true)} startIcon={<Edit />}>

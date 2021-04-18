@@ -4,7 +4,7 @@
 
 import React from 'react';
 import _ from 'lodash';
-import { Grid, Typography, useTheme, makeStyles} from '@material-ui/core';
+import { Grid, Typography, useTheme, makeStyles, Divider } from '@material-ui/core';
 import { startOfDay, parseISO } from 'date-fns';
 import DateFormatter from 'src/utils/format/date-formatter';
 import { TimetableScheduleItem } from 'src/gql/common/types';
@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
   dayPartition: {
     background: '#ddd',
     padding: theme.spacing(1, 1),
-    margin: theme.spacing(2, -0.5, 3)
+    margin: theme.spacing(2, -0.5, 1)
   },
 }));
 
@@ -59,18 +59,21 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }
   const theme = useTheme();
 
   return (
-    <ScreenWrapper eventId={eventId} currentPath="timetable" >
-      <Grid container direction='column' justify='center' alignItems='center'>
-        <Grid item style={{ marginBottom: theme.spacing(2) }}>
-          <Typography>Timetable</Typography>
+    <ScreenWrapper eventId={eventId} currentPath="timetable">
+      <Grid container direction='column' justify='center' alignItems='flex-start'>
+        <Grid item style={{ margin: theme.spacing(2,0,3) }}>
+          <Typography variant='h3' color='textSecondary'>Timetable</Typography>
         </Grid>
       </Grid>
       <Grid container direction='column' justify='center' alignItems='center'>
         {scheduleDays.map(({ day, scheduleItems }) => (
           <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px', marginBottom: theme.spacing(2) }}>
             {day && <DayPartition day={day} />}
-            {scheduleItems.map((scheduleItem) => (
-              <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} isAdmin={isAdmin} />
+            {scheduleItems.map((scheduleItem, i) => (
+              <>
+                {i !== 0 && <Divider />}
+                <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} isAdmin={isAdmin} />
+              </>
             ))}
           </Grid>
         ))}

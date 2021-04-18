@@ -47,7 +47,7 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
       <Grid item>
         <Typography variant='h4'>{round.longName}</Typography>
       </Grid>
-      <Grid container direction='row' spacing={1} style={{ padding: theme.spacing(1, 1, 3, 0.5) }}>
+      <Grid container direction='row' spacing={1} style={{ padding: theme.spacing(1, 1, 2, 0.5) }}>
         {round.heats.items.map((heat) => (
           <Grid item key={heat.name}>
             <Button
