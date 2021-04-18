@@ -5,10 +5,16 @@ import { useGetEventQuery } from 'src/generated-types';
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import Spinner from 'src/components/spinner';
+
+import sponsor1 from 'src/sponsor-embily.jpg';
+import sponsor2 from 'src/sponsor-swp.png';
+import sponsor3 from 'src/sponsor-mystic.png';
+import sponsor4 from 'src/sponsor-slingshot.jpg';
+import sponsor5 from 'src/sponsor-777.png';
+
 import CompetitionsTable from './competitions-table';
 import EditEvent from './buttons/edit-event';
 import AddCompetition from './buttons/add-competition';
-
 
 interface IEventsScreenProps {
   eventId: string;
@@ -96,6 +102,23 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
         )}
         <Grid item>
           <CompetitionsTable competitions={data.getEvent.competitions.items} />
+        </Grid>
+        
+        <Grid item>
+          <CardContent>
+            <Typography variant='h3' color='primary'>
+              Sponsors
+            </Typography>
+          </CardContent>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={2} justify='space-around' style={{ padding: '0 16px' }}>
+            <Grid item><img src={sponsor2} alt='swp' style={{height: 100}} /></Grid>
+            <Grid item><img src={sponsor5} alt='777' style={{height: 100}} /></Grid>
+            <Grid item><img src={sponsor3} alt='mystic' style={{height: 25}} /></Grid>
+            <Grid item><img src={sponsor4} alt='slingshot' style={{height: 25}} /></Grid>
+            <Grid item><img src={sponsor1} alt='embily' style={{height: 50}} /></Grid>
+          </Grid>
         </Grid>
       </Grid>
       {/* FAB Menu will be rendered based on UAC role */}
