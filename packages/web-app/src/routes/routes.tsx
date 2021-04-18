@@ -29,7 +29,8 @@ const Routes: React.FC = () => {
       </Route>
       <Switch>
         <Route exact path={routeConfig.ROUTE_EVENTS} component={EventsScreen} />
-        <Route exact path={routeConfig.ROUTE_PROFILE} component={ProfileScreen} />
+        <Route exact path={`${routeConfig.ROUTE_PROFILE}`} component={ProfileScreen} />
+        <Route exact path={`${routeConfig.ROUTE_PROFILE}/:eventId`} render={({ match: { params } }) => <ProfileScreen eventId={params.eventId} />} />
         <Route exact path={routeConfig.ROUTE_HOME} component={HomeScreen} />
         <Route exact path={`${routeConfig.ROUTE_EVENT}/:eventId`} render={({ match: { params } }) => <EventScreen eventId={params.eventId} />} />
         <Route
@@ -42,7 +43,7 @@ const Routes: React.FC = () => {
           path={`${routeConfig.ROUTE_COMPETITION}/:competitionId`}
           render={({ match: { params } }) => <CompetitionScreen competitionId={params.competitionId} />}
         />
-        <Route exact path={`${routeConfig.ROUTE_SCOREBOARD}/:eventId`} render={({ match: { params } }) => <ScoreboardScreen eventId={params.eventId} />} />
+        <Route exact path={`${routeConfig.ROUTE_LIVE}/:eventId`} render={({ match: { params } }) => <ScoreboardScreen eventId={params.eventId} />} />
         <Route exact path={`${routeConfig.ROUTE_TIMETABLE}/:eventId`} render={({ match: { params } }) => <TimetableScreen eventId={params.eventId} />} />
         <Route exact path={`${routeConfig.ROUTE_HEAT}/:heatId`} render={({ match: { params } }) => <HeatScreen heatId={params.heatId} />} />
         {/* ToDo: Page not found */}

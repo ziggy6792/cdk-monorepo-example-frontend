@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { parseISO, startOfDay } from 'date-fns';
 import DateFormatter from 'src/utils/format/date-formatter';
 import { useHistory } from 'react-router';
-import { ROUTE_HEAT, ROUTE_SCOREBOARD } from 'src/config/routes';
+import { ROUTE_HEAT, ROUTE_LIVE } from 'src/config/routes';
 import HeatCard, { HeatCardStatus } from './heat-card';
 
 const useStyles = makeStyles(() => ({
@@ -92,7 +92,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                     <HeatCard
                       onClick={() => {
                         if (heat.status === HeatStatus.InProgress) {
-                          history.push(`${ROUTE_SCOREBOARD}/${eventId}`);
+                          history.push(`${ROUTE_LIVE}/${eventId}`);
                         } else {
                           history.push(`${ROUTE_HEAT}/${heat.id}`);
                         }

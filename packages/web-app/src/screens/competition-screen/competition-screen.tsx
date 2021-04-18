@@ -26,16 +26,16 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
         <>
           <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
           <Grid container direction='column' justify='center' alignItems='center'>
-            <Grid item>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={() => {
-                  history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
-                }}
-              >
-                Competition Manager
-              </Button>
+          <Grid item>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => {
+                history.push(`${ROUTE_COMPETITION_MANAGER}/${competitionId}`);
+              }}
+            >
+              Competition Manager
+            </Button>
             </Grid>
 
             {/* ToDo: Fix this */}

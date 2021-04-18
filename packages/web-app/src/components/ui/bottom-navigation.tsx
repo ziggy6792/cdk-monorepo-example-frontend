@@ -10,7 +10,7 @@ import {
   BottomNavigationAction 
 } from '@material-ui/core';
 import { EventNote, AccountTree, Home, AccountCircle, ControlCamera } from '@material-ui/icons';
-import { ROUTE_SCOREBOARD, ROUTE_TIMETABLE, ROUTE_PROFILE, ROUTE_EVENT } from 'src/config/routes';
+import { ROUTE_LIVE, ROUTE_TIMETABLE, ROUTE_PROFILE, ROUTE_EVENT, ROUTE_TOURNAMENT } from 'src/config/routes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,25 +46,21 @@ const BottomNavigation: React.FC<BottomNavProps> = ({ eventId, currentPath }) =>
   const history = useHistory();
   
   const routes = {
-    "tournament": ROUTE_TIMETABLE,
+    "tournament": ROUTE_TOURNAMENT,
     "timetable": ROUTE_TIMETABLE,
     "overall": ROUTE_EVENT,
-    "live": ROUTE_SCOREBOARD,
-    "admin": ROUTE_PROFILE,
+    "live": ROUTE_LIVE,
+    "profile": ROUTE_PROFILE,
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, newValue: string) => {
-    if(newValue === 'profile'){
-      history.push(ROUTE_PROFILE)
-    }else{
-      history.push(`${routes[newValue]}/${eventId}`);
-    }
+    history.push(`${routes[newValue]}/${eventId}`);
   };
 
   return (
     <Card className={classes.root}>
       <MuiBottomNavigation value={currentPath} showLabels onChange={handleChange} className={classes.root}>
-        <BottomNavigationAction label="Tournament" value="tournament" icon={<AccountTree style={{ transform: "scaleX(-1)" }} />} />
+        {/* <BottomNavigationAction label="Tournament" value="tournament" icon={<AccountTree style={{ transform: "scaleX(-1)" }} />} /> */}
         <BottomNavigationAction label="Timetable" value="timetable" icon={<EventNote />} />
         <BottomNavigationAction label="Overall" value="overall" icon={<Home />} />
         <BottomNavigationAction label="Live" value="live" icon={<ControlCamera />} />

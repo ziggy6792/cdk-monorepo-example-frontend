@@ -12,7 +12,7 @@ import {
   ValidationItemHeatAlreadyOpen,
 } from 'src/generated-types';
 import { useHistory } from 'react-router';
-import { ROUTE_SCOREBOARD } from 'src/config/routes';
+import { ROUTE_LIVE } from 'src/config/routes';
 import ProgressButton from 'src/components/ui/buttons/progress-button';
 import Dialog from 'src/components/ui/dialog';
 import ValidationItems, { ValidationItemContent } from 'src/modules/validation-items';
@@ -45,7 +45,7 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
       setValidationItems(response.data.selectHeat.items);
       setOpen(true);
     } else if (response.data.selectHeat.__typename === 'Event') {
-      history.push(`${ROUTE_SCOREBOARD}/${response.data.selectHeat.id}`);
+      history.push(`${ROUTE_LIVE}/${response.data.selectHeat.id}`);
     }
     return null;
   };
@@ -63,7 +63,7 @@ const JudgeHeat: React.FC<IJudgeHeatProps> = ({ heat }) => {
     const message = validationMessageLookup[validationItem.message];
     if (validationItem.__typename === 'ValidationItemHeatAlreadyOpen') {
       return {
-        action: <Link onClick={() => history.push(`${ROUTE_SCOREBOARD}/${validationItem.eventId}`)}>Open Scoreboard</Link>,
+        action: <Link onClick={() => history.push(`${ROUTE_LIVE}/${validationItem.eventId}`)}>Open Scoreboard</Link>,
         message,
       };
     }
