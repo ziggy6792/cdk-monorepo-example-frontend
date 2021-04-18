@@ -15,7 +15,7 @@ import AddNotice from './buttons/add-notice';
 export const useStyles = makeStyles((theme) => ({
   dayPartition: {
     background: '#ddd',
-    padding: theme.spacing(1, 1),
+    padding: theme.spacing(1, 2),
     margin: theme.spacing(2, -0.5, 1)
   },
 }));
@@ -33,7 +33,7 @@ interface DayPartitionProps {
 const DayPartition: React.FC<DayPartitionProps> = ({ day }) => {
   const classes = useStyles();
   return(
-    <Typography variant='h4' color='textPrimary' component='div'>
+    <Typography variant='h4' color='textSecondary' component='div'>
       <Grid container spacing={1} justify='space-between' className={classes.dayPartition}>
         <Grid item>
           {DateFormatter.toShortDate(day)}

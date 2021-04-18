@@ -39,7 +39,12 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
       <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom>
         <Grid container justify='center' alignItems='center' style={{ height: '100vh'}}>
           <Grid item>
-            <Typography variant='h6' component='div' color='primary' style={{ padding: 50, textAlign: 'center', lineHeight: 1.2, textTransform: 'none' }}>
+            <Typography
+              variant='h6'
+              component='div'
+              color='primary'
+              style={{ textAlign: 'center', lineHeight: 1.2, textTransform: 'none' }}
+            >
               There are currently no live heats.
               <br />
               Check back in a bit!

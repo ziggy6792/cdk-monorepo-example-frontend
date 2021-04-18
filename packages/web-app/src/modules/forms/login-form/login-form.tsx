@@ -199,18 +199,18 @@ const SignUpForm: React.FC<SubFormProps> = ({ setFormType, submitForm, isSubmitD
         Sign Up
       </Button>
     </Grid>
-    <Grid item>
-      <Typography>Have a Profile?</Typography>
-      <Button
-        color='primary'
-        onClick={() => {
-          resetForm();
-          setFormType(FormType.SIGN_IN);
-        }}
-      >
-        Sign In
-      </Button>
-    </Grid>
+    <Grid item style={{ background: '#ddd', padding: '8px 16px', margin: 8, borderRadius: 4 }}>
+      <Typography display='inline' style={{ fontSize: '0.9rem' }}>Have a Profile?</Typography>
+        <Button
+          color='primary'
+          onClick={() => {
+            resetForm();
+            setFormType(FormType.SIGN_IN);
+          }}
+        >
+          Sign In
+        </Button>
+      </Grid>
   </>
 );
 
