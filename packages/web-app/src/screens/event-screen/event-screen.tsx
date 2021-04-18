@@ -98,6 +98,13 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
             </Typography>
           </CardContent>
         </Grid>
+        {!data.getEvent.competitions.items.length && (
+          <Grid item style={{ textAlign: 'center', background: '#ccc', padding: 16, margin: '0 16px' }}>
+            <Typography variant='subtitle2' color='textSecondary'>
+              Competitions coming soon!
+            </Typography>
+          </Grid>
+        )}
         <Grid item>
           <CompetitionsTable competitions={data.getEvent.competitions.items} />
         </Grid>
