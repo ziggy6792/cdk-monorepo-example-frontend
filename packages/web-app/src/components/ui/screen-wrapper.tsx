@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '100px 0 140px'
     },
     denseContent: {
+      padding: '70px 0 140px'
     },
     onlyBottomContent: {
       padding: '0 0 140px'

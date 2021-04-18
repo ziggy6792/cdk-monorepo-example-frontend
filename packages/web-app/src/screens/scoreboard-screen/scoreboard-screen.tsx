@@ -60,7 +60,11 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
           </Grid>
         )}
         <Grid item style={{ width: '100%' }}>
-          <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
+          <ScoresTables
+            riderAllocations={data.selectedHeat.riderAllocations.items}
+            eventId={eventId}
+            noProgressing={data.selectedHeat.noProgressing} 
+          />
         </Grid>
       </Grid>
     </ScreenWrapper>

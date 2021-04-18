@@ -9,7 +9,13 @@ interface IHeatSummaryProps {
 
 const HeatSummary: React.FC<IHeatSummaryProps> = ({ heat: summary }) => (
   <Summary name={summary.longName}>
-    <Typography>TODO Summary</Typography>
+    <Typography
+      variant='subtitle2'
+      color='textSecondary'
+      style={{ padding: '8px 0' }}
+    >
+      TODO Summary
+    </Typography>
   </Summary>
 );
 
