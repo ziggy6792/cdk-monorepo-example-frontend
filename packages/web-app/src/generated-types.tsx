@@ -4,212 +4,206 @@ import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
   /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
-  DateTime: Date;
+  DateTime: Date,
 };
 
-export type Competition = DataEntity &
-  Identifiable &
-  Creatable &
-  Schedule & {
-    __typename?: 'Competition';
-    createdAt: Scalars['DateTime'];
-    modifiedAt: Scalars['DateTime'];
-    id: Scalars['ID'];
-    name: Scalars['String'];
-    breadcrumbs: LinkList;
-    scheduleItems: ScheduleItemList;
-    description: Scalars['String'];
-    category: Scalars['String'];
-    eventId: Scalars['ID'];
-    judgeUserId: Scalars['ID'];
-    status: CompetitionStatus;
-    params: CompetitionParams;
-    maxRiders?: Maybe<Scalars['Int']>;
-    gender: Gender;
-    sport: Sport;
-    level: Level;
-    judgeUser?: Maybe<User>;
-    event: Event;
-    isAdmin: Scalars['Boolean'];
-    isJudge: Scalars['Boolean'];
-    rounds: RoundList;
-    startTime?: Maybe<Scalars['DateTime']>;
-    hasDemoRiders: Scalars['Boolean'];
-    winners: RiderAllocationList;
-    riderAllocations: RiderAllocationList;
-  };
+
+export type Competition = DataEntity & Identifiable & Creatable & Schedule & {
+   __typename?: 'Competition',
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  breadcrumbs: LinkList,
+  scheduleItems: ScheduleItemList,
+  description: Scalars['String'],
+  category: Scalars['String'],
+  eventId: Scalars['ID'],
+  judgeUserId: Scalars['ID'],
+  status: CompetitionStatus,
+  params: CompetitionParams,
+  maxRiders?: Maybe<Scalars['Int']>,
+  gender: Gender,
+  sport: Sport,
+  level: Level,
+  judgeUser?: Maybe<User>,
+  event: Event,
+  isAdmin: Scalars['Boolean'],
+  isJudge: Scalars['Boolean'],
+  rounds: RoundList,
+  startTime?: Maybe<Scalars['DateTime']>,
+  hasDemoRiders: Scalars['Boolean'],
+  winners: RiderAllocationList,
+  riderAllocations: RiderAllocationList,
+};
 
 export type CompetitionList = {
-  __typename?: 'CompetitionList';
-  items: Array<Competition>;
+   __typename?: 'CompetitionList',
+  items: Array<Competition>,
 };
 
 export type CompetitionParams = {
-  __typename?: 'CompetitionParams';
-  name: Scalars['String'];
+   __typename?: 'CompetitionParams',
+  name: Scalars['String'],
 };
 
 export type CompetitionParamsInput = {
-  rounds: Array<RoundParamsInput>;
+  rounds: Array<RoundParamsInput>,
 };
 
 /** The Competition Status */
 export enum CompetitionStatus {
   RegistrationOpen = 'REGISTRATION_OPEN',
   RegistrationClosed = 'REGISTRATION_CLOSED',
-  Finalized = 'FINALIZED',
+  Finalized = 'FINALIZED'
 }
 
 export type Creatable = {
-  createdAt: Scalars['DateTime'];
-  modifiedAt: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
 };
 
 export type CreateCompetitionInput = {
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  category?: Maybe<Scalars['String']>;
-  judgeUserId?: Maybe<Scalars['ID']>;
-  status?: Maybe<CompetitionStatus>;
-  selectedHeatId?: Maybe<Scalars['String']>;
-  maxRiders?: Maybe<Scalars['Int']>;
-  gender?: Maybe<Gender>;
-  sport?: Maybe<Sport>;
-  level?: Maybe<Level>;
-  id?: Maybe<Scalars['ID']>;
-  eventId: Scalars['ID'];
+  name: Scalars['String'],
+  description?: Maybe<Scalars['String']>,
+  category?: Maybe<Scalars['String']>,
+  judgeUserId?: Maybe<Scalars['ID']>,
+  status?: Maybe<CompetitionStatus>,
+  selectedHeatId?: Maybe<Scalars['String']>,
+  maxRiders?: Maybe<Scalars['Int']>,
+  gender?: Maybe<Gender>,
+  sport?: Maybe<Sport>,
+  level?: Maybe<Level>,
+  id?: Maybe<Scalars['ID']>,
+  eventId: Scalars['ID'],
 };
 
 export type CreateEventInput = {
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  status?: Maybe<EventStatus>;
-  adminUserId?: Maybe<Scalars['String']>;
-  selectedHeatId?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['ID']>;
-  startTime: Scalars['DateTime'];
+  name: Scalars['String'],
+  description?: Maybe<Scalars['String']>,
+  status?: Maybe<EventStatus>,
+  adminUserId?: Maybe<Scalars['String']>,
+  selectedHeatId?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['ID']>,
+  startTime: Scalars['DateTime'],
 };
 
 export type CreateRiderAllocationInput = {
-  allocatableId: Scalars['ID'];
-  userId?: Maybe<Scalars['ID']>;
-  startSeed: Scalars['Int'];
+  allocatableId: Scalars['ID'],
+  userId?: Maybe<Scalars['ID']>,
+  startSeed: Scalars['Int'],
 };
 
 export type CreateScheduleItemInput = {
-  startTime?: Maybe<Scalars['DateTime']>;
-  notice?: Maybe<Scalars['String']>;
-  scheduleId: Scalars['ID'];
+  startTime?: Maybe<Scalars['DateTime']>,
+  notice?: Maybe<Scalars['String']>,
+  scheduleId: Scalars['ID'],
 };
 
 export type CreateUserInput = {
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  email: Scalars['String'];
-  id?: Maybe<Scalars['ID']>;
+  firstName: Scalars['String'],
+  lastName: Scalars['String'],
+  email: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
 };
 
 export type DataEntity = {
-  createdAt: Scalars['DateTime'];
-  modifiedAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  breadcrumbs: LinkList;
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  breadcrumbs: LinkList,
 };
+
 
 export type EndHeatResult = Competition | ValidationItemList;
 
-export type Event = DataEntity &
-  Identifiable &
-  Creatable &
-  Schedule & {
-    __typename?: 'Event';
-    createdAt: Scalars['DateTime'];
-    modifiedAt: Scalars['DateTime'];
-    id: Scalars['ID'];
-    name: Scalars['String'];
-    breadcrumbs: LinkList;
-    scheduleItems: ScheduleItemList;
-    description?: Maybe<Scalars['String']>;
-    startTime?: Maybe<Scalars['DateTime']>;
-    status: EventStatus;
-    adminUserId: Scalars['String'];
-    selectedHeatId: Scalars['String'];
-    adminUser: User;
-    isAdmin: Scalars['Boolean'];
-    selectedHeat?: Maybe<Heat>;
-    competitions: CompetitionList;
-  };
+export type Event = DataEntity & Identifiable & Creatable & Schedule & {
+   __typename?: 'Event',
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  breadcrumbs: LinkList,
+  scheduleItems: ScheduleItemList,
+  description?: Maybe<Scalars['String']>,
+  startTime?: Maybe<Scalars['DateTime']>,
+  status: EventStatus,
+  adminUserId: Scalars['String'],
+  selectedHeatId: Scalars['String'],
+  adminUser: User,
+  isAdmin: Scalars['Boolean'],
+  selectedHeat?: Maybe<Heat>,
+  competitions: CompetitionList,
+};
 
 /** The Event Status */
 export enum EventStatus {
   RegistrationOpen = 'REGISTRATION_OPEN',
   RegistrationClosed = 'REGISTRATION_CLOSED',
-  Finalized = 'FINALIZED',
+  Finalized = 'FINALIZED'
 }
 
 /** Gender */
 export enum Gender {
   Any = 'ANY',
   Male = 'MALE',
-  Female = 'FEMALE',
+  Female = 'FEMALE'
 }
 
-export type Heat = DataEntity &
-  Identifiable &
-  Creatable & {
-    __typename?: 'Heat';
-    createdAt: Scalars['DateTime'];
-    modifiedAt: Scalars['DateTime'];
-    id: Scalars['ID'];
-    name: Scalars['String'];
-    breadcrumbs: LinkList;
-    roundId: Scalars['ID'];
-    progressionsPerHeat: Scalars['Int'];
-    isFinished: Scalars['Boolean'];
-    longName: Scalars['String'];
-    round: Round;
-    isAdmin: Scalars['Boolean'];
-    isJudge: Scalars['Boolean'];
-    incomingHeats: Array<Heat>;
-    status: HeatStatus;
-    seedSlots: Array<SeedSlot>;
-    size: Scalars['Int'];
-    getSortedRiderAllocations: RiderAllocationList;
-    riderAllocations: RiderAllocationList;
-    noAllocated: Scalars['Int'];
-    noProgressing: Scalars['Int'];
-    isFinal: Scalars['Boolean'];
-  };
+export type Heat = DataEntity & Identifiable & Creatable & {
+   __typename?: 'Heat',
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  breadcrumbs: LinkList,
+  roundId: Scalars['ID'],
+  progressionsPerHeat: Scalars['Int'],
+  isFinished: Scalars['Boolean'],
+  longName: Scalars['String'],
+  round: Round,
+  isAdmin: Scalars['Boolean'],
+  isJudge: Scalars['Boolean'],
+  incomingHeats: Array<Heat>,
+  status: HeatStatus,
+  seedSlots: Array<SeedSlot>,
+  size: Scalars['Int'],
+  getSortedRiderAllocations: RiderAllocationList,
+  riderAllocations: RiderAllocationList,
+  noAllocated: Scalars['Int'],
+  noProgressing: Scalars['Int'],
+  isFinal: Scalars['Boolean'],
+};
 
 export type HeatList = {
-  __typename?: 'HeatList';
-  items: Array<Heat>;
+   __typename?: 'HeatList',
+  items: Array<Heat>,
 };
 
 export type HeatParamsInput = {
-  name: Scalars['String'];
-  status?: Maybe<HeatStatus>;
-  seedSlots: Array<SeedSlotParamsInput>;
+  name: Scalars['String'],
+  status?: Maybe<HeatStatus>,
+  seedSlots: Array<SeedSlotParamsInput>,
 };
 
 export enum HeatStatus {
   NotReady = 'NOT_READY',
   Ready = 'READY',
   InProgress = 'IN_PROGRESS',
-  Finished = 'FINISHED',
+  Finished = 'FINISHED'
 }
 
 export type Identifiable = {
-  createdAt: Scalars['DateTime'];
-  modifiedAt: Scalars['DateTime'];
-  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
 };
 
 /** Level */
@@ -218,421 +212,448 @@ export enum Level {
   Beginner = 'BEGINNER',
   Intermediate = 'INTERMEDIATE',
   Advanced = 'ADVANCED',
-  Professional = 'PROFESSIONAL',
+  Professional = 'PROFESSIONAL'
 }
 
 export type Link = {
-  __typename?: 'Link';
-  type: LinkType;
-  id: Scalars['ID'];
-  name: Scalars['String'];
+   __typename?: 'Link',
+  type: LinkType,
+  id: Scalars['ID'],
+  name: Scalars['String'],
 };
 
 export type LinkList = {
-  __typename?: 'LinkList';
-  items: Array<Link>;
+   __typename?: 'LinkList',
+  items: Array<Link>,
 };
 
 export enum LinkType {
   Event = 'EVENT',
   Competition = 'COMPETITION',
   Heat = 'HEAT',
-  Round = 'ROUND',
+  Round = 'ROUND'
 }
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  createUser: User;
-  updateUser: User;
-  deleteUser: User;
-  createEvent: Event;
-  updateEvent: Event;
-  deleteEvent: Event;
-  createCompetition: Competition;
-  updateCompetition: Competition;
-  deleteCompetition: Competition;
-  createScheduleItem: ScheduleItem;
-  updateScheduleItem: ScheduleItem;
-  createRiderAllocation: RiderAllocation;
-  createRiderAllocations: Array<RiderAllocation>;
-  updateRiderAllocations: Array<RiderAllocation>;
-  buildCompetition?: Maybe<Competition>;
-  selectHeat: SelectHeatResult;
-  allocateRiders?: Maybe<Competition>;
-  scoreRun: Heat;
-  endHeat: EndHeatResult;
-  addRemoveDemoRiders?: Maybe<Competition>;
-  signUpCompetition?: Maybe<Competition>;
+   __typename?: 'Mutation',
+  createUser: User,
+  updateUser: User,
+  deleteUser: User,
+  createEvent: Event,
+  updateEvent: Event,
+  deleteEvent: Event,
+  createCompetition: Competition,
+  updateCompetition: Competition,
+  deleteCompetition: Competition,
+  createScheduleItem: ScheduleItem,
+  updateScheduleItem: ScheduleItem,
+  createRiderAllocation: RiderAllocation,
+  createRiderAllocations: Array<RiderAllocation>,
+  updateRiderAllocations: Array<RiderAllocation>,
+  buildCompetition?: Maybe<Competition>,
+  selectHeat: SelectHeatResult,
+  allocateRiders?: Maybe<Competition>,
+  scoreRun: Heat,
+  endHeat: EndHeatResult,
+  addRemoveDemoRiders?: Maybe<Competition>,
+  signUpCompetition?: Maybe<Competition>,
 };
+
 
 export type MutationCreateUserArgs = {
-  input: CreateUserInput;
+  input: CreateUserInput
 };
+
 
 export type MutationUpdateUserArgs = {
-  input: UpdateUserInput;
+  input: UpdateUserInput
 };
+
 
 export type MutationDeleteUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type MutationCreateEventArgs = {
-  input: CreateEventInput;
+  input: CreateEventInput
 };
+
 
 export type MutationUpdateEventArgs = {
-  input: UpdateEventInput;
+  input: UpdateEventInput
 };
+
 
 export type MutationDeleteEventArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type MutationCreateCompetitionArgs = {
-  input: CreateCompetitionInput;
+  input: CreateCompetitionInput
 };
+
 
 export type MutationUpdateCompetitionArgs = {
-  input: UpdateCompetitionInput;
+  input: UpdateCompetitionInput
 };
+
 
 export type MutationDeleteCompetitionArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type MutationCreateScheduleItemArgs = {
-  input: CreateScheduleItemInput;
+  input: CreateScheduleItemInput
 };
+
 
 export type MutationUpdateScheduleItemArgs = {
-  input: UpdateScheduleItemInput;
+  input: UpdateScheduleItemInput
 };
+
 
 export type MutationCreateRiderAllocationArgs = {
-  input: CreateRiderAllocationInput;
+  input: CreateRiderAllocationInput
 };
+
 
 export type MutationCreateRiderAllocationsArgs = {
-  input: Array<CreateRiderAllocationInput>;
+  input: Array<CreateRiderAllocationInput>
 };
+
 
 export type MutationUpdateRiderAllocationsArgs = {
-  input: Array<UpdateRiderAllocationInput>;
+  input: Array<UpdateRiderAllocationInput>
 };
+
 
 export type MutationBuildCompetitionArgs = {
-  params: CompetitionParamsInput;
-  id: Scalars['ID'];
+  params: CompetitionParamsInput,
+  id: Scalars['ID']
 };
+
 
 export type MutationSelectHeatArgs = {
-  validationLevel?: Maybe<ValidationItemType>;
-  id: Scalars['ID'];
+  validationLevel?: Maybe<ValidationItemType>,
+  id: Scalars['ID']
 };
+
 
 export type MutationAllocateRidersArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type MutationScoreRunArgs = {
-  input: ScorRunInput;
+  input: ScorRunInput
 };
+
 
 export type MutationEndHeatArgs = {
-  validationLevel?: Maybe<ValidationItemType>;
-  id?: Maybe<Scalars['ID']>;
+  validationLevel?: Maybe<ValidationItemType>,
+  id?: Maybe<Scalars['ID']>
 };
+
 
 export type MutationAddRemoveDemoRidersArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
+
 export type MutationSignUpCompetitionArgs = {
-  riders: Array<SignUpRiderInput>;
-  id: Scalars['ID'];
+  riders: Array<SignUpRiderInput>,
+  id: Scalars['ID']
 };
 
 export type Query = {
-  __typename?: 'Query';
-  getMe?: Maybe<User>;
-  getUser: User;
-  listUsers: Array<User>;
-  getEvent: Event;
-  listEvents: Array<Event>;
-  getCompetition: Competition;
-  listCompetitions: Array<Competition>;
-  getHeat: Heat;
-  listHeats: Array<Heat>;
-  getRound: Round;
-  listRounds: Array<Round>;
-  getDataEntity?: Maybe<DataEntity>;
-  hello: Scalars['String'];
+   __typename?: 'Query',
+  getMe?: Maybe<User>,
+  getUser: User,
+  listUsers: Array<User>,
+  getEvent: Event,
+  listEvents: Array<Event>,
+  getCompetition: Competition,
+  listCompetitions: Array<Competition>,
+  getHeat: Heat,
+  listHeats: Array<Heat>,
+  getRound: Round,
+  listRounds: Array<Round>,
+  getDataEntity?: Maybe<DataEntity>,
+  hello: Scalars['String'],
 };
+
 
 export type QueryGetUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type QueryListUsersArgs = {
-  limit?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>
 };
+
 
 export type QueryGetEventArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type QueryListEventsArgs = {
-  limit?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>
 };
+
 
 export type QueryGetCompetitionArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type QueryListCompetitionsArgs = {
-  limit?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>
 };
+
 
 export type QueryGetHeatArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type QueryListHeatsArgs = {
-  limit?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>
 };
+
 
 export type QueryGetRoundArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
+
 
 export type QueryListRoundsArgs = {
-  limit?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>
 };
 
+
 export type QueryGetDataEntityArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
 export type RiderAllocation = Creatable & {
-  __typename?: 'RiderAllocation';
-  createdAt: Scalars['DateTime'];
-  modifiedAt: Scalars['DateTime'];
-  allocatableId: Scalars['ID'];
-  userId: Scalars['ID'];
-  startSeed: Scalars['Int'];
-  previousHeatId: Scalars['ID'];
-  runs?: Maybe<Array<Run>>;
-  position?: Maybe<Scalars['Int']>;
-  rankOrder?: Maybe<Scalars['Int']>;
-  startOrder?: Maybe<Scalars['Int']>;
-  user?: Maybe<User>;
+   __typename?: 'RiderAllocation',
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  allocatableId: Scalars['ID'],
+  userId: Scalars['ID'],
+  startSeed: Scalars['Int'],
+  previousHeatId: Scalars['ID'],
+  runs?: Maybe<Array<Run>>,
+  position?: Maybe<Scalars['Int']>,
+  rankOrder?: Maybe<Scalars['Int']>,
+  startOrder?: Maybe<Scalars['Int']>,
+  user?: Maybe<User>,
 };
 
 export type RiderAllocationList = {
-  __typename?: 'RiderAllocationList';
-  items: Array<RiderAllocation>;
+   __typename?: 'RiderAllocationList',
+  items: Array<RiderAllocation>,
 };
 
-export type Round = Identifiable &
-  Creatable &
-  Schedulable &
-  DataEntity & {
-    __typename?: 'Round';
-    createdAt: Scalars['DateTime'];
-    modifiedAt: Scalars['DateTime'];
-    id: Scalars['ID'];
-    name: Scalars['String'];
-    breadcrumbs: LinkList;
-    scheduleItem: ScheduleItem;
-    startTime?: Maybe<Scalars['DateTime']>;
-    roundNo: Scalars['Int'];
-    type: RoundType;
-    competitionId: Scalars['ID'];
-    getHeats: HeatList;
-    heats: HeatList;
-    isAdmin: Scalars['Boolean'];
-    isJudge: Scalars['Boolean'];
-    competition: Competition;
-    longName: Scalars['String'];
-  };
+export type Round = Identifiable & Creatable & Schedulable & DataEntity & {
+   __typename?: 'Round',
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  breadcrumbs: LinkList,
+  scheduleItem: ScheduleItem,
+  startTime?: Maybe<Scalars['DateTime']>,
+  roundNo: Scalars['Int'],
+  type: RoundType,
+  competitionId: Scalars['ID'],
+  getHeats: HeatList,
+  heats: HeatList,
+  isAdmin: Scalars['Boolean'],
+  isJudge: Scalars['Boolean'],
+  competition: Competition,
+  longName: Scalars['String'],
+};
 
 export type RoundList = {
-  __typename?: 'RoundList';
-  items: Array<Round>;
+   __typename?: 'RoundList',
+  items: Array<Round>,
 };
 
 export type RoundParamsInput = {
-  roundNo: Scalars['Int'];
-  type: RoundType;
-  heats: Array<HeatParamsInput>;
+  roundNo: Scalars['Int'],
+  type: RoundType,
+  heats: Array<HeatParamsInput>,
 };
 
 /** The Round Type */
 export enum RoundType {
   Upper = 'UPPER',
-  Lower = 'LOWER',
+  Lower = 'LOWER'
 }
 
 export type Run = {
-  __typename?: 'Run';
-  score?: Maybe<Scalars['Float']>;
-  isPublic?: Maybe<Scalars['Boolean']>;
+   __typename?: 'Run',
+  score?: Maybe<Scalars['Float']>,
+  isPublic?: Maybe<Scalars['Boolean']>,
 };
 
 export type RunInput = {
-  score?: Maybe<Scalars['Float']>;
-  isPublic?: Maybe<Scalars['Boolean']>;
+  score?: Maybe<Scalars['Float']>,
+  isPublic?: Maybe<Scalars['Boolean']>,
 };
 
 export type Schedulable = {
-  createdAt: Scalars['DateTime'];
-  modifiedAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  breadcrumbs: LinkList;
-  scheduleItem: ScheduleItem;
-  startTime?: Maybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  breadcrumbs: LinkList,
+  scheduleItem: ScheduleItem,
+  startTime?: Maybe<Scalars['DateTime']>,
 };
 
 export type Schedule = {
-  createdAt: Scalars['DateTime'];
-  modifiedAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  breadcrumbs: LinkList;
-  scheduleItems: ScheduleItemList;
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  breadcrumbs: LinkList,
+  scheduleItems: ScheduleItemList,
 };
 
-export type ScheduleItem = Identifiable &
-  Creatable & {
-    __typename?: 'ScheduleItem';
-    createdAt: Scalars['DateTime'];
-    modifiedAt: Scalars['DateTime'];
-    id: Scalars['ID'];
-    scheduleId: Scalars['ID'];
-    schedulableId: Scalars['ID'];
-    startTime?: Maybe<Scalars['DateTime']>;
-    notice?: Maybe<Scalars['String']>;
-    scheduledItem?: Maybe<Schedulable>;
-    schedule?: Maybe<Schedule>;
-  };
+export type ScheduleItem = Identifiable & Creatable & {
+   __typename?: 'ScheduleItem',
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  scheduleId: Scalars['ID'],
+  schedulableId: Scalars['ID'],
+  startTime?: Maybe<Scalars['DateTime']>,
+  notice?: Maybe<Scalars['String']>,
+  scheduledItem?: Maybe<Schedulable>,
+  schedule?: Maybe<Schedule>,
+};
 
 export type ScheduleItemList = {
-  __typename?: 'ScheduleItemList';
-  items: Array<ScheduleItem>;
+   __typename?: 'ScheduleItemList',
+  items: Array<ScheduleItem>,
 };
 
 export type ScorRunInput = {
-  heatId: Scalars['ID'];
-  userId: Scalars['ID'];
-  runs: Array<RunInput>;
+  heatId: Scalars['ID'],
+  userId: Scalars['ID'],
+  runs: Array<RunInput>,
 };
 
 export type SeedSlot = {
-  __typename?: 'SeedSlot';
-  seed: Scalars['Int'];
-  nextHeatId?: Maybe<Scalars['ID']>;
-  previousHeatId?: Maybe<Scalars['ID']>;
-  previousHeat?: Maybe<Heat>;
-  nextHeat?: Maybe<Heat>;
-  isProgressing?: Maybe<Scalars['Boolean']>;
+   __typename?: 'SeedSlot',
+  seed: Scalars['Int'],
+  nextHeatId?: Maybe<Scalars['ID']>,
+  previousHeatId?: Maybe<Scalars['ID']>,
+  previousHeat?: Maybe<Heat>,
+  nextHeat?: Maybe<Heat>,
+  isProgressing?: Maybe<Scalars['Boolean']>,
 };
 
 export type SeedSlotParamsInput = {
-  seed: Scalars['Int'];
+  seed: Scalars['Int'],
 };
 
 export type SelectHeatResult = Event | ValidationItemList;
 
 export type SignUpRiderInput = {
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
+  firstName: Scalars['String'],
+  lastName: Scalars['String'],
 };
 
 /** Sport */
 export enum Sport {
   Wakeboard = 'WAKEBOARD',
-  Wakeskate = 'WAKESKATE',
+  Wakeskate = 'WAKESKATE'
 }
 
 export type UpdateCompetitionInput = {
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  category?: Maybe<Scalars['String']>;
-  judgeUserId?: Maybe<Scalars['ID']>;
-  status?: Maybe<CompetitionStatus>;
-  selectedHeatId?: Maybe<Scalars['String']>;
-  maxRiders?: Maybe<Scalars['Int']>;
-  gender?: Maybe<Gender>;
-  sport?: Maybe<Sport>;
-  level?: Maybe<Level>;
-  id: Scalars['ID'];
+  name: Scalars['String'],
+  description?: Maybe<Scalars['String']>,
+  category?: Maybe<Scalars['String']>,
+  judgeUserId?: Maybe<Scalars['ID']>,
+  status?: Maybe<CompetitionStatus>,
+  selectedHeatId?: Maybe<Scalars['String']>,
+  maxRiders?: Maybe<Scalars['Int']>,
+  gender?: Maybe<Gender>,
+  sport?: Maybe<Sport>,
+  level?: Maybe<Level>,
+  id: Scalars['ID'],
 };
 
 export type UpdateEventInput = {
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  status?: Maybe<EventStatus>;
-  adminUserId?: Maybe<Scalars['String']>;
-  selectedHeatId?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  startTime?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'],
+  description?: Maybe<Scalars['String']>,
+  status?: Maybe<EventStatus>,
+  adminUserId?: Maybe<Scalars['String']>,
+  selectedHeatId?: Maybe<Scalars['String']>,
+  id: Scalars['ID'],
+  startTime?: Maybe<Scalars['DateTime']>,
 };
 
 export type UpdateRiderAllocationInput = {
-  allocatableId: Scalars['ID'];
-  userId?: Maybe<Scalars['ID']>;
-  startSeed: Scalars['Int'];
+  allocatableId: Scalars['ID'],
+  userId?: Maybe<Scalars['ID']>,
+  startSeed: Scalars['Int'],
 };
 
 export type UpdateScheduleItemInput = {
-  startTime?: Maybe<Scalars['DateTime']>;
-  notice?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  startTime?: Maybe<Scalars['DateTime']>,
+  notice?: Maybe<Scalars['String']>,
+  id: Scalars['ID'],
 };
 
 export type UpdateUserInput = {
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  email: Scalars['String'];
-  id: Scalars['ID'];
+  firstName: Scalars['String'],
+  lastName: Scalars['String'],
+  email: Scalars['String'],
+  id: Scalars['ID'],
 };
 
-export type User = Identifiable &
-  Creatable & {
-    __typename?: 'User';
-    createdAt: Scalars['DateTime'];
-    modifiedAt: Scalars['DateTime'];
-    id: Scalars['ID'];
-    email: Scalars['String'];
-    firstName: Scalars['String'];
-    isDemo?: Maybe<Scalars['Boolean']>;
-    lastName: Scalars['String'];
-    fullName: Scalars['String'];
-  };
+export type User = Identifiable & Creatable & {
+   __typename?: 'User',
+  createdAt: Scalars['DateTime'],
+  modifiedAt: Scalars['DateTime'],
+  id: Scalars['ID'],
+  email: Scalars['String'],
+  firstName: Scalars['String'],
+  isDemo?: Maybe<Scalars['Boolean']>,
+  lastName: Scalars['String'],
+  fullName: Scalars['String'],
+};
 
 export type ValidationItem = ValidationItemBase & {
-  __typename?: 'ValidationItem';
-  type: ValidationItemType;
-  message: ValidationItemMessage;
+   __typename?: 'ValidationItem',
+  type: ValidationItemType,
+  message: ValidationItemMessage,
 };
 
 export type ValidationItemBase = {
-  type: ValidationItemType;
-  message: ValidationItemMessage;
+  type: ValidationItemType,
+  message: ValidationItemMessage,
 };
 
 export type ValidationItemHeatAlreadyOpen = ValidationItemBase & {
-  __typename?: 'ValidationItemHeatAlreadyOpen';
-  type: ValidationItemType;
-  message: ValidationItemMessage;
-  eventId: Scalars['ID'];
+   __typename?: 'ValidationItemHeatAlreadyOpen',
+  type: ValidationItemType,
+  message: ValidationItemMessage,
+  eventId: Scalars['ID'],
 };
 
 export type ValidationItemList = {
-  __typename?: 'ValidationItemList';
-  items: Array<ValidationItemBase>;
+   __typename?: 'ValidationItemList',
+  items: Array<ValidationItemBase>,
 };
 
 export enum ValidationItemMessage {
@@ -644,372 +665,593 @@ export enum ValidationItemMessage {
   OpenheatAlreadyfinished = 'OPENHEAT_ALREADYFINISHED',
   EndheatNotready = 'ENDHEAT_NOTREADY',
   EndheatNotfullyscored = 'ENDHEAT_NOTFULLYSCORED',
-  EndheatCancel = 'ENDHEAT_CANCEL',
+  EndheatCancel = 'ENDHEAT_CANCEL'
 }
 
 export enum ValidationItemType {
   Error = 'ERROR',
-  Warn = 'WARN',
+  Warn = 'WARN'
 }
 
-type BreadcrumbFields_Event_Fragment = { __typename?: 'Event' } & {
-  breadcrumbs: { __typename?: 'LinkList' } & { items: Array<{ __typename?: 'Link' } & Pick<Link, 'id' | 'name' | 'type'>> };
-};
+type BreadcrumbFields_Event_Fragment = (
+  { __typename?: 'Event' }
+  & { breadcrumbs: (
+    { __typename?: 'LinkList' }
+    & { items: Array<(
+      { __typename?: 'Link' }
+      & Pick<Link, 'id' | 'name' | 'type'>
+    )> }
+  ) }
+);
 
-type BreadcrumbFields_Heat_Fragment = { __typename?: 'Heat' } & {
-  breadcrumbs: { __typename?: 'LinkList' } & { items: Array<{ __typename?: 'Link' } & Pick<Link, 'id' | 'name' | 'type'>> };
-};
+type BreadcrumbFields_Heat_Fragment = (
+  { __typename?: 'Heat' }
+  & { breadcrumbs: (
+    { __typename?: 'LinkList' }
+    & { items: Array<(
+      { __typename?: 'Link' }
+      & Pick<Link, 'id' | 'name' | 'type'>
+    )> }
+  ) }
+);
 
-type BreadcrumbFields_Round_Fragment = { __typename?: 'Round' } & {
-  breadcrumbs: { __typename?: 'LinkList' } & { items: Array<{ __typename?: 'Link' } & Pick<Link, 'id' | 'name' | 'type'>> };
-};
+type BreadcrumbFields_Round_Fragment = (
+  { __typename?: 'Round' }
+  & { breadcrumbs: (
+    { __typename?: 'LinkList' }
+    & { items: Array<(
+      { __typename?: 'Link' }
+      & Pick<Link, 'id' | 'name' | 'type'>
+    )> }
+  ) }
+);
 
-type BreadcrumbFields_Competition_Fragment = { __typename?: 'Competition' } & {
-  breadcrumbs: { __typename?: 'LinkList' } & { items: Array<{ __typename?: 'Link' } & Pick<Link, 'id' | 'name' | 'type'>> };
-};
+type BreadcrumbFields_Competition_Fragment = (
+  { __typename?: 'Competition' }
+  & { breadcrumbs: (
+    { __typename?: 'LinkList' }
+    & { items: Array<(
+      { __typename?: 'Link' }
+      & Pick<Link, 'id' | 'name' | 'type'>
+    )> }
+  ) }
+);
 
-export type BreadcrumbFieldsFragment =
-  | BreadcrumbFields_Event_Fragment
-  | BreadcrumbFields_Heat_Fragment
-  | BreadcrumbFields_Round_Fragment
-  | BreadcrumbFields_Competition_Fragment;
+export type BreadcrumbFieldsFragment = BreadcrumbFields_Event_Fragment | BreadcrumbFields_Heat_Fragment | BreadcrumbFields_Round_Fragment | BreadcrumbFields_Competition_Fragment;
 
-export type CoreCompetitionFieldsFragment = { __typename?: 'Competition' } & Pick<
-  Competition,
-  'id' | 'isAdmin' | 'isJudge' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'
-> & {
-    winners: { __typename?: 'RiderAllocationList' } & {
-      items: Array<{ __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'position'> & { user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>> }>;
-    };
-    event: { __typename?: 'Event' } & Pick<Event, 'id'>;
-    judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
-    riderAllocations: { __typename?: 'RiderAllocationList' } & {
-      items: Array<
-        { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'userId' | 'startSeed'> & {
-            user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>>;
-          }
-      >;
-    };
-    rounds: { __typename?: 'RoundList' } & {
-      items: Array<
-        { __typename?: 'Round' } & Pick<Round, 'id' | 'name' | 'startTime'> & {
-            heats: { __typename?: 'HeatList' } & {
-              items: Array<
-                { __typename?: 'Heat' } & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'> & {
-                    round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
-                    riderAllocations: { __typename?: 'RiderAllocationList' } & {
-                      items: Array<{ __typename?: 'RiderAllocation' } & { user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>> }>;
-                    };
-                  }
-              >;
-            };
-          }
-      >;
-    };
-  } & BreadcrumbFields_Competition_Fragment;
+export type CoreCompetitionFieldsFragment = (
+  { __typename?: 'Competition' }
+  & Pick<Competition, 'id' | 'isAdmin' | 'isJudge' | 'hasDemoRiders' | 'name' | 'description' | 'level' | 'gender' | 'sport' | 'maxRiders' | 'judgeUserId'>
+  & { winners: (
+    { __typename?: 'RiderAllocationList' }
+    & { items: Array<(
+      { __typename?: 'RiderAllocation' }
+      & Pick<RiderAllocation, 'position' | 'userId'>
+      & { user: Maybe<(
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'fullName'>
+      )> }
+    )> }
+  ), event: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'id'>
+  ), judgeUser: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'fullName'>
+  )>, riderAllocations: (
+    { __typename?: 'RiderAllocationList' }
+    & { items: Array<(
+      { __typename?: 'RiderAllocation' }
+      & Pick<RiderAllocation, 'userId' | 'startSeed'>
+      & { user: Maybe<(
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'fullName'>
+      )> }
+    )> }
+  ), rounds: (
+    { __typename?: 'RoundList' }
+    & { items: Array<(
+      { __typename?: 'Round' }
+      & Pick<Round, 'id' | 'name' | 'startTime'>
+      & { heats: (
+        { __typename?: 'HeatList' }
+        & { items: Array<(
+          { __typename?: 'Heat' }
+          & Pick<Heat, 'id' | 'isFinal' | 'name' | 'size' | 'noAllocated' | 'createdAt' | 'status'>
+          & { round: (
+            { __typename?: 'Round' }
+            & Pick<Round, 'roundNo'>
+          ), riderAllocations: (
+            { __typename?: 'RiderAllocationList' }
+            & { items: Array<(
+              { __typename?: 'RiderAllocation' }
+              & Pick<RiderAllocation, 'userId'>
+              & { user: Maybe<(
+                { __typename?: 'User' }
+                & Pick<User, 'id' | 'fullName'>
+              )> }
+            )> }
+          ) }
+        )> }
+      ) }
+    )> }
+  ) }
+  & BreadcrumbFields_Competition_Fragment
+);
 
 export type GetCompetitionQueryVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type GetCompetitionQuery = { __typename?: 'Query' } & { getCompetition: { __typename?: 'Competition' } & CoreCompetitionFieldsFragment };
+
+export type GetCompetitionQuery = (
+  { __typename?: 'Query' }
+  & { getCompetition: (
+    { __typename?: 'Competition' }
+    & CoreCompetitionFieldsFragment
+  ) }
+);
 
 export type CreateCompetitionMutationVariables = {
-  input: CreateCompetitionInput;
+  input: CreateCompetitionInput
 };
 
-export type CreateCompetitionMutation = { __typename?: 'Mutation' } & { createCompetition: { __typename?: 'Competition' } & Pick<Competition, 'id'> };
+
+export type CreateCompetitionMutation = (
+  { __typename?: 'Mutation' }
+  & { createCompetition: (
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'id'>
+  ) }
+);
 
 export type UpdateCompetitionMutationVariables = {
-  input: UpdateCompetitionInput;
+  input: UpdateCompetitionInput
 };
 
-export type UpdateCompetitionMutation = { __typename?: 'Mutation' } & { updateCompetition: { __typename?: 'Competition' } & Pick<Competition, 'id'> };
+
+export type UpdateCompetitionMutation = (
+  { __typename?: 'Mutation' }
+  & { updateCompetition: (
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'id'>
+  ) }
+);
 
 export type BuildCompetitionMutationVariables = {
-  params: CompetitionParamsInput;
-  id: Scalars['ID'];
+  params: CompetitionParamsInput,
+  id: Scalars['ID']
 };
 
-export type BuildCompetitionMutation = { __typename?: 'Mutation' } & { buildCompetition: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>> };
+
+export type BuildCompetitionMutation = (
+  { __typename?: 'Mutation' }
+  & { buildCompetition: Maybe<(
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'id'>
+  )> }
+);
 
 export type AllocateRidersMutationVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type AllocateRidersMutation = { __typename?: 'Mutation' } & {
-  allocateRiders: Maybe<
-    { __typename?: 'Competition' } & Pick<Competition, 'id'> & {
-        rounds: { __typename?: 'RoundList' } & {
-          items: Array<
-            { __typename?: 'Round' } & Pick<Round, 'id'> & {
-                heats: { __typename?: 'HeatList' } & {
-                  items: Array<
-                    { __typename?: 'Heat' } & Pick<Heat, 'name'> & {
-                        riderAllocations: { __typename?: 'RiderAllocationList' } & {
-                          items: Array<{ __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'userId' | 'startSeed'>>;
-                        };
-                      }
-                  >;
-                };
-              }
-          >;
-        };
-      }
-  >;
-};
+
+export type AllocateRidersMutation = (
+  { __typename?: 'Mutation' }
+  & { allocateRiders: Maybe<(
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'id'>
+    & { rounds: (
+      { __typename?: 'RoundList' }
+      & { items: Array<(
+        { __typename?: 'Round' }
+        & Pick<Round, 'id'>
+        & { heats: (
+          { __typename?: 'HeatList' }
+          & { items: Array<(
+            { __typename?: 'Heat' }
+            & Pick<Heat, 'id' | 'name'>
+            & { riderAllocations: (
+              { __typename?: 'RiderAllocationList' }
+              & { items: Array<(
+                { __typename?: 'RiderAllocation' }
+                & Pick<RiderAllocation, 'userId' | 'startSeed'>
+              )> }
+            ) }
+          )> }
+        ) }
+      )> }
+    ) }
+  )> }
+);
 
 export type AddRemoveDemoRidersMutationVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type AddRemoveDemoRidersMutation = { __typename?: 'Mutation' } & {
-  addRemoveDemoRiders: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>>;
-};
+
+export type AddRemoveDemoRidersMutation = (
+  { __typename?: 'Mutation' }
+  & { addRemoveDemoRiders: Maybe<(
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'id'>
+  )> }
+);
 
 export type SignUpCompetitionMutationVariables = {
-  id: Scalars['ID'];
-  riders: Array<SignUpRiderInput>;
+  id: Scalars['ID'],
+  riders: Array<SignUpRiderInput>
 };
 
-export type SignUpCompetitionMutation = { __typename?: 'Mutation' } & { signUpCompetition: Maybe<{ __typename?: 'Competition' } & Pick<Competition, 'id'>> };
+
+export type SignUpCompetitionMutation = (
+  { __typename?: 'Mutation' }
+  & { signUpCompetition: Maybe<(
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'id'>
+  )> }
+);
 
 export type EndHeatMutationVariables = {
-  id: Scalars['ID'];
-  validationLevel?: Maybe<ValidationItemType>;
+  id: Scalars['ID'],
+  validationLevel?: Maybe<ValidationItemType>
 };
 
-export type EndHeatMutation = { __typename?: 'Mutation' } & {
-  endHeat:
-    | ({ __typename?: 'Competition' } & CoreCompetitionFieldsFragment)
-    | ({ __typename?: 'ValidationItemList' } & {
-        items: Array<
-          | ({ __typename?: 'ValidationItem' } & Pick<ValidationItem, 'message' | 'type'>)
-          | ({ __typename?: 'ValidationItemHeatAlreadyOpen' } & Pick<ValidationItemHeatAlreadyOpen, 'message' | 'type'>)
-        >;
-      });
-};
+
+export type EndHeatMutation = (
+  { __typename?: 'Mutation' }
+  & { endHeat: (
+    { __typename?: 'Competition' }
+    & CoreCompetitionFieldsFragment
+  ) | (
+    { __typename?: 'ValidationItemList' }
+    & { items: Array<(
+      { __typename?: 'ValidationItem' }
+      & Pick<ValidationItem, 'message' | 'type'>
+    ) | (
+      { __typename?: 'ValidationItemHeatAlreadyOpen' }
+      & Pick<ValidationItemHeatAlreadyOpen, 'message' | 'type'>
+    )> }
+  ) }
+);
 
 export type ListEventsQueryVariables = {};
 
-export type ListEventsQuery = { __typename?: 'Query' } & {
-  listEvents: Array<{ __typename?: 'Event' } & Pick<Event, 'id' | 'name' | 'startTime' | 'status' | 'createdAt' | 'modifiedAt'>>;
-};
+
+export type ListEventsQuery = (
+  { __typename?: 'Query' }
+  & { listEvents: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'id' | 'name' | 'startTime' | 'status' | 'createdAt' | 'modifiedAt'>
+  )> }
+);
 
 export type CreateEventMutationVariables = {
-  input: CreateEventInput;
+  input: CreateEventInput
 };
 
-export type CreateEventMutation = { __typename?: 'Mutation' } & { createEvent: { __typename?: 'Event' } & Pick<Event, 'id'> };
+
+export type CreateEventMutation = (
+  { __typename?: 'Mutation' }
+  & { createEvent: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'id'>
+  ) }
+);
 
 export type UpdateEventMutationVariables = {
-  input: UpdateEventInput;
+  input: UpdateEventInput
 };
 
-export type UpdateEventMutation = { __typename?: 'Mutation' } & { updateEvent: { __typename?: 'Event' } & Pick<Event, 'id'> };
+
+export type UpdateEventMutation = (
+  { __typename?: 'Mutation' }
+  & { updateEvent: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'id'>
+  ) }
+);
 
 export type GetEventQueryVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type GetEventQuery = { __typename?: 'Query' } & {
-  getEvent: { __typename?: 'Event' } & Pick<Event, 'isAdmin' | 'id' | 'name' | 'startTime' | 'description'> & {
-      adminUser: { __typename?: 'User' } & Pick<User, 'fullName'>;
-      competitions: { __typename?: 'CompetitionList' } & {
-        items: Array<
-          { __typename?: 'Competition' } & Pick<Competition, 'id' | 'name' | 'startTime'> & {
-              judgeUser: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>>;
-            }
-        >;
-      };
-    } & BreadcrumbFields_Event_Fragment;
-};
+
+export type GetEventQuery = (
+  { __typename?: 'Query' }
+  & { getEvent: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'isAdmin' | 'id' | 'name' | 'startTime' | 'description'>
+    & { adminUser: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'fullName'>
+    ), competitions: (
+      { __typename?: 'CompetitionList' }
+      & { items: Array<(
+        { __typename?: 'Competition' }
+        & Pick<Competition, 'id' | 'name' | 'startTime'>
+        & { judgeUser: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'id' | 'fullName'>
+        )> }
+      )> }
+    ) }
+    & BreadcrumbFields_Event_Fragment
+  ) }
+);
 
 export type GetEventScheduleQueryVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type GetEventScheduleQuery = { __typename?: 'Query' } & {
-  getEvent: { __typename?: 'Event' } & Pick<Event, 'name' | 'isAdmin'> & {
-      scheduleItems: { __typename?: 'ScheduleItemList' } & {
-        items: Array<
-          { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'> & {
-              scheduledItem: Maybe<
-                { __typename?: 'Round' } & Pick<Round, 'roundNo' | 'longName'> & {
-                    heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
-                  }
-              >;
-            }
-        >;
-      };
-    };
-};
+
+export type GetEventScheduleQuery = (
+  { __typename?: 'Query' }
+  & { getEvent: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'name' | 'id' | 'isAdmin'>
+    & { scheduleItems: (
+      { __typename?: 'ScheduleItemList' }
+      & { items: Array<(
+        { __typename?: 'ScheduleItem' }
+        & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'>
+        & { scheduledItem: Maybe<(
+          { __typename?: 'Round' }
+          & Pick<Round, 'id' | 'roundNo' | 'longName'>
+          & { heats: (
+            { __typename?: 'HeatList' }
+            & { items: Array<(
+              { __typename?: 'Heat' }
+              & Pick<Heat, 'id' | 'name'>
+            )> }
+          ) }
+        )> }
+      )> }
+    ) }
+  ) }
+);
 
 export type SelectHeatMutationVariables = {
-  id: Scalars['ID'];
-  validationLevel?: Maybe<ValidationItemType>;
+  id: Scalars['ID'],
+  validationLevel?: Maybe<ValidationItemType>
 };
 
-export type SelectHeatMutation = { __typename?: 'Mutation' } & {
-  selectHeat:
-    | ({ __typename?: 'Event' } & Pick<Event, 'id'> & { selectedHeat: Maybe<{ __typename?: 'Heat' } & CoreHeatFieldsFragment> })
-    | ({ __typename?: 'ValidationItemList' } & {
-        items: Array<
-          | ({ __typename?: 'ValidationItem' } & Pick<ValidationItem, 'message' | 'type'>)
-          | ({ __typename?: 'ValidationItemHeatAlreadyOpen' } & Pick<ValidationItemHeatAlreadyOpen, 'eventId' | 'message' | 'type'>)
-        >;
-      });
-};
+
+export type SelectHeatMutation = (
+  { __typename?: 'Mutation' }
+  & { selectHeat: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'id'>
+    & { selectedHeat: Maybe<(
+      { __typename?: 'Heat' }
+      & CoreHeatFieldsFragment
+    )> }
+  ) | (
+    { __typename?: 'ValidationItemList' }
+    & { items: Array<(
+      { __typename?: 'ValidationItem' }
+      & Pick<ValidationItem, 'message' | 'type'>
+    ) | (
+      { __typename?: 'ValidationItemHeatAlreadyOpen' }
+      & Pick<ValidationItemHeatAlreadyOpen, 'eventId' | 'message' | 'type'>
+    )> }
+  ) }
+);
 
 export type GetSelectedHeatQueryVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
-  getEvent: { __typename?: 'Event' } & Pick<Event, 'id'> & { selectedHeat: Maybe<{ __typename?: 'Heat' } & CoreHeatFieldsFragment> };
-};
 
-export type CoreHeatFieldsFragment = { __typename?: 'Heat' } & Pick<
-  Heat,
-  'id' | 'isAdmin' | 'isJudge' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'
-> & {
-    round: { __typename?: 'Round' } & Pick<Round, 'roundNo'>;
-    riderAllocations: { __typename?: 'RiderAllocationList' } & {
-      items: Array<
-        { __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'userId' | 'startSeed' | 'startOrder' | 'rankOrder' | 'allocatableId' | 'position'> & {
-            user: Maybe<{ __typename?: 'User' } & Pick<User, 'fullName'>>;
-            runs: Maybe<Array<{ __typename?: 'Run' } & Pick<Run, 'score'>>>;
-          }
-      >;
-    };
-  } & BreadcrumbFields_Heat_Fragment;
+export type GetSelectedHeatQuery = (
+  { __typename?: 'Query' }
+  & { getEvent: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'id'>
+    & { selectedHeat: Maybe<(
+      { __typename?: 'Heat' }
+      & CoreHeatFieldsFragment
+    )> }
+  ) }
+);
+
+export type CoreHeatFieldsFragment = (
+  { __typename?: 'Heat' }
+  & Pick<Heat, 'id' | 'isAdmin' | 'isJudge' | 'status' | 'name' | 'longName' | 'size' | 'noAllocated' | 'noProgressing' | 'createdAt'>
+  & { round: (
+    { __typename?: 'Round' }
+    & Pick<Round, 'id' | 'roundNo'>
+  ), riderAllocations: (
+    { __typename?: 'RiderAllocationList' }
+    & { items: Array<(
+      { __typename?: 'RiderAllocation' }
+      & Pick<RiderAllocation, 'userId' | 'startSeed' | 'startOrder' | 'rankOrder' | 'allocatableId' | 'position'>
+      & { user: Maybe<(
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'fullName'>
+      )>, runs: Maybe<Array<(
+        { __typename?: 'Run' }
+        & Pick<Run, 'score'>
+      )>> }
+    )> }
+  ) }
+  & BreadcrumbFields_Heat_Fragment
+);
 
 export type GetHeatQueryVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type GetHeatQuery = { __typename?: 'Query' } & { getHeat: { __typename?: 'Heat' } & CoreHeatFieldsFragment };
+
+export type GetHeatQuery = (
+  { __typename?: 'Query' }
+  & { getHeat: (
+    { __typename?: 'Heat' }
+    & CoreHeatFieldsFragment
+  ) }
+);
 
 export type ScoreRunMutationVariables = {
-  input: ScorRunInput;
+  input: ScorRunInput
 };
 
-export type ScoreRunMutation = { __typename?: 'Mutation' } & { scoreRun: { __typename?: 'Heat' } & Pick<Heat, 'id'> };
+
+export type ScoreRunMutation = (
+  { __typename?: 'Mutation' }
+  & { scoreRun: (
+    { __typename?: 'Heat' }
+    & Pick<Heat, 'id'>
+  ) }
+);
 
 export type GetDataEntityQueryVariables = {
-  id: Scalars['ID'];
+  id: Scalars['ID']
 };
 
-export type GetDataEntityQuery = { __typename?: 'Query' } & {
-  getDataEntity: Maybe<
-    | ({ __typename?: 'Event' } & Pick<Event, 'createdAt' | 'id' | 'name'>)
-    | ({ __typename?: 'Heat' } & Pick<Heat, 'status' | 'createdAt' | 'id' | 'name'>)
-    | ({ __typename?: 'Round' } & Pick<Round, 'createdAt' | 'id' | 'name'>)
-    | ({ __typename?: 'Competition' } & Pick<Competition, 'judgeUserId' | 'createdAt' | 'id' | 'name'>)
-  >;
-};
+
+export type GetDataEntityQuery = (
+  { __typename?: 'Query' }
+  & { getDataEntity: Maybe<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'createdAt' | 'id' | 'name'>
+  ) | (
+    { __typename?: 'Heat' }
+    & Pick<Heat, 'status' | 'createdAt' | 'id' | 'name'>
+  ) | (
+    { __typename?: 'Round' }
+    & Pick<Round, 'createdAt' | 'id' | 'name'>
+  ) | (
+    { __typename?: 'Competition' }
+    & Pick<Competition, 'judgeUserId' | 'createdAt' | 'id' | 'name'>
+  )> }
+);
 
 export type UpdateRiderAllocationsMutationVariables = {
-  input: Array<UpdateRiderAllocationInput>;
+  input: Array<UpdateRiderAllocationInput>
 };
 
-export type UpdateRiderAllocationsMutation = { __typename?: 'Mutation' } & {
-  updateRiderAllocations: Array<{ __typename?: 'RiderAllocation' } & Pick<RiderAllocation, 'allocatableId'>>;
-};
+
+export type UpdateRiderAllocationsMutation = (
+  { __typename?: 'Mutation' }
+  & { updateRiderAllocations: Array<(
+    { __typename?: 'RiderAllocation' }
+    & Pick<RiderAllocation, 'allocatableId'>
+  )> }
+);
 
 export type UpdateScheduleItemMutationVariables = {
-  input: UpdateScheduleItemInput;
+  input: UpdateScheduleItemInput
 };
 
-export type UpdateScheduleItemMutation = { __typename?: 'Mutation' } & {
-  updateScheduleItem: { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'id' | 'startTime'>;
-};
+
+export type UpdateScheduleItemMutation = (
+  { __typename?: 'Mutation' }
+  & { updateScheduleItem: (
+    { __typename?: 'ScheduleItem' }
+    & Pick<ScheduleItem, 'id' | 'startTime'>
+  ) }
+);
 
 export type CreateScheduleItemMutationVariables = {
-  input: CreateScheduleItemInput;
+  input: CreateScheduleItemInput
 };
 
-export type CreateScheduleItemMutation = { __typename?: 'Mutation' } & {
-  createScheduleItem: { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'id' | 'startTime'>;
-};
+
+export type CreateScheduleItemMutation = (
+  { __typename?: 'Mutation' }
+  & { createScheduleItem: (
+    { __typename?: 'ScheduleItem' }
+    & Pick<ScheduleItem, 'id' | 'startTime'>
+  ) }
+);
 
 export type ListUsersQueryVariables = {};
 
-export type ListUsersQuery = { __typename?: 'Query' } & { listUsers: Array<{ __typename?: 'User' } & Pick<User, 'id' | 'fullName'>> };
+
+export type ListUsersQuery = (
+  { __typename?: 'Query' }
+  & { listUsers: Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'fullName'>
+  )> }
+);
 
 export const BreadcrumbFieldsFragmentDoc = gql`
-  fragment BreadcrumbFields on DataEntity {
-    breadcrumbs {
-      items {
+    fragment BreadcrumbFields on DataEntity {
+  breadcrumbs {
+    items {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+export const CoreCompetitionFieldsFragmentDoc = gql`
+    fragment CoreCompetitionFields on Competition {
+  ...BreadcrumbFields
+  id
+  winners {
+    items {
+      position
+      userId
+      user {
         id
-        name
-        type
+        fullName
       }
     }
   }
-`;
-export const CoreCompetitionFieldsFragmentDoc = gql`
-  fragment CoreCompetitionFields on Competition {
-    ...BreadcrumbFields
+  isAdmin
+  isJudge
+  event {
     id
-    winners {
-      items {
-        position
-        user {
-          fullName
-        }
-      }
-    }
-    isAdmin
-    isJudge
-    event {
-      id
-    }
-    hasDemoRiders
-    name
-    description
-    level
-    gender
-    sport
-    maxRiders
-    judgeUserId
-    judgeUser {
-      id
-      fullName
-    }
-    riderAllocations {
-      items {
-        userId
-        user {
-          id
-          fullName
-        }
-        startSeed
-      }
-    }
-    rounds {
-      items {
+  }
+  hasDemoRiders
+  name
+  description
+  level
+  gender
+  sport
+  maxRiders
+  judgeUserId
+  judgeUser {
+    id
+    fullName
+  }
+  riderAllocations {
+    items {
+      userId
+      user {
         id
-        name
-        startTime
-        heats {
-          items {
-            id
-            isFinal
-            name
-            round {
-              roundNo
-            }
-            size
-            noAllocated
-            createdAt
-            status
-            riderAllocations {
-              items {
-                user {
-                  id
-                  fullName
-                }
+        fullName
+      }
+      startSeed
+    }
+  }
+  rounds {
+    items {
+      id
+      name
+      startTime
+      heats {
+        items {
+          id
+          isFinal
+          name
+          round {
+            roundNo
+          }
+          size
+          noAllocated
+          createdAt
+          status
+          riderAllocations {
+            items {
+              userId
+              user {
+                id
+                fullName
               }
             }
           }
@@ -1017,57 +1259,57 @@ export const CoreCompetitionFieldsFragmentDoc = gql`
       }
     }
   }
-  ${BreadcrumbFieldsFragmentDoc}
-`;
+}
+    ${BreadcrumbFieldsFragmentDoc}`;
 export const CoreHeatFieldsFragmentDoc = gql`
-  fragment CoreHeatFields on Heat {
-    ...BreadcrumbFields
+    fragment CoreHeatFields on Heat {
+  ...BreadcrumbFields
+  id
+  isAdmin
+  isJudge
+  status
+  name
+  longName
+  round {
     id
-    isAdmin
-    isJudge
-    status
-    name
-    longName
-    round {
-      roundNo
-    }
-    size
-    noAllocated
-    noProgressing
-    createdAt
-    riderAllocations {
-      items {
-        userId
-        user {
-          fullName
-        }
-        startSeed
-        startOrder
-        rankOrder
-        allocatableId
-        position
-        runs {
-          score
-        }
+    roundNo
+  }
+  size
+  noAllocated
+  noProgressing
+  createdAt
+  riderAllocations {
+    items {
+      userId
+      user {
+        id
+        fullName
+      }
+      startSeed
+      startOrder
+      rankOrder
+      allocatableId
+      position
+      runs {
+        score
       }
     }
   }
-  ${BreadcrumbFieldsFragmentDoc}
-`;
+}
+    ${BreadcrumbFieldsFragmentDoc}`;
 export const GetCompetitionDocument = gql`
-  query getCompetition($id: ID!) {
-    getCompetition(id: $id) {
-      ...CoreCompetitionFields
-    }
+    query getCompetition($id: ID!) {
+  getCompetition(id: $id) {
+    ...CoreCompetitionFields
   }
-  ${CoreCompetitionFieldsFragmentDoc}
-`;
+}
+    ${CoreCompetitionFieldsFragmentDoc}`;
 
 /**
  * __useGetCompetitionQuery__
  *
  * To run a query within a React component, call `useGetCompetitionQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCompetitionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGetCompetitionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1080,21 +1322,21 @@ export const GetCompetitionDocument = gql`
  * });
  */
 export function useGetCompetitionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCompetitionQuery, GetCompetitionQueryVariables>) {
-  return ApolloReactHooks.useQuery<GetCompetitionQuery, GetCompetitionQueryVariables>(GetCompetitionDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<GetCompetitionQuery, GetCompetitionQueryVariables>(GetCompetitionDocument, baseOptions);
+      }
 export function useGetCompetitionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCompetitionQuery, GetCompetitionQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<GetCompetitionQuery, GetCompetitionQueryVariables>(GetCompetitionDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<GetCompetitionQuery, GetCompetitionQueryVariables>(GetCompetitionDocument, baseOptions);
+        }
 export type GetCompetitionQueryHookResult = ReturnType<typeof useGetCompetitionQuery>;
 export type GetCompetitionLazyQueryHookResult = ReturnType<typeof useGetCompetitionLazyQuery>;
 export type GetCompetitionQueryResult = ApolloReactCommon.QueryResult<GetCompetitionQuery, GetCompetitionQueryVariables>;
 export const CreateCompetitionDocument = gql`
-  mutation createCompetition($input: CreateCompetitionInput!) {
-    createCompetition(input: $input) {
-      id
-    }
+    mutation createCompetition($input: CreateCompetitionInput!) {
+  createCompetition(input: $input) {
+    id
   }
-`;
+}
+    `;
 export type CreateCompetitionMutationFn = ApolloReactCommon.MutationFunction<CreateCompetitionMutation, CreateCompetitionMutationVariables>;
 
 /**
@@ -1114,21 +1356,19 @@ export type CreateCompetitionMutationFn = ApolloReactCommon.MutationFunction<Cre
  *   },
  * });
  */
-export function useCreateCompetitionMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<CreateCompetitionMutation, CreateCompetitionMutationVariables>
-) {
-  return ApolloReactHooks.useMutation<CreateCompetitionMutation, CreateCompetitionMutationVariables>(CreateCompetitionDocument, baseOptions);
-}
+export function useCreateCompetitionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateCompetitionMutation, CreateCompetitionMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateCompetitionMutation, CreateCompetitionMutationVariables>(CreateCompetitionDocument, baseOptions);
+      }
 export type CreateCompetitionMutationHookResult = ReturnType<typeof useCreateCompetitionMutation>;
 export type CreateCompetitionMutationResult = ApolloReactCommon.MutationResult<CreateCompetitionMutation>;
 export type CreateCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateCompetitionMutation, CreateCompetitionMutationVariables>;
 export const UpdateCompetitionDocument = gql`
-  mutation updateCompetition($input: UpdateCompetitionInput!) {
-    updateCompetition(input: $input) {
-      id
-    }
+    mutation updateCompetition($input: UpdateCompetitionInput!) {
+  updateCompetition(input: $input) {
+    id
   }
-`;
+}
+    `;
 export type UpdateCompetitionMutationFn = ApolloReactCommon.MutationFunction<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>;
 
 /**
@@ -1148,21 +1388,19 @@ export type UpdateCompetitionMutationFn = ApolloReactCommon.MutationFunction<Upd
  *   },
  * });
  */
-export function useUpdateCompetitionMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>
-) {
-  return ApolloReactHooks.useMutation<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>(UpdateCompetitionDocument, baseOptions);
-}
+export function useUpdateCompetitionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>(UpdateCompetitionDocument, baseOptions);
+      }
 export type UpdateCompetitionMutationHookResult = ReturnType<typeof useUpdateCompetitionMutation>;
 export type UpdateCompetitionMutationResult = ApolloReactCommon.MutationResult<UpdateCompetitionMutation>;
 export type UpdateCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateCompetitionMutation, UpdateCompetitionMutationVariables>;
 export const BuildCompetitionDocument = gql`
-  mutation buildCompetition($params: CompetitionParamsInput!, $id: ID!) {
-    buildCompetition(id: $id, params: $params) {
-      id
-    }
+    mutation buildCompetition($params: CompetitionParamsInput!, $id: ID!) {
+  buildCompetition(id: $id, params: $params) {
+    id
   }
-`;
+}
+    `;
 export type BuildCompetitionMutationFn = ApolloReactCommon.MutationFunction<BuildCompetitionMutation, BuildCompetitionMutationVariables>;
 
 /**
@@ -1184,26 +1422,26 @@ export type BuildCompetitionMutationFn = ApolloReactCommon.MutationFunction<Buil
  * });
  */
 export function useBuildCompetitionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<BuildCompetitionMutation, BuildCompetitionMutationVariables>) {
-  return ApolloReactHooks.useMutation<BuildCompetitionMutation, BuildCompetitionMutationVariables>(BuildCompetitionDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<BuildCompetitionMutation, BuildCompetitionMutationVariables>(BuildCompetitionDocument, baseOptions);
+      }
 export type BuildCompetitionMutationHookResult = ReturnType<typeof useBuildCompetitionMutation>;
 export type BuildCompetitionMutationResult = ApolloReactCommon.MutationResult<BuildCompetitionMutation>;
 export type BuildCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<BuildCompetitionMutation, BuildCompetitionMutationVariables>;
 export const AllocateRidersDocument = gql`
-  mutation allocateRiders($id: ID!) {
-    allocateRiders(id: $id) {
-      id
-      rounds {
-        items {
-          id
-          heats {
-            items {
-              name
-              riderAllocations {
-                items {
-                  userId
-                  startSeed
-                }
+    mutation allocateRiders($id: ID!) {
+  allocateRiders(id: $id) {
+    id
+    rounds {
+      items {
+        id
+        heats {
+          items {
+            id
+            name
+            riderAllocations {
+              items {
+                userId
+                startSeed
               }
             }
           }
@@ -1211,7 +1449,8 @@ export const AllocateRidersDocument = gql`
       }
     }
   }
-`;
+}
+    `;
 export type AllocateRidersMutationFn = ApolloReactCommon.MutationFunction<AllocateRidersMutation, AllocateRidersMutationVariables>;
 
 /**
@@ -1232,18 +1471,18 @@ export type AllocateRidersMutationFn = ApolloReactCommon.MutationFunction<Alloca
  * });
  */
 export function useAllocateRidersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AllocateRidersMutation, AllocateRidersMutationVariables>) {
-  return ApolloReactHooks.useMutation<AllocateRidersMutation, AllocateRidersMutationVariables>(AllocateRidersDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<AllocateRidersMutation, AllocateRidersMutationVariables>(AllocateRidersDocument, baseOptions);
+      }
 export type AllocateRidersMutationHookResult = ReturnType<typeof useAllocateRidersMutation>;
 export type AllocateRidersMutationResult = ApolloReactCommon.MutationResult<AllocateRidersMutation>;
 export type AllocateRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AllocateRidersMutation, AllocateRidersMutationVariables>;
 export const AddRemoveDemoRidersDocument = gql`
-  mutation addRemoveDemoRiders($id: ID!) {
-    addRemoveDemoRiders(id: $id) {
-      id
-    }
+    mutation addRemoveDemoRiders($id: ID!) {
+  addRemoveDemoRiders(id: $id) {
+    id
   }
-`;
+}
+    `;
 export type AddRemoveDemoRidersMutationFn = ApolloReactCommon.MutationFunction<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>;
 
 /**
@@ -1263,21 +1502,19 @@ export type AddRemoveDemoRidersMutationFn = ApolloReactCommon.MutationFunction<A
  *   },
  * });
  */
-export function useAddRemoveDemoRidersMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>
-) {
-  return ApolloReactHooks.useMutation<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>(AddRemoveDemoRidersDocument, baseOptions);
-}
+export function useAddRemoveDemoRidersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>(AddRemoveDemoRidersDocument, baseOptions);
+      }
 export type AddRemoveDemoRidersMutationHookResult = ReturnType<typeof useAddRemoveDemoRidersMutation>;
 export type AddRemoveDemoRidersMutationResult = ApolloReactCommon.MutationResult<AddRemoveDemoRidersMutation>;
 export type AddRemoveDemoRidersMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRemoveDemoRidersMutation, AddRemoveDemoRidersMutationVariables>;
 export const SignUpCompetitionDocument = gql`
-  mutation signUpCompetition($id: ID!, $riders: [SignUpRiderInput!]!) {
-    signUpCompetition(id: $id, riders: $riders) {
-      id
-    }
+    mutation signUpCompetition($id: ID!, $riders: [SignUpRiderInput!]!) {
+  signUpCompetition(id: $id, riders: $riders) {
+    id
   }
-`;
+}
+    `;
 export type SignUpCompetitionMutationFn = ApolloReactCommon.MutationFunction<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>;
 
 /**
@@ -1298,30 +1535,27 @@ export type SignUpCompetitionMutationFn = ApolloReactCommon.MutationFunction<Sig
  *   },
  * });
  */
-export function useSignUpCompetitionMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>
-) {
-  return ApolloReactHooks.useMutation<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>(SignUpCompetitionDocument, baseOptions);
-}
+export function useSignUpCompetitionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>) {
+        return ApolloReactHooks.useMutation<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>(SignUpCompetitionDocument, baseOptions);
+      }
 export type SignUpCompetitionMutationHookResult = ReturnType<typeof useSignUpCompetitionMutation>;
 export type SignUpCompetitionMutationResult = ApolloReactCommon.MutationResult<SignUpCompetitionMutation>;
 export type SignUpCompetitionMutationOptions = ApolloReactCommon.BaseMutationOptions<SignUpCompetitionMutation, SignUpCompetitionMutationVariables>;
 export const EndHeatDocument = gql`
-  mutation endHeat($id: ID!, $validationLevel: ValidationItemType) {
-    endHeat(id: $id, validationLevel: $validationLevel) {
-      ... on Competition {
-        ...CoreCompetitionFields
-      }
-      ... on ValidationItemList {
-        items {
-          message
-          type
-        }
+    mutation endHeat($id: ID!, $validationLevel: ValidationItemType) {
+  endHeat(id: $id, validationLevel: $validationLevel) {
+    ... on Competition {
+      ...CoreCompetitionFields
+    }
+    ... on ValidationItemList {
+      items {
+        message
+        type
       }
     }
   }
-  ${CoreCompetitionFieldsFragmentDoc}
-`;
+}
+    ${CoreCompetitionFieldsFragmentDoc}`;
 export type EndHeatMutationFn = ApolloReactCommon.MutationFunction<EndHeatMutation, EndHeatMutationVariables>;
 
 /**
@@ -1343,29 +1577,29 @@ export type EndHeatMutationFn = ApolloReactCommon.MutationFunction<EndHeatMutati
  * });
  */
 export function useEndHeatMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EndHeatMutation, EndHeatMutationVariables>) {
-  return ApolloReactHooks.useMutation<EndHeatMutation, EndHeatMutationVariables>(EndHeatDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<EndHeatMutation, EndHeatMutationVariables>(EndHeatDocument, baseOptions);
+      }
 export type EndHeatMutationHookResult = ReturnType<typeof useEndHeatMutation>;
 export type EndHeatMutationResult = ApolloReactCommon.MutationResult<EndHeatMutation>;
 export type EndHeatMutationOptions = ApolloReactCommon.BaseMutationOptions<EndHeatMutation, EndHeatMutationVariables>;
 export const ListEventsDocument = gql`
-  query listEvents {
-    listEvents {
-      id
-      name
-      startTime
-      status
-      createdAt
-      modifiedAt
-    }
+    query listEvents {
+  listEvents {
+    id
+    name
+    startTime
+    status
+    createdAt
+    modifiedAt
   }
-`;
+}
+    `;
 
 /**
  * __useListEventsQuery__
  *
  * To run a query within a React component, call `useListEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useListEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useListEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1377,21 +1611,21 @@ export const ListEventsDocument = gql`
  * });
  */
 export function useListEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListEventsQuery, ListEventsQueryVariables>) {
-  return ApolloReactHooks.useQuery<ListEventsQuery, ListEventsQueryVariables>(ListEventsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<ListEventsQuery, ListEventsQueryVariables>(ListEventsDocument, baseOptions);
+      }
 export function useListEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListEventsQuery, ListEventsQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<ListEventsQuery, ListEventsQueryVariables>(ListEventsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<ListEventsQuery, ListEventsQueryVariables>(ListEventsDocument, baseOptions);
+        }
 export type ListEventsQueryHookResult = ReturnType<typeof useListEventsQuery>;
 export type ListEventsLazyQueryHookResult = ReturnType<typeof useListEventsLazyQuery>;
 export type ListEventsQueryResult = ApolloReactCommon.QueryResult<ListEventsQuery, ListEventsQueryVariables>;
 export const CreateEventDocument = gql`
-  mutation createEvent($input: CreateEventInput!) {
-    createEvent(input: $input) {
-      id
-    }
+    mutation createEvent($input: CreateEventInput!) {
+  createEvent(input: $input) {
+    id
   }
-`;
+}
+    `;
 export type CreateEventMutationFn = ApolloReactCommon.MutationFunction<CreateEventMutation, CreateEventMutationVariables>;
 
 /**
@@ -1412,18 +1646,18 @@ export type CreateEventMutationFn = ApolloReactCommon.MutationFunction<CreateEve
  * });
  */
 export function useCreateEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateEventMutation, CreateEventMutationVariables>) {
-  return ApolloReactHooks.useMutation<CreateEventMutation, CreateEventMutationVariables>(CreateEventDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<CreateEventMutation, CreateEventMutationVariables>(CreateEventDocument, baseOptions);
+      }
 export type CreateEventMutationHookResult = ReturnType<typeof useCreateEventMutation>;
 export type CreateEventMutationResult = ApolloReactCommon.MutationResult<CreateEventMutation>;
 export type CreateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEventMutation, CreateEventMutationVariables>;
 export const UpdateEventDocument = gql`
-  mutation updateEvent($input: UpdateEventInput!) {
-    updateEvent(input: $input) {
-      id
-    }
+    mutation updateEvent($input: UpdateEventInput!) {
+  updateEvent(input: $input) {
+    id
   }
-`;
+}
+    `;
 export type UpdateEventMutationFn = ApolloReactCommon.MutationFunction<UpdateEventMutation, UpdateEventMutationVariables>;
 
 /**
@@ -1444,43 +1678,44 @@ export type UpdateEventMutationFn = ApolloReactCommon.MutationFunction<UpdateEve
  * });
  */
 export function useUpdateEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateEventMutation, UpdateEventMutationVariables>) {
-  return ApolloReactHooks.useMutation<UpdateEventMutation, UpdateEventMutationVariables>(UpdateEventDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<UpdateEventMutation, UpdateEventMutationVariables>(UpdateEventDocument, baseOptions);
+      }
 export type UpdateEventMutationHookResult = ReturnType<typeof useUpdateEventMutation>;
 export type UpdateEventMutationResult = ApolloReactCommon.MutationResult<UpdateEventMutation>;
 export type UpdateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateEventMutation, UpdateEventMutationVariables>;
 export const GetEventDocument = gql`
-  query getEvent($id: ID!) {
-    getEvent(id: $id) {
-      ...BreadcrumbFields
-      isAdmin
+    query getEvent($id: ID!) {
+  getEvent(id: $id) {
+    ...BreadcrumbFields
+    isAdmin
+    id
+    name
+    adminUser {
       id
-      name
-      adminUser {
-        fullName
-      }
-      startTime
-      description
-      competitions {
-        items {
+      fullName
+    }
+    startTime
+    description
+    competitions {
+      items {
+        id
+        name
+        startTime
+        judgeUser {
           id
-          name
-          startTime
-          judgeUser {
-            fullName
-          }
+          fullName
         }
       }
     }
   }
-  ${BreadcrumbFieldsFragmentDoc}
-`;
+}
+    ${BreadcrumbFieldsFragmentDoc}`;
 
 /**
  * __useGetEventQuery__
  *
  * To run a query within a React component, call `useGetEventQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetEventQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGetEventQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1493,35 +1728,36 @@ export const GetEventDocument = gql`
  * });
  */
 export function useGetEventQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
-  return ApolloReactHooks.useQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, baseOptions);
+      }
 export function useGetEventLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, baseOptions);
+        }
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = ApolloReactCommon.QueryResult<GetEventQuery, GetEventQueryVariables>;
 export const GetEventScheduleDocument = gql`
-  query getEventSchedule($id: ID!) {
-    getEvent(id: $id) {
-      name
-      isAdmin
-      scheduleItems {
-        items {
-          scheduleId
-          id
-          startTime
-          notice
-          createdAt
-          scheduledItem {
-            ... on Round {
-              roundNo
-              longName
-              heats {
-                items {
-                  id
-                  name
-                }
+    query getEventSchedule($id: ID!) {
+  getEvent(id: $id) {
+    name
+    id
+    isAdmin
+    scheduleItems {
+      items {
+        scheduleId
+        id
+        startTime
+        notice
+        createdAt
+        scheduledItem {
+          ... on Round {
+            id
+            roundNo
+            longName
+            heats {
+              items {
+                id
+                name
               }
             }
           }
@@ -1529,13 +1765,14 @@ export const GetEventScheduleDocument = gql`
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetEventScheduleQuery__
  *
  * To run a query within a React component, call `useGetEventScheduleQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetEventScheduleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGetEventScheduleQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1548,36 +1785,35 @@ export const GetEventScheduleDocument = gql`
  * });
  */
 export function useGetEventScheduleQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetEventScheduleQuery, GetEventScheduleQueryVariables>) {
-  return ApolloReactHooks.useQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
+      }
 export function useGetEventScheduleLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetEventScheduleQuery, GetEventScheduleQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<GetEventScheduleQuery, GetEventScheduleQueryVariables>(GetEventScheduleDocument, baseOptions);
+        }
 export type GetEventScheduleQueryHookResult = ReturnType<typeof useGetEventScheduleQuery>;
 export type GetEventScheduleLazyQueryHookResult = ReturnType<typeof useGetEventScheduleLazyQuery>;
 export type GetEventScheduleQueryResult = ApolloReactCommon.QueryResult<GetEventScheduleQuery, GetEventScheduleQueryVariables>;
 export const SelectHeatDocument = gql`
-  mutation selectHeat($id: ID!, $validationLevel: ValidationItemType) {
-    selectHeat(id: $id, validationLevel: $validationLevel) {
-      ... on Event {
-        id
-        selectedHeat {
-          ...CoreHeatFields
-        }
+    mutation selectHeat($id: ID!, $validationLevel: ValidationItemType) {
+  selectHeat(id: $id, validationLevel: $validationLevel) {
+    ... on Event {
+      id
+      selectedHeat {
+        ...CoreHeatFields
       }
-      ... on ValidationItemList {
-        items {
-          message
-          type
-          ... on ValidationItemHeatAlreadyOpen {
-            eventId
-          }
+    }
+    ... on ValidationItemList {
+      items {
+        message
+        type
+        ... on ValidationItemHeatAlreadyOpen {
+          eventId
         }
       }
     }
   }
-  ${CoreHeatFieldsFragmentDoc}
-`;
+}
+    ${CoreHeatFieldsFragmentDoc}`;
 export type SelectHeatMutationFn = ApolloReactCommon.MutationFunction<SelectHeatMutation, SelectHeatMutationVariables>;
 
 /**
@@ -1599,28 +1835,27 @@ export type SelectHeatMutationFn = ApolloReactCommon.MutationFunction<SelectHeat
  * });
  */
 export function useSelectHeatMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SelectHeatMutation, SelectHeatMutationVariables>) {
-  return ApolloReactHooks.useMutation<SelectHeatMutation, SelectHeatMutationVariables>(SelectHeatDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<SelectHeatMutation, SelectHeatMutationVariables>(SelectHeatDocument, baseOptions);
+      }
 export type SelectHeatMutationHookResult = ReturnType<typeof useSelectHeatMutation>;
 export type SelectHeatMutationResult = ApolloReactCommon.MutationResult<SelectHeatMutation>;
 export type SelectHeatMutationOptions = ApolloReactCommon.BaseMutationOptions<SelectHeatMutation, SelectHeatMutationVariables>;
 export const GetSelectedHeatDocument = gql`
-  query getSelectedHeat($id: ID!) {
-    getEvent(id: $id) {
-      id
-      selectedHeat {
-        ...CoreHeatFields
-      }
+    query getSelectedHeat($id: ID!) {
+  getEvent(id: $id) {
+    id
+    selectedHeat {
+      ...CoreHeatFields
     }
   }
-  ${CoreHeatFieldsFragmentDoc}
-`;
+}
+    ${CoreHeatFieldsFragmentDoc}`;
 
 /**
  * __useGetSelectedHeatQuery__
  *
  * To run a query within a React component, call `useGetSelectedHeatQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSelectedHeatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGetSelectedHeatQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1633,28 +1868,27 @@ export const GetSelectedHeatDocument = gql`
  * });
  */
 export function useGetSelectedHeatQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>) {
-  return ApolloReactHooks.useQuery<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>(GetSelectedHeatDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>(GetSelectedHeatDocument, baseOptions);
+      }
 export function useGetSelectedHeatLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>(GetSelectedHeatDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>(GetSelectedHeatDocument, baseOptions);
+        }
 export type GetSelectedHeatQueryHookResult = ReturnType<typeof useGetSelectedHeatQuery>;
 export type GetSelectedHeatLazyQueryHookResult = ReturnType<typeof useGetSelectedHeatLazyQuery>;
 export type GetSelectedHeatQueryResult = ApolloReactCommon.QueryResult<GetSelectedHeatQuery, GetSelectedHeatQueryVariables>;
 export const GetHeatDocument = gql`
-  query getHeat($id: ID!) {
-    getHeat(id: $id) {
-      ...CoreHeatFields
-    }
+    query getHeat($id: ID!) {
+  getHeat(id: $id) {
+    ...CoreHeatFields
   }
-  ${CoreHeatFieldsFragmentDoc}
-`;
+}
+    ${CoreHeatFieldsFragmentDoc}`;
 
 /**
  * __useGetHeatQuery__
  *
  * To run a query within a React component, call `useGetHeatQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetHeatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGetHeatQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1667,21 +1901,21 @@ export const GetHeatDocument = gql`
  * });
  */
 export function useGetHeatQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetHeatQuery, GetHeatQueryVariables>) {
-  return ApolloReactHooks.useQuery<GetHeatQuery, GetHeatQueryVariables>(GetHeatDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<GetHeatQuery, GetHeatQueryVariables>(GetHeatDocument, baseOptions);
+      }
 export function useGetHeatLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetHeatQuery, GetHeatQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<GetHeatQuery, GetHeatQueryVariables>(GetHeatDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<GetHeatQuery, GetHeatQueryVariables>(GetHeatDocument, baseOptions);
+        }
 export type GetHeatQueryHookResult = ReturnType<typeof useGetHeatQuery>;
 export type GetHeatLazyQueryHookResult = ReturnType<typeof useGetHeatLazyQuery>;
 export type GetHeatQueryResult = ApolloReactCommon.QueryResult<GetHeatQuery, GetHeatQueryVariables>;
 export const ScoreRunDocument = gql`
-  mutation scoreRun($input: ScorRunInput!) {
-    scoreRun(input: $input) {
-      id
-    }
+    mutation scoreRun($input: ScorRunInput!) {
+  scoreRun(input: $input) {
+    id
   }
-`;
+}
+    `;
 export type ScoreRunMutationFn = ApolloReactCommon.MutationFunction<ScoreRunMutation, ScoreRunMutationVariables>;
 
 /**
@@ -1702,32 +1936,32 @@ export type ScoreRunMutationFn = ApolloReactCommon.MutationFunction<ScoreRunMuta
  * });
  */
 export function useScoreRunMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ScoreRunMutation, ScoreRunMutationVariables>) {
-  return ApolloReactHooks.useMutation<ScoreRunMutation, ScoreRunMutationVariables>(ScoreRunDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ScoreRunMutation, ScoreRunMutationVariables>(ScoreRunDocument, baseOptions);
+      }
 export type ScoreRunMutationHookResult = ReturnType<typeof useScoreRunMutation>;
 export type ScoreRunMutationResult = ApolloReactCommon.MutationResult<ScoreRunMutation>;
 export type ScoreRunMutationOptions = ApolloReactCommon.BaseMutationOptions<ScoreRunMutation, ScoreRunMutationVariables>;
 export const GetDataEntityDocument = gql`
-  query getDataEntity($id: ID!) {
-    getDataEntity(id: $id) {
-      createdAt
-      id
-      name
-      ... on Competition {
-        judgeUserId
-      }
-      ... on Heat {
-        status
-      }
+    query getDataEntity($id: ID!) {
+  getDataEntity(id: $id) {
+    createdAt
+    id
+    name
+    ... on Competition {
+      judgeUserId
+    }
+    ... on Heat {
+      status
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetDataEntityQuery__
  *
  * To run a query within a React component, call `useGetDataEntityQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetDataEntityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGetDataEntityQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1740,21 +1974,21 @@ export const GetDataEntityDocument = gql`
  * });
  */
 export function useGetDataEntityQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetDataEntityQuery, GetDataEntityQueryVariables>) {
-  return ApolloReactHooks.useQuery<GetDataEntityQuery, GetDataEntityQueryVariables>(GetDataEntityDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<GetDataEntityQuery, GetDataEntityQueryVariables>(GetDataEntityDocument, baseOptions);
+      }
 export function useGetDataEntityLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetDataEntityQuery, GetDataEntityQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<GetDataEntityQuery, GetDataEntityQueryVariables>(GetDataEntityDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<GetDataEntityQuery, GetDataEntityQueryVariables>(GetDataEntityDocument, baseOptions);
+        }
 export type GetDataEntityQueryHookResult = ReturnType<typeof useGetDataEntityQuery>;
 export type GetDataEntityLazyQueryHookResult = ReturnType<typeof useGetDataEntityLazyQuery>;
 export type GetDataEntityQueryResult = ApolloReactCommon.QueryResult<GetDataEntityQuery, GetDataEntityQueryVariables>;
 export const UpdateRiderAllocationsDocument = gql`
-  mutation updateRiderAllocations($input: [UpdateRiderAllocationInput!]!) {
-    updateRiderAllocations(input: $input) {
-      allocatableId
-    }
+    mutation updateRiderAllocations($input: [UpdateRiderAllocationInput!]!) {
+  updateRiderAllocations(input: $input) {
+    allocatableId
   }
-`;
+}
+    `;
 export type UpdateRiderAllocationsMutationFn = ApolloReactCommon.MutationFunction<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>;
 
 /**
@@ -1774,25 +2008,20 @@ export type UpdateRiderAllocationsMutationFn = ApolloReactCommon.MutationFunctio
  *   },
  * });
  */
-export function useUpdateRiderAllocationsMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>
-) {
-  return ApolloReactHooks.useMutation<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>(UpdateRiderAllocationsDocument, baseOptions);
-}
+export function useUpdateRiderAllocationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>(UpdateRiderAllocationsDocument, baseOptions);
+      }
 export type UpdateRiderAllocationsMutationHookResult = ReturnType<typeof useUpdateRiderAllocationsMutation>;
 export type UpdateRiderAllocationsMutationResult = ApolloReactCommon.MutationResult<UpdateRiderAllocationsMutation>;
-export type UpdateRiderAllocationsMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  UpdateRiderAllocationsMutation,
-  UpdateRiderAllocationsMutationVariables
->;
+export type UpdateRiderAllocationsMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRiderAllocationsMutation, UpdateRiderAllocationsMutationVariables>;
 export const UpdateScheduleItemDocument = gql`
-  mutation updateScheduleItem($input: UpdateScheduleItemInput!) {
-    updateScheduleItem(input: $input) {
-      id
-      startTime
-    }
+    mutation updateScheduleItem($input: UpdateScheduleItemInput!) {
+  updateScheduleItem(input: $input) {
+    id
+    startTime
   }
-`;
+}
+    `;
 export type UpdateScheduleItemMutationFn = ApolloReactCommon.MutationFunction<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>;
 
 /**
@@ -1812,22 +2041,20 @@ export type UpdateScheduleItemMutationFn = ApolloReactCommon.MutationFunction<Up
  *   },
  * });
  */
-export function useUpdateScheduleItemMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>
-) {
-  return ApolloReactHooks.useMutation<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>(UpdateScheduleItemDocument, baseOptions);
-}
+export function useUpdateScheduleItemMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>(UpdateScheduleItemDocument, baseOptions);
+      }
 export type UpdateScheduleItemMutationHookResult = ReturnType<typeof useUpdateScheduleItemMutation>;
 export type UpdateScheduleItemMutationResult = ApolloReactCommon.MutationResult<UpdateScheduleItemMutation>;
 export type UpdateScheduleItemMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateScheduleItemMutation, UpdateScheduleItemMutationVariables>;
 export const CreateScheduleItemDocument = gql`
-  mutation createScheduleItem($input: CreateScheduleItemInput!) {
-    createScheduleItem(input: $input) {
-      id
-      startTime
-    }
+    mutation createScheduleItem($input: CreateScheduleItemInput!) {
+  createScheduleItem(input: $input) {
+    id
+    startTime
   }
-`;
+}
+    `;
 export type CreateScheduleItemMutationFn = ApolloReactCommon.MutationFunction<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>;
 
 /**
@@ -1847,28 +2074,26 @@ export type CreateScheduleItemMutationFn = ApolloReactCommon.MutationFunction<Cr
  *   },
  * });
  */
-export function useCreateScheduleItemMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>
-) {
-  return ApolloReactHooks.useMutation<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>(CreateScheduleItemDocument, baseOptions);
-}
+export function useCreateScheduleItemMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>(CreateScheduleItemDocument, baseOptions);
+      }
 export type CreateScheduleItemMutationHookResult = ReturnType<typeof useCreateScheduleItemMutation>;
 export type CreateScheduleItemMutationResult = ApolloReactCommon.MutationResult<CreateScheduleItemMutation>;
 export type CreateScheduleItemMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateScheduleItemMutation, CreateScheduleItemMutationVariables>;
 export const ListUsersDocument = gql`
-  query listUsers {
-    listUsers {
-      id
-      fullName
-    }
+    query listUsers {
+  listUsers {
+    id
+    fullName
   }
-`;
+}
+    `;
 
 /**
  * __useListUsersQuery__
  *
  * To run a query within a React component, call `useListUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useListUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useListUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1880,11 +2105,11 @@ export const ListUsersDocument = gql`
  * });
  */
 export function useListUsersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListUsersQuery, ListUsersQueryVariables>) {
-  return ApolloReactHooks.useQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
+      }
 export function useListUsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListUsersQuery, ListUsersQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
+        }
 export type ListUsersQueryHookResult = ReturnType<typeof useListUsersQuery>;
 export type ListUsersLazyQueryHookResult = ReturnType<typeof useListUsersLazyQuery>;
 export type ListUsersQueryResult = ApolloReactCommon.QueryResult<ListUsersQuery, ListUsersQueryVariables>;

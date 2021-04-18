@@ -40,6 +40,7 @@ export const GET_EVENT = gql`
       id
       name
       adminUser {
+        id
         fullName
       }
       startTime
@@ -50,6 +51,7 @@ export const GET_EVENT = gql`
           name
           startTime
           judgeUser {
+            id
             fullName
           }
         }
@@ -62,6 +64,7 @@ export const GET_EVENT_SCHEDULE = gql`
   query getEventSchedule($id: ID!) {
     getEvent(id: $id) {
       name
+      id
       isAdmin
       scheduleItems {
         items {
@@ -72,6 +75,7 @@ export const GET_EVENT_SCHEDULE = gql`
           createdAt
           scheduledItem {
             ... on Round {
+              id
               roundNo
               longName
               heats {

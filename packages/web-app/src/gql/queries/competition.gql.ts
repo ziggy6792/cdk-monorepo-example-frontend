@@ -11,7 +11,9 @@ const CORE_COMPETITION_FIELDS = gql`
     winners {
       items {
         position
+        userId
         user {
+          id
           fullName
         }
       }
@@ -62,6 +64,7 @@ const CORE_COMPETITION_FIELDS = gql`
             status
             riderAllocations {
               items {
+                userId
                 user {
                   id
                   fullName
@@ -117,6 +120,7 @@ export const ALLOCATE_RIDERS = gql`
           id
           heats {
             items {
+              id
               name
               riderAllocations {
                 items {
