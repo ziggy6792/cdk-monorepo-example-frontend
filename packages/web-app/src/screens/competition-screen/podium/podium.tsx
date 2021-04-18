@@ -30,19 +30,25 @@ const Podium: React.FC<IPodiumProps> = ({ winners }) => (
   <>
     <Grid container direction='row' justify='space-around'>
       {podiumItems.map((podiumItem) => (
-        <Grid item>
+        <Grid item xs={4}>
           <Grid container direction='column' justify='center' alignItems='center'>
             <Grid item>
               <div className={podiumItem.style}>
                 <Grid container direction='row' justify='center' alignItems='flex-end' style={{ height: '100%' }}>
                   <Grid item>
-                    <Typography style={{ color: 'white' }}>{podiumItem.text}</Typography>
+                    <Typography variant='h3' style={{ color: 'white', transform: 'translateX(-3px)' }}>{podiumItem.text}</Typography>
                   </Grid>
                 </Grid>
               </div>
             </Grid>
             <Grid item>
-              <Typography style={{ fontSize: '0.8rem' }}>{winners[podiumItem.positionIndex].user.fullName}</Typography>
+              <Typography
+                color="textPrimary"
+                variant='h6'
+                style={{ fontSize: '0.8rem', lineHeight: 1, padding: '8px 4px' }}
+              >
+                {winners[podiumItem.positionIndex].user.fullName}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

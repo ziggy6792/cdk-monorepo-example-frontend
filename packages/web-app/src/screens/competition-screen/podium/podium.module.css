@@ -1,6 +1,6 @@
 .first {
-  height: 300px;
-  width: 100px;
+  height: 180px;
+  width: 70px;
 
   background-repeat: no-repeat;
   background-position: bottom;
@@ -9,8 +9,8 @@
 }
 
 .second {
-  height: 300px;
-  width: 100px;
+  height: 180px;
+  width: 70px;
   background-repeat: no-repeat;
   background-position: bottom;
 
@@ -18,8 +18,8 @@
 }
 
 .thrid {
-  height: 300px;
-  width: 100px;
+  height: 180px;
+  width: 70px;
 
   background-repeat: no-repeat;
   background-position: bottom;
