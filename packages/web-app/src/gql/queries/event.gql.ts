@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { RANKED_RIDERS_FIELDS } from './competition.gql';
 import { BREADCRUMB_FIELDS } from './breadcrumbs.gql';
 import { CORE_HEAT_FIELDS } from './heat.gql';
 
@@ -31,8 +32,16 @@ export const UPDATE_EVENT = gql`
   }
 `;
 
+// const CORE_COMPETITION_FIELDS = gql`
+//   ${BREADCRUMB_FIELDS}
+//   ${RANKED_RIDERS_FIELDS}
+//   fragment CoreCompetitionFields on Competition {
+//     ...BreadcrumbFields
+//     ...RankedRidersFields
+
 export const GET_EVENT = gql`
   ${BREADCRUMB_FIELDS}
+  ${RANKED_RIDERS_FIELDS}
   query getEvent($id: ID!) {
     getEvent(id: $id) {
       ...BreadcrumbFields
@@ -48,12 +57,14 @@ export const GET_EVENT = gql`
       competitions {
         items {
           id
+          status
           name
           startTime
           judgeUser {
             id
             fullName
           }
+          ...RankedRidersFields
         }
       }
     }

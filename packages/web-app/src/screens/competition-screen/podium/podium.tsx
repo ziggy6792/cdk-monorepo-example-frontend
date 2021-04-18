@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import _ from 'lodash';
-import { IWinnerItem } from 'src/gql/common/types';
+import { IRiderRankItem } from 'src/gql/common/types';
 import styles from './podium.module.css';
 
 interface IPodiumProps {
-  winners: IWinnerItem[];
+  winners: IRiderRankItem[];
 }
 
 const podiumItems = [
