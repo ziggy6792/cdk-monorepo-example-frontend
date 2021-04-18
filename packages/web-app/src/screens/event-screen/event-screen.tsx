@@ -115,11 +115,11 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
           </Grid>
           <Grid item>
             <Grid container spacing={2} justify='space-around' style={{ padding: '0 16px' }}>
-              <Grid item><img src={sponsor2} alt='swp' style={{height: 100}} /></Grid>
-              <Grid item><img src={sponsor5} alt='777' style={{height: 100}} /></Grid>
-              <Grid item><img src={sponsor3} alt='mystic' style={{height: 25}} /></Grid>
-              <Grid item><img src={sponsor4} alt='slingshot' style={{height: 25}} /></Grid>
-              <Grid item><img src={sponsor1} alt='embily' style={{height: 50}} /></Grid>
+              <Grid item><img src={sponsor2} alt='swp' style={{height: 120}} /></Grid>
+              <Grid item><img src={sponsor5} alt='777' style={{height: 120}} /></Grid>
+              <Grid item><img src={sponsor4} alt='slingshot' style={{height: 45}} /></Grid>
+              <Grid item><img src={sponsor3} alt='mystic' style={{height: 35}} /></Grid>
+              <Grid item><img src={sponsor1} alt='embily' style={{height: 55}} /></Grid>
             </Grid>
           </Grid>
         </Grid>
