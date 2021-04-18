@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import DataTable, { IDataTableProps, IDataTableRow } from 'src/components/data-table';
-import { Grid, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { IRiderAllocationItem } from 'src/gql/common/types';
 import clsx from 'clsx';
-import ScoreboardTabs from './scoreboard-tabs';
 
 interface ScoresDataTableProps extends Omit<IDataTableProps, 'title'> {
   title?: string;
@@ -41,11 +40,7 @@ const ScoreboardDataTable: React.FC<ScoresDataTableProps> = (props) => {
         filter: false,
         viewColumns: false,
         search: false,
-        customToolbar: () => (
-          <Grid container>
-            <ScoreboardTabs />
-          </Grid>
-        ),
+
         setRowProps: highlightedPositions
           ? (row, dataIndex) => {
               const riderAllocationRow = tableData[dataIndex] as IRiderAllocationRow;
