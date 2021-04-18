@@ -67,7 +67,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }
       </Grid>
       <Grid container direction='column' justify='center' alignItems='center'>
         {scheduleDays.map(({ day, scheduleItems }) => (
-          <Grid item key={day?.toISOString() || 'null'} style={{ width: '400px', marginBottom: theme.spacing(2) }}>
+          <Grid item key={day?.toISOString() || 'null'} style={{ marginBottom: theme.spacing(2), width: 'fit-content', minWidth: '100%' }}>
             {day && <DayPartition day={day} />}
             {scheduleItems.map((scheduleItem, i) => (
               <>
