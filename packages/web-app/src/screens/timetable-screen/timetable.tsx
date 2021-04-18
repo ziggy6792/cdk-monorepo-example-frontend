@@ -4,13 +4,21 @@
 
 import React from 'react';
 import _ from 'lodash';
-import { Grid, Typography, useTheme } from '@material-ui/core';
+import { Grid, Typography, useTheme, makeStyles} from '@material-ui/core';
 import { startOfDay, parseISO } from 'date-fns';
 import DateFormatter from 'src/utils/format/date-formatter';
 import { TimetableScheduleItem } from 'src/gql/common/types';
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import TimetableRow from './timetable-row';
 import AddNotice from './buttons/add-notice';
+
+export const useStyles = makeStyles((theme) => ({
+  dayPartition: {
+    background: '#ddd',
+    padding: theme.spacing(1, 1),
+    margin: theme.spacing(2, -0.5, 3)
+  },
+}));
 
 export interface TimetableProps {
   scheduleItems: TimetableScheduleItem[];
@@ -22,16 +30,21 @@ interface DayPartitionProps {
   day: Date;
 }
 
-const DayPartition: React.FC<DayPartitionProps> = ({ day }) => (
-  <Grid container spacing={1} justify='space-between'>
-    <Grid item>
-      <Typography>{DateFormatter.toShortDate(day)}</Typography>
-    </Grid>
-    <Grid item>
-      <Typography>{DateFormatter.toShortDay(day)}</Typography>
-    </Grid>
-  </Grid>
-);
+const DayPartition: React.FC<DayPartitionProps> = ({ day }) => {
+  const classes = useStyles();
+  return(
+    <Typography variant='h4' color='textPrimary' component='div'>
+      <Grid container spacing={1} justify='space-between' className={classes.dayPartition}>
+        <Grid item>
+          {DateFormatter.toShortDate(day)}
+        </Grid>
+        <Grid item>
+          {DateFormatter.toShortDay(day)}
+        </Grid>
+      </Grid>
+    </Typography>
+  )
+};
 
 const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }) => {
   const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>

@@ -61,8 +61,8 @@ const BottomNavigation: React.FC<BottomNavProps> = ({ eventId, currentPath }) =>
     <Card className={classes.root}>
       <MuiBottomNavigation value={currentPath} showLabels onChange={handleChange} className={classes.root}>
         {/* <BottomNavigationAction label="Tournament" value="tournament" icon={<AccountTree style={{ transform: "scaleX(-1)" }} />} /> */}
-        <BottomNavigationAction label="Timetable" value="timetable" icon={<EventNote />} />
         <BottomNavigationAction label="Overall" value="overall" icon={<Home />} />
+        <BottomNavigationAction label="Timetable" value="timetable" icon={<EventNote />} />
         <BottomNavigationAction label="Live" value="live" icon={<ControlCamera />} />
         <BottomNavigationAction label="Admin" value="profile" icon={<AccountCircle />} />
       </MuiBottomNavigation>      

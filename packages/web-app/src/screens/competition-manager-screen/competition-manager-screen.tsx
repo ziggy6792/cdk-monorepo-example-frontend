@@ -1,7 +1,10 @@
-import { Button, Grid } from '@material-ui/core';
 import React from 'react';
-import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
+
+import { Button, Grid } from '@material-ui/core';
+import { ArrowBack } from '@material-ui/icons';
+
+import { useGetCompetitionQuery } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
 import CompetitionSummary from 'src/modules/summary/competition-summary';
 import { Redirect, useHistory } from 'react-router';
@@ -38,24 +41,33 @@ const CompetitionManagerScreen: React.FC<IEventsScreenProps> = ({ competitionId 
       {!data && <Spinner />}
       {data && !data.getCompetition.isAdmin && <Redirect to={ROUTE_PROFILE} />}
       {data && (
-        <Grid container direction='column' justify='center' alignItems='center'>
-          <Grid container direction='row' justify='flex-end' alignItems='center'>
-            <Grid item>
-              <Button
-                onClick={() => {
-                  history.push(`${ROUTE_COMPETITION}/${competitionId}`);
-                }}
-              >
-                Open Competition Page
-              </Button>
-            </Grid>
+        <Grid container direction='column' justify='center' alignItems='center' spacing={2}>
+          <Grid item xs={12}>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => {
+                history.push(`${ROUTE_COMPETITION}/${competitionId}`);
+              }}
+              startIcon={<ArrowBack />}
+              style={{ padding: '8px 20px', margin: '16px 0 0'}}
+            >
+              Back to Competition
+            </Button>
           </Grid>
 
           <Grid item style={{ width: '100%' }}>
             <CompetitionSummary summary={data.getCompetition} />
           </Grid>
 
-          <Grid container direction='row' justify='center' alignItems='center'>
+          <Grid
+            container
+            direction='row'
+            justify='center'
+            alignItems='center'
+            spacing={1}
+            style={{ marginBottom: 16 }}
+          >
             <Grid item>
               <EditCompetition
                 competitionToEdit={{

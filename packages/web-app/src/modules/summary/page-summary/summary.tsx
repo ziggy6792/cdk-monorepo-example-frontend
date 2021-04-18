@@ -13,29 +13,29 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ name, description, children }) => (
   <>
     <Grid container style={{ padding: 16 }}>
-      <Grid item>
-        <Typography variant='h4'>{name}</Typography>
+      <Grid item xs={12}>
+        <Typography variant='subtitle2'>Competition</Typography>
+        <Typography variant='h3'>{name}</Typography>
+      </Grid>
+      <Grid item xs={12}>
         {children}
       </Grid>
-      <Grid item />
-    </Grid>
-    {description && (
-      <Grid container style={{ padding: 16 }}>
-        <Grid item>
+      {description && (
+        <Grid item xs={12}>
           <Typography
             style={{
               fontSize: '1rem',
-              margin: '0 30px',
-              background: '#eee',
               padding: '2px 8px',
               borderRadius: '8px',
+              background: "#ddd",
             }}
+            color='textPrimary'
           >
             {description}
           </Typography>
         </Grid>
-      </Grid>
-    )}
+      )}
+    </Grid>
   </>
 );
 

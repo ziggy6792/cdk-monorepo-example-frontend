@@ -20,8 +20,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   judgeName: {
-    fontWeight: 500,
+    fontWeight: 700,
+    color: theme.palette.text.primary,
   },
+  nameWrapper: {
+    padding: theme.spacing(1, 1, 2),
+    textTransform: 'none'
+  }
 }));
 
 const CompetitionSummary: React.FC<CompetitionSummaryProps> = ({ summary }) => {
@@ -29,7 +34,7 @@ const CompetitionSummary: React.FC<CompetitionSummaryProps> = ({ summary }) => {
 
   return (
     <Summary name={summary.name} description={summary.description}>
-      <Typography>
+      <Typography color='textSecondary' variant='h6' component='div' className={classes.nameWrapper}>
         Judged by <span className={classes.judgeName}>{summary.judgeUser?.fullName}</span>
       </Typography>
     </Summary>

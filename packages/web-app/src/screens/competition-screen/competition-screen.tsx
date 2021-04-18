@@ -1,12 +1,16 @@
-import { Button, Grid } from '@material-ui/core';
 import React from 'react';
-import { useGetCompetitionQuery } from 'src/generated-types';
 import _ from 'lodash';
+import { useHistory } from 'react-router';
+
+import { Button, Grid } from '@material-ui/core';
+import { Build } from '@material-ui/icons';
+
+import { useGetCompetitionQuery } from 'src/generated-types';
 import Spinner from 'src/components/spinner';
 import CompetitionSummary from 'src/modules/summary/competition-summary';
 import { ROUTE_COMPETITION_MANAGER } from 'src/config/routes';
-import { useHistory } from 'react-router';
 import Breadcrumbs from 'src/modules/breadcrumbs/breadcrumbs';
+
 import HeatsStructure from './heats-structure/heats-structure';
 import Podium from './podium';
 
@@ -28,6 +32,7 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
           <Grid container direction='column' justify='center' alignItems='center'>
           <Grid item>
             <Button
+              startIcon={<Build />}
               variant='contained'
               color='primary'
               onClick={() => {

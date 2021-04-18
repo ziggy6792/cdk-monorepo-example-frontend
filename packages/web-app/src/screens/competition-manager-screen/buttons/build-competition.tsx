@@ -58,6 +58,8 @@ const BuildCompetition: React.FC<IBuildCompetitionProps> = ({ competitionId, par
         onClick={() => {
           setOpen(true);
         }}
+        variant='contained'
+        color='primary'
       >
         Build
       </Button>

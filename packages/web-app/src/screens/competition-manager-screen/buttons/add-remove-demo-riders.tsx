@@ -31,7 +31,7 @@ const AddRemoveDemoRiders: React.FC<IEditSeedsProps> = ({ competitionId, hasDemo
 
   return (
     <>
-      <ProgressButton onClick={onAllocateRiders} disabled={disabled}>
+      <ProgressButton onClick={onAllocateRiders} disabled={disabled} variant='contained'>
         {hasDemoRiders ? 'Remove' : 'Add'} Demo Riders
       </ProgressButton>
     </>

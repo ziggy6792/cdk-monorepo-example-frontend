@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 
-import { Grid } from '@material-ui/core';
+import { Grid , Typography} from '@material-ui/core';
 import React, { Fragment } from 'react';
 
 export enum NotifyMessageType {
@@ -27,10 +27,10 @@ const NotifyMessage: React.FC<INotifyMessageProps> = ({ notifyMessage: { type, m
   <>
     <Grid container direction='row' spacing={2}>
       <Grid item sm={2}>
-        {type}
+        <Typography variant='h4'>{type}</Typography>
       </Grid>
       <Grid item sm={8}>
-        {message}
+        <Typography variant='subtitle2'>{message}</Typography>
       </Grid>
       <Grid item sm={2}>
         {action}

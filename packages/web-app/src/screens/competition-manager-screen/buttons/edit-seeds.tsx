@@ -55,6 +55,8 @@ const EditSeeds: React.FC<IEditSeedsProps> = ({ riderAllocations, competitionId,
           setOpen(true);
         }}
         disabled={disabled}
+        variant='contained'
+        color='primary'
       >
         Seed Order
       </Button>

@@ -43,6 +43,8 @@ const EditCompetition: React.FC<IEditCompetitionProps> = ({ competitionToEdit, j
   return (
     <>
       <Button
+        variant='contained'
+        color='primary'
         onClick={() => {
           setOpen(true);
         }}

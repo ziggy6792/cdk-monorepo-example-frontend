@@ -37,10 +37,10 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
     <>
       <Dialog open={open} setOpen={setOpen}>
         <ConfirmBox
-          title='Allocatte Riders'
+          title='Allocate Riders'
           confirmButton={{
             onClick: onAllocateRiders,
-            text: 'Allocatte Riders',
+            text: 'Allocate Riders',
           }}
           cancelButton={{ onClick: () => setOpen(false) }}
         >
@@ -48,13 +48,13 @@ const AllocateRiders: React.FC<IEditCompetitionProps> = ({ competitionId, disabl
             notifyMessages={[
               {
                 type: NotifyMessageType.WARN,
-                message: 'This action will clear any existing competition results and reset the competitoin. Are you sure?',
+                message: 'This action will clear any existing competition results and reset the competition. Are you sure?',
               },
             ]}
           />
         </ConfirmBox>
       </Dialog>
-      <Button onClick={() => setOpen(true)} disabled={disabled}>
+      <Button variant='contained' color='primary' onClick={() => setOpen(true)} disabled={disabled}>
         Allocate Riders
       </Button>
     </>

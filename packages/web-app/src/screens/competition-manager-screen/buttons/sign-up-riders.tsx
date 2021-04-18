@@ -66,6 +66,8 @@ const SignUpRiders: React.FC<ISignUpRidersProps> = ({ competitionId, noOfRiders 
         onClick={() => {
           setOpen(true);
         }}
+        variant='contained'
+        color='primary'
       >
         Sign Up Riders
       </Button>
