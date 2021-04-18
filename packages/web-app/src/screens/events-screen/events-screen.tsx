@@ -26,7 +26,7 @@ const EventsScreen: React.FC = () => {
               <CreateEvent />
             </Grid>
           )}
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justify='center'>
             {data.listEvents.map((event) => {
               console.log(event);
               return (

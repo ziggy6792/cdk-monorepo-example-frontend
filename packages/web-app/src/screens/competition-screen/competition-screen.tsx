@@ -34,7 +34,7 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
   const eventTitle = data.getCompetition.breadcrumbs.items.find((item) => item.type === 'EVENT').name;
 
   return (
-    <>
+    <Grid container direction='column' justify='center' alignItems='center'>
       <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='tournament' onlyBottom>
         <Breadcrumbs breadcrumbs={data.getCompetition.breadcrumbs} />
         <Grid container direction='column' justify='center' alignItems='center'>
@@ -69,7 +69,7 @@ const CompetitionScreen: React.FC<IEventsScreenProps> = ({ competitionId }) => {
         </Grid>
         )
       </ScreenWrapper>
-    </>
+    </Grid>
   );
 };
 

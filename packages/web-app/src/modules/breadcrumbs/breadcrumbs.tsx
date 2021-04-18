@@ -7,7 +7,7 @@ import { LinkList, LinkType } from 'src/generated-types';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    padding: '0 24px 8px 16px',
+    padding: theme.spacing(2,3,1,2),
     width: '90%',
     overflow: 'auto',
     borderBottom: '1px solid #ddd',

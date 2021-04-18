@@ -58,19 +58,21 @@ const ScoreboardScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
   }
 
   return (
-    <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom>
-      <Grid container direction='column' justify='center' alignItems='center'>
-        <HeatSummary heat={data.selectedHeat} />
-        {data.selectedHeat.isJudge && (
-          <Grid item>
-            <EndHeat heat={data.selectedHeat} />
+    <Grid container direction='column' justify='center' alignItems='center'>
+      <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom>
+        <Grid container direction='column' justify='center' alignItems='center'>
+          <HeatSummary heat={data.selectedHeat} />
+          {data.selectedHeat.isJudge && (
+            <Grid item>
+              <EndHeat heat={data.selectedHeat} />
+            </Grid>
+          )}
+          <Grid item style={{ width: '100%' }}>
+            <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
           </Grid>
-        )}
-        <Grid item style={{ width: '100%' }}>
-          <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
         </Grid>
-      </Grid>
-    </ScreenWrapper>
+      </ScreenWrapper>
+    </Grid>  
   );
 };
 

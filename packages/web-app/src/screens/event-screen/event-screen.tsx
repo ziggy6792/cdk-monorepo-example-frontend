@@ -23,6 +23,7 @@ interface IEventsScreenProps {
 const useStyles = makeStyles((theme) => ({
   description: {
     fontSize: '1rem',
+    maxWidth: 600
   },
   tableCtaButtons: {
     marginTop: 20,
@@ -72,74 +73,76 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
   } = data.getEvent;
 
   return (
-    <ScreenWrapper eventTitle={name} eventId={eventId} currentPath='overall'>
-      <Grid container direction='column'>
-        <Grid item>
-          <CardContent>
-            
-            <Typography variant='h3' color='primary'>
-              Event Description
-            </Typography>
-            <br />
-            <Typography className={classes.description} variant='body2' color='textPrimary'>
-              {description}
-            </Typography>
-          </CardContent>
-        </Grid>
-        <Grid item>
-          <CardContent>
-            <Typography variant='h3' color='primary'>
-              Competitions
-            </Typography>
-          </CardContent>
-        </Grid>
-        {!data.getEvent.competitions.items.length && (
-          <Grid item style={{ textAlign: 'center', background: '#ccc', padding: 16, margin: '0 16px' }}>
-            <Typography variant='subtitle2' color='textSecondary'>
-              Competitions coming soon!
-            </Typography>
+    <Grid container direction='column' justify='center' alignItems='center'>
+      <ScreenWrapper eventTitle={name} eventId={eventId} currentPath='overall'>
+        <Grid container direction='column'>
+          <Grid item>
+            <CardContent>
+              
+              <Typography variant='h3' color='primary'>
+                Event Description
+              </Typography>
+              <br />
+              <Typography className={classes.description} variant='body2' color='textPrimary'>
+                {description}
+              </Typography>
+            </CardContent>
           </Grid>
+          <Grid item>
+            <CardContent>
+              <Typography variant='h3' color='primary'>
+                Competitions
+              </Typography>
+            </CardContent>
+          </Grid>
+          {!data.getEvent.competitions.items.length && (
+            <Grid item style={{ textAlign: 'center', background: '#ccc', padding: 16, margin: '0 16px' }}>
+              <Typography variant='subtitle2' color='textSecondary'>
+                Competitions coming soon!
+              </Typography>
+            </Grid>
+          )}
+          <Grid item>
+            <CompetitionsTable competitions={data.getEvent.competitions.items} />
+          </Grid>
+          
+          <Grid item>
+            <CardContent>
+              <Typography variant='h3' color='primary'>
+                Sponsors
+              </Typography>
+            </CardContent>
+          </Grid>
+          <Grid item>
+            <Grid container spacing={2} justify='space-around' style={{ padding: '0 16px' }}>
+              <Grid item><img src={sponsor2} alt='swp' style={{height: 100}} /></Grid>
+              <Grid item><img src={sponsor5} alt='777' style={{height: 100}} /></Grid>
+              <Grid item><img src={sponsor3} alt='mystic' style={{height: 25}} /></Grid>
+              <Grid item><img src={sponsor4} alt='slingshot' style={{height: 25}} /></Grid>
+              <Grid item><img src={sponsor1} alt='embily' style={{height: 50}} /></Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* FAB Menu will be rendered based on UAC role */}
+        {data.getEvent.isAdmin && (
+          <FabMenu>
+            <FabMenu.Item>
+              <AddCompetition eventId={eventId} />
+            </FabMenu.Item>
+            <FabMenu.Item>
+              <EditEvent
+                eventToEdit={{
+                  id: eventId,
+                  description,
+                  name,
+                  startTime,
+                }}
+              />
+            </FabMenu.Item>
+          </FabMenu>
         )}
-        <Grid item>
-          <CompetitionsTable competitions={data.getEvent.competitions.items} />
-        </Grid>
-        
-        <Grid item>
-          <CardContent>
-            <Typography variant='h3' color='primary'>
-              Sponsors
-            </Typography>
-          </CardContent>
-        </Grid>
-        <Grid item>
-          <Grid container spacing={2} justify='space-around' style={{ padding: '0 16px' }}>
-            <Grid item><img src={sponsor2} alt='swp' style={{height: 100}} /></Grid>
-            <Grid item><img src={sponsor5} alt='777' style={{height: 100}} /></Grid>
-            <Grid item><img src={sponsor3} alt='mystic' style={{height: 25}} /></Grid>
-            <Grid item><img src={sponsor4} alt='slingshot' style={{height: 25}} /></Grid>
-            <Grid item><img src={sponsor1} alt='embily' style={{height: 50}} /></Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      {/* FAB Menu will be rendered based on UAC role */}
-      {data.getEvent.isAdmin && (
-        <FabMenu>
-          <FabMenu.Item>
-            <AddCompetition eventId={eventId} />
-          </FabMenu.Item>
-          <FabMenu.Item>
-            <EditEvent
-              eventToEdit={{
-                id: eventId,
-                description,
-                name,
-                startTime,
-              }}
-            />
-          </FabMenu.Item>
-        </FabMenu>
-      )}
-    </ScreenWrapper>
+      </ScreenWrapper>
+    </Grid>   
   );
 };
 

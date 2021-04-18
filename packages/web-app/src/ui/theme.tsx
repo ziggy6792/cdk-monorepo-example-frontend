@@ -192,10 +192,10 @@ export default createMuiTheme({
         fontStyle: 'italic',
         letterSpacing: '-0.05rem',
         textTransform: 'capitalize',
-        fontSize: '0.7rem',
+        fontSize: '0.8rem',
         lineHeight: 0.8,
         '&$selected': {
-          fontSize: '0.7rem',
+          fontSize: '0.8rem',
           letterSpacing: 0,
           fontWeight: 800,
         }
