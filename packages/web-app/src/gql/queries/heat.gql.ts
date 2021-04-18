@@ -12,6 +12,7 @@ export const CORE_HEAT_FIELDS = gql`
     name
     longName
     round {
+      id
       roundNo
     }
     size
@@ -22,6 +23,7 @@ export const CORE_HEAT_FIELDS = gql`
       items {
         userId
         user {
+          id
           fullName
         }
         startSeed
