@@ -79,15 +79,21 @@ const ScoreRunForm: React.FC<IScoreRunFormProps> = ({ onSubmit, onCancel, initia
                   )}
                 />
               </Grid>
-              <Grid container direction='column' style={{ marginTop: theme.spacing(1) }}>
+              <Grid container direction='column' alignItems='center' style={{ marginTop: theme.spacing(1) }}>
                 <Grid item>
-                  <Typography variant='subtitle2' align='center'>
-                    {`Current Rank: ${getPositionDisplayText(currentPosition)}`}
+                  <Typography variant='h6' color='textSecondary' display='inline'>
+                    Current Rank:
+                  </Typography>
+                  <Typography variant='h6' color='primary' display='inline'>
+                    {getPositionDisplayText(currentPosition)}
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant='subtitle2' align='center'>
-                    {`Updated Rank: ${getPositionDisplayText(getUpdatedPosition(values))}`}
+                  <Typography variant='h6' color='textSecondary' display='inline'>
+                    Updated Rank: 
+                  </Typography>
+                  <Typography variant='h6' color='primary' display='inline'>
+                    {getPositionDisplayText(getUpdatedPosition(values))}
                   </Typography>
                 </Grid>
                 {globalError && (
