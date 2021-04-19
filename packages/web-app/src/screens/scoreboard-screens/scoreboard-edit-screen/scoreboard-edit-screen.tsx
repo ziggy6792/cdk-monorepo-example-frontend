@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import * as routeConfig from 'src/config/routes';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { Container, Button, Box } from '@material-ui/core';
-
 import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-get-selected-heat';
-
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
@@ -35,11 +33,13 @@ const ScoreboardEditScreen: React.FC<IProps> = ({ match, history }) => {
 
   const onClickBack = () => history.push(`${routeConfig.ROUTE_LIVE}/${eventId}`);
 
+  const eventName = data?.eventName;
+
   return (
     <>
       {/* Redirect non judges to readonly screen */}
       {data?.selectedHeat && !data.selectedHeat.isJudge && <Redirect to={`${routeConfig.ROUTE_LIVE}/${eventId}`} />}
-      <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense showSpinner={!data}>
+      <ScreenWrapper eventTitle={eventName} eventId={eventId} currentPath='live' dense showSpinner={!data}>
         {data && (
           <>
             {!data.selectedHeat && <NoLiveHeats />}

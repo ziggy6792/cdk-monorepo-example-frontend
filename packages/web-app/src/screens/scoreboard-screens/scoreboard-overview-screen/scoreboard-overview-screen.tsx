@@ -75,11 +75,12 @@ const ScoreboardOverviewScreen: React.FC<IProps> = ({ match, history }) => {
 
   // const [title, subTitle] = parseLongName(data?.selectedHeat?.longName) || [null, null];
 
-  const title = data?.selectedHeat?.name;
+  const title = data?.selectedHeat?.round.longName;
   const subTitle = data?.selectedHeat?.name;
+  const eventName = data?.eventName;
 
   return (
-    <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense showSpinner={!data}>
+    <ScreenWrapper eventTitle={eventName} eventId={eventId} currentPath='live' dense showSpinner={!data}>
       {data && (
         <>
           {!data.selectedHeat && <NoLiveHeats />}

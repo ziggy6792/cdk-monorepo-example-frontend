@@ -14,6 +14,7 @@ export const CORE_HEAT_FIELDS = gql`
     round {
       id
       roundNo
+      longName
     }
     size
     noAllocated
