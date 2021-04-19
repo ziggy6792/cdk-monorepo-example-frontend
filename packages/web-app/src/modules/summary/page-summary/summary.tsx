@@ -6,16 +6,17 @@ import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
 
 interface SummaryProps {
-  name: string;
+  title: string;
+  subtitle: string;
   description?: string;
 }
 
-const Summary: React.FC<SummaryProps> = ({ name, description, children }) => (
+const Summary: React.FC<SummaryProps> = ({ title, subtitle, description, children }) => (
   <>
     <Grid container style={{ padding: '0 16px 0' }}>
       <Grid item xs={12}>
-        <Typography variant='subtitle2'>Competition</Typography>
-        <Typography variant='h3'>{name}</Typography>
+        <Typography variant='subtitle2'>{title}</Typography>
+        <Typography variant='h3'>{subtitle}</Typography>
       </Grid>
       <Grid item xs={12}>
         {children}
@@ -27,7 +28,7 @@ const Summary: React.FC<SummaryProps> = ({ name, description, children }) => (
               fontSize: '1rem',
               padding: '2px 8px',
               borderRadius: '8px',
-              background: "#ddd",
+              background: '#ddd',
             }}
             color='textPrimary'
           >
