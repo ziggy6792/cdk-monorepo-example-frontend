@@ -7,16 +7,6 @@ interface IHeatSummaryProps {
   heat: Pick<Heat, 'name' | 'longName'>;
 }
 
-const HeatSummary: React.FC<IHeatSummaryProps> = ({ heat: summary }) => (
-  <Summary name={summary.longName}>
-    <Typography
-      variant='subtitle2'
-      color='textSecondary'
-      style={{ padding: '8px 0' }}
-    >
-      TODO Summary
-    </Typography>
-  </Summary>
-);
+const HeatSummary: React.FC<IHeatSummaryProps> = ({ heat: summary }) => <Summary title='Heat' subtitle={summary.longName} />;
 
 export default HeatSummary;
