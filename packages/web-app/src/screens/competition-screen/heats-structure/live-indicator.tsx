@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'white',
   },
   circleIcon: {
-    color: '#e74c3c',
+    color: '#e74c3c !important',
     height: 10,
     width: 10,
   },
