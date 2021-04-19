@@ -14,20 +14,35 @@ const useStyles = makeStyles((theme) => ({
     height: 10,
     width: 10,
   },
-  largeWrapper: {
-    fontSize: '2rem'
+  pulse: {
+    animationName: '$pulse',
+    animationDuration: '2s',
+    animationTimingFunction: 'ease-in-out',
+    animationIterationCount: 'infinite'
   },
-  largeIcon: {
-    height: 30,
-    width: 30
+  '@keyframes pulse':{
+    "0%": {
+      opacity: 0,
+    },
+    "25%": {
+      opacity: 1,
+    },
+    "75%": {
+      opacity: 1,
+    },
+    "100%": {
+      opacity: 0,
+    },
   }
+
 }));
 
 interface LiveIndicatorProps {
-  large?: boolean
+  large?: boolean;
+  pulse?: boolean
 }
 
-const LiveIndicator: React.FC<LiveIndicatorProps> = ({ large = false }) => {
+const LiveIndicator: React.FC<LiveIndicatorProps> = ({ large = false, pulse = false }) => {
   const classes = useStyles();
 
   return (
@@ -35,7 +50,7 @@ const LiveIndicator: React.FC<LiveIndicatorProps> = ({ large = false }) => {
       size={large ? 'medium' : 'small'}
       avatar={<CircleIcon className={classes.circleIcon} />}
       label="LIVE"
-      className={classes.wrapper}
+      className={clsx(classes.wrapper, {[classes.pulse]: pulse})}
     />
   );
 };

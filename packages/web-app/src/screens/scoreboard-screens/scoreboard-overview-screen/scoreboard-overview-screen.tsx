@@ -22,12 +22,12 @@ import { parseLongName } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   topSection: {
-    marginTop: -13,
+    marginTop: -12,
     paddingTop: theme.spacing(4),
     paddingBottom: 0,
-    height: 120,
-    // backgroundImage: 'linear-gradient(#2a6db0, #606CB1)',
-    backgroundImage: 'linear-gradient(45deg, #eee, #fff)',
+    height: 100,
+    // backgroundImage: 'linear-gradient(#2a6db0, #606CB1)', sorry valhalla
+    background: '#fff'
   },
   infoWrapper: {
     display: 'flex',
@@ -111,7 +111,7 @@ const ScoreboardOverviewScreen: React.FC<IProps> = ({ match, history }) => {
                   <Box>
                     <Grid container alignItems='center' spacing={1} style={{ marginTop: 5 }}>
                       <Grid item>
-                        <LiveIndicator large />
+                        <LiveIndicator large pulse />
                       </Grid>
                     </Grid>
                   </Box>

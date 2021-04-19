@@ -79,7 +79,7 @@ const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width
         </Grid>
         {status === HeatCardStatus.IN_PROGRESS &&
           <Grid item style={{ position: 'absolute', right: 4, top: -4 }}>
-            <LiveIndicator />
+            <LiveIndicator pulse />
           </Grid>
         }
       </Grid>

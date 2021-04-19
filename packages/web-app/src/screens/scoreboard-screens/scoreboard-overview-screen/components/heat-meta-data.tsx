@@ -1,6 +1,9 @@
 import React from 'react';
-import Dialog from 'src/components/ui/dialog-base';
+
 import { Typography, Box, Card, CardContent, Button } from '@material-ui/core';
+import { AirlineSeatReclineExtra } from '@material-ui/icons';
+
+import Dialog from 'src/components/ui/dialog-base';
 import { IRiderAllocationItem } from 'src/gql/common/types';
 
 interface IProps {
@@ -35,8 +38,8 @@ const HeatMetaDataModal: React.FC<IProps> = ({ open, onClose, riderAllocations }
       </Typography>
     ))}
     <br />
-    <Button variant='contained' color='primary' onClick={onClose}>
-      Ok!
+    <Button startIcon={<AirlineSeatReclineExtra />} variant='contained' color='primary' onClick={onClose}>
+      Send it!
     </Button>
   </Dialog>
 );
