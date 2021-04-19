@@ -77,52 +77,67 @@ const ScoreboardOverview: React.FC<IProps> = ({ match, history }) => {
 
   return (
     <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense showSpinner={!data}>
-      {data?.selectedHeat && (
+      {data && (
         <>
-          <Box className={classes.topSection}>
-            <Box flexGrow={1}>
-              <Typography variant='h3' align='center' style={{ textTransform: 'uppercase', color: 'white' }}>
-                {title}
-              </Typography>
-              <Typography variant='h4' align='center' style={{ color: 'white', marginTop: 10, textTransform: 'uppercase' }}>
-                {subTitle}
-              </Typography>
-            </Box>
-            <Box className={classes.infoWrapper}>
-              <Button onClick={onInfoBtnClick} variant='contained' style={{ backgroundColor: 'white' }}>
-                <div className={classes.lineupIcon}>
-                  <HelpOutlineIcon fontSize='large' color='primary' />
-                  <Typography style={{ fontSize: 12 }}>Infomation</Typography>
-                </div>
-              </Button>
-              <Box>
-                <Grid container alignItems='center' spacing={1} style={{ marginTop: 5 }}>
-                  <Grid item>
-                    <Typography>Live</Typography>
-                  </Grid>
-                  <Grid item>
-                    <div style={{ height: 10, width: 10, backgroundColor: 'green', borderRadius: '50%' }} />
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
-          </Box>
-          <Container maxWidth='md'>
-            <Box mt={8} p={2}>
-              <RiderRankList noProgressing={data.selectedHeat.noProgressing} riderAllocations={data.selectedHeat.riderAllocations.items} />
-            </Box>
-          </Container>
-          {data.selectedHeat.isJudge && (
-            <FabMenu>
-              <FabMenu.Item>
-                <EndHeat heat={data.selectedHeat} />
-              </FabMenu.Item>
-              <FabMenu.Item onClick={onRedirectEdit}>
-                <Button>INPUT SCORE</Button>
-              </FabMenu.Item>
-            </FabMenu>
+          {!data.selectedHeat && (
+            <Grid container justify='center' alignItems='center' style={{ height: '100%' }}>
+              <Grid item>
+                <Typography variant='h6' component='div' color='primary' style={{ textAlign: 'center', lineHeight: 1.2, textTransform: 'none' }}>
+                  There are currently no live heats.
+                  <br />
+                  Check back in a bit!
+                </Typography>
+              </Grid>
+            </Grid>
           )}
-          <HeatMetaDataModal open={open} onClose={onClose} riderAllocations={data.selectedHeat.riderAllocations.items} />
+          {data?.selectedHeat && (
+            <>
+              <Box className={classes.topSection}>
+                <Box flexGrow={1}>
+                  <Typography variant='h3' align='center' style={{ textTransform: 'uppercase', color: 'white' }}>
+                    {title}
+                  </Typography>
+                  <Typography variant='h4' align='center' style={{ color: 'white', marginTop: 10, textTransform: 'uppercase' }}>
+                    {subTitle}
+                  </Typography>
+                </Box>
+                <Box className={classes.infoWrapper}>
+                  <Button onClick={onInfoBtnClick} variant='contained' style={{ backgroundColor: 'white' }}>
+                    <div className={classes.lineupIcon}>
+                      <HelpOutlineIcon fontSize='large' color='primary' />
+                      <Typography style={{ fontSize: 12 }}>Infomation</Typography>
+                    </div>
+                  </Button>
+                  <Box>
+                    <Grid container alignItems='center' spacing={1} style={{ marginTop: 5 }}>
+                      <Grid item>
+                        <Typography>Live</Typography>
+                      </Grid>
+                      <Grid item>
+                        <div style={{ height: 10, width: 10, backgroundColor: 'green', borderRadius: '50%' }} />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Box>
+              <Container maxWidth='md'>
+                <Box mt={8} p={2}>
+                  <RiderRankList noProgressing={data.selectedHeat.noProgressing} riderAllocations={data.selectedHeat.riderAllocations.items} />
+                </Box>
+              </Container>
+              {data.selectedHeat.isJudge && (
+                <FabMenu>
+                  <FabMenu.Item>
+                    <EndHeat heat={data.selectedHeat} />
+                  </FabMenu.Item>
+                  <FabMenu.Item onClick={onRedirectEdit}>
+                    <Button>INPUT SCORE</Button>
+                  </FabMenu.Item>
+                </FabMenu>
+              )}
+              <HeatMetaDataModal open={open} onClose={onClose} riderAllocations={data.selectedHeat.riderAllocations.items} />
+            </>
+          )}
         </>
       )}
     </ScreenWrapper>
@@ -130,3 +145,36 @@ const ScoreboardOverview: React.FC<IProps> = ({ match, history }) => {
 };
 
 export default ScoreboardOverview;
+
+// return (
+//   <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom showSpinner={!data}>
+//     {data && (
+//       <>
+//         {!data.selectedHeat && (
+//           <Grid container justify='center' alignItems='center' style={{ height: '100vh' }}>
+//             <Grid item>
+//               <Typography variant='h6' component='div' color='primary' style={{ textAlign: 'center', lineHeight: 1.2, textTransform: 'none' }}>
+//                 There are currently no live heats.
+//                 <br />
+//                 Check back in a bit!
+//               </Typography>
+//             </Grid>
+//           </Grid>
+//         )}
+//         {data.selectedHeat && (
+//           <Grid container direction='column' justify='center' alignItems='center'>
+//             <HeatSummary heat={data.selectedHeat} />
+//             {data.selectedHeat.isJudge && (
+//               <Grid item>
+//                 <EndHeat heat={data.selectedHeat} />
+//               </Grid>
+//             )}
+//             <Grid item style={{ width: '100%' }}>
+//               <ScoresTables riderAllocations={data.selectedHeat.riderAllocations.items} eventId={eventId} noProgressing={data.selectedHeat.noProgressing} />
+//             </Grid>
+//           </Grid>
+//         )}
+//       </>
+//     )}
+//   </ScreenWrapper>
+// );
