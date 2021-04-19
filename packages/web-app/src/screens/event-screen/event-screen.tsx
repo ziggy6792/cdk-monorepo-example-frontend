@@ -6,6 +6,7 @@ import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import Spinner from 'src/components/spinner';
 
+import organizer from 'src/organiser-wba.jpg';
 import sponsor1 from 'src/sponsor-embily.jpg';
 import sponsor2 from 'src/sponsor-swp.png';
 import sponsor3 from 'src/sponsor-mystic.png';
@@ -97,17 +98,20 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
               <Grid item>
                 <CardContent>
                   <Typography variant='h3' color='primary'>
-                    Sponsors
+                    Thanks to
                   </Typography>
                 </CardContent>
               </Grid>
               <Grid item>
-                <Grid container spacing={2} justify='space-around' style={{ padding: '0 16px' }}>
+                <Grid container spacing={1} justify='space-around' style={{ padding: '0 16px' }}>               
                   <Grid item>
-                    <img src={sponsor2} alt='swp' style={{ height: 120 }} />
+                    <img src={organizer} alt='swp' style={{ height: 90 }} />
                   </Grid>
                   <Grid item>
-                    <img src={sponsor5} alt='777' style={{ height: 120 }} />
+                    <img src={sponsor2} alt='swp' style={{ height: 90 }} />
+                  </Grid>
+                  <Grid item>
+                    <img src={sponsor5} alt='777' style={{ height: 90 }} />
                   </Grid>
                   <Grid item>
                     <img src={sponsor4} alt='slingshot' style={{ height: 45 }} />
