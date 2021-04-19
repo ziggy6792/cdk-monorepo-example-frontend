@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { isAuthenticatedActionCreator } from 'src/domain/auth';
 import * as routeConfig from 'src/config/routes';
 
-import Overview from './overview';
-import Edit from './edit';
+import Overview from './scoreboard-overview-screen';
+import Edit from './scoreboard-edit-screen';
 
 const Routes: React.FC = () => {
   const dispatch = useDispatch();

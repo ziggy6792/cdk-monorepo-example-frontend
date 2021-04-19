@@ -13,6 +13,7 @@ import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
 
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import NoLiveHeats from 'src/screens/scoreboard-screens/shared/no-live-heats';
+import scoreboardConfig from 'src/screens/scoreboard-screens/shared/scoreboard-config';
 import RiderRankList from './components/rider-rank-table';
 import HeatMetaDataModal from './components/heat-meta-data';
 
@@ -51,7 +52,7 @@ interface IMatchParams {
 
 type IProps = RouteComponentProps<IMatchParams>;
 
-const ScoreboardOverview: React.FC<IProps> = ({ match, history }) => {
+const ScoreboardOverviewScreen: React.FC<IProps> = ({ match, history }) => {
   const classes = useStyles();
   const { eventId } = match.params;
   const [open, setOpen] = useState(false);
@@ -59,7 +60,7 @@ const ScoreboardOverview: React.FC<IProps> = ({ match, history }) => {
 
   useEffect(
     () => {
-      startPolling(5000);
+      startPolling(scoreboardConfig.SCOREBOARD_POLL_RATE);
       return () => {
         stopPolling();
       };
@@ -136,7 +137,7 @@ const ScoreboardOverview: React.FC<IProps> = ({ match, history }) => {
   );
 };
 
-export default ScoreboardOverview;
+export default ScoreboardOverviewScreen;
 
 // return (
 //   <ScreenWrapper eventId={eventId} currentPath='live' onlyBottom showSpinner={!data}>
