@@ -134,6 +134,7 @@ export const GET_SELECTED_HEAT = gql`
   query getSelectedHeat($id: ID!) {
     getEvent(id: $id) {
       id
+      name
       selectedHeat {
         ...CoreHeatFields
       }

@@ -109,8 +109,8 @@ export default createMuiTheme({
         position: 'inherit'
       },
       containedPrimary: {
-        backgroundImage: gradientBlue
-      }
+        backgroundImage: gradientBlue,
+      },
     },
     MuiInputLabel: {
       root: {
@@ -198,15 +198,15 @@ export default createMuiTheme({
           fontSize: '0.8rem',
           letterSpacing: 0,
           fontWeight: 800,
-        }
+        },
       },
       root: {
         '&$selected': {
           fontSize: '0.7rem',
           color: 'white',
-          backgroundImage: gradientBlue
-        }
-      }
+          backgroundImage: gradientBlue,
+        },
+      },
     },
   },
 });
