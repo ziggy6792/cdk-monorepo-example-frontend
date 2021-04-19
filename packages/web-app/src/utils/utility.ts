@@ -21,3 +21,15 @@ export const ordinalSuffixOf = (i: number): string => {
   }
   return `${i}th`;
 };
+
+export const sanitizeNameInput = (name: string): string => {
+  if (!name) {
+    return name;
+  }
+  name = name.replace(/\s\s+/g, ' ');
+  const separateWord = name.toLowerCase().split(' ');
+  for (let i = 0; i < separateWord.length; i++) {
+    separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
+  }
+  return separateWord.join(' ');
+};
