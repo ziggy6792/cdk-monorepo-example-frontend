@@ -94,12 +94,6 @@ class PipelineStack extends cdk.Stack {
 
     // pipeline.
 
-    // Manual Approval
-    stagingStage.addManualApprovalAction({
-      actionName: 'ManualApproval',
-      runOrder: stagingStage.nextSequentialRunOrder(),
-    });
-
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
 
@@ -111,7 +105,13 @@ class PipelineStack extends cdk.Stack {
       },
     });
 
-    pipeline.addApplicationStage(deployedProdStage);
+    const pipelineStage = pipeline.addApplicationStage(deployedProdStage);
+
+    // Manual Approval
+    stagingStage.addManualApprovalAction({
+      actionName: 'ManualApproval',
+      runOrder: 1,
+    });
 
     // if (deployedProdStage.urlOutput.exportName) {
     //   this.prodUrlOutput = new cdk.CfnOutput(this, deployedProdStage.urlOutput.exportName, { value: deployedProdStage.urlOutput.importValue });
