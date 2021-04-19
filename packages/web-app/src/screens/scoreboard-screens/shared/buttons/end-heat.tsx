@@ -85,9 +85,7 @@ const EndHeat: React.FC<IEndHeatProps> = ({ heat }) => {
           <ValidationItems validationItems={validationItems} validationItemContent={validationItemContent} />
         </ConfirmBox>
       </Dialog>
-      <ProgressButton onClick={onEndHeat} variant='contained'>
-        End Heat
-      </ProgressButton>
+      <ProgressButton onClick={onEndHeat}>End Heat</ProgressButton>
     </>
   );
 };
