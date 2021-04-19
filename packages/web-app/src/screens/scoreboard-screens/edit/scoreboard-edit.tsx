@@ -8,6 +8,7 @@ import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-g
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
+import NoLiveHeats from 'src/screens/scoreboard-screens/shared/no-live-heats.tsx';
 import EditScoreboardTable from './edit-scoreboard-table';
 
 interface IMatchParams {
@@ -33,27 +34,31 @@ const ScoreboardEdit: React.FC<IProps> = ({ match, history }) => {
 
   const onClickBack = () => history.push(`${routeConfig.ROUTE_LIVE}/${eventId}`);
 
-  const onRedirectEdit = () => history.push(`${routeConfig.ROUTE_LIVE}/${eventId}`);
   return (
     <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense showSpinner={!data}>
       {data && (
-        <Container maxWidth='md'>
-          <Box p={3}>
-            <Button color='primary' variant='contained' style={{ marginBottom: 20 }} onClick={onClickBack}>
-              BACK
-            </Button>
-            <EditScoreboardTable
-              riderAllocations={data.selectedHeat.riderAllocations.items}
-              noProgressing={data.selectedHeat.noProgressing}
-              eventId={eventId}
-            />
-            <FabMenu>
-              <FabMenu.Item>
-                <EndHeat heat={data.selectedHeat} />
-              </FabMenu.Item>
-            </FabMenu>
-          </Box>
-        </Container>
+        <>
+          {!data.selectedHeat && <NoLiveHeats />}
+          {data.selectedHeat && (
+            <Container maxWidth='md'>
+              <Box p={3}>
+                <Button color='primary' variant='contained' style={{ marginBottom: 20 }} onClick={onClickBack}>
+                  BACK
+                </Button>
+                <EditScoreboardTable
+                  riderAllocations={data.selectedHeat.riderAllocations.items}
+                  noProgressing={data.selectedHeat.noProgressing}
+                  eventId={eventId}
+                />
+                <FabMenu>
+                  <FabMenu.Item>
+                    <EndHeat heat={data.selectedHeat} />
+                  </FabMenu.Item>
+                </FabMenu>
+              </Box>
+            </Container>
+          )}
+        </>
       )}
     </ScreenWrapper>
   );

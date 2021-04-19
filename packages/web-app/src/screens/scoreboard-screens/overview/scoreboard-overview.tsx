@@ -10,7 +10,9 @@ import FabMenu from 'src/components/ui/fab-menu';
 import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-get-selected-heat';
 
 import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
+
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
+import NoLiveHeats from 'src/screens/scoreboard-screens/no-live-heats.tsx';
 import RiderRankList from './components/rider-rank-table';
 import HeatMetaDataModal from './components/heat-meta-data';
 
@@ -79,17 +81,7 @@ const ScoreboardOverview: React.FC<IProps> = ({ match, history }) => {
     <ScreenWrapper eventTitle='' eventId={eventId} currentPath='live' dense showSpinner={!data}>
       {data && (
         <>
-          {!data.selectedHeat && (
-            <Grid container justify='center' alignItems='center' style={{ height: '100%' }}>
-              <Grid item>
-                <Typography variant='h6' component='div' color='primary' style={{ textAlign: 'center', lineHeight: 1.2, textTransform: 'none' }}>
-                  There are currently no live heats.
-                  <br />
-                  Check back in a bit!
-                </Typography>
-              </Grid>
-            </Grid>
-          )}
+          {!data.selectedHeat && <NoLiveHeats />}
           {data?.selectedHeat && (
             <>
               <Box className={classes.topSection}>
