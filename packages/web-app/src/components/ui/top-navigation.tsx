@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'fixed',
       top: 0,
       width: '100%',
+      zIndex: 100
     },
     toolbar: {
       display: 'block',

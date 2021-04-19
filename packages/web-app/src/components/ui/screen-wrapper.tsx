@@ -10,12 +10,15 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     normalContent: {
       padding: '100px 0 140px',
+      zIndex: 0
     },
     denseContent: {
       padding: '70px 0 140px',
+      zIndex: 0
     },
     onlyBottomContent: {
       padding: '0 0 140px',
+      zIndex: 0
     },
   })
 );
