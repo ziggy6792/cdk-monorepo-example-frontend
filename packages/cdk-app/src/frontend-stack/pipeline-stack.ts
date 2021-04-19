@@ -95,12 +95,10 @@ class PipelineStack extends cdk.Stack {
     // pipeline.
 
     // Manual Approval
-    // devStage.addActions(
-    //   new ManualApprovalAction({
-    //     actionName: 'ManualApproval',
-    //     runOrder: devStage.nextSequentialRunOrder(),
-    //   })
-    // );
+    stagingStage.addManualApprovalAction({
+      actionName: 'ManualApproval',
+      runOrder: stagingStage.nextSequentialRunOrder(),
+    });
 
     // Do this as many times as necessary with any account and region
     // Account and region may be different from the pipeline's.
