@@ -25,15 +25,15 @@ const useStyles = makeStyles((theme) => ({
   },
   nameWrapper: {
     padding: theme.spacing(1, 1, 2),
-    textTransform: 'none'
-  }
+    textTransform: 'none',
+  },
 }));
 
 const CompetitionSummary: React.FC<CompetitionSummaryProps> = ({ summary }) => {
   const classes = useStyles();
 
   return (
-    <Summary name={summary.name} description={summary.description}>
+    <Summary title='Competition' subtitle={summary.name} description={summary.description}>
       <Typography color='textSecondary' variant='h6' component='div' className={classes.nameWrapper}>
         Judged by <span className={classes.judgeName}>{summary.judgeUser?.fullName}</span>
       </Typography>
