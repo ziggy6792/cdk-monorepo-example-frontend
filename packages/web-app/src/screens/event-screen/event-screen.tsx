@@ -103,9 +103,9 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                 </CardContent>
               </Grid>
               <Grid item>
-                <Grid container spacing={1} justify='space-around' style={{ padding: '0 16px' }}>               
+                <Grid container spacing={1} justify='space-around' style={{ padding: '8px 16px', background: 'white' }}>               
                   <Grid item>
-                    <img src={organizer} alt='swp' style={{ height: 90 }} />
+                    <img src={organizer} alt='wba' style={{ height: 90 }} />
                   </Grid>
                   <Grid item>
                     <img src={sponsor2} alt='swp' style={{ height: 90 }} />
@@ -114,7 +114,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                     <img src={sponsor5} alt='777' style={{ height: 90 }} />
                   </Grid>
                   <Grid item>
-                    <img src={sponsor4} alt='slingshot' style={{ height: 45 }} />
+                    <img src={sponsor4} alt='slingshot' style={{ height: 50 }} />
                   </Grid>
                   <Grid item>
                     <img src={sponsor3} alt='mystic' style={{ height: 35 }} />
