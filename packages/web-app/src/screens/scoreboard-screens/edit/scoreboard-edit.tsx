@@ -8,7 +8,7 @@ import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-g
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
-import NoLiveHeats from 'src/screens/scoreboard-screens/shared/no-live-heats.tsx';
+import NoLiveHeats from 'src/screens/scoreboard-screens/shared/no-live-heats';
 import EditScoreboardTable from './edit-scoreboard-table';
 
 interface IMatchParams {

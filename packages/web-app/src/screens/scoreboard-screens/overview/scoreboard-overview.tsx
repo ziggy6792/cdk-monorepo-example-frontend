@@ -12,7 +12,7 @@ import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-g
 import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
 
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
-import NoLiveHeats from 'src/screens/scoreboard-screens/no-live-heats.tsx';
+import NoLiveHeats from 'src/screens/scoreboard-screens/shared/no-live-heats';
 import RiderRankList from './components/rider-rank-table';
 import HeatMetaDataModal from './components/heat-meta-data';
 
