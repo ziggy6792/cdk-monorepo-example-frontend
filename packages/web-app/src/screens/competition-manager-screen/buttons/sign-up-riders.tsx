@@ -9,6 +9,7 @@ import { GET_COMPETITION } from 'src/gql/queries/competition.gql';
 import _ from 'lodash';
 import YmlForm, { IYmlFormValues } from 'src/modules/forms/yml-form';
 import jsYaml from 'js-yaml';
+import { sanitizeNameInput } from 'src/utils/utility';
 
 interface ISignUpRidersProps {
   competitionId: string;
@@ -43,8 +44,8 @@ const SignUpRiders: React.FC<ISignUpRidersProps> = ({ competitionId, noOfRiders 
     try {
       riders = parsedParams
         ? parsedParams.map((values) => ({
-            firstName: values[0],
-            lastName: values[1],
+            firstName: sanitizeNameInput(values[0]),
+            lastName: sanitizeNameInput(values[1]),
           }))
         : [];
     } catch (err) {
