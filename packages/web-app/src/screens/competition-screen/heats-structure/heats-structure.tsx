@@ -124,7 +124,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                           heat.name
                         )
                       }
-                      width={heat.isFinal ? 300 : 200}
+                      width={210}
                       status={statusLookup[heat.status]}
                       content={
                         <>

@@ -18,13 +18,8 @@ export interface IProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
   tableTitle: {
-    textTransform: 'uppercase',
-    marginBottom: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.2rem',
-    },
+    marginBottom: theme.spacing(1)
   },
-
   bottomTable: {
     marginTop: theme.spacing(4),
   },
@@ -85,7 +80,7 @@ const RiderTable: React.FC<IRiderTable> = ({ riders, title }) => {
   const renderRuns = (index) => <StyledTableCell key={`table-${index + 1}`} align='left'>{`Run ${index + 1}`}</StyledTableCell>;
   return (
     <>
-      <Typography className={classes.tableTitle} variant='h3'>
+      <Typography className={classes.tableTitle} variant='h4'>
         {title}
       </Typography>
       <TableContainer component={Paper}>

@@ -1,33 +1,42 @@
 import React from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import { Chip, makeStyles, Typography } from '@material-ui/core';
 import CircleIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    color: '#323232',
-    whiteSpace: 'nowrap',
-    fontSize: '0.7rem',
     fontWeight: 900,
     letterSpacing: '-1px',
     background: 'white',
-    borderRadius: '35px',
-    padding: '1px 5px',
-    margin: theme.spacing(0,0.5),
-    border: '1px solid #ddd',
   },
   circleIcon: {
     color: '#e74c3c',
     height: 10,
     width: 10,
   },
+  largeWrapper: {
+    fontSize: '2rem'
+  },
+  largeIcon: {
+    height: 30,
+    width: 30
+  }
 }));
 
-const LiveIndicator: React.FC = () => {
+interface LiveIndicatorProps {
+  large?: boolean
+}
+
+const LiveIndicator: React.FC<LiveIndicatorProps> = ({ large = false }) => {
   const classes = useStyles();
+
   return (
-    <Typography component='div' className={classes.wrapper}>
-      <CircleIcon className={classes.circleIcon} /> LIVE
-    </Typography>
+    <Chip
+      size={large ? 'medium' : 'small'}
+      avatar={<CircleIcon className={classes.circleIcon} />}
+      label="LIVE"
+      className={classes.wrapper}
+    />
   );
 };
 

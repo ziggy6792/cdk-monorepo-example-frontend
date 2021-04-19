@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from 'src/components/ui/dialog-base';
-import { Typography, Box, Paper, Button } from '@material-ui/core';
+import { Typography, Box, Card, CardContent, Button } from '@material-ui/core';
 import { IRiderAllocationItem } from 'src/gql/common/types';
 
 interface IProps {
@@ -10,27 +10,34 @@ interface IProps {
 }
 
 const HeatMetaDataModal: React.FC<IProps> = ({ open, onClose, riderAllocations }) => (
-  <Dialog open={open} onClose={onClose}>
-    <Paper>
-      <Typography>Infomation</Typography>
-      <Typography variant='body1' style={{ textTransform: 'uppercase', fontSize: 16 }}>
-        No. of Particpants: {riderAllocations.length}
+  <Dialog open={open} onClose={onClose} fullWidth maxWidth='md'>
+    <Typography variant='h4'>Information</Typography>
+    <div
+      style={{
+        background: '#eee',
+        margin: '8px 0',
+        borderRadius: '8px',
+        padding: '8px',
+      }}
+    >
+      <Typography variant='subtitle2' color='textPrimary' style={{ fontSize: 16 }}>
+        {riderAllocations.length} total participants
       </Typography>
-      <Typography variant='body1' style={{ textTransform: 'uppercase', fontSize: 16 }}>
-        No. of Qualifiers:{' '}
+      {/* <Typography variant='subtitle2' color='textPrimary' style={{ fontSize: 16 }}>
+        4 qualifiers # TODO
+      </Typography> */}
+    </div>
+    <br />
+    <Typography variant='h4' style={{ paddingBottom: 8 }}>Starting Lineup</Typography>
+    {riderAllocations.map((rider) => (
+      <Typography variant='h6' color='textPrimary' key={rider.userId} style={{ lineHeight: 1.2}}>
+        - {rider.user.fullName}
       </Typography>
-    </Paper>
-    <Typography>Starting Lineup</Typography>
-    <Box>
-      <ul>
-        {riderAllocations.map((rider) => (
-          <li key={rider.userId}>{rider.user.fullName}</li>
-        ))}
-      </ul>
-      <Button variant='outlined' color='primary' onClick={onClose}>
-        Close
-      </Button>
-    </Box>
+    ))}
+    <br />
+    <Button variant='contained' color='primary' onClick={onClose}>
+      Ok!
+    </Button>
   </Dialog>
 );
 

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   date: {
-    width: 80,
+    width: 70,
     position: 'inherit',
   },
   dateDay: {

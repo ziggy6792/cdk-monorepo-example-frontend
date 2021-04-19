@@ -8,6 +8,7 @@ import { Grid, Typography, Box, Container, Button } from '@material-ui/core';
 import FabMenu from 'src/components/ui/fab-menu';
 
 import { useCustomGetSelectedHeatQuery } from 'src/gql/custom-hooks/use-custom-get-selected-heat';
+import LiveIndicator from 'src/screens/competition-screen/heats-structure/live-indicator';
 
 import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
 
@@ -25,7 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: 0,
     height: 120,
-    backgroundImage: 'linear-gradient(#2a6db0, #606CB1)',
+    // backgroundImage: 'linear-gradient(#2a6db0, #606CB1)',
+    backgroundImage: 'linear-gradient(45deg, #eee, #fff)',
   },
   infoWrapper: {
     display: 'flex',
@@ -88,27 +90,28 @@ const ScoreboardOverviewScreen: React.FC<IProps> = ({ match, history }) => {
             <>
               <Box className={classes.topSection}>
                 <Box flexGrow={1}>
-                  <Typography variant='h3' align='center' style={{ textTransform: 'uppercase', color: 'white' }}>
+                  <Typography variant='h3' align='center' color='primary'>
                     {title}
                   </Typography>
-                  <Typography variant='h4' align='center' style={{ color: 'white', marginTop: 10, textTransform: 'uppercase' }}>
+                  <Typography variant='h4' align='center' color='textSecondary' style={{ marginTop: 10 }}>
                     {subTitle}
                   </Typography>
                 </Box>
                 <Box className={classes.infoWrapper}>
-                  <Button onClick={onInfoBtnClick} variant='contained' style={{ backgroundColor: 'white' }}>
-                    <div className={classes.lineupIcon}>
-                      <HelpOutlineIcon fontSize='large' color='primary' />
-                      <Typography style={{ fontSize: 12 }}>Infomation</Typography>
-                    </div>
+                  <Button
+                    startIcon={<HelpOutlineIcon />}
+                    color='primary'
+                    onClick={onInfoBtnClick}
+                    variant='contained'
+                    size='large'
+                    style={{ backgroundColor: 'white' }}
+                  >
+                    Information
                   </Button>
                   <Box>
                     <Grid container alignItems='center' spacing={1} style={{ marginTop: 5 }}>
                       <Grid item>
-                        <Typography>Live</Typography>
-                      </Grid>
-                      <Grid item>
-                        <div style={{ height: 10, width: 10, backgroundColor: 'green', borderRadius: '50%' }} />
+                        <LiveIndicator large />
                       </Grid>
                     </Grid>
                   </Box>

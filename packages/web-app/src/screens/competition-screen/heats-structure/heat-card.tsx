@@ -78,7 +78,7 @@ const HeatCard: React.FC<IHeatCardProps> = ({ title, content = '', status, width
           </Typography>
         </Grid>
         {status === HeatCardStatus.IN_PROGRESS &&
-          <Grid item style={{ position: 'absolute', right: 0, top: 4 }}>
+          <Grid item style={{ position: 'absolute', right: 4, top: -4 }}>
             <LiveIndicator />
           </Grid>
         }
