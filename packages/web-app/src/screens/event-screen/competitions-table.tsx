@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
   },
   compName: {},
+  compNameWrapper: {
+    width: 'calc(100vw - 170px)'
+  },
   chip: {
     height: 14,
     marginLeft: 8,
@@ -88,7 +91,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
                       </Typography>
                     )}
                   </Grid>
-                  <Grid item>
+                  <Grid item className={classes.compNameWrapper}>
                     <Typography variant='h4' className={classes.compName} component='div'>
                       {competition.name}
                     </Typography>
