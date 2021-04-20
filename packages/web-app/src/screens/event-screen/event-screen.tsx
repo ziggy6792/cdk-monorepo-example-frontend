@@ -25,7 +25,6 @@ interface IEventsScreenProps {
 const useStyles = makeStyles((theme) => ({
   description: {
     fontSize: '1rem',
-    maxWidth: 600,
   },
   tableCtaButtons: {
     marginTop: 20,
@@ -67,7 +66,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
         {data && (
           <>
             <Grid container direction='column'>
-              <Grid item style={{ textAlign: 'center' }}>
+              <Grid item style={{ textAlign: 'center', margin: '16px 0', background: 'white', padding: 16 }}>
                 <img
                   src={eventBanner}
                   alt='event banner'
@@ -105,6 +104,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
               <Grid item>
                 <CompetitionsTable competitions={data.getEvent.competitions.items} />
               </Grid>
+              <br />
               <Grid item>
                 <CardContent>
                   <Typography variant='h3' color='primary'>
