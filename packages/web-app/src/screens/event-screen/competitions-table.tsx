@@ -79,7 +79,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
                 className={classes.summary}
               >
                 <Grid container alignItems='center' spacing={1}>
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <Typography variant='h5' className={classes.dateDay} component='div'>
                       {DateFormatter.toDay(competition.startTime)}
                     </Typography>
@@ -89,7 +89,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
                       </Typography>
                     )}
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={9}>
                     <Typography variant='h4' component='div'>
                       {competition.name}
                     </Typography>
