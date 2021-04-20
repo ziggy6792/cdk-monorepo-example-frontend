@@ -4,7 +4,6 @@ import { Button, Grid, Typography, makeStyles } from '@material-ui/core';
 import { ExitToApp, ViewList } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutActionCreator } from 'src/domain/auth';
-import Spinner from 'src/components/spinner';
 import Buttons from 'src/modules/forms/login-form/buttons';
 import LoginForm from 'src/modules/forms/login-form';
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
