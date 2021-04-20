@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useMediaQuery, useTheme, Dialog as MUIDialog, DialogContent, Grid, Typography } from '@material-ui/core';
+import { useMediaQuery, useTheme, Dialog as MUIDialog, DialogContent } from '@material-ui/core';
 
 interface IDialog {
   // title?: string;
