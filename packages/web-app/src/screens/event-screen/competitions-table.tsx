@@ -78,7 +78,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
                 id='panel1a-header'
                 className={classes.summary}
               >
-                <Grid container alignItems='center'>
+                <Grid container alignItems='center' spacing={1}>
                   <Grid item xs={2}>
                     <Typography variant='h5' className={classes.dateDay} component='div'>
                       {DateFormatter.toDay(competition.startTime)}
