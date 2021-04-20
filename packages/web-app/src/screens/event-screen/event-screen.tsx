@@ -6,12 +6,13 @@ import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import FabMenu from 'src/components/ui/fab-menu';
 import Spinner from 'src/components/spinner';
 
-import organizer from 'src/organiser-wba.jpg';
-import sponsor1 from 'src/sponsor-embily.jpg';
-import sponsor2 from 'src/sponsor-swp.png';
-import sponsor3 from 'src/sponsor-mystic.png';
-import sponsor4 from 'src/sponsor-slingshot.jpg';
-import sponsor5 from 'src/sponsor-777.png';
+import eventBanner from 'src/organiser-header.jpg';
+import sponsors from 'src/all-sponsors.jpg';
+// import sponsor1 from 'src/sponsor-embily.jpg';
+// import sponsor2 from 'src/sponsor-swp.png';
+// import sponsor3 from 'src/sponsor-mystic.png';
+// import sponsor4 from 'src/sponsor-slingshot.jpg';
+// import sponsor5 from 'src/sponsor-777.png';
 
 import CompetitionsTable from './competitions-table';
 import EditEvent from './buttons/edit-event';
@@ -61,11 +62,21 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
   const { name, description, startTime } = data?.getEvent || {};
 
   return (
-    <Grid container direction='column' justify='center' alignItems='center'>
+    <Grid container direction='column' justify='center' style={{ maxWidth: '100vw' }}>
       <ScreenWrapper eventTitle={name} eventId={eventId} currentPath='overall' showSpinner={!data}>
         {data && (
           <>
             <Grid container direction='column'>
+              <Grid item style={{ textAlign: 'center' }}>
+                <img
+                  src={eventBanner}
+                  alt='event banner'
+                  style={{ 
+                    width: '95vw',
+                    maxWidth: 500,
+                  }}
+                />
+              </Grid>
               <Grid item>
                 <CardContent>
                   <Typography variant='h3' color='primary'>
@@ -94,7 +105,6 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
               <Grid item>
                 <CompetitionsTable competitions={data.getEvent.competitions.items} />
               </Grid>
-
               <Grid item>
                 <CardContent>
                   <Typography variant='h3' color='primary'>
@@ -103,24 +113,14 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                 </CardContent>
               </Grid>
               <Grid item>
-                <Grid container spacing={1} justify='space-around' style={{ padding: '8px 16px', background: 'white' }}>               
+                <Grid
+                  container
+                  spacing={1}
+                  justify='space-around'
+                  style={{ padding: '8px 16px', background: 'white' }}
+                >
                   <Grid item>
-                    <img src={organizer} alt='wba' style={{ height: 90 }} />
-                  </Grid>
-                  <Grid item>
-                    <img src={sponsor2} alt='swp' style={{ height: 90 }} />
-                  </Grid>
-                  <Grid item>
-                    <img src={sponsor5} alt='777' style={{ height: 90 }} />
-                  </Grid>
-                  <Grid item>
-                    <img src={sponsor4} alt='slingshot' style={{ height: 50 }} />
-                  </Grid>
-                  <Grid item>
-                    <img src={sponsor3} alt='mystic' style={{ height: 35 }} />
-                  </Grid>
-                  <Grid item>
-                    <img src={sponsor1} alt='embily' style={{ height: 55 }} />
+                    <img src={sponsors} alt='wba' style={{ width: '95vw', maxWidth: 500 }} />
                   </Grid>
                 </Grid>
               </Grid>

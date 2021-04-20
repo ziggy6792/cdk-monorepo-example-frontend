@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   date: {
-    width: 70,
     position: 'inherit',
   },
   dateDay: {
@@ -51,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
   },
   compName: {},
   compNameWrapper: {
-    width: 'calc(100vw - 170px)'
   },
   chip: {
     height: 14,
@@ -81,7 +79,7 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
                 className={classes.summary}
               >
                 <Grid container alignItems='center'>
-                  <Grid item className={classes.date}>
+                  <Grid item xs={2}>
                     <Typography variant='h5' className={classes.dateDay} component='div'>
                       {DateFormatter.toDay(competition.startTime)}
                     </Typography>
@@ -91,8 +89,8 @@ const CompetitionsTable: React.FC<IEventsTableProps> = ({ competitions }) => {
                       </Typography>
                     )}
                   </Grid>
-                  <Grid item className={classes.compNameWrapper}>
-                    <Typography variant='h4' className={classes.compName} component='div'>
+                  <Grid item xs={10}>
+                    <Typography variant='h4' component='div'>
                       {competition.name}
                     </Typography>
                   </Grid>
