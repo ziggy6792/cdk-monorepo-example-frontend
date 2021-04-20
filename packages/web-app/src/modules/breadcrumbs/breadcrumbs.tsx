@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
-import { Breadcrumbs as MuiBreadcrumbs, Link, Typography, makeStyles } from '@material-ui/core';
+import { Breadcrumbs as MuiBreadcrumbs, Link, Typography, makeStyles, Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import * as routes from 'src/config/routes';
 import { LinkList, LinkType } from 'src/generated-types';
+import { LabelImportant } from '@material-ui/icons';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +12,8 @@ export const useStyles = makeStyles((theme) => ({
     width: '90%',
     overflow: 'auto',
     borderBottom: '1px solid #ddd',
-    marginBottom: 8
+    marginBottom: 8,
+    background: 'whitesmoke'
   },
   ol: {
     width: 'max-content',
@@ -69,9 +71,17 @@ const Breadcrumbs: React.FC<IBreadcrumbs> = ({ breadcrumbs }) => {
             </Typography>
           </Link>
         ) : (
-          <Typography color='textPrimary' variant='h6' style={{ background: '#fff', padding: '8px 16px', borderRadius: 4 }}>
-            {name}
-          </Typography>
+          <Button
+            startIcon={<LabelImportant />}
+            style={{ background: '#fff', borderRadius: 4 }}
+            >
+            <Typography
+              color='textPrimary'
+              variant='h6'
+            >
+              {name}
+            </Typography>
+          </Button>
         )
       )}
     </MuiBreadcrumbs>

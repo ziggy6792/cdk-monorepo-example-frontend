@@ -4,7 +4,8 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import { Grid, Link, useTheme, Typography, Button } from '@material-ui/core';
+import { Grid, useTheme, Typography, Button } from '@material-ui/core';
+import { LabelImportant } from '@material-ui/icons';
 import { TimetableRound, TimetableScheduleItem } from 'src/gql/common/types';
 import { useHistory } from 'react-router';
 import { ROUTE_COMPETITION, ROUTE_HEAT } from 'src/config/routes';
@@ -61,9 +62,14 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
         {round.heats.items.map((heat) => (
           <Grid item key={heat.name}>
             <Button
+              startIcon={<LabelImportant />}
+              color='default'
               variant='contained'
               onClick={() => {
                 history.push(`${ROUTE_HEAT}/${heat.id}`);
+              }}
+              style={{
+                border: '2px solid white'
               }}
             >
               {heat.name}

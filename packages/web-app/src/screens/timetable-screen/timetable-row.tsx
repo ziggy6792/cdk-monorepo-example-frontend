@@ -52,7 +52,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
         />
       </Dialog>
       <Grid container spacing={1} style={{ padding: '8px 0 0'}}>
-        <Grid item xs={3}>
+        <Grid item xs={3} style={{ textAlign: 'center' }}>
           {isAdmin && (
             <Button color='primary' variant='contained' onClick={() => setOpen(true)} startIcon={<Edit />}>
               {scheduleItem.startTime ? DateFormatter.toTime(scheduleItem.startTime) : 'TBD'}
