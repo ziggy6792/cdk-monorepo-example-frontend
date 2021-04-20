@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { Button, Grid, useTheme } from '@material-ui/core';
+import { Button, useTheme } from '@material-ui/core';
 import { UpdateRiderAllocationInput, useUpdateRiderAllocationsMutation } from 'src/generated-types';
 import Dialog from 'src/components/ui/dialog';
 import SeedsForm, { ISeedsFormValues } from 'src/modules/forms/seeds-form';
