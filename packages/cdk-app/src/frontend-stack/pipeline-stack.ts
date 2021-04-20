@@ -105,10 +105,10 @@ class PipelineStack extends cdk.Stack {
       },
     });
 
-    const pipelineStage = pipeline.addApplicationStage(deployedProdStage);
+    const prodStage = pipeline.addApplicationStage(deployedProdStage);
 
     // Manual Approval
-    stagingStage.addManualApprovalAction({
+    prodStage.addManualApprovalAction({
       actionName: 'ManualApproval',
       runOrder: 1,
     });
