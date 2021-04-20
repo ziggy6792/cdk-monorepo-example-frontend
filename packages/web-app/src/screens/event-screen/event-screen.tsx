@@ -66,12 +66,12 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
         {data && (
           <>
             <Grid container direction='column'>
-              <Grid item style={{ textAlign: 'center', margin: '16px 0', background: 'white', padding: 16 }}>
+              <Grid item style={{ textAlign: 'center', margin: '16px 0', background: 'white', padding: '16px 0' }}>
                 <img
                   src={eventBanner}
                   alt='event banner'
                   style={{ 
-                    width: '95vw',
+                    width: '90vw',
                     maxWidth: 500,
                   }}
                 />
@@ -101,7 +101,7 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                   </Typography>
                 </Grid>
               )}
-              <Grid item>
+              <Grid item style={{ maxWidth: '100vw'}}>
                 <CompetitionsTable competitions={data.getEvent.competitions.items} />
               </Grid>
               <br />
@@ -117,10 +117,10 @@ const EventScreen: React.FC<IEventsScreenProps> = ({ eventId }) => {
                   container
                   spacing={1}
                   justify='space-around'
-                  style={{ padding: '8px 16px', background: 'white' }}
+                  style={{ padding: '8px 0', background: 'white' }}
                 >
                   <Grid item>
-                    <img src={sponsors} alt='wba' style={{ width: '95vw', maxWidth: 500 }} />
+                    <img src={sponsors} alt='wba' style={{ width: '90vw', maxWidth: 500 }} />
                   </Grid>
                 </Grid>
               </Grid>
