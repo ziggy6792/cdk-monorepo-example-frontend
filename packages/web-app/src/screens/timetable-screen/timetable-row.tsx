@@ -12,6 +12,8 @@ import Dialog from 'src/components/ui/dialog';
 import TimetableForm, { ITimetableFormValues } from 'src/modules/forms/timetable-form/timetable-form';
 import { useUpdateScheduleItemMutation } from 'src/generated-types';
 import { GET_EVENT_SCHEDULE } from 'src/gql/queries/event.gql';
+import LiveIndicator from 'src/screens/competition-screen/heats-structure/live-indicator';
+
 import TimetableEntry from './timetable-entry';
 
 interface ITimetableRowProps {
@@ -39,6 +41,8 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
     return null;
   };
 
+  const isLive = Math.random()*10 <= 2;
+
   return (
     <>
       <Dialog open={open} setOpen={setOpen}>
@@ -51,7 +55,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
           allowSubmitPristine={!scheduleItem.startTime}
         />
       </Dialog>
-      <Grid container spacing={1} style={{ padding: '8px 0 0'}}>
+      <Grid container spacing={1} style={{ padding: '8px 0 0', background: isLive ? '#17a3c312' : '' }}>
         <Grid item xs={3} style={{ textAlign: 'center' }}>
           {isAdmin && (
             <Button color='primary' variant='contained' onClick={() => setOpen(true)} startIcon={<Edit />}>
@@ -62,6 +66,11 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
             <Typography variant='h4' color='textPrimary' style={{ padding: '0 8px' }}>
               {DateFormatter.toTime(scheduleItem.startTime, isAdmin ? 'Select time...' : 'TBD')}
             </Typography>
+          )}
+          {isLive && (
+            <div style={{ padding: '8px 0 0' }}>
+              <LiveIndicator pulse />
+            </div>
           )}
         </Grid>
         <Grid item xs={9}>

@@ -5,8 +5,10 @@
 
 import React from 'react';
 import { Grid, useTheme, Typography, Button } from '@material-ui/core';
-import { LabelImportant } from '@material-ui/icons';
+import { LabelImportant, FiberManualRecord } from '@material-ui/icons';
 import { TimetableRound, TimetableScheduleItem } from 'src/gql/common/types';
+import LiveIndicator from 'src/screens/competition-screen/heats-structure/live-indicator';
+
 import { useHistory } from 'react-router';
 import { ROUTE_COMPETITION, ROUTE_HEAT } from 'src/config/routes';
 
@@ -18,7 +20,7 @@ const TimetableEntry: React.FC<TimetableEntryProps> = ({ scheduleItem }) => {
   const { notice, scheduledItem } = scheduleItem;
   return (
     <>
-      {scheduledItem?.__typename === 'Round' && <TimetableRoundEntry round={scheduledItem} />}
+      {scheduledItem?.__typename === 'Round' && <TimetableRoundEntry round={scheduledItem} isLive />}
       {notice && <TimetableNoticeEntry notice={notice} />}
     </>
   );
@@ -38,9 +40,10 @@ const TimetableNoticeEntry: React.FC<TimetableNoticeEntryProps> = ({ notice }) =
 
 interface TimetableRoundEntryProps {
   round: TimetableRound;
+  isLive: boolean
 }
 
-const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
+const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round, isLive }) => {
   const theme = useTheme();
 
   const history = useHistory();
@@ -62,14 +65,16 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
         {round.heats.items.map((heat) => (
           <Grid item key={heat.name}>
             <Button
-              startIcon={<LabelImportant />}
+              startIcon={isLive ? 
+                <FiberManualRecord style={{ color: '#e74c3c'}}/> : <LabelImportant />}
               color='default'
               variant='contained'
               onClick={() => {
                 history.push(`${ROUTE_HEAT}/${heat.id}`);
               }}
               style={{
-                border: '2px solid white'
+                border: '2px solid white',
+                background: isLive ? 'white' : '#e0e0e0'
               }}
             >
               {heat.name}
