@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingBottom: 0,
     height: 100,
     // backgroundImage: 'linear-gradient(#2a6db0, #606CB1)', sorry valhalla
-    background: '#fff'
+    background: '#fff',
   },
   infoWrapper: {
     display: 'flex',
@@ -80,6 +80,8 @@ const ScoreboardOverviewScreen: React.FC<IProps> = ({ match, history }) => {
   const title = data?.selectedHeat?.round.longName;
   const subTitle = data?.selectedHeat?.name;
   const eventName = data?.eventName;
+
+  console.log('breadcrumbs', data?.breadcrumbs);
 
   return (
     <ScreenWrapper eventTitle={eventName} eventId={eventId} currentPath='live' dense showSpinner={!data}>
