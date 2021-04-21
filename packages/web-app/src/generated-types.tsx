@@ -891,8 +891,8 @@ export type GetSelectedHeatQueryVariables = {
 
 export type GetSelectedHeatQuery = { __typename?: 'Query' } & {
   getEvent: { __typename?: 'Event' } & Pick<Event, 'id' | 'name'> & {
-      selectedHeat: Maybe<{ __typename?: 'Heat' } & CoreHeatFieldsFragment>;
-    } & BreadcrumbFields_Event_Fragment;
+      selectedHeat: Maybe<{ __typename?: 'Heat' } & BreadcrumbFields_Heat_Fragment & CoreHeatFieldsFragment>;
+    };
 };
 
 export type CoreHeatFieldsFragment = { __typename?: 'Heat' } & Pick<
@@ -1663,8 +1663,8 @@ export const GetSelectedHeatDocument = gql`
     getEvent(id: $id) {
       id
       name
-      ...BreadcrumbFields
       selectedHeat {
+        ...BreadcrumbFields
         ...CoreHeatFields
       }
     }

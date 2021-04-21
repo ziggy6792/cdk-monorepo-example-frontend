@@ -5,7 +5,7 @@ import { useGetSelectedHeatQuery, GetSelectedHeatQuery, GetSelectedHeatQueryVari
 import * as ApolloReactHooks from '@apollo/react-hooks';
 
 export interface IGetSelectedHeatResult extends QueryResult {
-  data: { selectedHeat: GetSelectedHeatQuery['getEvent']['selectedHeat'] } & { eventName: string } & BreadcrumbFieldsFragment;
+  data: { selectedHeat: GetSelectedHeatQuery['getEvent']['selectedHeat'] } & { eventName: string };
 }
 
 export const useCustomGetSelectedHeatQuery = (
@@ -14,6 +14,6 @@ export const useCustomGetSelectedHeatQuery = (
   const { data, ...rest } = useGetSelectedHeatQuery(baseOptions);
   return {
     ...rest,
-    data: data ? { selectedHeat: data?.getEvent?.selectedHeat, eventName: data?.getEvent?.name, breadcrumbs: data?.getEvent.breadcrumbs } : null,
+    data: data ? { selectedHeat: data?.getEvent?.selectedHeat, eventName: data?.getEvent?.name } : null,
   };
 };

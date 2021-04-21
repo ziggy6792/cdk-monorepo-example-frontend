@@ -136,8 +136,8 @@ export const GET_SELECTED_HEAT = gql`
     getEvent(id: $id) {
       id
       name
-      ...BreadcrumbFields
       selectedHeat {
+        ...BreadcrumbFields
         ...CoreHeatFields
       }
     }
