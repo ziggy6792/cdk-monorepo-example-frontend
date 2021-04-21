@@ -14,7 +14,7 @@ import { useUpdateScheduleItemMutation } from 'src/generated-types';
 import { GET_EVENT_SCHEDULE } from 'src/gql/queries/event.gql';
 import LiveIndicator from 'src/screens/competition-screen/heats-structure/live-indicator';
 
-import TimetableEntry from './timetable-entry';
+import TimetableEntry, { isHeatLive } from './timetable-entry';
 
 interface ITimetableRowProps {
   scheduleItem: TimetableScheduleItem;
@@ -41,7 +41,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
     return null;
   };
 
-  const isLive = Math.random()*10 <= 2;
+  const isLive = scheduleItem.scheduledItem.__typename === 'Round' && scheduleItem.scheduledItem.heats.items.find(({ status }) => isHeatLive(status));
 
   return (
     <>

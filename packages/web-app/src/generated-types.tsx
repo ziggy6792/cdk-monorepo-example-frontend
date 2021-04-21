@@ -860,7 +860,7 @@ export type GetEventScheduleQuery = { __typename?: 'Query' } & {
               scheduledItem: Maybe<
                 { __typename?: 'Round' } & Pick<Round, 'id' | 'roundNo' | 'longName'> & {
                     competition: { __typename?: 'Competition' } & Pick<Competition, 'id'>;
-                    heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
+                    heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name' | 'status'>> };
                   }
               >;
             }
@@ -1575,6 +1575,7 @@ export const GetEventScheduleDocument = gql`
                 items {
                   id
                   name
+                  status
                 }
               }
             }

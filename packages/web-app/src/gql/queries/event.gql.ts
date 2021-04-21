@@ -96,6 +96,7 @@ export const GET_EVENT_SCHEDULE = gql`
                 items {
                   id
                   name
+                  status
                 }
               }
             }
