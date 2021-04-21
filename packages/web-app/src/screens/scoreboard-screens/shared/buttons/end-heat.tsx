@@ -47,9 +47,9 @@ const EndHeat: React.FC<IEndHeatProps> = ({ heat, onSucessfull }) => {
     } else if (response.data.endHeat.__typename === 'Competition') {
       // history.push(`${ROUTE_COMPETITION}/${response.data.endHeat.id}`);
       if (onSucessfull) {
-        console.log('onSucessfull');
         onSucessfull();
       }
+      setOpen(false);
     }
 
     return null;

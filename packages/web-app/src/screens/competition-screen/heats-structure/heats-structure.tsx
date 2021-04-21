@@ -57,8 +57,8 @@ type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'name'> & {
 
 const statusLookup = {
   [HeatStatus.NotReady]: HeatCardStatus.NOT_STARTED,
-  [HeatStatus.InProgress]: HeatCardStatus.IN_PROGRESS,
-  [HeatStatus.InProgressFinished]: HeatCardStatus.IN_PROGRESS,
+  [HeatStatus.SelectedInProgress]: HeatCardStatus.IN_PROGRESS,
+  [HeatStatus.SelectedFinished]: HeatCardStatus.IN_PROGRESS,
   [HeatStatus.Finished]: HeatCardStatus.READY_OR_FINISHED,
   [HeatStatus.Ready]: HeatCardStatus.READY_OR_FINISHED,
 };
