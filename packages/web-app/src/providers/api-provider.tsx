@@ -33,8 +33,6 @@ const transformerLink = createTransformerLink(transformers as any);
 const enhancedHttpLink = transformerLink.concat(createHttpLink({ fetch: ApiFetch.awsApiFetch }) as any);
 
 const errorLink = onError((apolloError) => {
-  // ToDo: Accessing store outside of component. Maybe this is hacky
-
   const { graphQLErrors, networkError } = apolloError;
   const errors = [];
 
@@ -44,9 +42,35 @@ const errorLink = onError((apolloError) => {
     );
   }
 
+  const errorAsSting = (error: Error) => JSON.stringify({ message: error?.message, stack: error?.stack });
+
   if (networkError) {
-    errors.push({ type: ErrorType.NETWORK_ERROR, displayText: `${networkError}` });
+    // eslint-disable-next-line no-console
+    console.error('NETWORK_ERROR', networkError);
+    if ('result' in networkError) {
+      errors.push({
+        type: ErrorType.NETWORK_ERROR,
+        displayText: `ServerError: ${errorAsSting(networkError)} ${JSON.stringify({
+          statusCode: networkError?.statusCode,
+          response: networkError?.response,
+          result: networkError?.result,
+        })}`,
+      });
+    } else if ('bodyText' in networkError) {
+      errors.push({
+        type: ErrorType.NETWORK_ERROR,
+        displayText: `ServerParseError: ${errorAsSting(networkError)} ${JSON.stringify({
+          statusCode: networkError?.statusCode,
+          response: networkError?.response,
+          bodyText: networkError?.bodyText,
+        })}`,
+      });
+    } else {
+      errors.push({ type: ErrorType.NETWORK_ERROR, displayText: errorAsSting(networkError) });
+    }
   }
+
+  // ToDo: Accessing store outside of component. Maybe this is hacky
   store.dispatch(setErrorsActionCreator({ errors }));
 });
 
