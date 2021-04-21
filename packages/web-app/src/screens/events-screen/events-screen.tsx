@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import { Card, Typography, Grid, CardContent } from '@material-ui/core';
+import { Typography, Grid, CardContent } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Spinner from 'src/components/spinner';
 import authSelectors from 'src/domain/auth/selectors';
+import AlpacaIcon from 'src/Alpaca.svg';
 import { useListEventsQuery } from 'src/generated-types';
 import CreateEvent from './buttons/create-event';
-import EventsTable from './events-table';
 import EventCard from './event-card';
 
 const EventsScreen: React.FC = () => {
@@ -16,6 +16,7 @@ const EventsScreen: React.FC = () => {
   return (
     <>
       <Typography variant='h3' style={{ textAlign: 'center', padding: '48px 16px 24px', color: '#297b92' }}>
+        <img src={AlpacaIcon} alt='alpaca' style={{ width: 80 }} /><br />
         Welcome to Alpaca!
       </Typography>
       {!data && <Spinner />}
