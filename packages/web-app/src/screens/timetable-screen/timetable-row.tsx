@@ -76,7 +76,8 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
           )}
         </Grid>
         <Grid item xs={9}>
-          <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} liveHeatId={liveHeatId} />
+          {/* ToDo: Cleanup this props drilling */}
+          <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} liveHeatId={liveHeatId} eventId={eventId} />
         </Grid>
       </Grid>
     </>
