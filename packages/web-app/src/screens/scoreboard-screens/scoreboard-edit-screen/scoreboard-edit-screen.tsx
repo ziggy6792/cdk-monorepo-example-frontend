@@ -56,7 +56,7 @@ const ScoreboardEditScreen: React.FC<IProps> = ({ match, history }) => {
                   />
                   <FabMenu>
                     <FabMenu.Item>
-                      <EndHeat heat={data.selectedHeat} />
+                      <EndHeat heat={data.selectedHeat} onSucessfull={onClickBack} />
                     </FabMenu.Item>
                   </FabMenu>
                 </Box>

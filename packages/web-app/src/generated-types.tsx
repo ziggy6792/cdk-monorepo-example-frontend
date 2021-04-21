@@ -205,6 +205,7 @@ export enum HeatStatus {
   NotReady = 'NOT_READY',
   Ready = 'READY',
   InProgress = 'IN_PROGRESS',
+  InProgressFinished = 'IN_PROGRESS_FINISHED',
   Finished = 'FINISHED',
 }
 

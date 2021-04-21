@@ -24,9 +24,10 @@ interface IEndHeatProps {
     id: string;
     name: string;
   };
+  onSucessfull?: () => void;
 }
 
-const EndHeat: React.FC<IEndHeatProps> = ({ heat }) => {
+const EndHeat: React.FC<IEndHeatProps> = ({ heat, onSucessfull }) => {
   const history = useHistory();
 
   const [open, setOpen] = useState(false);
@@ -44,7 +45,11 @@ const EndHeat: React.FC<IEndHeatProps> = ({ heat }) => {
       setValidationItems(response.data.endHeat.items);
       setOpen(true);
     } else if (response.data.endHeat.__typename === 'Competition') {
-      history.push(`${ROUTE_COMPETITION}/${response.data.endHeat.id}`);
+      // history.push(`${ROUTE_COMPETITION}/${response.data.endHeat.id}`);
+      if (onSucessfull) {
+        console.log('onSucessfull');
+        onSucessfull();
+      }
     }
 
     return null;

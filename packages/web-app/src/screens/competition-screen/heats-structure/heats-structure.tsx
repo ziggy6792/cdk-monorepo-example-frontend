@@ -15,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     width: 'fit-content',
     letterSpacing: '2px',
-    padding: theme.spacing(2,0,0)
+    padding: theme.spacing(2, 0, 0),
   },
   roundHeader: {
     backgroundImage: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.main}cc)`,
     color: 'white',
-    padding: theme.spacing(1,2,1,5),
-    margin: theme.spacing(2,0,0,-6),
+    padding: theme.spacing(1, 2, 1, 5),
+    margin: theme.spacing(2, 0, 0, -6),
     width: 'fit-content',
     letterSpacing: '2px',
     borderBottomRightRadius: 8,
@@ -58,6 +58,7 @@ type HeatsStructureRound = Pick<Round, 'id' | 'startTime' | 'name'> & {
 const statusLookup = {
   [HeatStatus.NotReady]: HeatCardStatus.NOT_STARTED,
   [HeatStatus.InProgress]: HeatCardStatus.IN_PROGRESS,
+  [HeatStatus.InProgressFinished]: HeatCardStatus.IN_PROGRESS,
   [HeatStatus.Finished]: HeatCardStatus.READY_OR_FINISHED,
   [HeatStatus.Ready]: HeatCardStatus.READY_OR_FINISHED,
 };
@@ -89,16 +90,12 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
               <Grid
                 container
                 justify='flex-start'
-                style={{ 
-                  margin: theme.spacing(1,0,1,2),
+                style={{
+                  margin: theme.spacing(1, 0, 1, 2),
                 }}
               >
                 <Grid item>
-                  <Typography
-                    component='div'
-                    variant='h4'
-                    className={classes.roundHeader}
-                  >
+                  <Typography component='div' variant='h4' className={classes.roundHeader}>
                     {round.name}
                   </Typography>
                 </Grid>
@@ -108,7 +105,7 @@ const HeatsStructure: React.FC<IHeatsStructureProps> = ({ rounds, eventId }) => 
                   <Grid item key={heat.id}>
                     <HeatCard
                       onClick={() => {
-                        if (heat.status === HeatStatus.InProgress) {
+                        if (statusLookup[heat.status] === HeatCardStatus.IN_PROGRESS) {
                           history.push(`${ROUTE_LIVE}/${eventId}`);
                         } else {
                           history.push(`${ROUTE_HEAT}/${heat.id}`);
