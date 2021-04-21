@@ -30,7 +30,7 @@ interface TimetableNoticeEntryProps {
 
 const TimetableNoticeEntry: React.FC<TimetableNoticeEntryProps> = ({ notice }) => (
   <Grid item xs={12}>
-    <Typography variant='h4' color='textPrimary' style={{ padding: '0 0 16px', textTransform: 'none' }}>
+    <Typography variant='h4' color='textPrimary' style={{ padding: '0 4px 16px 0', textTransform: 'none', lineHeight: 1 }}>
       {notice}
     </Typography>
   </Grid>
@@ -53,7 +53,7 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round }) => {
           onClick={() => {
             history.push(`${ROUTE_COMPETITION}/${round.competition.id}`);
           }}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', lineHeight: 1 }}
         >
           {round.longName}
         </Typography>
