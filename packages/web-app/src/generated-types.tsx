@@ -853,14 +853,14 @@ export type GetEventScheduleQueryVariables = {
 };
 
 export type GetEventScheduleQuery = { __typename?: 'Query' } & {
-  getEvent: { __typename?: 'Event' } & Pick<Event, 'name' | 'id' | 'isAdmin'> & {
+  getEvent: { __typename?: 'Event' } & Pick<Event, 'name' | 'id' | 'isAdmin' | 'selectedHeatId'> & {
       scheduleItems: { __typename?: 'ScheduleItemList' } & {
         items: Array<
           { __typename?: 'ScheduleItem' } & Pick<ScheduleItem, 'scheduleId' | 'id' | 'startTime' | 'notice' | 'createdAt'> & {
               scheduledItem: Maybe<
                 { __typename?: 'Round' } & Pick<Round, 'id' | 'roundNo' | 'longName'> & {
                     competition: { __typename?: 'Competition' } & Pick<Competition, 'id'>;
-                    heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name' | 'status'>> };
+                    heats: { __typename?: 'HeatList' } & { items: Array<{ __typename?: 'Heat' } & Pick<Heat, 'id' | 'name'>> };
                   }
               >;
             }
@@ -1556,6 +1556,7 @@ export const GetEventScheduleDocument = gql`
       name
       id
       isAdmin
+      selectedHeatId
       scheduleItems {
         items {
           scheduleId
@@ -1575,7 +1576,6 @@ export const GetEventScheduleDocument = gql`
                 items {
                   id
                   name
-                  status
                 }
               }
             }

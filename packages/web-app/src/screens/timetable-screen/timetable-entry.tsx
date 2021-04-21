@@ -10,20 +10,17 @@ import { TimetableRound, TimetableScheduleItem } from 'src/gql/common/types';
 
 import { useHistory } from 'react-router';
 import { ROUTE_COMPETITION, ROUTE_HEAT } from 'src/config/routes';
-import { HeatStatus } from 'src/generated-types';
 
 interface TimetableEntryProps {
+  liveHeatId?: string;
   scheduleItem: TimetableScheduleItem;
 }
 
-// Created here as we will have to use it here in the future for more than 1 heat rounds
-export const isHeatLive = (status: HeatStatus): boolean => [HeatStatus.SelectedFinished, HeatStatus.SelectedInProgress].includes(status);
-
-const TimetableEntry: React.FC<TimetableEntryProps> = ({ scheduleItem }) => {
+const TimetableEntry: React.FC<TimetableEntryProps> = ({ scheduleItem, liveHeatId }) => {
   const { notice, scheduledItem } = scheduleItem;
   return (
     <>
-      {scheduledItem?.__typename === 'Round' && <TimetableRoundEntry round={scheduledItem} isLive />}
+      {scheduledItem?.__typename === 'Round' && <TimetableRoundEntry round={scheduledItem} liveHeatId={liveHeatId} />}
       {notice && <TimetableNoticeEntry notice={notice} />}
     </>
   );
@@ -43,10 +40,10 @@ const TimetableNoticeEntry: React.FC<TimetableNoticeEntryProps> = ({ notice }) =
 
 interface TimetableRoundEntryProps {
   round: TimetableRound;
-  isLive: boolean;
+  liveHeatId?: string;
 }
 
-const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round, isLive }) => {
+const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round, liveHeatId }) => {
   const theme = useTheme();
 
   const history = useHistory();
@@ -77,7 +74,7 @@ const TimetableRoundEntry: React.FC<TimetableRoundEntryProps> = ({ round, isLive
               }}
               style={{
                 border: '2px solid white',
-                background: isLive ? 'white' : '#e0e0e0',
+                background: liveHeatId === heat.id ? 'white' : '#e0e0e0',
               }}
             >
               {heat.name}

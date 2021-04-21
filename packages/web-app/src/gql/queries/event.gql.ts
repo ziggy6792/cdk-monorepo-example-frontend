@@ -77,6 +77,7 @@ export const GET_EVENT_SCHEDULE = gql`
       name
       id
       isAdmin
+      selectedHeatId
       scheduleItems {
         items {
           scheduleId
@@ -96,7 +97,6 @@ export const GET_EVENT_SCHEDULE = gql`
                 items {
                   id
                   name
-                  status
                 }
               }
             }

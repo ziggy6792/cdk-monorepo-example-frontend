@@ -24,6 +24,7 @@ export interface TimetableProps {
   scheduleItems: TimetableScheduleItem[];
   eventId: string;
   isAdmin: boolean;
+  liveHeatId?: string;
 }
 
 interface DayPartitionProps {
@@ -42,7 +43,7 @@ const DayPartition: React.FC<DayPartitionProps> = ({ day }) => {
   );
 };
 
-const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }) => {
+const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin, liveHeatId }) => {
   const groupedItems = _.groupBy(scheduleItems, (scheduleItem) =>
     scheduleItem.startTime ? startOfDay(scheduleItem.startTime).toISOString() : new Date(0).toISOString()
   );
@@ -70,7 +71,7 @@ const Timetable: React.FC<TimetableProps> = ({ scheduleItems, eventId, isAdmin }
             {scheduleItems.map((scheduleItem, i) => (
               <>
                 {i !== 0 && <Divider />}
-                <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} isAdmin={isAdmin} />
+                <TimetableRow scheduleItem={scheduleItem} eventId={eventId} key={scheduleItem.id} isAdmin={isAdmin} liveHeatId={liveHeatId} />
               </>
             ))}
           </Grid>

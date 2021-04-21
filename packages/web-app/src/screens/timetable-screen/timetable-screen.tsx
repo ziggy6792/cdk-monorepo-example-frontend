@@ -16,7 +16,12 @@ const TimetableScreen: React.FC<IScoreboardScreenProps> = ({ eventId }) => {
     <ScreenWrapper eventId={eventId} currentPath='timetable' dense showSpinner={!data}>
       {data && (
         <Grid container direction='column' justify='center' alignItems='center'>
-          <Timetable scheduleItems={data.getEvent.scheduleItems.items} eventId={eventId} isAdmin={data.getEvent.isAdmin} />
+          <Timetable
+            scheduleItems={data.getEvent.scheduleItems.items}
+            eventId={eventId}
+            isAdmin={data.getEvent.isAdmin}
+            liveHeatId={data.getEvent.selectedHeatId}
+          />
         </Grid>
       )}
     </ScreenWrapper>

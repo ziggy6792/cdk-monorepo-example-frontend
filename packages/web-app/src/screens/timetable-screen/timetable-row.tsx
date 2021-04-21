@@ -14,15 +14,16 @@ import { useUpdateScheduleItemMutation } from 'src/generated-types';
 import { GET_EVENT_SCHEDULE } from 'src/gql/queries/event.gql';
 import LiveIndicator from 'src/screens/competition-screen/heats-structure/live-indicator';
 
-import TimetableEntry, { isHeatLive } from './timetable-entry';
+import TimetableEntry from './timetable-entry';
 
 interface ITimetableRowProps {
   scheduleItem: TimetableScheduleItem;
   eventId: string;
   isAdmin: boolean;
+  liveHeatId?: string;
 }
 
-const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isAdmin }) => {
+const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isAdmin, liveHeatId }) => {
   const [open, setOpen] = useState(false);
 
   const [updateScheduleItem] = useUpdateScheduleItemMutation({
@@ -41,7 +42,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
     return null;
   };
 
-  const isLive = scheduleItem.scheduledItem.__typename === 'Round' && scheduleItem.scheduledItem.heats.items.find(({ status }) => isHeatLive(status));
+  const isLive = scheduleItem.scheduledItem.__typename === 'Round' && scheduleItem.scheduledItem.heats.items.find(({ id }) => liveHeatId === id);
 
   return (
     <>
@@ -55,7 +56,8 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
           allowSubmitPristine={!scheduleItem.startTime}
         />
       </Dialog>
-      <Grid container spacing={1} style={{ padding: '8px 0 0', background: isLive ? '#17a3c312' : '' }}>
+      {/* <Grid container spacing={1} style={{ padding: '8px 0 0', background: isLive ? '#17a3c312' : '' }}> */}
+      <Grid container spacing={1} style={{ padding: '8px 0 0' }}>
         <Grid item xs={3} style={{ textAlign: 'center' }}>
           {isAdmin && (
             <Button color='primary' variant='contained' onClick={() => setOpen(true)} startIcon={<Edit />}>
@@ -74,7 +76,7 @@ const TimetableRow: React.FC<ITimetableRowProps> = ({ scheduleItem, eventId, isA
           )}
         </Grid>
         <Grid item xs={9}>
-          <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} />
+          <TimetableEntry scheduleItem={scheduleItem} key={scheduleItem.id} liveHeatId={liveHeatId} />
         </Grid>
       </Grid>
     </>
