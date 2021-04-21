@@ -204,7 +204,8 @@ export type HeatParamsInput = {
 export enum HeatStatus {
   NotReady = 'NOT_READY',
   Ready = 'READY',
-  InProgress = 'IN_PROGRESS',
+  SelectedInProgress = 'SELECTED_IN_PROGRESS',
+  SelectedFinished = 'SELECTED_FINISHED',
   Finished = 'FINISHED',
 }
 
