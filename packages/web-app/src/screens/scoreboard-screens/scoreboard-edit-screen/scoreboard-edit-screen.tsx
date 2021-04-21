@@ -8,6 +8,7 @@ import FabMenu from 'src/components/ui/fab-menu';
 import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
 import NoLiveHeats from 'src/screens/scoreboard-screens/shared/no-live-heats';
 import scoreboardConfig from 'src/screens/scoreboard-screens/shared/scoreboard-config';
+import Breadcrumbs from 'src/modules/breadcrumbs/breadcrumbs';
 import EditScoreboardTable from './edit-scoreboard-table';
 
 interface IMatchParams {
@@ -39,7 +40,7 @@ const ScoreboardEditScreen: React.FC<IProps> = ({ match, history }) => {
     <>
       {/* Redirect non judges to readonly screen */}
       {data?.selectedHeat && !data.selectedHeat.isJudge && <Redirect to={`${routeConfig.ROUTE_LIVE}/${eventId}`} />}
-      <ScreenWrapper eventTitle={eventName} eventId={eventId} currentPath='live' dense showSpinner={!data}>
+      <ScreenWrapper eventTitle={eventName} eventId={eventId} currentPath='live' showSpinner={!data}>
         {data && (
           <>
             {!data.selectedHeat && <NoLiveHeats />}

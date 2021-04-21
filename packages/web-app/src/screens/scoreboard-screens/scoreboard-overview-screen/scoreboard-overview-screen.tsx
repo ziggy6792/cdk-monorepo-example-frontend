@@ -15,10 +15,9 @@ import EndHeat from 'src/screens/scoreboard-screens/shared/buttons/end-heat';
 import ScreenWrapper from 'src/components/ui/screen-wrapper';
 import NoLiveHeats from 'src/screens/scoreboard-screens/shared/no-live-heats';
 import scoreboardConfig from 'src/screens/scoreboard-screens/shared/scoreboard-config';
+import Breadcrumbs from 'src/modules/breadcrumbs/breadcrumbs';
 import RiderRankList from './components/rider-rank-table';
 import HeatMetaDataModal from './components/heat-meta-data';
-
-import { parseLongName } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   topSection: {
@@ -75,21 +74,18 @@ const ScoreboardOverviewScreen: React.FC<IProps> = ({ match, history }) => {
   const onClose = () => setOpen(false);
   const onRedirectEdit = () => history.push(`${routeConfig.ROUTE_LIVE}/${eventId}/edit`);
 
-  // const [title, subTitle] = parseLongName(data?.selectedHeat?.longName) || [null, null];
-
   const title = data?.selectedHeat?.round.longName;
   const subTitle = data?.selectedHeat?.name;
   const eventName = data?.eventName;
 
-  console.log('breadcrumbs', data?.breadcrumbs);
-
   return (
-    <ScreenWrapper eventTitle={eventName} eventId={eventId} currentPath='live' dense showSpinner={!data}>
+    <ScreenWrapper eventTitle={eventName} eventId={eventId} currentPath='live' onlyBottom showSpinner={!data}>
       {data && (
         <>
           {!data.selectedHeat && <NoLiveHeats />}
           {data?.selectedHeat && (
             <>
+              <Breadcrumbs breadcrumbs={data.selectedHeat.breadcrumbs} />
               <Box className={classes.topSection}>
                 <Box flexGrow={1}>
                   <Typography variant='h3' align='center' color='primary'>

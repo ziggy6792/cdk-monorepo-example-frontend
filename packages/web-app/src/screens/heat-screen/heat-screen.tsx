@@ -28,7 +28,7 @@ const HeatScreen: React.FC<IScoreboardScreenProps> = ({ heatId }) => {
   const { id: eventId, name: eventTitle } = data?.getHeat.breadcrumbs.items.find((item) => item.type === 'EVENT') || {};
 
   return (
-    <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='tournament' showSpinner={!data}>
+    <ScreenWrapper eventTitle={eventTitle} eventId={eventId} currentPath='tournament' onlyBottom showSpinner={!data}>
       {data && (
         <>
           <Breadcrumbs breadcrumbs={data.getHeat.breadcrumbs} />
